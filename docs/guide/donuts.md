@@ -114,3 +114,25 @@ new DonutSimulation(canvas, {
     repulsionStrength: 0.05
 });
 ```
+
+### Mouse Avoidance
+
+Enable mouse avoidance to make donuts move away from the cursor. This is disabled by default.
+
+::: example Mouse avoidance || Donuts move away from the cursor.
+example=../code/donuts/mouse-avoidance.vue
+:::
+
+```typescript
+// Enable mouse avoidance with defaults
+new DonutSimulation(canvas, {
+    mouseAvoidance: true
+});
+
+// Custom avoidance radius and strength
+new DonutSimulation(canvas, {
+    mouseAvoidance: true,
+    mouseAvoidanceRadius: 200,
+    mouseAvoidanceStrength: 0.05
+});
+```
