@@ -39,7 +39,7 @@ function celebrate(): void {
 }
 
 onMounted(async () => {
-    const { ConfettiSimulation } = await import('@basmilius/effects');
+    const { ConfettiSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
         sim = new ConfettiSimulation(canvasRef.value, {scale: 0.5});

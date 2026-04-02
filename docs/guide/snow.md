@@ -17,7 +17,7 @@ example=../code/snow/preview.vue
 All options are passed via a config object:
 
 ```typescript
-import { SnowSimulation } from '@basmilius/effects';
+import { SnowSimulation } from '@basmilius/sparkle';
 
 const sim = new SnowSimulation(canvas, {
     particles: 300,

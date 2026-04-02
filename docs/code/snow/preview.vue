@@ -11,7 +11,7 @@ const canvasRef = ref<HTMLCanvasElement>();
 let sim: { start(): void; destroy(): void } | null = null;
 
 onMounted(async () => {
-    const { SnowSimulation } = await import('@basmilius/effects');
+    const { SnowSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
         sim = new SnowSimulation(canvasRef.value, {scale: 1});

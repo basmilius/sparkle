@@ -4,19 +4,46 @@
 
 ---
 
-# Visual Effects
-This repository contains a few visual effects that I use in various projects.
+# Sparkle
 
-### 🧩 Install
-- **Fireworks**:<br/>
-  `yarn add @basmilius/effects-fireworks`<br/>
-  `npm install @basmilius/effects-fireworks`<br/>
-  <br/>
+Canvas-based visual effects library for the web. Includes fireworks, confetti and snow simulations.
 
-- **Snow**:<br/>
-  `yarn add @basmilius/effects-snow`<br/>
-  `npm install @basmilius/effects-snow`
+### Install
 
-### 👀 Previews
-- **Fireworks**: https://basmilius.github.io/visual-effects/example/fireworks.html
-- **Snow**: https://basmilius.github.io/visual-effects/example/snow.html
+```bash
+bun add @basmilius/sparkle
+```
+```bash
+npm install @basmilius/sparkle
+```
+```bash
+pnpm add @basmilius/sparkle
+```
+
+### Quick Start
+
+```typescript
+import { FireworkSimulation, ConfettiSimulation, SnowSimulation } from '@basmilius/sparkle';
+
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+
+// Fireworks
+const fireworks = new FireworkSimulation(canvas);
+fireworks.start();
+
+// Confetti
+const confetti = new ConfettiSimulation(canvas);
+confetti.fire({ angle: 90, spread: 60, particles: 150, startVelocity: 45, x: 0.5, y: 0.5 });
+
+// Snow
+const snow = new SnowSimulation(canvas);
+snow.start();
+```
+
+### Documentation
+
+Visit the [documentation site](https://sparkle.graphics) for guides, examples and the full API reference.
+
+### License
+
+MIT

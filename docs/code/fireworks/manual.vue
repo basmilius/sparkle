@@ -29,7 +29,7 @@ function onClick(evt: MouseEvent): void {
 }
 
 onMounted(async () => {
-    const { FIREWORK_VARIANTS, FireworkSimulation } = await import('@basmilius/effects');
+    const { FIREWORK_VARIANTS, FireworkSimulation } = await import('@basmilius/sparkle');
 
     variants = [...FIREWORK_VARIANTS];
 

@@ -11,7 +11,7 @@ const canvasRef = ref<HTMLCanvasElement>();
 let sim: { destroy(): void } | null = null;
 
 onMounted(async () => {
-    const { FireworkSimulation } = await import('@basmilius/effects');
+    const { FireworkSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
         sim = new FireworkSimulation(canvasRef.value, {scale: 0.5});

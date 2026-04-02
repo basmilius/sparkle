@@ -35,7 +35,7 @@ function fire(variant: string): void {
 }
 
 onMounted(async () => {
-    const { FIREWORK_VARIANTS, FireworkSimulation } = await import('@basmilius/effects');
+    const { FIREWORK_VARIANTS, FireworkSimulation } = await import('@basmilius/sparkle');
 
     variants.value = [...FIREWORK_VARIANTS];
 

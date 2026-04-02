@@ -1,7 +1,7 @@
 import './style.css';
 
-import { ConfettiSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/effects';
-import type { FireworkVariant } from '@basmilius/effects';
+import { ConfettiSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/sparkle';
+import type { FireworkVariant } from '@basmilius/sparkle';
 
 type Effect = 'confetti' | 'fireworks' | 'fireworks-lab' | 'snow';
 

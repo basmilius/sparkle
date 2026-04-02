@@ -4,13 +4,13 @@
 
 ::: code-group
 ```bash [bun]
-bun add @basmilius/effects
+bun add @basmilius/sparkle
 ```
 ```bash [npm]
-npm install @basmilius/effects
+npm install @basmilius/sparkle
 ```
 ```bash [pnpm]
-pnpm add @basmilius/effects
+pnpm add @basmilius/sparkle
 ```
 :::
 
@@ -33,7 +33,7 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 An automatic firework display with 16 explosion variants:
 
 ```typescript
-import { FireworkSimulation } from '@basmilius/effects';
+import { FireworkSimulation } from '@basmilius/sparkle';
 
 const sim = new FireworkSimulation(canvas);
 sim.start();
@@ -44,7 +44,7 @@ sim.start();
 Fire confetti bursts on demand:
 
 ```typescript
-import { ConfettiSimulation } from '@basmilius/effects';
+import { ConfettiSimulation } from '@basmilius/sparkle';
 
 const sim = new ConfettiSimulation(canvas);
 
@@ -63,7 +63,7 @@ sim.fire({
 A continuous snowfall effect:
 
 ```typescript
-import { SnowSimulation } from '@basmilius/effects';
+import { SnowSimulation } from '@basmilius/sparkle';
 
 const sim = new SnowSimulation(canvas);
 sim.start();

@@ -9,7 +9,7 @@ export default defineConfig({
     vite: {
         resolve: {
             alias: {
-                '@basmilius/effects': resolve(__dirname, '../../src/index.ts')
+                '@basmilius/sparkle': resolve(__dirname, '../../src/index.ts')
             }
         },
         ssr: {
