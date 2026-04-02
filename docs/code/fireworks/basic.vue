@@ -1,5 +1,5 @@
 <template>
-    <div class="effect-demo effect-demo--dark">
+    <div class="effect-demo">
         <canvas ref="canvasRef"></canvas>
     </div>
 </template>

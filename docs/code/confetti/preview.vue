@@ -1,5 +1,5 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--dark effect-demo--clickable" @click="onClick">
+    <div ref="containerRef" class="effect-demo effect-demo--clickable" @click="onClick">
         <canvas ref="canvasRef"></canvas>
 
         <span class="effect-demo__hint">Click anywhere</span>

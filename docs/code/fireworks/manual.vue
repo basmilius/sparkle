@@ -1,5 +1,5 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--dark effect-demo--clickable">
+    <div ref="containerRef" class="effect-demo effect-demo--clickable">
         <canvas ref="canvasRef"></canvas>
 
         <span class="effect-demo__hint">Click anywhere to fire a random explosion</span>

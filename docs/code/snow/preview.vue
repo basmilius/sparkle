@@ -1,5 +1,5 @@
 <template>
-    <div class="effect-demo effect-demo--blue">
+    <div class="effect-demo">
         <canvas ref="canvasRef"></canvas>
     </div>
 </template>
@@ -14,7 +14,7 @@ onMounted(async () => {
     const { SnowSimulation } = await import('@basmilius/effects');
 
     if (canvasRef.value) {
-        sim = new SnowSimulation(canvasRef.value, {scale: 0.5});
+        sim = new SnowSimulation(canvasRef.value, {scale: 1});
         sim.start();
     }
 });

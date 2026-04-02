@@ -1,5 +1,5 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--dark">
+    <div ref="containerRef" class="effect-demo">
         <canvas ref="canvasRef"></canvas>
 
         <div v-if="ready" class="effect-demo__controls">
