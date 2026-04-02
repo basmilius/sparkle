@@ -4,7 +4,7 @@ import examplePlugin from 'vitepress-plugin-example';
 import renderPlugin from 'vitepress-plugin-render';
 
 export default defineConfig({
-    title: 'Visual Effects',
+    title: 'Sparkle',
     description: 'Canvas-based visual effects library for the web.',
     vite: {
         resolve: {
@@ -48,7 +48,7 @@ export default defineConfig({
             }
         ],
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/basmilius/visual-effects'}
+            {icon: 'github', link: 'https://github.com/basmilius/sparkle'}
         ]
     }
 });

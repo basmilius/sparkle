@@ -1,7 +1,7 @@
 ---
 layout: home
 hero:
-    name: Visual Effects
+    name: Sparkle
     tagline: Canvas-based visual effects library for the web.
     actions:
         - theme: brand
@@ -9,7 +9,7 @@ hero:
           link: /guide/getting-started
         - theme: alt
           text: View on GitHub
-          link: https://github.com/basmilius/visual-effects
+          link: https://github.com/basmilius/sparkle
 features:
     - title: Fireworks
       details: 16 unique firework variants including Saturn, Heart, Spiral and more. Full 3D depth simulation.
