@@ -1,6 +1,6 @@
 # Sparkle (@basmilius/sparkle)
 
-Canvas-based visual effects library for the web. Includes fireworks, confetti, snow, and donuts simulations.
+Canvas-based visual effects library for the web. Includes fireworks, confetti, snow, donuts, fireflies, rain, aurora, bubbles, sparklers, balloons, stars, and particles simulations.
 
 - **Docs:** https://sparkle.graphics
 - **Repo:** https://github.com/basmilius/sparkle
@@ -36,10 +36,18 @@ src/
   canvas.ts             # LimitedFrameRateCanvas base class
   point.ts              # Point type (x, y)
   distance.ts           # Euclidean distance utility
+  aurora/               # AuroraSimulation — flowing northern lights bands
+  balloons/             # BalloonSimulation — rising balloons with strings
+  bubbles/              # BubbleSimulation — rising soap bubbles with click-to-pop
   confetti/             # ConfettiSimulation — on-demand particle bursts
   donuts/               # DonutSimulation — floating rings with collision
+  fireflies/            # FireflySimulation — glowing pulsing dots with organic drift
   fireworks/            # FireworkSimulation — auto-playing fireworks (16 variants)
+  particles/            # ParticleSimulation — network/plexus effect with connections
+  rain/                 # RainSimulation — raindrops with splashes and lightning
   snow/                 # SnowSimulation — continuous snowfall
+  sparklers/            # SparklerSimulation — spark emitter with trails and hover mode
+  stars/                # StarSimulation — twinkling sky with shooting stars
 dev/                    # Vite playground with interactive demo
 docs/                   # VitePress documentation site
   .vitepress/           # VitePress config and theme
@@ -85,6 +93,9 @@ src/{effect}/
 - **Array compaction:** in-place during tick loop (avoids `filter()` allocations)
 - **Canvas rendering:** `setTransform()` over save/translate/rotate/restore pattern
 - **Color space:** display-p3 by default
+- **Pixel-based effects:** effects that use pixel coordinates (not normalized 0-1) must create entities in `start()` (after `super.start()` calls `onResize()`), not in the constructor — otherwise `this.width`/`this.height` are still the defaults
+- **Velocity-based rendering:** for moving particles, draw visual trails/lines along the actual velocity vector rather than using cosmetic offsets — keeps visual direction and movement in sync
+- **Mouse interaction:** follow donuts pattern — store bound listeners as readonly fields, add in constructor, remove in `destroy()` override before `super.destroy()`
 - **Exports:** barrel pattern per module, types exported with `export type`
 - **No CommonJS:** ESM throughout (`"type": "module"`)
 

@@ -1,9 +1,9 @@
 import './style.css';
 
-import { ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/sparkle';
+import { AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FireworkSimulation, ParticleSimulation, RainSimulation, SnowSimulation, SparklerSimulation, StarSimulation } from '@basmilius/sparkle';
 import type { FireworkVariant } from '@basmilius/sparkle';
 
-type Effect = 'confetti' | 'donuts' | 'fireworks' | 'fireworks-lab' | 'snow';
+type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'fireworks' | 'fireworks-lab' | 'particles' | 'rain' | 'snow' | 'sparklers' | 'stars';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const variantGrid = document.getElementById('variant-grid') as HTMLDivElement;
@@ -84,6 +84,54 @@ function start(effect: Effect): void {
         }
         case 'snow': {
             const sim = new SnowSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'fireflies': {
+            const sim = new FireflySimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'rain': {
+            const sim = new RainSimulation(canvas, {variant: 'thunderstorm'});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'aurora': {
+            const sim = new AuroraSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'bubbles': {
+            const sim = new BubbleSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'sparklers': {
+            const sim = new SparklerSimulation(canvas, {hoverMode: true});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'balloons': {
+            const sim = new BalloonSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'stars': {
+            const sim = new StarSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'particles': {
+            const sim = new ParticleSimulation(canvas, {mouseMode: 'connect'});
             sim.start();
             active = sim;
             break;
