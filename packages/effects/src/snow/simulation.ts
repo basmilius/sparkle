@@ -1,4 +1,4 @@
-import { LimitedFrameRateCanvas } from '@basmilius/effects-common';
+import { LimitedFrameRateCanvas } from '../canvas';
 import { MULBERRY } from './consts';
 import type { Snowflake } from './snowflake';
 

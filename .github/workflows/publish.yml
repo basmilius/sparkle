@@ -24,25 +24,12 @@ jobs:
                 run: bun install --frozen-lockfile
 
             -   name: ✏️ Tag v${{ env.RELEASE_VERSION }}
-                run: |
-                    bun pm version --cwd packages/common ${{ env.RELEASE_VERSION }}
-                    bun pm version --cwd packages/fireworks ${{ env.RELEASE_VERSION }}
-                    bun pm version --cwd packages/snow ${{ env.RELEASE_VERSION }}
-                    
-                    sed -i 's/workspace:\*/${{ env.RELEASE_VERSION }}/g' packages/common/package.json
-                    sed -i 's/workspace:\*/${{ env.RELEASE_VERSION }}/g' packages/fireworks/package.json
-                    sed -i 's/workspace:\*/${{ env.RELEASE_VERSION }}/g' packages/snow/package.json
+                run: bun pm version --cwd packages/effects ${{ env.RELEASE_VERSION }}
 
             -   name: 🔨 Build
-                run: |
-                    bun --cwd packages/common build
-                    bun --cwd packages/fireworks build
-                    bun --cwd packages/snow build
+                run: bun run build
 
             -   name: 🚀 Publish v${{ env.RELEASE_VERSION }}
-                run: |
-                    bun publish --cwd packages/common --access public
-                    bun publish --cwd packages/fireworks --access public
-                    bun publish --cwd packages/snow --access public
+                run: bun publish --cwd packages/effects --access public
                 env:
                     NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

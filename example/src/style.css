@@ -1,0 +1,92 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #0048b4, #062965);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+#canvas {
+    position: fixed;
+    inset: 0;
+}
+
+nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: .5rem;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 999px;
+    padding: .375rem;
+    z-index: 10;
+}
+
+nav button {
+    padding: .5rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, .7);
+    cursor: pointer;
+    font-size: .875rem;
+    font-weight: 500;
+    transition: background .15s, color .15s;
+}
+
+nav button:hover {
+    background: rgba(255, 255, 255, .1);
+    color: white;
+}
+
+nav button.is-active {
+    background: rgba(255, 255, 255, .2);
+    color: white;
+}
+
+.variant-grid {
+    position: fixed;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .375rem;
+    max-width: 680px;
+    justify-content: center;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 1rem;
+    padding: .5rem;
+    z-index: 10;
+}
+
+.variant-grid button {
+    padding: .375rem .75rem;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: .5rem;
+    color: rgba(255, 255, 255, .8);
+    cursor: pointer;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: .75rem;
+    font-weight: 500;
+    transition: background .15s, color .15s;
+}
+
+.variant-grid button:hover {
+    background: rgba(255, 255, 255, .2);
+    color: white;
+}

@@ -1,5 +1,5 @@
 {
-    "name": "@basmilius/effects",
+    "name": "@basmilius/effects-workspace",
     "private": true,
     "author": {
         "name": "Bas Milius",
@@ -7,6 +7,13 @@
         "url": "https://bas.dev"
     },
     "workspaces": [
-        "packages/*"
-    ]
+        "packages/effects"
+    ],
+    "scripts": {
+        "build": "bun run --cwd packages/effects build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "vite": "^6.3.1"
+    }
 }

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun install:*)",
+      "Bash(bun run:*)",
+      "Bash(bunx vite:*)",
+      "Bash(npx tsc:*)",
+      "Bash(cp \"/Users/bas/Library/Mobile Documents/com~apple~CloudDocs/Junk/12/fireworks v2.0.js\" /tmp/fireworks-ref.js)",
+      "Bash(brctl download:*)"
+    ]
+  }
+}

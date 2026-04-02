@@ -9,7 +9,7 @@ export class LimitedFrameRateCanvas {
     #now: number = 0;
     #then: number = 0;
     #ticks: number = 0;
-    #isStopped: boolean = false;
+    #isStopped: boolean = true;
     #height: number = 540;
     #width: number = 960;
 
@@ -35,6 +35,10 @@ export class LimitedFrameRateCanvas {
 
     get isSmall(): boolean {
         return innerWidth < 991; // dirty little fix :-)
+    }
+
+    get isTicking(): boolean {
+        return !this.#isStopped;
     }
 
     get ticks(): number {
@@ -106,6 +110,7 @@ export class LimitedFrameRateCanvas {
     }
 
     destroy(): void {
+        this.stop();
         document.removeEventListener('visibilitychange', this.onVisibilityChange);
         window.removeEventListener('resize', this.onResize);
     }
