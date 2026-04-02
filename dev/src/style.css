@@ -18,30 +18,66 @@ body {
     inset: 0;
 }
 
-nav {
+.nav-toggle {
     position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 1rem;
+    left: 1rem;
     display: flex;
-    gap: .5rem;
+    align-items: center;
+    justify-content: center;
     background: rgba(0, 0, 0, .3);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, .15);
-    border-radius: 999px;
-    padding: .375rem;
+    border-radius: .75rem;
+    color: rgba(255, 255, 255, .8);
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0;
+    z-index: 20;
+    transition: background .15s, color .15s;
+}
+
+.nav-toggle:hover {
+    background: rgba(0, 0, 0, .5);
+    color: white;
+}
+
+nav {
+    position: fixed;
+    top: 1rem;
+    left: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 2rem);
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 1rem;
+    padding: .5rem;
+    width: 10rem;
     z-index: 10;
+    transition: opacity .2s, transform .2s;
+}
+
+nav.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-.5rem);
 }
 
 nav button {
-    padding: .5rem 1.25rem;
+    padding: .5rem .75rem;
     background: transparent;
     border: none;
-    border-radius: 999px;
+    border-radius: .5rem;
     color: rgba(255, 255, 255, .7);
     cursor: pointer;
-    font-size: .875rem;
+    font-size: .8125rem;
     font-weight: 500;
+    text-align: left;
     transition: background .15s, color .15s;
 }
 

@@ -1,12 +1,18 @@
 import './style.css';
 
-import { AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FireworkSimulation, ParticleSimulation, RainSimulation, SnowSimulation, SparklerSimulation, StarSimulation } from '@basmilius/sparkle';
+import { AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FirepitSimulation, FireworkSimulation, GlitterSimulation, LanternSimulation, LeafSimulation, LightningSimulation, MatrixSimulation, OrbitSimulation, ParticleSimulation, PetalSimulation, PlasmaSimulation, RainSimulation, SandstormSimulation, SnowSimulation, SparklerSimulation, StarSimulation, StreamerSimulation, WaveSimulation, WormholeSimulation } from '@basmilius/sparkle';
 import type { FireworkVariant } from '@basmilius/sparkle';
 
-type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'fireworks' | 'fireworks-lab' | 'particles' | 'rain' | 'snow' | 'sparklers' | 'stars';
+type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'firepit' | 'fireworks' | 'fireworks-lab' | 'glitter' | 'lanterns' | 'leaves' | 'lightning' | 'matrix' | 'orbits' | 'particles' | 'petals' | 'plasma' | 'rain' | 'sandstorm' | 'snow' | 'sparklers' | 'stars' | 'streamers' | 'waves' | 'wormhole';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const variantGrid = document.getElementById('variant-grid') as HTMLDivElement;
+const nav = document.getElementById('nav') as HTMLElement;
+const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement;
+
+navToggle.addEventListener('click', () => {
+    nav.classList.toggle('is-hidden');
+}, {passive: true});
 
 let active: { stop(): void; destroy(): void } | null = null;
 let clickHandler: ((evt: MouseEvent) => void) | null = null;
@@ -132,6 +138,84 @@ function start(effect: Effect): void {
         }
         case 'particles': {
             const sim = new ParticleSimulation(canvas, {mouseMode: 'connect'});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'leaves': {
+            const sim = new LeafSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'petals': {
+            const sim = new PetalSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'firepit': {
+            const sim = new FirepitSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'sandstorm': {
+            const sim = new SandstormSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'waves': {
+            const sim = new WaveSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'lanterns': {
+            const sim = new LanternSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'streamers': {
+            const sim = new StreamerSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'glitter': {
+            const sim = new GlitterSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'matrix': {
+            const sim = new MatrixSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'wormhole': {
+            const sim = new WormholeSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'plasma': {
+            const sim = new PlasmaSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'lightning': {
+            const sim = new LightningSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'orbits': {
+            const sim = new OrbitSimulation(canvas);
             sim.start();
             active = sim;
             break;

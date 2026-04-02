@@ -31,37 +31,88 @@ export default defineConfig({
             {
                 text: 'Guide',
                 items: [
-                    {text: 'Getting Started', link: '/guide/getting-started'},
-                    {text: 'Fireworks', link: '/guide/fireworks'},
-                    {text: 'Confetti', link: '/guide/confetti'},
-                    {text: 'Donuts', link: '/guide/donuts'},
-                    {text: 'Snow', link: '/guide/snow'},
-                    {text: 'Fireflies', link: '/guide/fireflies'},
-                    {text: 'Rain', link: '/guide/rain'},
-                    {text: 'Aurora', link: '/guide/aurora'},
-                    {text: 'Bubbles', link: '/guide/bubbles'},
-                    {text: 'Sparklers', link: '/guide/sparklers'},
-                    {text: 'Balloons', link: '/guide/balloons'},
-                    {text: 'Stars', link: '/guide/stars'},
-                    {text: 'Particles', link: '/guide/particles'}
+                    {text: 'Getting Started', link: '/guide/getting-started'}
                 ]
             },
             {
-                text: 'API',
+                text: 'Celebration',
+                collapsed: false,
+                items: [
+                    {text: 'Fireworks', link: '/guide/fireworks'},
+                    {text: 'Confetti', link: '/guide/confetti'},
+                    {text: 'Balloons', link: '/guide/balloons'},
+                    {text: 'Streamers', link: '/guide/streamers'},
+                    {text: 'Glitter', link: '/guide/glitter'},
+                    {text: 'Lanterns', link: '/guide/lanterns'},
+                    {text: 'Sparklers', link: '/guide/sparklers'}
+                ]
+            },
+            {
+                text: 'Nature',
+                collapsed: false,
+                items: [
+                    {text: 'Snow', link: '/guide/snow'},
+                    {text: 'Rain', link: '/guide/rain'},
+                    {text: 'Aurora', link: '/guide/aurora'},
+                    {text: 'Leaves', link: '/guide/leaves'},
+                    {text: 'Petals', link: '/guide/petals'},
+                    {text: 'Fireflies', link: '/guide/fireflies'},
+                    {text: 'Bubbles', link: '/guide/bubbles'},
+                    {text: 'Waves', link: '/guide/waves'},
+                    {text: 'Lightning', link: '/guide/lightning'},
+                    {text: 'Sandstorm', link: '/guide/sandstorm'}
+                ]
+            },
+            {
+                text: 'Ambient',
+                collapsed: false,
+                items: [
+                    {text: 'Stars', link: '/guide/stars'},
+                    {text: 'Particles', link: '/guide/particles'},
+                    {text: 'Firepit', link: '/guide/firepit'},
+                    {text: 'Plasma', link: '/guide/plasma'},
+                    {text: 'Orbits', link: '/guide/orbits'}
+                ]
+            },
+            {
+                text: 'Stylized',
+                collapsed: false,
+                items: [
+                    {text: 'Matrix', link: '/guide/matrix'},
+                    {text: 'Wormhole', link: '/guide/wormhole'},
+                    {text: 'Donuts', link: '/guide/donuts'}
+                ]
+            },
+            {
+                text: 'API Reference',
+                collapsed: true,
                 items: [
                     {text: 'General', link: '/api/general'},
-                    {text: 'Fireworks', link: '/api/fireworks'},
+                    {text: 'Aurora', link: '/api/aurora'},
+                    {text: 'Balloons', link: '/api/balloons'},
+                    {text: 'Bubbles', link: '/api/bubbles'},
                     {text: 'Confetti', link: '/api/confetti'},
                     {text: 'Donuts', link: '/api/donuts'},
-                    {text: 'Snow', link: '/api/snow'},
                     {text: 'Fireflies', link: '/api/fireflies'},
+                    {text: 'Firepit', link: '/api/firepit'},
+                    {text: 'Fireworks', link: '/api/fireworks'},
+                    {text: 'Glitter', link: '/api/glitter'},
+                    {text: 'Lanterns', link: '/api/lanterns'},
+                    {text: 'Leaves', link: '/api/leaves'},
+                    {text: 'Lightning', link: '/api/lightning'},
+                    {text: 'Matrix', link: '/api/matrix'},
+                    {text: 'Orbits', link: '/api/orbits'},
+                    {text: 'Particles', link: '/api/particles'},
+                    {text: 'Petals', link: '/api/petals'},
+                    {text: 'Plasma', link: '/api/plasma'},
                     {text: 'Rain', link: '/api/rain'},
-                    {text: 'Aurora', link: '/api/aurora'},
-                    {text: 'Bubbles', link: '/api/bubbles'},
+                    {text: 'Sandstorm', link: '/api/sandstorm'},
+                    {text: 'Snow', link: '/api/snow'},
                     {text: 'Sparklers', link: '/api/sparklers'},
-                    {text: 'Balloons', link: '/api/balloons'},
                     {text: 'Stars', link: '/api/stars'},
-                    {text: 'Particles', link: '/api/particles'}
+                    {text: 'Streamers', link: '/api/streamers'},
+                    {text: 'Waves', link: '/api/waves'},
+                    {text: 'Wormhole', link: '/api/wormhole'}
                 ]
             }
         ],
