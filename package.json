@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/basmilius/visual-effects.git"
+        "url": "https://github.com/basmilius/sparkle.git"
     },
     "scripts": {
         "build": "tsdown",
