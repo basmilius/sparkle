@@ -24,7 +24,7 @@ jobs:
                 run: bun install --frozen-lockfile
 
             -   name: Tag v${{ env.RELEASE_VERSION }}
-                run: bun pm version ${{ env.RELEASE_VERSION }}
+                run: bun pm version ${{ env.RELEASE_VERSION }} --no-git-tag-version
 
             -   name: Build
                 run: bun run build
