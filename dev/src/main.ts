@@ -1,9 +1,9 @@
 import './style.css';
 
-import { ConfettiSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/sparkle';
+import { ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/sparkle';
 import type { FireworkVariant } from '@basmilius/sparkle';
 
-type Effect = 'confetti' | 'fireworks' | 'fireworks-lab' | 'snow';
+type Effect = 'confetti' | 'donuts' | 'fireworks' | 'fireworks-lab' | 'snow';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const variantGrid = document.getElementById('variant-grid') as HTMLDivElement;
@@ -74,6 +74,12 @@ function start(effect: Effect): void {
             };
 
             canvas.addEventListener('click', clickHandler, {passive: true});
+            break;
+        }
+        case 'donuts': {
+            const sim = new DonutSimulation(canvas);
+            sim.start();
+            active = sim;
             break;
         }
         case 'snow': {

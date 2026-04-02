@@ -34,6 +34,7 @@ export default defineConfig({
                     {text: 'Getting Started', link: '/guide/getting-started'},
                     {text: 'Fireworks', link: '/guide/fireworks'},
                     {text: 'Confetti', link: '/guide/confetti'},
+                    {text: 'Donuts', link: '/guide/donuts'},
                     {text: 'Snow', link: '/guide/snow'}
                 ]
             },
@@ -43,6 +44,7 @@ export default defineConfig({
                     {text: 'General', link: '/api/general'},
                     {text: 'Fireworks', link: '/api/fireworks'},
                     {text: 'Confetti', link: '/api/confetti'},
+                    {text: 'Donuts', link: '/api/donuts'},
                     {text: 'Snow', link: '/api/snow'}
                 ]
             }
