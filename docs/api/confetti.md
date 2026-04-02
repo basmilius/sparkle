@@ -41,6 +41,7 @@ interface Config {
     colors: string[];
     decay: number;
     gravity: number;
+    palette: Palette;
     particles: number;
     shapes: Shape[];
     spread: number;
@@ -54,11 +55,12 @@ interface Config {
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `angle` | `number` | `90` | Launch angle in degrees. `90` is straight up. |
-| `colors` | `string[]` | 7 vibrant colors | Array of hex color strings. |
+| `colors` | `string[]` | — | Array of hex color strings. Overrides `palette` when set. |
 | `decay` | `number` | `0.9` | Velocity decay factor per tick. Lower = faster slowdown. |
 | `gravity` | `number` | `1` | Gravity acceleration. Higher = faster fall. |
+| `palette` | [`Palette`](#palette) | `'vibrant'` | Built-in color palette. Ignored when `colors` is set. |
 | `particles` | `number` | `50` | Number of confetti particles to emit. |
-| `shapes` | [`Shape[]`](#shape) | All 6 shapes | Shapes to randomly select from. |
+| `shapes` | [`Shape[]`](#shape) | All 11 shapes | Shapes to randomly select from. |
 | `spread` | `number` | `45` | Spread angle in degrees. |
 | `startVelocity` | `number` | `45` | Initial particle velocity. |
 | `ticks` | `number` | `200` | Lifetime in ticks before a particle disappears. |
@@ -89,23 +91,51 @@ interface ConfettiSimulationConfig {
 
 ---
 
+## `Palette`
+
+A built-in color palette. Use `palette` in config for a quick preset, or provide `colors` to override.
+
+```typescript
+type Palette = 'classic' | 'pastel' | 'vibrant' | 'warm';
+```
+
+| Palette | Description |
+|---------|-------------|
+| `classic` | The original neon color set. |
+| `pastel` | Soft, muted pastels. |
+| `vibrant` | Bright, modern tones (default). |
+| `warm` | Rich, warm and deep colors. |
+
+The `PALETTES` constant is exported and maps each palette name to its color array:
+
+```typescript
+import { PALETTES } from '@basmilius/sparkle';
+
+console.log(PALETTES.vibrant);
+// ['#6366f1', '#8b5cf6', '#ec4899', '#f97316', '#eab308', '#22c55e', '#06b6d4']
+```
+
+---
+
 ## `Shape`
 
 The visual shape of a confetti particle.
 
 ```typescript
-type Shape = 'circle' | 'diamond' | 'ribbon' | 'square' | 'star' | 'triangle';
+type Shape = 'bowtie' | 'circle' | 'crescent' | 'diamond' | 'heart' | 'hexagon' | 'ribbon' | 'ring' | 'square' | 'star' | 'triangle';
 ```
 
 ---
 
 ## Defaults
 
-The default color palette:
+Default palette: `'vibrant'`
+
+Default shapes:
 
 ```typescript
 [
-    '#26ccff', '#a25afd', '#ff5e7e',
-    '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff'
+    'bowtie', 'circle', 'crescent', 'diamond', 'heart',
+    'hexagon', 'ribbon', 'ring', 'square', 'star', 'triangle'
 ]
 ```

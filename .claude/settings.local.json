@@ -5,9 +5,11 @@
       "Bash(bun run:*)",
       "Bash(bunx vite:*)",
       "Bash(npx tsc:*)",
+      "Bash(cp \"/Users/bas/Library/Mobile Documents/com~apple~CloudDocs/Junk/12/fireworks v2.0.js\" /tmp/fireworks-ref.js)",
       "Bash(brctl download:*)",
       "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; head -20 \"{}\"')",
-      "Bash(bun add:*)"
+      "Bash(bun add:*)",
+      "Bash(npx vitepress:*)"
     ]
   }
 }

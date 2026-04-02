@@ -3,6 +3,7 @@ export type Config = {
     readonly colors: string[];
     readonly decay: number;
     readonly gravity: number;
+    readonly palette: Palette;
     readonly particles: number;
     readonly shapes: Shape[];
     readonly spread: number;
@@ -48,6 +49,8 @@ export type ParticleConfig = {
     readonly y: number;
 };
 
+export type Palette = 'classic' | 'pastel' | 'vibrant' | 'warm';
+
 export type RGB = [r: number, g: number, b: number];
 
-export type Shape = 'circle' | 'diamond' | 'ribbon' | 'square' | 'star' | 'triangle';
+export type Shape = 'bowtie' | 'circle' | 'crescent' | 'diamond' | 'heart' | 'hexagon' | 'ribbon' | 'ring' | 'square' | 'star' | 'triangle';
