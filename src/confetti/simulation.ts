@@ -55,12 +55,20 @@ const SHAPE_PATHS: Record<Shape, Path2D> = {
     })()
 };
 
+export interface ConfettiSimulationConfig {
+    readonly scale?: number;
+    readonly canvasOptions?: CanvasRenderingContext2DSettings;
+}
+
 export class ConfettiSimulation extends LimitedFrameRateCanvas {
 
+    readonly #scale: number;
     #particles: Particle[] = [];
 
-    constructor(canvas: HTMLCanvasElement, options: CanvasRenderingContext2DSettings = { colorSpace: 'display-p3' }) {
-        super(canvas, 60, options);
+    constructor(canvas: HTMLCanvasElement, config: ConfettiSimulationConfig = {}) {
+        super(canvas, 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
+
+        this.#scale = config.scale ?? 1;
 
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0';
@@ -82,10 +90,10 @@ export class ConfettiSimulation extends LimitedFrameRateCanvas {
                 angle,
                 color: hexToRGB(colors[Math.floor(MULBERRY.next() * colors.length)]),
                 decay,
-                gravity,
+                gravity: gravity * this.#scale,
                 shape: shapes[Math.floor(MULBERRY.next() * shapes.length)],
                 spread,
-                startVelocity,
+                startVelocity: startVelocity * this.#scale,
                 ticks,
                 x: this.width * x,
                 y: this.height * y
@@ -181,7 +189,7 @@ export class ConfettiSimulation extends LimitedFrameRateCanvas {
             rotSin: Math.sin(rotAngle),
             rotSpeed: (MULBERRY.next() - 0.5) * 0.06,
             shape: config.shape,
-            size: 5 + MULBERRY.next() * 5,
+            size: (5 + MULBERRY.next() * 5) * this.#scale,
             swing: MULBERRY.next() * TWO_PI,
             swingAmp: 0.5 + MULBERRY.next() * 1.5,
             swingSpeed: 0.025 + MULBERRY.next() * 0.035,

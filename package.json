@@ -1,19 +1,53 @@
 {
-    "name": "@basmilius/effects-workspace",
-    "private": true,
+    "name": "@basmilius/effects",
+    "license": "MIT",
+    "version": "0.0.0",
     "author": {
-        "name": "Bas Milius",
         "email": "bas@mili.us",
+        "name": "Bas Milius",
         "url": "https://bas.dev"
     },
-    "workspaces": [
-        "packages/effects"
-    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/basmilius/visual-effects.git"
+    },
     "scripts": {
-        "build": "bun run --cwd packages/effects build",
-        "dev": "vite"
+        "build": "tsdown",
+        "dev": "vite",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs"
+    },
+    "engines": {
+        "node": ">=23"
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "type": "module",
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
+    "typings": "./dist/index.d.mts",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.mts",
+            "default": "./dist/index.mjs"
+        }
+    },
+    "dependencies": {
+        "@basmilius/utils": "^2.12.0"
     },
     "devDependencies": {
-        "vite": "^6.3.1"
+        "tsdown": "^0.21.4",
+        "typescript": "^5.9.3",
+        "vite": "^6.3.1",
+        "vitepress": "^1.6.3",
+        "vitepress-plugin-example": "^1.4.0",
+        "vitepress-plugin-render": "^1.4.0"
     }
 }

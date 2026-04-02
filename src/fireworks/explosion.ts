@@ -44,7 +44,7 @@ export class Explosion {
         return this.#type;
     }
 
-    constructor(position: Point, hue: number, lineWidth: number, type: ExplosionType, angle?: number, speed?: number, vz?: number) {
+    constructor(position: Point, hue: number, lineWidth: number, type: ExplosionType, scale: number = 1, angle?: number, speed?: number, vz?: number) {
         const config = EXPLOSION_CONFIGS[type];
 
         this.#config = config;
@@ -57,10 +57,10 @@ export class Explosion {
         this.#decay = MULBERRY.nextBetween(config.decay[0], config.decay[1]);
         this.#hue = hue + MULBERRY.nextBetween(-config.hueVariation, config.hueVariation);
         this.#lineWidth = lineWidth * config.lineWidthScale;
-        this.#speed = speed ?? MULBERRY.nextBetween(config.speed[0], config.speed[1]);
+        this.#speed = (speed ?? MULBERRY.nextBetween(config.speed[0], config.speed[1])) * scale;
 
         if (vz !== undefined) {
-            this.#vz = vz;
+            this.#vz = vz * scale;
         } else if (config.spread3d) {
             this.#vz = MULBERRY.nextBetween(-this.#speed * 0.5, this.#speed * 0.5);
         } else {

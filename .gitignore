@@ -1,4 +1,6 @@
 .idea/
 dist/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
 node_modules/
 .env

@@ -14,6 +14,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
     #positionRandom = MULBERRY.fork();
     readonly #autoSpawn: boolean;
     readonly #baseSize: number;
+    readonly #scale: number;
     readonly #tailWidth: number;
 
     constructor(canvas: HTMLCanvasElement, config: FireworkSimulationConfig = {}) {
@@ -22,6 +23,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
         const scale = config.scale ?? 1;
         this.#autoSpawn = config.autoSpawn ?? true;
         this.#baseSize = 5 * scale;
+        this.#scale = scale;
         this.#tailWidth = 2 * scale;
 
         this.canvas.style.position = 'absolute';
@@ -95,6 +97,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                         explosion.hue,
                         this.#baseSize * 0.6,
                         'peony',
+                        this.#scale,
                         angle,
                         MULBERRY.nextBetween(3, 6)
                     ));
@@ -171,7 +174,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 angle = -Math.PI / 2 + MULBERRY.nextBetween(-spread, spread);
             }
 
-            this.#explosions.push(new Explosion(position, effectiveHue, this.#baseSize, type, angle, speed));
+            this.#explosions.push(new Explosion(position, effectiveHue, this.#baseSize, type, this.#scale, angle, speed));
         }
     }
 
@@ -189,6 +192,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue,
                 this.#baseSize,
                 'peony',
+                this.#scale,
                 rad + MULBERRY.nextBetween(-0.05, 0.05),
                 velocity + MULBERRY.nextBetween(-0.25, 0.25)
             ));
@@ -206,6 +210,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue,
                 this.#baseSize,
                 'peony',
+                this.#scale,
                 rad,
                 speed
             ));
@@ -237,6 +242,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue + 60,
                 this.#baseSize,
                 'ring',
+                this.#scale,
                 screenAngle,
                 screenSpeed,
                 vz
@@ -260,6 +266,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                     petalHue,
                     this.#baseSize,
                     'dahlia',
+                    this.#scale,
                     angle
                 ));
             }
@@ -296,6 +303,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue,
                 this.#baseSize,
                 'heart',
+                this.#scale,
                 angle,
                 Math.max(0.1, speed + MULBERRY.nextBetween(-0.15, 0.15))
             ));
@@ -322,6 +330,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                     armHue,
                     this.#baseSize,
                     'spiral',
+                    this.#scale,
                     angle,
                     speed + MULBERRY.nextBetween(-0.3, 0.3)
                 ));
@@ -351,6 +360,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue + MULBERRY.nextBetween(-15, 15),
                 this.#baseSize,
                 'flower',
+                this.#scale,
                 t + rotation,
                 speed + MULBERRY.nextBetween(-0.2, 0.2)
             ));
@@ -369,6 +379,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue,
                 this.#baseSize,
                 'ring',
+                this.#scale,
                 angle + MULBERRY.nextBetween(-0.05, 0.05),
                 outerSpeed + MULBERRY.nextBetween(-0.25, 0.25)
             ));
@@ -385,6 +396,7 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
                 hue + 120,
                 this.#baseSize,
                 'ring',
+                this.#scale,
                 angle + MULBERRY.nextBetween(-0.05, 0.05),
                 innerSpeed + MULBERRY.nextBetween(-0.25, 0.25)
             ));
@@ -393,11 +405,12 @@ export class FireworkSimulation extends LimitedFrameRateCanvas {
 
     #createFirework(position?: Point): void {
         const hue = this.#hue;
-        const targetX = position?.x || this.#positionRandom.nextBetween(innerWidth * .1, this.width - innerWidth * .1);
+        const targetX = position?.x || this.#positionRandom.nextBetween(this.width * .1, this.width * .9);
         const targetY = position?.y || this.height * .1 + this.#positionRandom.nextBetween(0, this.height * .5);
+        const startX = this.width * 0.3 + this.#positionRandom.nextBetween(0, this.width * 0.4);
 
         const firework = new Firework(
-            {x: targetX * .5 + innerWidth / 4, y: this.height},
+            {x: startX, y: this.height},
             {x: targetX, y: targetY},
             hue,
             this.#tailWidth,

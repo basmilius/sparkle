@@ -14,22 +14,22 @@ jobs:
     release:
         runs-on: ubuntu-latest
         steps:
-            -   name: 👀 Checkout latest source
+            -   name: Checkout latest source
                 uses: actions/checkout@v4
 
-            -   name: ⚙️ Setup Bun
+            -   name: Setup Bun
                 uses: oven-sh/setup-bun@v2
 
-            -   name: 📦️ Install dependencies
+            -   name: Install dependencies
                 run: bun install --frozen-lockfile
 
-            -   name: ✏️ Tag v${{ env.RELEASE_VERSION }}
-                run: bun pm version --cwd packages/effects ${{ env.RELEASE_VERSION }}
+            -   name: Tag v${{ env.RELEASE_VERSION }}
+                run: bun pm version ${{ env.RELEASE_VERSION }}
 
-            -   name: 🔨 Build
+            -   name: Build
                 run: bun run build
 
-            -   name: 🚀 Publish v${{ env.RELEASE_VERSION }}
-                run: bun publish --cwd packages/effects --access public
+            -   name: Publish v${{ env.RELEASE_VERSION }}
+                run: bun publish --access public
                 env:
                     NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -2,17 +2,33 @@ import { LimitedFrameRateCanvas } from '../canvas';
 import { MULBERRY } from './consts';
 import type { Snowflake } from './snowflake';
 
+export interface SnowSimulationConfig {
+    readonly fillStyle?: string;
+    readonly particles?: number;
+    readonly scale?: number;
+    readonly size?: number;
+    readonly speed?: number;
+    readonly canvasOptions?: CanvasRenderingContext2DSettings;
+}
+
 export class SnowSimulation extends LimitedFrameRateCanvas {
     readonly #fillStyle: string;
-    readonly #maxParticles: number;
-    readonly #size: number = 6;
+    readonly #scale: number;
+    readonly #size: number;
     readonly #speed: number;
+    #maxParticles: number;
     #angle: number = 0;
     #ratio: number = 1;
     #snowFlakes: Snowflake[] = [];
 
-    constructor(canvas: HTMLCanvasElement, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
-        super(canvas, 60, options);
+    constructor(canvas: HTMLCanvasElement, config: SnowSimulationConfig = {}) {
+        super(canvas, 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
+
+        this.#scale = config.scale ?? 1;
+        this.#fillStyle = config.fillStyle ?? 'rgb(255 255 255 / .75)';
+        this.#maxParticles = config.particles ?? 200;
+        this.#size = (config.size ?? 6) * this.#scale;
+        this.#speed = config.speed ?? 2;
 
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = '0';
@@ -20,13 +36,8 @@ export class SnowSimulation extends LimitedFrameRateCanvas {
         this.canvas.style.height = '100%';
         this.canvas.style.width = '100%';
 
-        this.#fillStyle = canvas.dataset.fillStyle || 'rgb(255 255 255 / .75)';
-        this.#maxParticles = parseInt(canvas.dataset.particles || '200');
-        this.#size = parseFloat(canvas.dataset.size || '6.0');
-        this.#speed = parseFloat(canvas.dataset.speed || '2.0');
-
         if (this.isSmall) {
-            this.#maxParticles /= 2;
+            this.#maxParticles = Math.floor(this.#maxParticles / 2);
         }
 
         for (let i = 0; i < this.#maxParticles; ++i) {
@@ -34,7 +45,7 @@ export class SnowSimulation extends LimitedFrameRateCanvas {
                 x: MULBERRY.next(),
                 y: MULBERRY.next() - 1,
                 density: MULBERRY.next() * this.#maxParticles,
-                radius: MULBERRY.next() * this.#size + 2
+                radius: MULBERRY.next() * this.#size + 2 * this.#scale
             });
         }
     }
