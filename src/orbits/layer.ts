@@ -1,10 +1,9 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY, ORBIT_COLORS } from './consts';
-import type { OrbitSimulationConfig } from './simulation';
-import type { OrbitalCenter, Orbiter } from './types';
+import type { OrbitalCenter, Orbiter, OrbitsConfig } from './types';
 
-export class OrbitLayer extends SimulationLayer {
+export class Orbits extends Effect<OrbitsConfig> {
     readonly #centerCount: number;
     readonly #orbitersPerCenter: number;
     #speed: number;
@@ -17,7 +16,7 @@ export class OrbitLayer extends SimulationLayer {
     #time: number = 0;
     #initialized: boolean = false;
 
-    constructor(config: OrbitSimulationConfig = {}) {
+    constructor(config: OrbitsConfig = {}) {
         super();
 
         this.#centerCount = config.centers ?? 3;
@@ -54,18 +53,18 @@ export class OrbitLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<OrbitsConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.trailLength !== undefined) {
-            this.#trailLength = config.trailLength as number;
+            this.#trailLength = config.trailLength;
         }
         if (config.showCenters !== undefined) {
-            this.#showCenters = config.showCenters as boolean;
+            this.#showCenters = config.showCenters;
         }
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
     }
 

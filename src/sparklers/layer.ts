@@ -1,12 +1,24 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { SparklerSimulationConfig } from './simulation';
 import type { SparklerSpark } from './types';
+
+export interface SparklersConfig {
+    readonly emitRate?: number;
+    readonly maxSparks?: number;
+    readonly colors?: string[];
+    readonly speed?: [number, number];
+    readonly friction?: number;
+    readonly gravity?: number;
+    readonly decay?: [number, number];
+    readonly trailLength?: number;
+    readonly hoverMode?: boolean;
+    readonly scale?: number;
+}
 
 const DEFAULT_COLORS = ['#ffcc33', '#ff9900', '#ffffff', '#ffee88'];
 
-export class SparklerLayer extends SimulationLayer {
+export class Sparklers extends Effect<SparklersConfig> {
     #scale: number;
     #emitRate: number;
     readonly #maxSparks: number;
@@ -24,7 +36,7 @@ export class SparklerLayer extends SimulationLayer {
     #mouseOnCanvas: boolean = false;
     #sparks: SparklerSpark[] = [];
 
-    constructor(config: SparklerSimulationConfig = {}) {
+    constructor(config: SparklersConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -44,7 +56,7 @@ export class SparklerLayer extends SimulationLayer {
         this.#onMouseLeaveBound = this.#onMouseLeave.bind(this);
     }
 
-    setPosition(x: number, y: number): void {
+    moveTo(x: number, y: number): void {
         this.#emitX = x;
         this.#emitY = y;
     }
@@ -61,24 +73,24 @@ export class SparklerLayer extends SimulationLayer {
         canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<SparklersConfig>): void {
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
         if (config.emitRate !== undefined) {
-            this.#emitRate = config.emitRate as number;
+            this.#emitRate = config.emitRate;
         }
         if (config.friction !== undefined) {
-            this.#friction = config.friction as number;
+            this.#friction = config.friction;
         }
         if (config.gravity !== undefined) {
-            this.#gravity = config.gravity as number;
+            this.#gravity = config.gravity;
         }
         if (config.trailLength !== undefined) {
-            this.#trailLength = config.trailLength as number;
+            this.#trailLength = config.trailLength;
         }
         if (config.hoverMode !== undefined) {
-            this.#hoverMode = config.hoverMode as boolean;
+            this.#hoverMode = config.hoverMode;
         }
     }
 

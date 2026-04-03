@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { LightningSimulation } from '@basmilius/sparkle';
+    import { createLightning } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: LightningSimulation | null = null;
+    let sim: ReturnType<typeof createLightning> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new LightningSimulation(canvasRef.value, {frequency: 3, flash: true});
-            sim.start();
+            sim = createLightning({frequency: 3, flash: true});
+            sim.mount(canvasRef.value).start();
         }
     });
 

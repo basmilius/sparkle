@@ -21,9 +21,9 @@ example=../code/sparklers/hover.vue
 All options are passed via a config object:
 
 ```typescript
-import { SparklerSimulation } from '@basmilius/sparkle';
+import { createSparklers } from '@basmilius/sparkle';
 
-const sim = new SparklerSimulation(canvas, {
+const sparklers = createSparklers({
     emitRate: 8,
     maxSparks: 300,
     gravity: 0.8,
@@ -31,7 +31,7 @@ const sim = new SparklerSimulation(canvas, {
     hoverMode: false,
     scale: 1
 });
-sim.start();
+sparklers.mount(canvas).start();
 ```
 
 ### Emit Rate
@@ -40,10 +40,10 @@ Control how many sparks are emitted per frame:
 
 ```typescript
 // Subtle, few sparks
-new SparklerSimulation(canvas, { emitRate: 3 });
+createSparklers({ emitRate: 3 });
 
 // Intense shower
-new SparklerSimulation(canvas, { emitRate: 15 });
+createSparklers({ emitRate: 15 });
 ```
 
 ### Hover Mode
@@ -51,7 +51,7 @@ new SparklerSimulation(canvas, { emitRate: 15 });
 Make the sparkler follow the mouse:
 
 ```typescript
-new SparklerSimulation(canvas, { hoverMode: true });
+createSparklers({ hoverMode: true });
 ```
 
 ### Colors
@@ -60,12 +60,12 @@ Set custom spark colors:
 
 ```typescript
 // Cool blue sparks
-new SparklerSimulation(canvas, {
+createSparklers({
     colors: ['#4488ff', '#88ccff', '#ffffff']
 });
 
 // Red and gold
-new SparklerSimulation(canvas, {
+createSparklers({
     colors: ['#ff4444', '#ffaa00', '#ffee88']
 });
 ```
@@ -76,14 +76,14 @@ Fine-tune the spark behavior:
 
 ```typescript
 // Slow, floaty sparks
-new SparklerSimulation(canvas, {
+createSparklers({
     friction: 0.99,
     gravity: 0.3,
     speed: [1, 4]
 });
 
 // Fast, heavy sparks
-new SparklerSimulation(canvas, {
+createSparklers({
     friction: 0.93,
     gravity: 1.5,
     speed: [4, 12]
@@ -95,9 +95,9 @@ new SparklerSimulation(canvas, {
 Manually set the emission point:
 
 ```typescript
-const sim = new SparklerSimulation(canvas);
-sim.start();
+const sparklers = createSparklers();
+sparklers.mount(canvas).start();
 
 // Move to top-left corner (normalized 0-1)
-sim.setPosition(0.2, 0.2);
+sparklers.moveTo(0.2, 0.2);
 ```

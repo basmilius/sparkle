@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { MatrixSimulation } from '@basmilius/sparkle';
+    import { createMatrix } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: MatrixSimulation | null = null;
+    let sim: ReturnType<typeof createMatrix> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new MatrixSimulation(canvasRef.value);
-            sim.start();
+            sim = createMatrix();
+            sim.mount(canvasRef.value).start();
         }
     });
 

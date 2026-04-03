@@ -25,16 +25,16 @@ example=../code/stars/sky.vue
 All options are passed via a config object:
 
 ```typescript
-import { StarSimulation } from '@basmilius/sparkle';
+import { createStars } from '@basmilius/sparkle';
 
-const sim = new StarSimulation(canvas, {
+const stars = createStars({
     mode: 'both',
     starCount: 150,
     shootingInterval: [120, 360],
     twinkleSpeed: 1,
     scale: 1
 });
-sim.start();
+stars.mount(canvas).start();
 ```
 
 ### Mode
@@ -43,13 +43,13 @@ Choose which layers to display:
 
 ```typescript
 // Only twinkling stars
-new StarSimulation(canvas, { mode: 'sky' });
+createStars({ mode: 'sky' });
 
 // Only shooting stars
-new StarSimulation(canvas, { mode: 'shooting' });
+createStars({ mode: 'shooting' });
 
 // Both combined
-new StarSimulation(canvas, { mode: 'both' });
+createStars({ mode: 'both' });
 ```
 
 ### Star Count
@@ -58,10 +58,10 @@ Control the density of background stars:
 
 ```typescript
 // Sparse sky
-new StarSimulation(canvas, { starCount: 50 });
+createStars({ starCount: 50 });
 
 // Dense starfield
-new StarSimulation(canvas, { starCount: 300 });
+createStars({ starCount: 300 });
 ```
 
 ### Shooting Interval
@@ -70,18 +70,18 @@ Control how often shooting stars appear (in ticks):
 
 ```typescript
 // Frequent shooting stars
-new StarSimulation(canvas, { shootingInterval: [30, 90] });
+createStars({ shootingInterval: [30, 90] });
 
 // Rare shooting stars
-new StarSimulation(canvas, { shootingInterval: [300, 600] });
+createStars({ shootingInterval: [300, 600] });
 ```
 
 ### Twinkle Speed
 
 ```typescript
 // Slow, gentle twinkle
-new StarSimulation(canvas, { twinkleSpeed: 0.5 });
+createStars({ twinkleSpeed: 0.5 });
 
 // Fast, flickering stars
-new StarSimulation(canvas, { twinkleSpeed: 2.5 });
+createStars({ twinkleSpeed: 2.5 });
 ```

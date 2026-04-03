@@ -1,13 +1,21 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { FireflySimulationConfig } from './simulation';
 import type { Firefly } from './types';
 
 const SPRITE_SIZE = 64;
 const SPRITE_CENTER = SPRITE_SIZE / 2;
 const SPRITE_RADIUS = SPRITE_SIZE / 2;
 
-export class FireflyLayer extends SimulationLayer {
+export interface FirefliesConfig {
+    readonly count?: number;
+    readonly color?: string;
+    readonly size?: number;
+    readonly speed?: number;
+    readonly glowSpeed?: number;
+    readonly scale?: number;
+}
+
+export class Fireflies extends Effect<FirefliesConfig> {
     readonly #scale: number;
     readonly #size: number;
     #speed: number;
@@ -17,7 +25,7 @@ export class FireflyLayer extends SimulationLayer {
     #fireflies: Firefly[] = [];
     #sprite: HTMLCanvasElement;
 
-    constructor(config: FireflySimulationConfig = {}) {
+    constructor(config: FirefliesConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -39,7 +47,7 @@ export class FireflyLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<FirefliesConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

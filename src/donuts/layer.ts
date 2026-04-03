@@ -1,9 +1,24 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { DEFAULT_CONFIG, MULBERRY } from './consts';
 import type { Donut } from './donut';
-import type { DonutSimulationConfig } from './simulation';
 
-export class DonutLayer extends SimulationLayer {
+export interface DonutsConfig {
+    readonly background?: string;
+    readonly collisionPadding?: number;
+    readonly colors?: string[];
+    readonly count?: number;
+    readonly mouseAvoidance?: boolean;
+    readonly mouseAvoidanceRadius?: number;
+    readonly mouseAvoidanceStrength?: number;
+    readonly radiusRange?: [number, number];
+    readonly repulsionStrength?: number;
+    readonly rotationSpeedRange?: [number, number];
+    readonly scale?: number;
+    readonly speedRange?: [number, number];
+    readonly thickness?: number;
+}
+
+export class Donuts extends Effect<DonutsConfig> {
     readonly #background: string;
     readonly #collisionPadding: number;
     readonly #colors: string[];
@@ -27,7 +42,7 @@ export class DonutLayer extends SimulationLayer {
     #height: number = 540;
     #initialized: boolean = false;
 
-    constructor(config: DonutSimulationConfig = {}) {
+    constructor(config: DonutsConfig = {}) {
         super();
 
         const scale = config.scale ?? 1;
@@ -82,7 +97,7 @@ export class DonutLayer extends SimulationLayer {
         canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<DonutsConfig>): void {
         if (config.mouseAvoidance !== undefined) {
             this.#mouseAvoidance = config.mouseAvoidance as boolean;
         }

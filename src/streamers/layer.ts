@@ -1,9 +1,15 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY, STREAMER_COLORS } from './consts';
-import type { StreamerSimulationConfig } from './simulation';
 import type { Streamer } from './types';
 
-export class StreamerLayer extends SimulationLayer {
+export interface StreamersConfig {
+    readonly count?: number;
+    readonly colors?: string[];
+    readonly speed?: number;
+    readonly scale?: number;
+}
+
+export class Streamers extends Effect<StreamersConfig> {
     readonly #colors: string[];
     readonly #scale: number;
     #speed: number;
@@ -13,7 +19,7 @@ export class StreamerLayer extends SimulationLayer {
     #height: number = 540;
     #initialized: boolean = false;
 
-    constructor(config: StreamerSimulationConfig = {}) {
+    constructor(config: StreamersConfig = {}) {
         super();
 
         this.#colors = config.colors ?? STREAMER_COLORS;
@@ -40,7 +46,7 @@ export class StreamerLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<StreamersConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

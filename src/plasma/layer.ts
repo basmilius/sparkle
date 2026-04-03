@@ -1,6 +1,12 @@
-import { SimulationLayer } from '../layer';
-import type { PlasmaSimulationConfig } from './simulation';
+import { Effect } from '../effect';
 import type { PlasmaColor } from './types';
+
+export interface PlasmaConfig {
+    readonly speed?: number;
+    readonly scale?: number;
+    readonly resolution?: number;
+    readonly palette?: PlasmaColor[];
+}
 
 const DEFAULT_PALETTE: PlasmaColor[] = [
     {r: 0, g: 255, b: 255},
@@ -10,7 +16,7 @@ const DEFAULT_PALETTE: PlasmaColor[] = [
     {r: 0, g: 255, b: 100}
 ];
 
-export class PlasmaLayer extends SimulationLayer {
+export class Plasma extends Effect<PlasmaConfig> {
     #speed: number;
     #scale: number;
     readonly #resolution: number;
@@ -20,7 +26,7 @@ export class PlasmaLayer extends SimulationLayer {
     #offscreenCtx: CanvasRenderingContext2D | null = null;
     #imageData: ImageData | null = null;
 
-    constructor(config: PlasmaSimulationConfig = {}) {
+    constructor(config: PlasmaConfig = {}) {
         super();
 
         this.#speed = config.speed ?? 1;
@@ -29,12 +35,12 @@ export class PlasmaLayer extends SimulationLayer {
         this.#palette = config.palette ?? DEFAULT_PALETTE;
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<PlasmaConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
     }
 

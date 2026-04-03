@@ -1,4 +1,9 @@
-export { LeafLayer } from './layer';
-export { LeafSimulation } from './simulation';
-export type { LeafSimulationConfig } from './simulation';
-export type { Leaf } from './types';
+import { Leaves } from './layer';
+import type { LeavesConfig } from './types';
+import type { Effect } from '../effect';
+
+export function createLeaves(config?: LeavesConfig): Effect<LeavesConfig> {
+    return new Leaves(config);
+}
+
+export type { LeavesConfig, Leaf } from './types';

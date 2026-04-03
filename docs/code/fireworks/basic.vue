@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { FireworkSimulation } from '@basmilius/sparkle';
+    import { createFireworks } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: FireworkSimulation | null = null;
+    let sim: ReturnType<typeof createFireworks> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new FireworkSimulation(canvasRef.value);
-            sim.start();
+            sim = createFireworks();
+            sim.mount(canvasRef.value).start();
         }
     });
 

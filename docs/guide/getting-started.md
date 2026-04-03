@@ -38,10 +38,10 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 An automatic firework display with 16 explosion variants:
 
 ```typescript
-import { FireworkSimulation } from '@basmilius/sparkle';
+import { createFireworks } from '@basmilius/sparkle';
 
-const sim = new FireworkSimulation(canvas);
-sim.start();
+const fireworks = createFireworks();
+fireworks.mount(canvas).start();
 ```
 
 ### Confetti
@@ -49,11 +49,12 @@ sim.start();
 Fire confetti bursts on demand:
 
 ```typescript
-import { ConfettiSimulation } from '@basmilius/sparkle';
+import { createConfetti } from '@basmilius/sparkle';
 
-const sim = new ConfettiSimulation(canvas);
+const confetti = createConfetti();
+confetti.mount(canvas);
 
-sim.fire({
+confetti.burst({
     angle: 90,
     spread: 60,
     particles: 150,
@@ -68,10 +69,10 @@ sim.fire({
 A continuous snowfall effect:
 
 ```typescript
-import { SnowSimulation } from '@basmilius/sparkle';
+import { createSnow } from '@basmilius/sparkle';
 
-const sim = new SnowSimulation(canvas);
-sim.start();
+const snow = createSnow();
+snow.mount(canvas).start();
 ```
 
 ## Lifecycle
@@ -79,11 +80,14 @@ sim.start();
 All simulations share the same lifecycle methods:
 
 ```typescript
-// Start the animation loop.
-sim.start();
+// Mount to a canvas element and start the animation loop.
+sim.mount(canvas).start();
 
-// Stop the animation loop.
-sim.stop();
+// Temporarily pause the animation loop.
+sim.pause();
+
+// Resume after pausing.
+sim.start();
 
 // Stop and remove all event listeners.
 sim.destroy();

@@ -1,10 +1,17 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { WormholeSimulationConfig } from './simulation';
 import type { WormholeDirection, WormholeParticle } from './types';
 
-export class WormholeLayer extends SimulationLayer {
+export interface WormholeConfig {
+    readonly count?: number;
+    readonly speed?: number;
+    readonly color?: string;
+    readonly direction?: WormholeDirection;
+    readonly scale?: number;
+}
+
+export class Wormhole extends Effect<WormholeConfig> {
     #speed: number;
     readonly #colorRGB: [number, number, number];
     readonly #direction: WormholeDirection;
@@ -15,7 +22,7 @@ export class WormholeLayer extends SimulationLayer {
     #height: number = 540;
     #initialized: boolean = false;
 
-    constructor(config: WormholeSimulationConfig = {}) {
+    constructor(config: WormholeConfig = {}) {
         super();
 
         let count = config.count ?? 200;
@@ -46,7 +53,7 @@ export class WormholeLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<WormholeConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

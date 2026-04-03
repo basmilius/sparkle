@@ -21,16 +21,16 @@ example=../code/balloons/dense.vue
 All options are passed via a config object:
 
 ```typescript
-import { BalloonSimulation } from '@basmilius/sparkle';
+import { createBalloons } from '@basmilius/sparkle';
 
-const sim = new BalloonSimulation(canvas, {
+const balloons = createBalloons({
     count: 15,
     colors: ['#ff4444', '#4488ff', '#44cc44', '#ffcc00'],
     speed: 1,
     driftAmount: 1,
     scale: 1
 });
-sim.start();
+balloons.mount(canvas).start();
 ```
 
 ### Count
@@ -39,10 +39,10 @@ Control the number of balloons:
 
 ```typescript
 // Few balloons
-new BalloonSimulation(canvas, { count: 5 });
+createBalloons({ count: 5 });
 
 // Party mode
-new BalloonSimulation(canvas, { count: 30 });
+createBalloons({ count: 30 });
 ```
 
 ### Colors
@@ -51,12 +51,12 @@ Set custom balloon colors:
 
 ```typescript
 // Pastel palette
-new BalloonSimulation(canvas, {
+createBalloons({
     colors: ['#ffb3ba', '#bae1ff', '#baffc9', '#ffffba']
 });
 
 // Monochrome red
-new BalloonSimulation(canvas, {
+createBalloons({
     colors: ['#ff2222', '#cc0000', '#ff6666']
 });
 ```
@@ -67,10 +67,10 @@ Control the balloon size:
 
 ```typescript
 // Small balloons
-new BalloonSimulation(canvas, { sizeRange: [15, 25] });
+createBalloons({ sizeRange: [15, 25] });
 
 // Large balloons
-new BalloonSimulation(canvas, { sizeRange: [40, 65] });
+createBalloons({ sizeRange: [40, 65] });
 ```
 
 ### Drift
@@ -79,8 +79,8 @@ Control the horizontal drift:
 
 ```typescript
 // Minimal drift
-new BalloonSimulation(canvas, { driftAmount: 0.3 });
+createBalloons({ driftAmount: 0.3 });
 
 // Strong sideways movement
-new BalloonSimulation(canvas, { driftAmount: 2 });
+createBalloons({ driftAmount: 2 });
 ```

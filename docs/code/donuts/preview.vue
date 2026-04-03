@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { DonutSimulation } from '@basmilius/sparkle';
+    import { createDonuts } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: DonutSimulation | null = null;
+    let sim: ReturnType<typeof createDonuts> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new DonutSimulation(canvasRef.value);
-            sim.start();
+            sim = createDonuts();
+            sim.mount(canvasRef.value).start();
         }
     });
 

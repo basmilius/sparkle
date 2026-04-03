@@ -1,9 +1,16 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { FirepitSimulationConfig } from './simulation';
 import type { Ember, FlameLayer } from './types';
 
-export class FirepitLayer extends SimulationLayer {
+export interface FirepitConfig {
+    readonly embers?: number;
+    readonly flameWidth?: number;
+    readonly flameHeight?: number;
+    readonly intensity?: number;
+    readonly scale?: number;
+}
+
+export class Firepit extends Effect<FirepitConfig> {
     readonly #scale: number;
     #flameWidth: number;
     #flameHeight: number;
@@ -13,7 +20,7 @@ export class FirepitLayer extends SimulationLayer {
     #embers: Ember[] = [];
     #flameLayers: FlameLayer[] = [];
 
-    constructor(config: FirepitSimulationConfig = {}) {
+    constructor(config: FirepitConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -38,7 +45,7 @@ export class FirepitLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<FirepitConfig>): void {
         if (config.intensity !== undefined) {
             this.#intensity = config.intensity as number;
         }

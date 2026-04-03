@@ -12,11 +12,11 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { FIREWORK_VARIANTS, FireworkSimulation } from '@basmilius/sparkle';
+    import { createFireworks, FIREWORK_VARIANTS } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
     const containerRef = ref<HTMLDivElement>();
-    let sim: FireworkSimulation | null = null;
+    let sim: ReturnType<typeof createFireworks> | null = null;
     let variants: string[] = [];
 
     function onClick(evt: MouseEvent): void {
@@ -27,7 +27,7 @@
         const rect = containerRef.value.getBoundingClientRect();
         const variant = variants[Math.floor(Math.random() * variants.length)];
 
-        sim.fireExplosion(variant, {
+        sim.launch(variant, {
             x: evt.clientX - rect.left,
             y: evt.clientY - rect.top
         });
@@ -37,8 +37,8 @@
         variants = [...FIREWORK_VARIANTS];
 
         if (canvasRef.value && containerRef.value) {
-            sim = new FireworkSimulation(canvasRef.value, {autoSpawn: false});
-            sim.start();
+            sim = createFireworks({autoSpawn: false});
+            sim.mount(canvasRef.value).start();
             containerRef.value.addEventListener('click', onClick);
         }
     });

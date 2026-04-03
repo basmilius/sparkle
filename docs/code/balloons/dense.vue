@@ -8,19 +8,19 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { BalloonSimulation } from '@basmilius/sparkle';
+    import { createBalloons } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: BalloonSimulation | null = null;
+    let sim: ReturnType<typeof createBalloons> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new BalloonSimulation(canvasRef.value, {
+            sim = createBalloons({
                 count: 30,
                 sizeRange: [20, 55],
                 speed: 1.5
             });
-            sim.start();
+            sim.mount(canvasRef.value).start();
         }
     });
 

@@ -1,6 +1,6 @@
 # Custom Effects
 
-Sparkle exposes its internal particle classes and standalone systems so you can build fully custom simulations without using a pre-built `*Simulation` wrapper. You pick the particles you want, manage the canvas yourself, and write your own render loop.
+Sparkle exposes its internal particle classes and standalone systems so you can build fully custom simulations without using a pre-built effect class. You pick the particles you want, manage the canvas yourself, and write your own render loop.
 
 ## The basic pattern
 
@@ -12,7 +12,7 @@ example=../code/custom-effects/basic.vue
 
 ```typescript
 const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d', { colorSpace: 'display-p3' });
+const ctx = canvas.getContext('2d', {colorSpace: 'display-p3'});
 const particles = [];
 let then = 0;
 
@@ -87,10 +87,10 @@ example=../code/custom-effects/sparkler-particle.vue
 import { SparklerParticle } from '@basmilius/sparkle';
 
 const spark = new SparklerParticle(
-    { x: 300, y: 400 },
-    { x: 2, y: -4 },
+    {x: 300, y: 400},
+    {x: 2, y: -4},
     [255, 180, 50],
-    { trailLength: 5, scale: 1.2 }
+    {trailLength: 5, scale: 1.2}
 );
 
 // Use 'lighter' composite for additive glow
@@ -161,10 +161,10 @@ example=../code/custom-effects/rain-particle.vue
 import { RaindropParticle, SplashParticle } from '@basmilius/sparkle';
 
 const drop = new RaindropParticle(
-    { x: 200, y: 0 },
-    { x: 1, y: 8 },         // vx = wind, vy = fall speed
+    {x: 200, y: 0},
+    {x: 1, y: 8},         // vx = wind, vy = fall speed
     [174, 194, 224],
-    { depth: 0.7, groundY: canvas.height }
+    {depth: 0.7, groundY: canvas.height}
 );
 
 // On landing:
@@ -230,7 +230,7 @@ example=../code/custom-effects/lightning-system.vue
 import { LightningSystem } from '@basmilius/sparkle';
 
 const system = new LightningSystem(
-    { frequency: 0.5, color: [180, 200, 255], branches: true, flash: true },
+    {frequency: 0.5, color: [180, 200, 255], branches: true, flash: true},
     Math.random
 );
 
@@ -249,7 +249,7 @@ system.draw(ctx, canvas.width, canvas.height);
 
 ### createExplosion
 
-Creates an array of `Explosion` particles for any of the 16 firework variants. This is the main entry point for using fireworks in a custom simulator — no `FireworkSimulation` needed.
+Creates an array of `Explosion` particles for any of the 16 firework variants. This is the main entry point for using fireworks in a custom simulator — no `Fireworks` instance needed.
 
 ::: example Demo || Select a variant and click anywhere to fire.
 example=../code/custom-effects/playground.vue
@@ -260,10 +260,10 @@ import { createExplosion, FIREWORK_VARIANTS } from '@basmilius/sparkle';
 
 // Fire any variant at a position with a given hue
 const hue = Math.random() * 360;
-explosions.push(...createExplosion('heart', { x: 400, y: 300 }, hue));
+explosions.push(...createExplosion('heart', {x: 400, y: 300}, hue));
 
 // Optional: custom line width, scale, and seeded RNG
-explosions.push(...createExplosion('saturn', position, hue, { lineWidth: 5, scale: 1 }, Math.random));
+explosions.push(...createExplosion('saturn', position, hue, {lineWidth: 5, scale: 1}, Math.random));
 ```
 
 All 16 variants work: `peony`, `chrysanthemum`, `willow`, `ring`, `palm`, `crackle`, `crossette`, `saturn`, `dahlia`, `brocade`, `horsetail`, `strobe`, `heart`, `spiral`, `flower`, `concentric`.
@@ -311,13 +311,13 @@ for (let i = explosions.length - 1; i >= 0; i--) {
 import { Firework, createExplosion } from '@basmilius/sparkle';
 
 const firework = new Firework(
-    { x: canvas.width / 2, y: canvas.height },
-    { x: canvas.width / 2, y: canvas.height * 0.2 },
+    {x: canvas.width / 2, y: canvas.height},
+    {x: canvas.width / 2, y: canvas.height * 0.2},
     Math.random() * 360, 2, 5
 );
 
 firework.addEventListener('remove', () => {
     const hue = Math.random() * 360;
     explosions.push(...createExplosion('peony', firework.position, hue));
-}, { once: true });
+}, {once: true});
 ```

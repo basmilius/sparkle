@@ -9,17 +9,17 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { SparklerSimulation } from '@basmilius/sparkle';
+    import { createSparklers } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: SparklerSimulation | null = null;
+    let sim: ReturnType<typeof createSparklers> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new SparklerSimulation(canvasRef.value, {
+            sim = createSparklers({
                 hoverMode: true
             });
-            sim.start();
+            sim.mount(canvasRef.value).start();
         }
     });
 

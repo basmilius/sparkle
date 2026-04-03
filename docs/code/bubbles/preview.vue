@@ -9,15 +9,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { BubbleSimulation } from '@basmilius/sparkle';
+    import { createBubbles } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: BubbleSimulation | null = null;
+    let sim: ReturnType<typeof createBubbles> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new BubbleSimulation(canvasRef.value);
-            sim.start();
+            sim = createBubbles();
+            sim.mount(canvasRef.value).start();
         }
     });
 

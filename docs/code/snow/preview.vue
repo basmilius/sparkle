@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { SnowSimulation } from '@basmilius/sparkle';
+    import { createSnow } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: SnowSimulation | null = null;
+    let sim: ReturnType<typeof createSnow> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new SnowSimulation(canvasRef.value, {scale: 1});
-            sim.start();
+            sim = createSnow({scale: 1});
+            sim.mount(canvasRef.value).start();
         }
     });
 

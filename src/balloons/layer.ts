@@ -1,12 +1,21 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { BalloonSimulationConfig } from './simulation';
 import type { Balloon } from './types';
 
 const DEFAULT_COLORS = ['#ff4444', '#4488ff', '#44cc44', '#ffcc00', '#ff88cc', '#8844ff'];
 
-export class BalloonLayer extends SimulationLayer {
+export interface BalloonsConfig {
+    readonly count?: number;
+    readonly colors?: string[];
+    readonly sizeRange?: [number, number];
+    readonly speed?: number;
+    readonly driftAmount?: number;
+    readonly stringLength?: number;
+    readonly scale?: number;
+}
+
+export class Balloons extends Effect<BalloonsConfig> {
     readonly #scale: number;
     #speed: number;
     #driftAmount: number;
@@ -17,7 +26,7 @@ export class BalloonLayer extends SimulationLayer {
     #time: number = 0;
     #balloons: Balloon[] = [];
 
-    constructor(config: BalloonSimulationConfig = {}) {
+    constructor(config: BalloonsConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -39,7 +48,7 @@ export class BalloonLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<BalloonsConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

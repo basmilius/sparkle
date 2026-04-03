@@ -1,10 +1,26 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { ParticleSimulationConfig } from './simulation';
 import type { NetworkParticle, ParticleMouseMode } from './types';
 
-export class ParticleLayer extends SimulationLayer {
+export interface ParticlesConfig {
+    readonly count?: number;
+    readonly color?: string;
+    readonly lineColor?: string;
+    readonly size?: [number, number];
+    readonly speed?: [number, number];
+    readonly connectionDistance?: number;
+    readonly lineWidth?: number;
+    readonly mouseMode?: ParticleMouseMode;
+    readonly mouseRadius?: number;
+    readonly mouseStrength?: number;
+    readonly particleForces?: boolean;
+    readonly glow?: boolean;
+    readonly background?: string | null;
+    readonly scale?: number;
+}
+
+export class Particles extends Effect<ParticlesConfig> {
     #scale: number;
     #connectionDistance: number;
     #lineWidth: number;
@@ -31,7 +47,7 @@ export class ParticleLayer extends SimulationLayer {
     #height: number = 540;
     #initialized: boolean = false;
 
-    constructor(config: ParticleSimulationConfig = {}) {
+    constructor(config: ParticlesConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -60,30 +76,30 @@ export class ParticleLayer extends SimulationLayer {
         this.#onMouseLeaveBound = this.#onMouseLeave.bind(this);
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<ParticlesConfig>): void {
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
         if (config.connectionDistance !== undefined) {
-            this.#connectionDistance = (config.connectionDistance as number) * this.#scale;
+            this.#connectionDistance = config.connectionDistance * this.#scale;
         }
         if (config.lineWidth !== undefined) {
-            this.#lineWidth = config.lineWidth as number;
+            this.#lineWidth = config.lineWidth;
         }
         if (config.mouseMode !== undefined) {
-            this.#mouseMode = config.mouseMode as ParticleMouseMode;
+            this.#mouseMode = config.mouseMode;
         }
         if (config.mouseRadius !== undefined) {
-            this.#mouseRadius = (config.mouseRadius as number) * this.#scale;
+            this.#mouseRadius = config.mouseRadius * this.#scale;
         }
         if (config.mouseStrength !== undefined) {
-            this.#mouseStrength = config.mouseStrength as number;
+            this.#mouseStrength = config.mouseStrength;
         }
         if (config.particleForces !== undefined) {
-            this.#particleForces = config.particleForces as boolean;
+            this.#particleForces = config.particleForces;
         }
         if (config.glow !== undefined) {
-            this.#glow = config.glow as boolean;
+            this.#glow = config.glow;
         }
     }
 

@@ -26,10 +26,10 @@ Use the `scale` option to control the overall size of all effects:
 
 ```typescript
 // Smaller, more subtle fireworks
-const sim = new FireworkSimulation(canvas, {scale: 0.5});
+const fireworks = createFireworks({scale: 0.5});
 
 // Bigger, more dramatic fireworks
-const sim = new FireworkSimulation(canvas, {scale: 2});
+const fireworks = createFireworks({scale: 2});
 ```
 
 ## Variants

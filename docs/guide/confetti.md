@@ -1,6 +1,6 @@
 # Confetti
 
-The confetti simulation creates customizable particle bursts. Unlike the other simulations, confetti does not auto-spawn — you trigger bursts manually using the `fire()` method.
+The confetti simulation creates customizable particle bursts. Unlike the other simulations, confetti does not auto-spawn — you trigger bursts manually using the `burst()` method.
 
 ::: render
 render=../code/confetti/preview.vue
@@ -27,7 +27,7 @@ example=../code/confetti/color-palettes.vue
 Use a built-in palette:
 
 ```typescript
-sim.fire({
+confetti.burst({
     palette: 'warm',
     particles: 120
 });
@@ -36,7 +36,7 @@ sim.fire({
 Or provide custom colors to override the palette:
 
 ```typescript
-sim.fire({
+confetti.burst({
     colors: ['#ff0000', '#00ff00', '#0000ff'],
     particles: 120
 });
@@ -49,7 +49,7 @@ Available palettes: `classic`, `pastel`, `vibrant` (default), `warm`.
 Choose which particle shapes to use:
 
 ```typescript
-sim.fire({
+confetti.burst({
     angle: 90,
     spread: 60,
     particles: 100,
@@ -68,7 +68,7 @@ Adjust gravity and decay for different feels:
 
 ```typescript
 // Slow, floaty confetti
-sim.fire({
+confetti.burst({
     angle: 90,
     spread: 90,
     particles: 200,
@@ -83,7 +83,7 @@ sim.fire({
 
 ```typescript
 // Fast, explosive confetti
-sim.fire({
+confetti.burst({
     angle: 90,
     spread: 120,
     particles: 250,

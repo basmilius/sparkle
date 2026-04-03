@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { OrbitSimulation } from '@basmilius/sparkle';
+    import { createOrbits } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: OrbitSimulation | null = null;
+    let sim: ReturnType<typeof createOrbits> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new OrbitSimulation(canvasRef.value);
-            sim.start();
+            sim = createOrbits();
+            sim.mount(canvasRef.value).start();
         }
     });
 

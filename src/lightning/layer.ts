@@ -1,14 +1,14 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { LightningSimulationConfig } from './simulation';
+import type { LightningConfig } from './types';
 import { LightningSystem } from './system';
 
-export class LightningLayer extends SimulationLayer {
+export class Lightning extends Effect<LightningConfig> {
     readonly #system: LightningSystem;
     readonly #enableFlash: boolean;
 
-    constructor(config: LightningSimulationConfig = {}) {
+    constructor(config: LightningConfig = {}) {
         super();
 
         this.#enableFlash = config.flash ?? true;

@@ -1,54 +1,42 @@
 # Sandstorm API
 
-## `SandstormSimulation`
+## `Sandstorm`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new SandstormSimulation(canvas: HTMLCanvasElement, config?: SandstormSimulationConfig)
+createSandstorm(config ? : SandstormConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the sandstorm animation.
-
-#### `stop(): void`
-
-Stops the sandstorm animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `SandstormSimulationConfig`
+## `SandstormConfig`
 
 ```typescript
-interface SandstormSimulationConfig {
+interface SandstormConfig {
     count?: number;
     wind?: number;
     turbulence?: number;
     color?: string;
     hazeOpacity?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                     |
-|-----------------|------------------------------------|------------------------------|-------------------------------------------------|
-| `count`         | `number`                           | `300`                        | Number of sand grains. Halved on small screens. |
-| `wind`          | `number`                           | `1`                          | Horizontal wind strength multiplier.            |
-| `turbulence`    | `number`                           | `1`                          | Chaotic movement intensity.                     |
-| `color`         | `string`                           | `'#c2956b'`                  | CSS color string for sand and haze.             |
-| `hazeOpacity`   | `number`                           | `0.15`                       | Opacity of the atmospheric haze overlay (0-1).  |
-| `scale`         | `number`                           | `1`                          | Scales grain sizes proportionally.              |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.    |
+| Property     | Type     | Default     | Description                                     |
+|--------------|----------|-------------|-------------------------------------------------|
+| `count`      | `number` | `300`       | Number of sand grains. Halved on small screens. |
+| `wind`       | `number` | `1`         | Horizontal wind strength multiplier.            |
+| `turbulence` | `number` | `1`         | Chaotic movement intensity.                     |
+| `color`      | `string` | `'#c2956b'` | CSS color string for sand and haze.             |
+| `hazeOpacity`| `number` | `0.15`      | Opacity of the atmospheric haze overlay (0-1).  |
+| `scale`      | `number` | `1`         | Scales grain sizes proportionally.              |
 
 ---
 

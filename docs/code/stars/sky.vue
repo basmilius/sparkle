@@ -8,19 +8,19 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { StarSimulation } from '@basmilius/sparkle';
+    import { createStars } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: StarSimulation | null = null;
+    let sim: ReturnType<typeof createStars> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new StarSimulation(canvasRef.value, {
+            sim = createStars({
                 mode: 'sky',
                 starCount: 250,
                 twinkleSpeed: 1.5
             });
-            sim.start();
+            sim.mount(canvasRef.value).start();
         }
     });
 

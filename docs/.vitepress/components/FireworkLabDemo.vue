@@ -2,12 +2,13 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import type { FireworkVariant } from '@basmilius/effects';
-    import { FIREWORK_VARIANTS, FireworkSimulation } from '@basmilius/effects';
+    import type { FireworkVariant } from '@basmilius/sparkle';
+    import { createFireworks, FIREWORK_VARIANTS } from '@basmilius/sparkle';
+    import type { FireworksInstance } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
     const containerRef = ref<HTMLDivElement>();
-    let sim: FireworkSimulation | null = null;
+    let sim: FireworksInstance | null = null;
 
     function fire(variant: FireworkVariant): void {
         if (!sim || !containerRef.value) {
@@ -16,7 +17,7 @@
 
         const rect = containerRef.value.getBoundingClientRect();
 
-        sim.fireExplosion(variant, {
+        sim.launch(variant, {
             x: rect.width * (0.2 + Math.random() * 0.6),
             y: rect.height * (0.2 + Math.random() * 0.3)
         });
@@ -24,8 +25,8 @@
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new FireworkSimulation(canvasRef.value, {autoSpawn: false});
-            sim.start();
+            sim = createFireworks({ autoSpawn: false });
+            sim.mount(canvasRef.value).start();
         }
     });
 

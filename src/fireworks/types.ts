@@ -21,11 +21,10 @@ export interface ExplosionConfig {
     readonly glowSize: number;
 }
 
-export interface FireworkSimulationConfig {
+export interface FireworksConfig {
     readonly scale?: number;
     readonly autoSpawn?: boolean;
     readonly variants?: FireworkVariant[];
-    readonly canvasOptions?: CanvasRenderingContext2DSettings;
 }
 
 export const FIREWORK_VARIANTS: FireworkVariant[] = [

@@ -21,9 +21,9 @@ example=../code/fireflies/dense.vue
 All options are passed via a config object:
 
 ```typescript
-import { FireflySimulation } from '@basmilius/sparkle';
+import { createFireflies } from '@basmilius/sparkle';
 
-const sim = new FireflySimulation(canvas, {
+const fireflies = createFireflies({
     count: 60,
     color: '#b4ff6a',
     size: 6,
@@ -31,7 +31,7 @@ const sim = new FireflySimulation(canvas, {
     glowSpeed: 1,
     scale: 1
 });
-sim.start();
+fireflies.mount(canvas).start();
 ```
 
 ### Count
@@ -40,10 +40,10 @@ Control the number of fireflies:
 
 ```typescript
 // Sparse, subtle
-new FireflySimulation(canvas, { count: 20 });
+createFireflies({ count: 20 });
 
 // Dense swarm
-new FireflySimulation(canvas, { count: 150 });
+createFireflies({ count: 150 });
 ```
 
 ### Color
@@ -52,10 +52,10 @@ Set the glow color using any CSS color string:
 
 ```typescript
 // Warm yellow
-new FireflySimulation(canvas, { color: '#ffcc33' });
+createFireflies({ color: '#ffcc33' });
 
 // Cool blue
-new FireflySimulation(canvas, { color: '#66ccff' });
+createFireflies({ color: '#66ccff' });
 ```
 
 ### Glow Speed
@@ -64,18 +64,18 @@ Control how fast the fireflies pulse:
 
 ```typescript
 // Slow, gentle pulse
-new FireflySimulation(canvas, { glowSpeed: 0.5 });
+createFireflies({ glowSpeed: 0.5 });
 
 // Fast, energetic pulse
-new FireflySimulation(canvas, { glowSpeed: 2 });
+createFireflies({ glowSpeed: 2 });
 ```
 
 ### Movement Speed
 
 ```typescript
 // Very slow drift
-new FireflySimulation(canvas, { speed: 0.5 });
+createFireflies({speed: 0.5});
 
 // Quick, lively movement
-new FireflySimulation(canvas, { speed: 2 });
+createFireflies({speed: 2});
 ```

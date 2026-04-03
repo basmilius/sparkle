@@ -1,52 +1,40 @@
 # Snow API
 
-## `SnowSimulation`
+## `Snow`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new SnowSimulation(canvas: HTMLCanvasElement, config?: SnowSimulationConfig)
+createSnow(config?: SnowConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the snowfall animation.
-
-#### `stop(): void`
-
-Stops the snowfall animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `SnowSimulationConfig`
+## `SnowConfig`
 
 ```typescript
-interface SnowSimulationConfig {
+interface SnowConfig {
     fillStyle?: string;
     particles?: number;
     scale?: number;
     size?: number;
     speed?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                  |
-|-----------------|------------------------------------|------------------------------|--------------------------------------------------------------|
-| `fillStyle`     | `string`                           | `'rgb(255 255 255 / .75)'`   | CSS color string for the snowflake fill.                     |
-| `particles`     | `number`                           | `200`                        | Number of snowflakes. Automatically halved on small screens. |
-| `scale`         | `number`                           | `1`                          | Scales all snowflake sizes proportionally.                   |
-| `size`          | `number`                           | `6`                          | Maximum snowflake radius in pixels (before scale).           |
-| `speed`         | `number`                           | `2`                          | Fall speed multiplier.                                       |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                 |
+| Property    | Type     | Default                    | Description                                                  |
+|-------------|----------|----------------------------|--------------------------------------------------------------|
+| `fillStyle` | `string` | `'rgb(255 255 255 / .75)'` | CSS color string for the snowflake fill.                     |
+| `particles` | `number` | `200`                      | Number of snowflakes. Automatically halved on small screens. |
+| `scale`     | `number` | `1`                        | Scales all snowflake sizes proportionally.                   |
+| `size`      | `number` | `9`                        | Maximum snowflake radius in pixels (before scale).           |
+| `speed`     | `number` | `2`                        | Fall speed multiplier.                                       |
 
 ---
 

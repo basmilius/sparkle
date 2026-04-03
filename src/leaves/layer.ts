@@ -1,9 +1,8 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { LEAF_COLORS, MULBERRY } from './consts';
-import type { LeafSimulationConfig } from './simulation';
-import type { Leaf } from './types';
+import type { Leaf, LeavesConfig } from './types';
 
-export class LeafLayer extends SimulationLayer {
+export class Leaves extends Effect<LeavesConfig> {
     readonly #scale: number;
     readonly #size: number;
     #speed: number;
@@ -15,7 +14,7 @@ export class LeafLayer extends SimulationLayer {
     #sprites: HTMLCanvasElement[] = [];
     #height: number = 540;
 
-    constructor(config: LeafSimulationConfig = {}) {
+    constructor(config: LeavesConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -40,12 +39,12 @@ export class LeafLayer extends SimulationLayer {
         this.#height = height;
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<LeavesConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.wind !== undefined) {
-            this.#wind = config.wind as number;
+            this.#wind = config.wind;
         }
     }
 

@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { RainSimulation } from '@basmilius/sparkle';
+    import { createRain } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: RainSimulation | null = null;
+    let sim: ReturnType<typeof createRain> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new RainSimulation(canvasRef.value, {variant: 'thunderstorm'});
-            sim.start();
+            sim = createRain({variant: 'thunderstorm'});
+            sim.mount(canvasRef.value).start();
         }
     });
 

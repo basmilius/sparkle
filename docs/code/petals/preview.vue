@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { PetalSimulation } from '@basmilius/sparkle';
+    import { createPetals } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: PetalSimulation | null = null;
+    let sim: ReturnType<typeof createPetals> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new PetalSimulation(canvasRef.value);
-            sim.start();
+            sim = createPetals();
+            sim.mount(canvasRef.value).start();
         }
     });
 

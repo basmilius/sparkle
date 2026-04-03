@@ -1,36 +1,26 @@
 # Confetti API
 
-## `ConfettiSimulation`
+## `Confetti`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new ConfettiSimulation(canvas: HTMLCanvasElement, config?: ConfettiSimulationConfig)
+createConfetti(config?: ConfettiConfig)
 ```
 
 ### Methods
 
-#### `fire(config): void`
+#### `burst(config): void`
 
 Fires a burst of confetti particles. All config properties are optional and merged with the [defaults](#defaults).
 
 ```typescript
-sim.fire(config: Partial<Config>): void
+sim.burst(config: Partial<Config>): void
 ```
 
-#### `start(): void`
-
-Starts the simulation loop. Called automatically by `fire()` if not already running.
-
-#### `stop(): void`
-
-Stops the simulation loop.
-
-#### `destroy(): void`
-
-Stops the simulation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
@@ -70,7 +60,7 @@ interface Config {
 | `x`             | `number`              | `0.5`         | Horizontal position (0-1, normalized to canvas width).    |
 | `y`             | `number`              | `0.5`         | Vertical position (0-1, normalized to canvas height).     |
 
-All properties are optional when calling `fire()`. Omitted properties use the defaults above.
+All properties are optional when calling `burst()`. Omitted properties use the defaults above.
 
 ::: tip
 `startVelocity` and `gravity` are automatically scaled by the simulation's `scale` setting.
@@ -78,19 +68,17 @@ All properties are optional when calling `fire()`. Omitted properties use the de
 
 ---
 
-## `ConfettiSimulationConfig`
+## `ConfettiConfig`
 
 ```typescript
-interface ConfettiSimulationConfig {
+interface ConfettiConfig {
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                 |
-|-----------------|------------------------------------|------------------------------|-------------------------------------------------------------|
-| `scale`         | `number`                           | `1`                          | Scales particle size, velocity, and gravity proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                |
+| Property | Type     | Default | Description                                                 |
+|----------|----------|---------|-------------------------------------------------------------|
+| `scale`  | `number` | `1`     | Scales particle size, velocity, and gravity proportionally. |
 
 ---
 

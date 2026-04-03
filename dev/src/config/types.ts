@@ -60,15 +60,15 @@ export type ControlDef = SliderControl | ToggleControl | ColorControl | SelectCo
 export interface SimInstance {
     start(): void;
 
-    stop(): void;
+    pause(): void;
 
     destroy(): void;
 
     configure?(config: Record<string, unknown>): void;
 
-    fire?(config: unknown): void;
+    burst?(config: unknown): void;
 
-    fireExplosion?(variant: string, pos: { x: number; y: number }): void;
+    launch?(variant: string, pos: { x: number; y: number }): void;
 }
 
 export interface SimulatorDef {

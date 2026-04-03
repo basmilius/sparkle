@@ -17,14 +17,14 @@ example=../code/donuts/preview.vue
 All options are passed via a config object:
 
 ```typescript
-import { DonutSimulation } from '@basmilius/sparkle';
+import { createDonuts } from '@basmilius/sparkle';
 
-const sim = new DonutSimulation(canvas, {
+const donuts = createDonuts({
     background: '#a51955',
     colors: ['#bd1961', '#da287c'],
     count: 12
 });
-sim.start();
+donuts.mount(canvas).start();
 ```
 
 ### Scale
@@ -33,10 +33,10 @@ Scale all donut sizes, speeds, and collision padding proportionally:
 
 ```typescript
 // Half-size donuts
-new DonutSimulation(canvas, { scale: 0.5 });
+createDonuts({ scale: 0.5 });
 
 // Double-size donuts
-new DonutSimulation(canvas, { scale: 2 });
+createDonuts({ scale: 2 });
 ```
 
 ### Count
@@ -45,10 +45,10 @@ Control the number of donuts on screen:
 
 ```typescript
 // Sparse background
-new DonutSimulation(canvas, { count: 6 });
+createDonuts({ count: 6 });
 
 // Dense background
-new DonutSimulation(canvas, { count: 20 });
+createDonuts({ count: 20 });
 ```
 
 ### Colors
@@ -56,7 +56,7 @@ new DonutSimulation(canvas, { count: 20 });
 Set the fill colors for the donuts. Each donut picks a random color from the array:
 
 ```typescript
-new DonutSimulation(canvas, {
+createDonuts({
     colors: ['#6366f1', '#8b5cf6', '#ec4899']
 });
 ```
@@ -67,13 +67,13 @@ Control the donut radius range and ring thickness:
 
 ```typescript
 // Small, thin rings
-new DonutSimulation(canvas, {
+createDonuts({
     radiusRange: [30, 50],
     thickness: 0.25
 });
 
 // Large, thick rings
-new DonutSimulation(canvas, {
+createDonuts({
     radiusRange: [80, 120],
     thickness: 0.5
 });
@@ -85,13 +85,13 @@ Adjust movement and rotation speed:
 
 ```typescript
 // Slow, ambient drift
-new DonutSimulation(canvas, {
+createDonuts({
     speedRange: [0.05, 0.2],
     rotationSpeedRange: [0.0002, 0.001]
 });
 
 // Faster movement
-new DonutSimulation(canvas, {
+createDonuts({
     speedRange: [0.5, 1.2],
     rotationSpeedRange: [0.002, 0.005]
 });
@@ -103,13 +103,13 @@ Tune how donuts interact with each other:
 
 ```typescript
 // Tight packing, soft repulsion
-new DonutSimulation(canvas, {
+createDonuts({
     collisionPadding: 5,
     repulsionStrength: 0.01
 });
 
 // Wide spacing, strong repulsion
-new DonutSimulation(canvas, {
+createDonuts({
     collisionPadding: 40,
     repulsionStrength: 0.05
 });
@@ -125,12 +125,12 @@ example=../code/donuts/mouse-avoidance.vue
 
 ```typescript
 // Enable mouse avoidance with defaults
-new DonutSimulation(canvas, {
+createDonuts({
     mouseAvoidance: true
 });
 
 // Custom avoidance radius and strength
-new DonutSimulation(canvas, {
+createDonuts({
     mouseAvoidance: true,
     mouseAvoidanceRadius: 200,
     mouseAvoidanceStrength: 0.05

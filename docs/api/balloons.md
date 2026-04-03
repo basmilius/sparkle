@@ -1,35 +1,25 @@
 # Balloons API
 
-## `BalloonSimulation`
+## `Balloons`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new BalloonSimulation(canvas: HTMLCanvasElement, config?: BalloonSimulationConfig)
+createBalloons(config?: BalloonsConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the balloon animation.
-
-#### `stop(): void`
-
-Stops the balloon animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `BalloonSimulationConfig`
+## `BalloonsConfig`
 
 ```typescript
-interface BalloonSimulationConfig {
+interface BalloonsConfig {
     count?: number;
     colors?: string[];
     sizeRange?: [number, number];
@@ -37,20 +27,18 @@ interface BalloonSimulationConfig {
     driftAmount?: number;
     stringLength?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                                                              | Description                                                |
-|-----------------|------------------------------------|----------------------------------------------------------------------|------------------------------------------------------------|
-| `count`         | `number`                           | `15`                                                                 | Number of balloons. Automatically halved on small screens. |
-| `colors`        | `string[]`                         | `['#ff4444', '#4488ff', '#44cc44', '#ffcc00', '#ff88cc', '#8844ff']` | Balloon fill colors (hex strings).                         |
-| `sizeRange`     | `[number, number]`                 | `[25, 45]`                                                           | Min/max balloon radius in pixels (before scale).           |
-| `speed`         | `number`                           | `1`                                                                  | Rise speed multiplier.                                     |
-| `driftAmount`   | `number`                           | `1`                                                                  | Horizontal drift intensity multiplier.                     |
-| `stringLength`  | `number`                           | `1`                                                                  | String length multiplier.                                  |
-| `scale`         | `number`                           | `1`                                                                  | Scales all sizes proportionally.                           |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}`                                         | Options passed to `canvas.getContext('2d')`.               |
+| Property       | Type               | Default                                                              | Description                                                |
+|----------------|--------------------|----------------------------------------------------------------------|------------------------------------------------------------|
+| `count`        | `number`           | `15`                                                                 | Number of balloons. Automatically halved on small screens. |
+| `colors`       | `string[]`         | `['#ff4444', '#4488ff', '#44cc44', '#ffcc00', '#ff88cc', '#8844ff']` | Balloon fill colors (hex strings).                         |
+| `sizeRange`    | `[number, number]` | `[25, 45]`                                                           | Min/max balloon radius in pixels (before scale).           |
+| `speed`        | `number`           | `1`                                                                  | Rise speed multiplier.                                     |
+| `driftAmount`  | `number`           | `1`                                                                  | Horizontal drift intensity multiplier.                     |
+| `stringLength` | `number`           | `1`                                                                  | String length multiplier.                                  |
+| `scale`        | `number`           | `1`                                                                  | Scales all sizes proportionally.                           |
 
 ---
 

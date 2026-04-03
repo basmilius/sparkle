@@ -9,17 +9,17 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { ParticleSimulation } from '@basmilius/sparkle';
+    import { createParticles } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: ParticleSimulation | null = null;
+    let sim: ReturnType<typeof createParticles> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new ParticleSimulation(canvasRef.value, {
+            sim = createParticles({
                 mouseMode: 'connect'
             });
-            sim.start();
+            sim.mount(canvasRef.value).start();
         }
     });
 

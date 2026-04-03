@@ -1,9 +1,9 @@
 import { type Mulberry32, mulberry32 } from '@basmilius/utils';
-import type { DonutSimulationConfig } from './simulation';
+import type { DonutsConfig } from './layer';
 
 export const MULBERRY: Mulberry32 = mulberry32(13);
 
-export const DEFAULT_CONFIG: DonutSimulationConfig = {
+export const DEFAULT_CONFIG: DonutsConfig = {
     background: '#a51955',
     collisionPadding: 20,
     colors: ['#bd1961', '#da287c'],

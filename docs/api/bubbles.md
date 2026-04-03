@@ -1,35 +1,25 @@
 # Bubbles API
 
-## `BubbleSimulation`
+## `Bubbles`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new BubbleSimulation(canvas: HTMLCanvasElement, config?: BubbleSimulationConfig)
+createBubbles(config?: BubblesConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the bubble animation.
-
-#### `stop(): void`
-
-Stops the bubble animation.
-
-#### `destroy(): void`
-
-Stops the animation, removes click listener, and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `BubbleSimulationConfig`
+## `BubblesConfig`
 
 ```typescript
-interface BubbleSimulationConfig {
+interface BubblesConfig {
     count?: number;
     sizeRange?: [number, number];
     speed?: number;
@@ -38,21 +28,19 @@ interface BubbleSimulationConfig {
     colors?: string[];
     wobbleAmount?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                             | Description                                               |
-|-----------------|------------------------------------|-------------------------------------|-----------------------------------------------------------|
-| `count`         | `number`                           | `30`                                | Number of bubbles. Automatically halved on small screens. |
-| `sizeRange`     | `[number, number]`                 | `[10, 40]`                          | Min/max bubble radius in pixels (before scale).           |
-| `speed`         | `number`                           | `1`                                 | Rise speed multiplier.                                    |
-| `popOnClick`    | `boolean`                          | `true`                              | Enable click-to-pop interaction.                          |
-| `popRadius`     | `number`                           | `50`                                | Click detection radius in pixels.                         |
-| `colors`        | `string[]`                         | `['#88ccff', '#aaddff', '#ccbbff']` | Base colors for bubble hue.                               |
-| `wobbleAmount`  | `number`                           | `1`                                 | Horizontal wobble intensity multiplier.                   |
-| `scale`         | `number`                           | `1`                                 | Scales all bubble sizes proportionally.                   |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}`        | Options passed to `canvas.getContext('2d')`.              |
+| Property      | Type               | Default                             | Description                                               |
+|---------------|--------------------|-------------------------------------|-----------------------------------------------------------|
+| `count`       | `number`           | `30`                                | Number of bubbles. Automatically halved on small screens. |
+| `sizeRange`   | `[number, number]` | `[10, 40]`                          | Min/max bubble radius in pixels (before scale).           |
+| `speed`       | `number`           | `1`                                 | Rise speed multiplier.                                    |
+| `popOnClick`  | `boolean`          | `true`                              | Enable click-to-pop interaction.                          |
+| `popRadius`   | `number`           | `50`                                | Click detection radius in pixels.                         |
+| `colors`      | `string[]`         | `['#88ccff', '#aaddff', '#ccbbff']` | Base colors for bubble hue.                               |
+| `wobbleAmount`| `number`           | `1`                                 | Horizontal wobble intensity multiplier.                   |
+| `scale`       | `number`           | `1`                                 | Scales all bubble sizes proportionally.                   |
 
 ---
 

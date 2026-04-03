@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { LanternSimulation } from '@basmilius/sparkle';
+    import { createLanterns } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: LanternSimulation | null = null;
+    let sim: ReturnType<typeof createLanterns> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new LanternSimulation(canvasRef.value);
-            sim.start();
+            sim = createLanterns();
+            sim.mount(canvasRef.value).start();
         }
     });
 

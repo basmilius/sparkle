@@ -1,3 +1,12 @@
+export interface LeavesConfig {
+    readonly count?: number;
+    readonly colors?: string[];
+    readonly size?: number;
+    readonly speed?: number;
+    readonly wind?: number;
+    readonly scale?: number;
+}
+
 export type Leaf = {
     x: number;
     y: number;

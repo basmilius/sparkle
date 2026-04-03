@@ -1,8 +1,18 @@
 import { parseColor } from '../color';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { RainSimulationConfig } from './simulation';
 import type { Raindrop, RainVariant, Splash } from './types';
+
+export interface RainConfig {
+    readonly variant?: RainVariant;
+    readonly drops?: number;
+    readonly wind?: number;
+    readonly speed?: number;
+    readonly splashes?: boolean;
+    readonly color?: string;
+    readonly groundLevel?: number;
+    readonly scale?: number;
+}
 
 const VARIANT_PRESETS: Record<RainVariant, { drops: number; speed: number; wind: number; splashes: boolean }> = {
     drizzle: {drops: 70, speed: 0.55, wind: 0.1, splashes: false},
@@ -10,7 +20,7 @@ const VARIANT_PRESETS: Record<RainVariant, { drops: number; speed: number; wind:
     thunderstorm: {drops: 300, speed: 1, wind: 0.4, splashes: true}
 };
 
-export class RainLayer extends SimulationLayer {
+export class Rain extends Effect<RainConfig> {
     readonly #scale: number;
     #speed: number;
     #wind: number;
@@ -23,7 +33,7 @@ export class RainLayer extends SimulationLayer {
     #drops: Raindrop[] = [];
     #splashes: Splash[] = [];
 
-    constructor(config: RainSimulationConfig = {}) {
+    constructor(config: RainConfig = {}) {
         super();
 
         const variant = config.variant ?? 'downpour';
@@ -50,15 +60,15 @@ export class RainLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<RainConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.wind !== undefined) {
-            this.#wind = config.wind as number;
+            this.#wind = config.wind;
         }
         if (config.splashes !== undefined) {
-            this.#enableSplashes = config.splashes as boolean;
+            this.#enableSplashes = config.splashes;
         }
     }
 

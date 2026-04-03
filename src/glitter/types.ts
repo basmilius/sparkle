@@ -1,3 +1,13 @@
+export interface GlitterConfig {
+    readonly count?: number;
+    readonly colors?: string[];
+    readonly size?: number;
+    readonly speed?: number;
+    readonly groundLevel?: number;
+    readonly maxSettled?: number;
+    readonly scale?: number;
+}
+
 export type FallingGlitter = {
     x: number;
     y: number;

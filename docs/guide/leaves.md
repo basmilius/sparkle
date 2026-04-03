@@ -21,9 +21,9 @@ example=../code/leaves/windy.vue
 All options are passed via a config object:
 
 ```typescript
-import { LeafSimulation } from '@basmilius/sparkle';
+import { createLeaves } from '@basmilius/sparkle';
 
-const sim = new LeafSimulation(canvas, {
+const leaves = createLeaves({
     count: 80,
     colors: ['#c0392b', '#e74c3c', '#d35400', '#e67e22', '#f39c12'],
     size: 14,
@@ -31,7 +31,7 @@ const sim = new LeafSimulation(canvas, {
     wind: 0.3,
     scale: 1
 });
-sim.start();
+leaves.mount(canvas).start();
 ```
 
 ### Count
@@ -40,10 +40,10 @@ Control the number of leaves:
 
 ```typescript
 // Sparse
-new LeafSimulation(canvas, { count: 30 });
+createLeaves({ count: 30 });
 
 // Dense canopy
-new LeafSimulation(canvas, { count: 200 });
+createLeaves({ count: 200 });
 ```
 
 ### Wind
@@ -52,13 +52,13 @@ Control the horizontal wind strength and direction:
 
 ```typescript
 // Calm, mostly falling straight down
-new LeafSimulation(canvas, { wind: 0 });
+createLeaves({ wind: 0 });
 
 // Strong wind blowing right
-new LeafSimulation(canvas, { wind: 0.8 });
+createLeaves({ wind: 0.8 });
 
 // Wind blowing left
-new LeafSimulation(canvas, { wind: -0.5 });
+createLeaves({ wind: -0.5 });
 ```
 
 ### Colors
@@ -67,12 +67,12 @@ Customize the autumn palette:
 
 ```typescript
 // Golden theme
-new LeafSimulation(canvas, {
+createLeaves({
     colors: ['#f1c40f', '#f39c12', '#d4a017']
 });
 
 // Red maple theme
-new LeafSimulation(canvas, {
+createLeaves({
     colors: ['#c0392b', '#e74c3c', '#a0522d']
 });
 ```
@@ -81,8 +81,8 @@ new LeafSimulation(canvas, {
 
 ```typescript
 // Slow, peaceful drift
-new LeafSimulation(canvas, { speed: 0.5 });
+createLeaves({speed: 0.5});
 
 // Fast autumn storm
-new LeafSimulation(canvas, { speed: 2 });
+createLeaves({speed: 2});
 ```

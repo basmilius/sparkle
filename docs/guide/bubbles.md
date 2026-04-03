@@ -21,16 +21,16 @@ example=../code/bubbles/interactive.vue
 All options are passed via a config object:
 
 ```typescript
-import { BubbleSimulation } from '@basmilius/sparkle';
+import { createBubbles } from '@basmilius/sparkle';
 
-const sim = new BubbleSimulation(canvas, {
+const bubbles = createBubbles({
     count: 30,
     sizeRange: [10, 40],
     speed: 1,
     popOnClick: true,
     scale: 1
 });
-sim.start();
+bubbles.mount(canvas).start();
 ```
 
 ### Count
@@ -39,10 +39,10 @@ Control the number of bubbles:
 
 ```typescript
 // Few, sparse bubbles
-new BubbleSimulation(canvas, { count: 10 });
+createBubbles({ count: 10 });
 
 // Dense bubble field
-new BubbleSimulation(canvas, { count: 60 });
+createBubbles({ count: 60 });
 ```
 
 ### Size Range
@@ -51,10 +51,10 @@ Set the minimum and maximum bubble radius:
 
 ```typescript
 // Small, uniform bubbles
-new BubbleSimulation(canvas, { sizeRange: [5, 15] });
+createBubbles({ sizeRange: [5, 15] });
 
 // Large, varied bubbles
-new BubbleSimulation(canvas, { sizeRange: [20, 60] });
+createBubbles({ sizeRange: [20, 60] });
 ```
 
 ### Pop on Click
@@ -63,10 +63,10 @@ Enable or disable click-to-pop:
 
 ```typescript
 // Disable popping
-new BubbleSimulation(canvas, { popOnClick: false });
+createBubbles({ popOnClick: false });
 
 // Larger pop detection area
-new BubbleSimulation(canvas, { popOnClick: true, popRadius: 100 });
+createBubbles({ popOnClick: true, popRadius: 100 });
 ```
 
 ### Wobble
@@ -75,8 +75,8 @@ Control the horizontal wobble intensity:
 
 ```typescript
 // Minimal wobble
-new BubbleSimulation(canvas, { wobbleAmount: 0.3 });
+createBubbles({ wobbleAmount: 0.3 });
 
 // Exaggerated wobble
-new BubbleSimulation(canvas, { wobbleAmount: 2 });
+createBubbles({ wobbleAmount: 2 });
 ```

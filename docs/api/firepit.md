@@ -1,52 +1,40 @@
 # Firepit API
 
-## `FirepitSimulation`
+## `Firepit`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new FirepitSimulation(canvas: HTMLCanvasElement, config?: FirepitSimulationConfig)
+createFirepit(config?: FirepitConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the firepit animation.
-
-#### `stop(): void`
-
-Stops the firepit animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `FirepitSimulationConfig`
+## `FirepitConfig`
 
 ```typescript
-interface FirepitSimulationConfig {
+interface FirepitConfig {
     embers?: number;
     flameWidth?: number;
     flameHeight?: number;
     intensity?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                 |
-|-----------------|------------------------------------|------------------------------|-------------------------------------------------------------|
-| `embers`        | `number`                           | `60`                         | Maximum number of ember particles. Halved on small screens. |
-| `flameWidth`    | `number`                           | `0.4`                        | Flame width as fraction of canvas width.                    |
-| `flameHeight`   | `number`                           | `0.35`                       | Flame height as fraction of canvas height.                  |
-| `intensity`     | `number`                           | `1`                          | Overall brightness and spawn rate multiplier.               |
-| `scale`         | `number`                           | `1`                          | Scales ember sizes proportionally.                          |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                |
+| Property     | Type     | Default | Description                                                 |
+|--------------|----------|---------|-------------------------------------------------------------|
+| `embers`     | `number` | `60`    | Maximum number of ember particles. Halved on small screens. |
+| `flameWidth` | `number` | `0.4`   | Flame width as fraction of canvas width.                    |
+| `flameHeight`| `number` | `0.35`  | Flame height as fraction of canvas height.                  |
+| `intensity`  | `number` | `1`     | Overall brightness and spawn rate multiplier.               |
+| `scale`      | `number` | `1`     | Scales ember sizes proportionally.                          |
 
 ---
 

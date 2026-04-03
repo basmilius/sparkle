@@ -9,13 +9,13 @@ function between(rng: () => number, min: number, max: number): number {
 /**
  * Creates an array of {@link Explosion} particles for the given firework variant.
  * Use this to fire a fully formed explosion burst in your own render loop without
- * needing a {@link FireworkSimulation}.
+ * needing a {@link Fireworks} instance.
  *
  * @param variant - The firework variant to create.
  * @param position - The center position of the explosion in canvas pixels.
  * @param hue - Base hue in degrees (0–360).
  * @param options - Optional overrides for `lineWidth` (default `5`) and `scale` (default `1`).
- * @param rng - Optional `() => number` RNG returning values in [0, 1). Defaults to `Math.random`.
+ * @param rng - RNG function returning values in [0, 1). Defaults to `Math.random`.
  */
 export function createExplosion(
     variant: FireworkVariant,

@@ -1,9 +1,17 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY, PETAL_COLORS } from './consts';
-import type { PetalSimulationConfig } from './simulation';
 import type { Petal } from './types';
 
-export class PetalLayer extends SimulationLayer {
+export interface PetalsConfig {
+    readonly count?: number;
+    readonly colors?: string[];
+    readonly size?: number;
+    readonly speed?: number;
+    readonly wind?: number;
+    readonly scale?: number;
+}
+
+export class Petals extends Effect<PetalsConfig> {
     readonly #scale: number;
     readonly #size: number;
     #speed: number;
@@ -14,7 +22,7 @@ export class PetalLayer extends SimulationLayer {
     #petals: Petal[] = [];
     #sprites: HTMLCanvasElement[] = [];
 
-    constructor(config: PetalSimulationConfig = {}) {
+    constructor(config: PetalsConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -35,12 +43,12 @@ export class PetalLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<PetalsConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.wind !== undefined) {
-            this.#wind = config.wind as number;
+            this.#wind = config.wind;
         }
     }
 

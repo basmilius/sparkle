@@ -1,11 +1,22 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { ShootingStarSystem } from '../shooting-stars';
 import { MULBERRY } from './consts';
-import type { StarSimulationConfig } from './simulation';
 import type { Star, StarMode } from './types';
 
-export class StarLayer extends SimulationLayer {
+export interface StarsConfig {
+    readonly mode?: StarMode;
+    readonly starCount?: number;
+    readonly shootingInterval?: [number, number];
+    readonly shootingSpeed?: number;
+    readonly twinkleSpeed?: number;
+    readonly color?: string;
+    readonly shootingColor?: string;
+    readonly trailLength?: number;
+    readonly scale?: number;
+}
+
+export class Stars extends Effect<StarsConfig> {
     readonly #mode: StarMode;
     #twinkleSpeed: number;
     readonly #colorRGB: [number, number, number];
@@ -15,7 +26,7 @@ export class StarLayer extends SimulationLayer {
     #time: number = 0;
     #stars: Star[] = [];
 
-    constructor(config: StarSimulationConfig = {}) {
+    constructor(config: StarsConfig = {}) {
         super();
 
         this.#mode = config.mode ?? 'both';
@@ -53,7 +64,7 @@ export class StarLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<StarsConfig>): void {
         if (config.twinkleSpeed !== undefined) {
             this.#twinkleSpeed = config.twinkleSpeed as number;
         }

@@ -1,9 +1,17 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { SandstormSimulationConfig } from './simulation';
 import type { SandGrain } from './types';
 
-export class SandstormLayer extends SimulationLayer {
+export interface SandstormConfig {
+    readonly count?: number;
+    readonly wind?: number;
+    readonly turbulence?: number;
+    readonly color?: string;
+    readonly hazeOpacity?: number;
+    readonly scale?: number;
+}
+
+export class Sandstorm extends Effect<SandstormConfig> {
     readonly #scale: number;
     #wind: number;
     #turbulence: number;
@@ -15,7 +23,7 @@ export class SandstormLayer extends SimulationLayer {
     #time: number = 0;
     #grains: SandGrain[] = [];
 
-    constructor(config: SandstormSimulationConfig = {}) {
+    constructor(config: SandstormConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -38,12 +46,12 @@ export class SandstormLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<SandstormConfig>): void {
         if (config.wind !== undefined) {
-            this.#wind = config.wind as number;
+            this.#wind = config.wind;
         }
         if (config.turbulence !== undefined) {
-            this.#turbulence = config.turbulence as number;
+            this.#turbulence = config.turbulence;
         }
     }
 

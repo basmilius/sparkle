@@ -1,4 +1,9 @@
-export { GlitterLayer } from './layer';
-export { GlitterSimulation } from './simulation';
-export type { GlitterSimulationConfig } from './simulation';
-export type { FallingGlitter, SettledGlitter } from './types';
+import { Glitter } from './layer';
+import type { GlitterConfig } from './types';
+import type { Effect } from '../effect';
+
+export function createGlitter(config?: GlitterConfig): Effect<GlitterConfig> {
+    return new Glitter(config);
+}
+
+export type { GlitterConfig, FallingGlitter, SettledGlitter } from './types';

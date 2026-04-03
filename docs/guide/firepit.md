@@ -21,16 +21,16 @@ example=../code/firepit/intense.vue
 All options are passed via a config object:
 
 ```typescript
-import { FirepitSimulation } from '@basmilius/sparkle';
+import { createFirepit } from '@basmilius/sparkle';
 
-const sim = new FirepitSimulation(canvas, {
+const firepit = createFirepit({
     embers: 60,
     flameWidth: 0.4,
     flameHeight: 0.35,
     intensity: 1,
     scale: 1
 });
-sim.start();
+firepit.mount(canvas).start();
 ```
 
 ### Embers
@@ -39,10 +39,10 @@ Control the number of rising ember particles:
 
 ```typescript
 // Subtle, few embers
-new FirepitSimulation(canvas, { embers: 20 });
+createFirepit({ embers: 20 });
 
 // Lots of sparks
-new FirepitSimulation(canvas, { embers: 150 });
+createFirepit({ embers: 150 });
 ```
 
 ### Intensity
@@ -51,10 +51,10 @@ Scale the overall brightness and activity:
 
 ```typescript
 // Dying fire
-new FirepitSimulation(canvas, { intensity: 0.4 });
+createFirepit({ intensity: 0.4 });
 
 // Blazing bonfire
-new FirepitSimulation(canvas, { intensity: 2 });
+createFirepit({ intensity: 2 });
 ```
 
 ### Flame Size
@@ -63,8 +63,8 @@ Control the flame dimensions (as fraction of canvas):
 
 ```typescript
 // Narrow, tall flame
-new FirepitSimulation(canvas, { flameWidth: 0.2, flameHeight: 0.5 });
+createFirepit({ flameWidth: 0.2, flameHeight: 0.5 });
 
 // Wide, short flame
-new FirepitSimulation(canvas, { flameWidth: 0.6, flameHeight: 0.2 });
+createFirepit({ flameWidth: 0.6, flameHeight: 0.2 });
 ```

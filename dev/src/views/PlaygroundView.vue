@@ -1,7 +1,7 @@
 <script
     setup
     lang="ts">
-    import { LayeredSimulation, LimitedFrameRateCanvas } from '@basmilius/sparkle';
+    import { LimitedFrameRateCanvas, Scene, createScene } from '@basmilius/sparkle';
     import { onMounted, onUnmounted, ref } from 'vue';
     import { SIMULATOR_MAP, SIMULATORS } from '../config/registry';
     import ConfigPanel from '../components/ConfigPanel.vue';
@@ -18,7 +18,9 @@
     const background = ref('#0f0f11');
     const showAddMenu = ref(false);
     const globalSpeed = ref(LimitedFrameRateCanvas.globalSpeed);
-    let layeredSim: LayeredSimulation | null = null;
+    let scene: Scene | null = null;
+    // Holds effect instances in layer order for direct configure() calls
+    const effectInstances: any[] = [];
     let uidCounter = 0;
     let rebuildTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -27,19 +29,21 @@
             return;
         }
 
-        layeredSim?.destroy();
-        layeredSim = new LayeredSimulation(canvasRef.value);
+        scene?.destroy();
+        scene = createScene().mount(canvasRef.value);
+        effectInstances.length = 0;
 
         for (const entry of layers.value) {
             const def = SIMULATOR_MAP.get(entry.simulatorId);
             if (!def) {
                 continue;
             }
-            const layer = def.createLayer(entry.config);
-            layeredSim.add(layer as any);
+            const effect = def.createLayer(entry.config);
+            effectInstances.push(effect);
+            scene.layer(effect as any);
         }
 
-        layeredSim.start();
+        scene.start();
     }
 
     function scheduleRebuild(): void {
@@ -97,7 +101,7 @@
         const def = SIMULATOR_MAP.get(entry.simulatorId);
         if (def?.liveKeys.includes(key)) {
             const index = layers.value.indexOf(entry);
-            layeredSim?.configureLayer(index, {[key]: value});
+            effectInstances[index]?.configure?.({[key]: value});
         } else {
             scheduleRebuild();
         }
@@ -122,8 +126,8 @@
         if (rebuildTimer) {
             clearTimeout(rebuildTimer);
         }
-        layeredSim?.destroy();
-        layeredSim = null;
+        scene?.destroy();
+        scene = null;
     });
 </script>
 

@@ -21,9 +21,9 @@ example=../code/sandstorm/intense.vue
 All options are passed via a config object:
 
 ```typescript
-import { SandstormSimulation } from '@basmilius/sparkle';
+import { createSandstorm } from '@basmilius/sparkle';
 
-const sim = new SandstormSimulation(canvas, {
+const sandstorm = createSandstorm({
     count: 300,
     wind: 1,
     turbulence: 1,
@@ -31,7 +31,7 @@ const sim = new SandstormSimulation(canvas, {
     hazeOpacity: 0.15,
     scale: 1
 });
-sim.start();
+sandstorm.mount(canvas).start();
 ```
 
 ### Wind
@@ -40,10 +40,10 @@ Control the horizontal wind strength:
 
 ```typescript
 // Light breeze
-new SandstormSimulation(canvas, { wind: 0.3 });
+createSandstorm({ wind: 0.3 });
 
 // Hurricane-force
-new SandstormSimulation(canvas, { wind: 2 });
+createSandstorm({ wind: 2 });
 ```
 
 ### Turbulence
@@ -52,10 +52,10 @@ Control the chaotic movement of particles:
 
 ```typescript
 // Smooth, steady wind
-new SandstormSimulation(canvas, { turbulence: 0.3 });
+createSandstorm({ turbulence: 0.3 });
 
 // Wild, gusty storm
-new SandstormSimulation(canvas, { turbulence: 2 });
+createSandstorm({ turbulence: 2 });
 ```
 
 ### Color
@@ -64,10 +64,10 @@ Change the sand color:
 
 ```typescript
 // Red desert sand
-new SandstormSimulation(canvas, { color: '#c4704b' });
+createSandstorm({ color: '#c4704b' });
 
 // Light beach sand
-new SandstormSimulation(canvas, { color: '#e8d5a3' });
+createSandstorm({ color: '#e8d5a3' });
 ```
 
 ### Haze
@@ -76,8 +76,8 @@ Control the atmospheric haze layer:
 
 ```typescript
 // No haze
-new SandstormSimulation(canvas, { hazeOpacity: 0 });
+createSandstorm({ hazeOpacity: 0 });
 
 // Thick, visibility-reducing haze
-new SandstormSimulation(canvas, { hazeOpacity: 0.35 });
+createSandstorm({ hazeOpacity: 0.35 });
 ```

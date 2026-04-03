@@ -1,10 +1,9 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { LANTERN_COLORS, MULBERRY } from './consts';
-import type { LanternSimulationConfig } from './simulation';
-import type { Lantern } from './types';
+import type { Lantern, LanternsConfig } from './types';
 
-export class LanternLayer extends SimulationLayer {
+export class Lanterns extends Effect<LanternsConfig> {
     readonly #scale: number;
     #speed: number;
     readonly #size: number;
@@ -13,7 +12,7 @@ export class LanternLayer extends SimulationLayer {
     #time: number = 0;
     #lanterns: Lantern[] = [];
 
-    constructor(config: LanternSimulationConfig = {}) {
+    constructor(config: LanternsConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -33,9 +32,9 @@ export class LanternLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<LanternsConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
     }
 

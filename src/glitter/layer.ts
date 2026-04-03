@@ -1,10 +1,9 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { GLITTER_COLORS, MULBERRY } from './consts';
-import type { GlitterSimulationConfig } from './simulation';
-import type { FallingGlitter, SettledGlitter } from './types';
+import type { FallingGlitter, GlitterConfig, SettledGlitter } from './types';
 
-export class GlitterLayer extends SimulationLayer {
+export class Glitter extends Effect<GlitterConfig> {
     readonly #scale: number;
     readonly #size: number;
     #speed: number;
@@ -16,7 +15,7 @@ export class GlitterLayer extends SimulationLayer {
     #falling: FallingGlitter[] = [];
     #settled: SettledGlitter[] = [];
 
-    constructor(config: GlitterSimulationConfig = {}) {
+    constructor(config: GlitterConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -38,12 +37,12 @@ export class GlitterLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<GlitterConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.groundLevel !== undefined) {
-            this.#groundLevel = config.groundLevel as number;
+            this.#groundLevel = config.groundLevel;
         }
     }
 

@@ -1,13 +1,13 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import type { Point } from '../point';
 import { MULBERRY } from './consts';
 import { createExplosion } from './create-explosion';
 import { Explosion } from './explosion';
 import { Firework } from './firework';
 import { Spark } from './spark';
-import { FIREWORK_VARIANTS, type FireworkSimulationConfig, type FireworkVariant } from './types';
+import { FIREWORK_VARIANTS, type FireworksConfig, type FireworkVariant } from './types';
 
-export class FireworkLayer extends SimulationLayer {
+export class Fireworks extends Effect<FireworksConfig> {
     #explosions: Explosion[] = [];
     #fireworks: Firework[] = [];
     #sparks: Spark[] = [];
@@ -22,7 +22,7 @@ export class FireworkLayer extends SimulationLayer {
     #width: number = 960;
     #height: number = 540;
 
-    constructor(config: FireworkSimulationConfig = {}) {
+    constructor(config: FireworksConfig = {}) {
         super();
 
         const scale = config.scale ?? 1;
@@ -38,21 +38,21 @@ export class FireworkLayer extends SimulationLayer {
         this.#height = height;
     }
 
-    fireExplosion(variant: FireworkVariant, position?: Point): void {
+    launch(variant: FireworkVariant, position?: Point): void {
         const pos = position ?? {x: this.#width / 2, y: this.#height * 0.4};
         this.#hue = MULBERRY.nextBetween(0, 360);
         this.#spawnExplosion(pos, this.#hue, variant);
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<FireworksConfig>): void {
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
         if (config.autoSpawn !== undefined) {
-            this.#autoSpawn = config.autoSpawn as boolean;
+            this.#autoSpawn = config.autoSpawn;
         }
         if (Array.isArray(config.variants) && config.variants.length > 0) {
-            this.#variants = [...config.variants as FireworkVariant[]];
+            this.#variants = [...config.variants];
         }
     }
 

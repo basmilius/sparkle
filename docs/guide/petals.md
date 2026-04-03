@@ -21,9 +21,9 @@ example=../code/petals/dense.vue
 All options are passed via a config object:
 
 ```typescript
-import { PetalSimulation } from '@basmilius/sparkle';
+import { createPetals } from '@basmilius/sparkle';
 
-const sim = new PetalSimulation(canvas, {
+const petals = createPetals({
     count: 100,
     colors: ['#ffb7c5', '#ffc0cb', '#ffd1dc'],
     size: 10,
@@ -31,7 +31,7 @@ const sim = new PetalSimulation(canvas, {
     wind: 0.15,
     scale: 1
 });
-sim.start();
+petals.mount(canvas).start();
 ```
 
 ### Count
@@ -40,10 +40,10 @@ Control the number of petals:
 
 ```typescript
 // Sparse, subtle
-new PetalSimulation(canvas, { count: 30 });
+createPetals({ count: 30 });
 
 // Dense bloom
-new PetalSimulation(canvas, { count: 250 });
+createPetals({ count: 250 });
 ```
 
 ### Wind
@@ -52,10 +52,10 @@ Control the horizontal drift:
 
 ```typescript
 // Still air
-new PetalSimulation(canvas, { wind: 0 });
+createPetals({ wind: 0 });
 
 // Gentle breeze
-new PetalSimulation(canvas, { wind: 0.4 });
+createPetals({ wind: 0.4 });
 ```
 
 ### Colors
@@ -64,12 +64,12 @@ Customize the petal palette:
 
 ```typescript
 // White blossoms
-new PetalSimulation(canvas, {
+createPetals({
     colors: ['#ffffff', '#fff5f5', '#ffe8ec']
 });
 
 // Deep pink
-new PetalSimulation(canvas, {
+createPetals({
     colors: ['#ff69b4', '#ff1493', '#db7093']
 });
 ```
@@ -78,8 +78,8 @@ new PetalSimulation(canvas, {
 
 ```typescript
 // Very slow, dreamy
-new PetalSimulation(canvas, { speed: 0.3 });
+createPetals({speed: 0.3});
 
 // Lively spring breeze
-new PetalSimulation(canvas, { speed: 1.5 });
+createPetals({speed: 1.5});
 ```

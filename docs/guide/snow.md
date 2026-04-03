@@ -17,16 +17,16 @@ example=../code/snow/preview.vue
 All options are passed via a config object:
 
 ```typescript
-import { SnowSimulation } from '@basmilius/sparkle';
+import { createSnow } from '@basmilius/sparkle';
 
-const sim = new SnowSimulation(canvas, {
+const snow = createSnow({
     particles: 300,
     size: 8,
     speed: 1.5,
     fillStyle: 'rgb(255 255 255 / .8)',
     scale: 1
 });
-sim.start();
+snow.mount(canvas).start();
 ```
 
 ### Particle Count
@@ -35,10 +35,10 @@ Control the density of the snowfall:
 
 ```typescript
 // Light snowfall
-new SnowSimulation(canvas, {particles: 50});
+createSnow({ particles: 50 });
 
 // Heavy blizzard
-new SnowSimulation(canvas, {particles: 500});
+createSnow({ particles: 500 });
 ```
 
 ### Snowflake Size
@@ -47,20 +47,20 @@ Set the maximum snowflake radius in pixels:
 
 ```typescript
 // Small, fine snow
-new SnowSimulation(canvas, {size: 3});
+createSnow({ size: 3 });
 
 // Large, fluffy snowflakes
-new SnowSimulation(canvas, {size: 10});
+createSnow({ size: 10 });
 ```
 
 ### Fall Speed
 
 ```typescript
 // Gentle, slow drift
-new SnowSimulation(canvas, {speed: 1});
+createSnow({speed: 1});
 
 // Fast snowstorm
-new SnowSimulation(canvas, {speed: 4});
+createSnow({speed: 4});
 ```
 
 ### Scale
@@ -69,8 +69,8 @@ Scale all snowflake sizes proportionally:
 
 ```typescript
 // Half-size snowflakes
-new SnowSimulation(canvas, {scale: 0.5});
+createSnow({scale: 0.5});
 
 // Double-size snowflakes
-new SnowSimulation(canvas, {scale: 2});
+createSnow({scale: 2});
 ```

@@ -1,50 +1,38 @@
 # Plasma API
 
-## `PlasmaSimulation`
+## `Plasma`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new PlasmaSimulation(canvas: HTMLCanvasElement, config?: PlasmaSimulationConfig)
+createPlasma(config?: PlasmaConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the plasma animation.
-
-#### `stop(): void`
-
-Stops the plasma animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `PlasmaSimulationConfig`
+## `PlasmaConfig`
 
 ```typescript
-interface PlasmaSimulationConfig {
+interface PlasmaConfig {
     speed?: number;
     scale?: number;
     resolution?: number;
     palette?: PlasmaColor[];
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                            | Description                                                    |
-|-----------------|------------------------------------|------------------------------------|----------------------------------------------------------------|
-| `speed`         | `number`                           | `1`                                | Animation speed multiplier.                                    |
-| `scale`         | `number`                           | `1`                                | Pattern scale factor. Higher values create larger patterns.    |
-| `resolution`    | `number`                           | `4`                                | Pixel block size for rendering. Higher is faster but chunkier. |
-| `palette`       | `PlasmaColor[]`                    | Cyan, magenta, yellow, blue, green | Array of colors to interpolate between.                        |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}`       | Options passed to `canvas.getContext('2d')`.                   |
+| Property     | Type            | Default                            | Description                                                    |
+|--------------|-----------------|------------------------------------|----------------------------------------------------------------|
+| `speed`      | `number`        | `1`                                | Animation speed multiplier.                                    |
+| `scale`      | `number`        | `1`                                | Pattern scale factor. Higher values create larger patterns.    |
+| `resolution` | `number`        | `4`                                | Pixel block size for rendering. Higher is faster but chunkier. |
+| `palette`    | `PlasmaColor[]` | Cyan, magenta, yellow, blue, green | Array of colors to interpolate between.                        |
 
 ---
 

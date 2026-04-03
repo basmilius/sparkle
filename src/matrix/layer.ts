@@ -1,10 +1,9 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MATRIX_CHARS, MULBERRY } from './consts';
-import type { MatrixSimulationConfig } from './simulation';
-import type { MatrixColumn } from './types';
+import type { MatrixColumn, MatrixConfig } from './types';
 
-export class MatrixLayer extends SimulationLayer {
+export class Matrix extends Effect<MatrixConfig> {
     readonly #scale: number;
     #speed: number;
     readonly #fontSize: number;
@@ -17,7 +16,7 @@ export class MatrixLayer extends SimulationLayer {
     #height: number = 540;
     #initialized: boolean = false;
 
-    constructor(config: MatrixSimulationConfig = {}) {
+    constructor(config: MatrixConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -53,12 +52,12 @@ export class MatrixLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<MatrixConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.trailLength !== undefined) {
-            this.#trailLength = config.trailLength as number;
+            this.#trailLength = config.trailLength;
         }
     }
 

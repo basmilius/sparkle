@@ -1,35 +1,25 @@
 # Fireworks API
 
-## `FireworkSimulation`
+## `Fireworks`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new FireworkSimulation(canvas: HTMLCanvasElement, config?: FireworkSimulationConfig)
+createFireworks(config?: FireworksConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
-Starts the simulation loop.
-
-#### `stop(): void`
-
-Stops the simulation loop.
-
-#### `destroy(): void`
-
-Stops the simulation and removes all event listeners.
-
-#### `fireExplosion(variant, position?): void`
+#### `launch(variant, position?): void`
 
 Fires a single explosion of the given variant.
 
 ```typescript
-sim.fireExplosion(variant: FireworkVariant, position?: Point): void
+sim.launch(variant: FireworkVariant, position?: Point): void
 ```
 
 | Parameter  | Type                                  | Required | Description                                                  |
@@ -39,21 +29,21 @@ sim.fireExplosion(variant: FireworkVariant, position?: Point): void
 
 ---
 
-## `FireworkSimulationConfig`
+## `FireworksConfig`
 
 ```typescript
-interface FireworkSimulationConfig {
+interface FireworksConfig {
     scale?: number;
+    readonly variants?: FireworkVariant[];
     autoSpawn?: boolean;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                                                      |
-|-----------------|------------------------------------|------------------------------|--------------------------------------------------------------------------------------------------|
-| `scale`         | `number`                           | `1`                          | Scales all particle sizes, trail widths, and glow proportionally.                                |
-| `autoSpawn`     | `boolean`                          | `true`                       | When `false`, no fireworks are launched automatically. Use `fireExplosion()` for manual control. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                                                     |
+| Property    | Type                 | Default          | Description                                                                               |
+|-------------|----------------------|------------------|-------------------------------------------------------------------------------------------|
+| `scale`     | `number`             | `1`              | Scales all particle sizes, trail widths, and glow proportionally.                         |
+| `variants`  | `FireworkVariant[]`  | All 16 variants  | Subset of variants to use for auto-spawning. When empty or omitted, all variants are used.|
+| `autoSpawn` | `boolean`            | `true`           | When `false`, no fireworks are launched automatically. Use `launch()` for manual control. |
 
 ---
 

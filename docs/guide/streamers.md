@@ -21,14 +21,14 @@ example=../code/streamers/party.vue
 All options are passed via a config object:
 
 ```typescript
-import { StreamerSimulation } from '@basmilius/sparkle';
+import { createStreamers } from '@basmilius/sparkle';
 
-const sim = new StreamerSimulation(canvas, {
+const streamers = createStreamers({
     count: 30,
     speed: 1.2,
     scale: 1
 });
-sim.start();
+streamers.mount(canvas).start();
 ```
 
 ### Count
@@ -37,10 +37,10 @@ Control the number of streamers on screen:
 
 ```typescript
 // Sparse streamers
-new StreamerSimulation(canvas, { count: 10 });
+createStreamers({ count: 10 });
 
 // Dense party effect
-new StreamerSimulation(canvas, { count: 40 });
+createStreamers({ count: 40 });
 ```
 
 ### Speed
@@ -49,10 +49,10 @@ Adjust how fast the streamers fall:
 
 ```typescript
 // Slow, gentle falling
-new StreamerSimulation(canvas, { speed: 0.5 });
+createStreamers({speed: 0.5});
 
 // Fast, energetic falling
-new StreamerSimulation(canvas, { speed: 2 });
+createStreamers({speed: 2});
 ```
 
 ### Colors
@@ -61,12 +61,12 @@ Provide custom colors for the streamers:
 
 ```typescript
 // Gold and silver theme
-new StreamerSimulation(canvas, {
+createStreamers({
     colors: ['#ffd700', '#c0c0c0', '#fffacd', '#e8e8e8']
 });
 
 // Monochrome blue
-new StreamerSimulation(canvas, {
+createStreamers({
     colors: ['#1e90ff', '#4169e1', '#6495ed', '#87ceeb']
 });
 ```

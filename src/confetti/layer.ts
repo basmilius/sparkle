@@ -1,20 +1,23 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { DEFAULT_CONFIG, MULBERRY, PALETTES } from './consts';
 import { SHAPE_PATHS } from './shapes';
-import type { ConfettiSimulationConfig } from './simulation';
 import type { Config, Particle, ParticleConfig } from './types';
 
 const TWO_PI = Math.PI * 2;
 
-export class ConfettiLayer extends SimulationLayer {
+export interface ConfettiConfig {
+    readonly scale?: number;
+}
+
+export class Confetti extends Effect<ConfettiConfig> {
     readonly #scale: number;
     #particles: Particle[] = [];
     #width: number = 0;
     #height: number = 0;
     #isFiring: boolean = false;
 
-    constructor(config: ConfettiSimulationConfig = {}) {
+    constructor(config: ConfettiConfig = {}) {
         super();
         this.#scale = config.scale ?? 1;
     }
@@ -24,7 +27,7 @@ export class ConfettiLayer extends SimulationLayer {
         this.#height = height;
     }
 
-    fire(config: Partial<Config>): void {
+    burst(config: Partial<Config>): void {
         const width = this.#width;
         const height = this.#height;
 

@@ -1,4 +1,10 @@
-export { BubbleLayer } from './layer';
-export { BubbleSimulation } from './simulation';
-export type { BubbleSimulationConfig } from './simulation';
+import { Bubbles } from './layer';
+import type { BubblesConfig } from './layer';
+import type { Effect } from '../effect';
+
+export function createBubbles(config?: BubblesConfig): Effect<BubblesConfig> {
+    return new Bubbles(config);
+}
+
+export type { BubblesConfig };
 export type { Bubble, PopParticle } from './types';

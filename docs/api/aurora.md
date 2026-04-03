@@ -1,35 +1,25 @@
 # Aurora API
 
-## `AuroraSimulation`
+## `Aurora`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new AuroraSimulation(canvas: HTMLCanvasElement, config?: AuroraSimulationConfig)
+createAurora(config?: AuroraConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the aurora animation.
-
-#### `stop(): void`
-
-Stops the aurora animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `AuroraSimulationConfig`
+## `AuroraConfig`
 
 ```typescript
-interface AuroraSimulationConfig {
+interface AuroraConfig {
     bands?: number;
     colors?: string[];
     speed?: number;
@@ -37,20 +27,18 @@ interface AuroraSimulationConfig {
     waveAmplitude?: number;
     verticalPosition?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property           | Type                               | Default                                                   | Description                                                     |
-|--------------------|------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------|
-| `bands`            | `number`                           | `5`                                                       | Number of aurora curtain rays.                                  |
-| `colors`           | `string[]`                         | `['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff']` | Base hex colors for each ray. Colors cycle if fewer than bands. |
-| `speed`            | `number`                           | `1`                                                       | Animation speed multiplier.                                     |
-| `intensity`        | `number`                           | `0.8`                                                     | Overall brightness/opacity (0-1).                               |
-| `waveAmplitude`    | `number`                           | `1`                                                       | Base wave undulation amplitude multiplier.                      |
-| `verticalPosition` | `number`                           | `0.68`                                                    | Normalized Y base for the aurora rays (0=top, 1=bottom).        |
-| `scale`            | `number`                           | `1`                                                       | Global scale factor for ray height.                             |
-| `canvasOptions`    | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}`                              | Options passed to `canvas.getContext('2d')`.                    |
+| Property           | Type       | Default                                                   | Description                                                     |
+|--------------------|------------|-----------------------------------------------------------|-----------------------------------------------------------------|
+| `bands`            | `number`   | `5`                                                       | Number of aurora curtain rays.                                  |
+| `colors`           | `string[]` | `['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff']` | Base hex colors for each ray. Colors cycle if fewer than bands. |
+| `speed`            | `number`   | `1`                                                       | Animation speed multiplier.                                     |
+| `intensity`        | `number`   | `0.8`                                                     | Overall brightness/opacity (0-1).                               |
+| `waveAmplitude`    | `number`   | `1`                                                       | Base wave undulation amplitude multiplier.                      |
+| `verticalPosition` | `number`   | `0.68`                                                    | Normalized Y base for the aurora rays (0=top, 1=bottom).        |
+| `scale`            | `number`   | `1`                                                       | Global scale factor for ray height.                             |
 
 ---
 

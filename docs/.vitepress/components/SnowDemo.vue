@@ -2,15 +2,16 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { SnowSimulation } from '@basmilius/effects';
+    import { createSnow } from '@basmilius/sparkle';
+    import type { Effect, SnowConfig } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: SnowSimulation | null = null;
+    let sim: Effect<SnowConfig> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new SnowSimulation(canvasRef.value);
-            sim.start();
+            sim = createSnow();
+            sim.mount(canvasRef.value).start();
         }
     });
 

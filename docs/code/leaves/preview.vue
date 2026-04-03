@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { LeafSimulation } from '@basmilius/sparkle';
+    import { createLeaves } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: LeafSimulation | null = null;
+    let sim: ReturnType<typeof createLeaves> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new LeafSimulation(canvasRef.value);
-            sim.start();
+            sim = createLeaves();
+            sim.mount(canvasRef.value).start();
         }
     });
 

@@ -21,9 +21,9 @@ example=../code/glitter/golden.vue
 All options are passed via a config object:
 
 ```typescript
-import { GlitterSimulation } from '@basmilius/sparkle';
+import { createGlitter } from '@basmilius/sparkle';
 
-const sim = new GlitterSimulation(canvas, {
+const glitter = createGlitter({
     count: 80,
     colors: ['#ffd700', '#c0c0c0', '#ff69b4'],
     size: 4,
@@ -32,7 +32,7 @@ const sim = new GlitterSimulation(canvas, {
     maxSettled: 200,
     scale: 1
 });
-sim.start();
+glitter.mount(canvas).start();
 ```
 
 ### Count
@@ -41,10 +41,10 @@ Control the number of falling glitter pieces:
 
 ```typescript
 // Subtle, sparse
-new GlitterSimulation(canvas, { count: 30 });
+createGlitter({ count: 30 });
 
 // Heavy glitter shower
-new GlitterSimulation(canvas, { count: 150 });
+createGlitter({ count: 150 });
 ```
 
 ### Colors
@@ -53,12 +53,12 @@ Set custom glitter colors using hex strings:
 
 ```typescript
 // Golden theme
-new GlitterSimulation(canvas, {
+createGlitter({
     colors: ['#ffd700', '#ffb700', '#daa520']
 });
 
 // Silver and blue
-new GlitterSimulation(canvas, {
+createGlitter({
     colors: ['#c0c0c0', '#e0e0e0', '#87ceeb']
 });
 ```
@@ -69,10 +69,10 @@ Control where glitter settles (0 = top, 1 = bottom):
 
 ```typescript
 // Settle higher up
-new GlitterSimulation(canvas, { groundLevel: 0.7 });
+createGlitter({ groundLevel: 0.7 });
 
 // Settle near the bottom
-new GlitterSimulation(canvas, { groundLevel: 0.95 });
+createGlitter({ groundLevel: 0.95 });
 ```
 
 ### Speed
@@ -81,10 +81,10 @@ Control how fast the glitter falls:
 
 ```typescript
 // Slow, gentle drift
-new GlitterSimulation(canvas, { speed: 0.5 });
+createGlitter({speed: 0.5});
 
 // Fast cascade
-new GlitterSimulation(canvas, { speed: 2 });
+createGlitter({speed: 2});
 ```
 
 ### Max Settled
@@ -93,8 +93,8 @@ Control how many settled pieces remain on the ground:
 
 ```typescript
 // Minimal accumulation
-new GlitterSimulation(canvas, { maxSettled: 50 });
+createGlitter({ maxSettled: 50 });
 
 // Dense carpet of glitter
-new GlitterSimulation(canvas, { maxSettled: 500 });
+createGlitter({ maxSettled: 500 });
 ```

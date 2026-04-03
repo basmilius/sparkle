@@ -1,4 +1,4 @@
-import { AuroraLayer, AuroraSimulation, BalloonLayer, BalloonSimulation, BubbleLayer, BubbleSimulation, ConfettiLayer, ConfettiSimulation, DonutLayer, DonutSimulation, FireflyLayer, FireflySimulation, FirepitLayer, FirepitSimulation, FIREWORK_VARIANTS, FireworkLayer, FireworkSimulation, GlitterLayer, GlitterSimulation, LanternLayer, LanternSimulation, LeafLayer, LeafSimulation, LightningLayer, LightningSimulation, MatrixLayer, MatrixSimulation, OrbitLayer, OrbitSimulation, ParticleLayer, ParticleSimulation, PetalLayer, PetalSimulation, PlasmaLayer, PlasmaSimulation, RainLayer, RainSimulation, SandstormLayer, SandstormSimulation, SnowLayer, SnowSimulation, SparklerLayer, SparklerSimulation, StarLayer, StarSimulation, StreamerLayer, StreamerSimulation, WaveLayer, WaveSimulation, WormholeLayer, WormholeSimulation } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBubbles, createConfetti, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitter, createLanterns, createLeaves, createLightning, createMatrix, createOrbits, createParticles, createPetals, createPlasma, createRain, createSandstorm, createSnow, createSparklers, createStars, createStreamers, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -24,11 +24,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff']}
         ],
         create: (canvas, config) => {
-            const sim = new AuroraSimulation(canvas, config);
-            sim.start();
+            const sim = createAurora(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new AuroraLayer(config)
+        createLayer: (config) => createAurora(config)
     },
     {
         id: 'balloons',
@@ -53,11 +53,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8']}
         ],
         create: (canvas, config) => {
-            const sim = new BalloonSimulation(canvas, config);
-            sim.start();
+            const sim = createBalloons(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new BalloonLayer(config)
+        createLayer: (config) => createBalloons(config)
     },
     {
         id: 'bubbles',
@@ -83,11 +83,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'toggle', key: 'popOnClick', label: 'Pop on Click', default: true}
         ],
         create: (canvas, config) => {
-            const sim = new BubbleSimulation(canvas, config);
-            sim.start();
+            const sim = createBubbles(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new BubbleLayer(config)
+        createLayer: (config) => createBubbles(config)
     },
     {
         id: 'confetti',
@@ -146,8 +146,12 @@ export const SIMULATORS: SimulatorDef[] = [
                 default: ['bowtie', 'circle', 'crescent', 'diamond', 'heart', 'hexagon', 'ribbon', 'ring', 'square', 'star', 'triangle']
             }
         ],
-        create: (canvas, config) => new ConfettiSimulation(canvas, config),
-        createLayer: (config) => new ConfettiLayer(config)
+        create: (canvas, config) => {
+            const sim = createConfetti(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createConfetti(config)
     },
     {
         id: 'donuts',
@@ -178,11 +182,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b']}
         ],
         create: (canvas, config) => {
-            const sim = new DonutSimulation(canvas, config);
-            sim.start();
+            const sim = createDonuts(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new DonutLayer(config)
+        createLayer: (config) => createDonuts(config)
     },
     {
         id: 'fireflies',
@@ -206,11 +210,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'color', label: 'Color', default: '#aaff44'}
         ],
         create: (canvas, config) => {
-            const sim = new FireflySimulation(canvas, config);
-            sim.start();
+            const sim = createFireflies(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new FireflyLayer(config)
+        createLayer: (config) => createFireflies(config)
     },
     {
         id: 'firepit',
@@ -232,11 +236,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1}
         ],
         create: (canvas, config) => {
-            const sim = new FirepitSimulation(canvas, config);
-            sim.start();
+            const sim = createFirepit(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new FirepitLayer(config)
+        createLayer: (config) => createFirepit(config)
     },
     {
         id: 'fireworks',
@@ -261,11 +265,11 @@ export const SIMULATORS: SimulatorDef[] = [
             }
         ],
         create: (canvas, config) => {
-            const sim = new FireworkSimulation(canvas, config);
-            sim.start();
+            const sim = createFireworks(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new FireworkLayer(config)
+        createLayer: (config) => createFireworks(config)
     },
     {
         id: 'glitter',
@@ -290,11 +294,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ffd700', '#ff69b4', '#00ffff', '#ff4500', '#9400d3']}
         ],
         create: (canvas, config) => {
-            const sim = new GlitterSimulation(canvas, config);
-            sim.start();
+            const sim = createGlitter(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new GlitterLayer(config)
+        createLayer: (config) => createGlitter(config)
     },
     {
         id: 'lanterns',
@@ -315,11 +319,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff8c00', '#ffb347', '#ffd700', '#ff6347']}
         ],
         create: (canvas, config) => {
-            const sim = new LanternSimulation(canvas, config);
-            sim.start();
+            const sim = createLanterns(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new LanternLayer(config)
+        createLayer: (config) => createLanterns(config)
     },
     {
         id: 'leaves',
@@ -342,11 +346,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#8b4513', '#d2691e', '#cd853f', '#daa520', '#b8860b']}
         ],
         create: (canvas, config) => {
-            const sim = new LeafSimulation(canvas, config);
-            sim.start();
+            const sim = createLeaves(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new LeafLayer(config)
+        createLayer: (config) => createLeaves(config)
     },
     {
         id: 'lightning',
@@ -368,11 +372,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'toggle', key: 'flash', label: 'Flash', default: true}
         ],
         create: (canvas, config) => {
-            const sim = new LightningSimulation(canvas, config);
-            sim.start();
+            const sim = createLightning(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new LightningLayer(config)
+        createLayer: (config) => createLightning(config)
     },
     {
         id: 'matrix',
@@ -396,11 +400,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'color', label: 'Color', default: '#00ff41'}
         ],
         create: (canvas, config) => {
-            const sim = new MatrixSimulation(canvas, config);
-            sim.start();
+            const sim = createMatrix(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new MatrixLayer(config)
+        createLayer: (config) => createMatrix(config)
     },
     {
         id: 'orbits',
@@ -425,11 +429,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#4d96ff', '#ff6b6b', '#ffd93d', '#6bcb77', '#cc5de8']}
         ],
         create: (canvas, config) => {
-            const sim = new OrbitSimulation(canvas, config);
-            sim.start();
+            const sim = createOrbits(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new OrbitLayer(config)
+        createLayer: (config) => createOrbits(config)
     },
     {
         id: 'particles',
@@ -478,11 +482,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'toggle', key: 'particleForces', label: 'Particle Forces', default: false}
         ],
         create: (canvas, config) => {
-            const sim = new ParticleSimulation(canvas, config);
-            sim.start();
+            const sim = createParticles(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new ParticleLayer(config)
+        createLayer: (config) => createParticles(config)
     },
     {
         id: 'petals',
@@ -505,11 +509,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ffb7c5', '#ff9eb5', '#ffc8d8', '#ffafc0']}
         ],
         create: (canvas, config) => {
-            const sim = new PetalSimulation(canvas, config);
-            sim.start();
+            const sim = createPetals(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new PetalLayer(config)
+        createLayer: (config) => createPetals(config)
     },
     {
         id: 'plasma',
@@ -527,11 +531,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1}
         ],
         create: (canvas, config) => {
-            const sim = new PlasmaSimulation(canvas, config);
-            sim.start();
+            const sim = createPlasma(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new PlasmaLayer(config)
+        createLayer: (config) => createPlasma(config)
     },
     {
         id: 'rain',
@@ -569,11 +573,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'toggle', key: 'splashes', label: 'Splashes', default: true}
         ],
         create: (canvas, config) => {
-            const sim = new RainSimulation(canvas, config);
-            sim.start();
+            const sim = createRain(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new RainLayer(config)
+        createLayer: (config) => createRain(config)
     },
     {
         id: 'sandstorm',
@@ -597,11 +601,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'color', label: 'Color', default: '#c2a060'}
         ],
         create: (canvas, config) => {
-            const sim = new SandstormSimulation(canvas, config);
-            sim.start();
+            const sim = createSandstorm(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new SandstormLayer(config)
+        createLayer: (config) => createSandstorm(config)
     },
     {
         id: 'snow',
@@ -622,11 +626,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'fillStyle', label: 'Color', default: '#ffffff'}
         ],
         create: (canvas, config) => {
-            const sim = new SnowSimulation(canvas, config);
-            sim.start();
+            const sim = createSnow(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new SnowLayer(config)
+        createLayer: (config) => createSnow(config)
     },
     {
         id: 'sparklers',
@@ -655,11 +659,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#fff6a0', '#ffee44', '#ffcc00', '#ffaa00', '#ff8800']}
         ],
         create: (canvas, config) => {
-            const sim = new SparklerSimulation(canvas, config);
-            sim.start();
+            const sim = createSparklers(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new SparklerLayer(config)
+        createLayer: (config) => createSparklers(config)
     },
     {
         id: 'stars',
@@ -699,11 +703,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'shootingColor', label: 'Shooting Color', default: '#ffffff'}
         ],
         create: (canvas, config) => {
-            const sim = new StarSimulation(canvas, config);
-            sim.start();
+            const sim = createStars(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new StarLayer(config)
+        createLayer: (config) => createStars(config)
     },
     {
         id: 'streamers',
@@ -722,11 +726,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8']}
         ],
         create: (canvas, config) => {
-            const sim = new StreamerSimulation(canvas, config);
-            sim.start();
+            const sim = createStreamers(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new StreamerLayer(config)
+        createLayer: (config) => createStreamers(config)
     },
     {
         id: 'waves',
@@ -749,11 +753,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'colors', key: 'colors', label: 'Wave Colors', default: ['#1a6b9e', '#1e7fb8', '#2493d2', '#28a6e6']}
         ],
         create: (canvas, config) => {
-            const sim = new WaveSimulation(canvas, config);
-            sim.start();
+            const sim = createWaves(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new WaveLayer(config)
+        createLayer: (config) => createWaves(config)
     },
     {
         id: 'wormhole',
@@ -784,11 +788,11 @@ export const SIMULATORS: SimulatorDef[] = [
             {type: 'color', key: 'color', label: 'Color', default: '#a78bfa'}
         ],
         create: (canvas, config) => {
-            const sim = new WormholeSimulation(canvas, config);
-            sim.start();
+            const sim = createWormhole(config);
+            sim.mount(canvas).start();
             return sim;
         },
-        createLayer: (config) => new WormholeLayer(config)
+        createLayer: (config) => createWormhole(config)
     }
 ];
 

@@ -21,9 +21,9 @@ example=../code/aurora/intense.vue
 All options are passed via a config object:
 
 ```typescript
-import { AuroraSimulation } from '@basmilius/sparkle';
+import { createAurora } from '@basmilius/sparkle';
 
-const sim = new AuroraSimulation(canvas, {
+const aurora = createAurora({
     bands: 4,
     colors: ['#00ff88', '#00aaff', '#8844ff', '#ff44aa'],
     speed: 1,
@@ -31,7 +31,7 @@ const sim = new AuroraSimulation(canvas, {
     waveAmplitude: 1,
     verticalPosition: 0.3
 });
-sim.start();
+aurora.mount(canvas).start();
 ```
 
 ### Bands
@@ -40,10 +40,10 @@ Control the number of light bands:
 
 ```typescript
 // Subtle, minimal
-new AuroraSimulation(canvas, { bands: 2 });
+createAurora({bands: 2});
 
 // Rich, layered
-new AuroraSimulation(canvas, { bands: 6 });
+createAurora({bands: 6});
 ```
 
 ### Colors
@@ -52,12 +52,12 @@ Set custom band colors:
 
 ```typescript
 // Warm sunset aurora
-new AuroraSimulation(canvas, {
+createAurora({
     colors: ['#ff6644', '#ffaa00', '#ff44aa']
 });
 
 // Cool ocean tones
-new AuroraSimulation(canvas, {
+createAurora({
     colors: ['#0044ff', '#00ccff', '#00ffaa']
 });
 ```
@@ -68,10 +68,10 @@ Control the overall brightness:
 
 ```typescript
 // Subtle, background effect
-new AuroraSimulation(canvas, { intensity: 0.3 });
+createAurora({intensity: 0.3});
 
 // Vivid, dramatic
-new AuroraSimulation(canvas, { intensity: 1.0 });
+createAurora({intensity: 1.0});
 ```
 
 ### Vertical Position
@@ -80,8 +80,8 @@ Place the aurora higher or lower on the screen:
 
 ```typescript
 // Near the top
-new AuroraSimulation(canvas, { verticalPosition: 0.15 });
+createAurora({verticalPosition: 0.15});
 
 // Center of the screen
-new AuroraSimulation(canvas, { verticalPosition: 0.5 });
+createAurora({verticalPosition: 0.5});
 ```

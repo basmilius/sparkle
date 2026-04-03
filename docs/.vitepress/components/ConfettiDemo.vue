@@ -2,11 +2,12 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { ConfettiSimulation } from '@basmilius/effects';
+    import { createConfetti } from '@basmilius/sparkle';
+    import type { ConfettiInstance } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
     const containerRef = ref<HTMLDivElement>();
-    let sim: ConfettiSimulation | null = null;
+    let sim: ConfettiInstance | null = null;
 
     function onClick(evt: MouseEvent): void {
         if (!sim || !containerRef.value) {
@@ -15,7 +16,7 @@
 
         const rect = containerRef.value.getBoundingClientRect();
 
-        sim.fire({
+        sim.burst({
             angle: 90,
             spread: 60,
             particles: 120,
@@ -27,7 +28,8 @@
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new ConfettiSimulation(canvasRef.value);
+            sim = createConfetti();
+            sim.mount(canvasRef.value);
         }
     });
 

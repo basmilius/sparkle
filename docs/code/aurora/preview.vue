@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { AuroraSimulation } from '@basmilius/sparkle';
+    import { createAurora } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: AuroraSimulation | null = null;
+    let sim: ReturnType<typeof createAurora> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new AuroraSimulation(canvasRef.value);
-            sim.start();
+            sim = createAurora();
+            sim.mount(canvasRef.value).start();
         }
     });
 

@@ -1,11 +1,19 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { WaveSimulationConfig } from './simulation';
 import type { Wave } from './types';
 
 const DEFAULT_COLORS = ['#0a3d6b', '#0e5a8a', '#1a7ab5', '#3399cc', '#66c2e0'];
 
-export class WaveLayer extends SimulationLayer {
+export interface WavesConfig {
+    readonly layers?: number;
+    readonly speed?: number;
+    readonly colors?: string[];
+    readonly foamColor?: string;
+    readonly foamAmount?: number;
+    readonly scale?: number;
+}
+
+export class Waves extends Effect<WavesConfig> {
     #speed: number;
     readonly #foamColor: string;
     #foamAmount: number;
@@ -14,7 +22,7 @@ export class WaveLayer extends SimulationLayer {
     #foamParticles: { x: number; y: number; alpha: number; size: number }[] = [];
     #maxFoamParticles: number;
 
-    constructor(config: WaveSimulationConfig = {}) {
+    constructor(config: WavesConfig = {}) {
         super();
 
         const layers = config.layers ?? 5;
@@ -45,7 +53,7 @@ export class WaveLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<WavesConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

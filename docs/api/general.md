@@ -10,9 +10,13 @@ Base class for all simulations. Manages the animation loop, frame rate limiting,
 
 ```typescript
 new LimitedFrameRateCanvas(
-    canvas: HTMLCanvasElement,
-    frameRate: number,
-    options?: CanvasRenderingContext2DSettings
+    canvas
+:
+HTMLCanvasElement,
+    frameRate
+:
+number,
+    options ? : CanvasRenderingContext2DSettings
 )
 ```
 

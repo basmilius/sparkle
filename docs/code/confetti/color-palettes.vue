@@ -22,7 +22,7 @@
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import type { Palette } from '@basmilius/sparkle';
-    import { ConfettiSimulation } from '@basmilius/sparkle';
+    import { createConfetti } from '@basmilius/sparkle';
 
     const paletteNames: Record<Palette, string> = {
         classic: 'Classic',
@@ -34,7 +34,7 @@
     const canvasRef = ref<HTMLCanvasElement>();
     const containerRef = ref<HTMLDivElement>();
     const activePalette = ref<Palette>('vibrant');
-    let sim: ConfettiSimulation | null = null;
+    let sim: ReturnType<typeof createConfetti> | null = null;
 
     function buttonStyle(palette: Palette): Record<string, string> {
         if (palette !== activePalette.value) {
@@ -57,7 +57,7 @@
 
         const rect = containerRef.value.getBoundingClientRect();
 
-        sim.fire({
+        sim.burst({
             angle: 90,
             spread: 70,
             particles: 120,
@@ -75,7 +75,7 @@
 
         const rect = containerRef.value.getBoundingClientRect();
 
-        sim.fire({
+        sim.burst({
             angle: 90,
             spread: 70,
             particles: 120,
@@ -88,7 +88,8 @@
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new ConfettiSimulation(canvasRef.value);
+            sim = createConfetti();
+            sim.mount(canvasRef.value).start();
         }
     });
 

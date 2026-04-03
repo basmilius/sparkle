@@ -25,9 +25,9 @@ example=../code/particles/repel.vue
 All options are passed via a config object:
 
 ```typescript
-import { ParticleSimulation } from '@basmilius/sparkle';
+import { createParticles } from '@basmilius/sparkle';
 
-const sim = new ParticleSimulation(canvas, {
+const particles = createParticles({
     count: 100,
     color: '#6366f1',
     lineColor: '#6366f1',
@@ -35,7 +35,7 @@ const sim = new ParticleSimulation(canvas, {
     mouseMode: 'connect',
     scale: 1
 });
-sim.start();
+particles.mount(canvas).start();
 ```
 
 ### Mouse Mode
@@ -44,16 +44,16 @@ Choose how particles interact with the cursor:
 
 ```typescript
 // Lines from cursor to nearby particles
-new ParticleSimulation(canvas, { mouseMode: 'connect' });
+createParticles({ mouseMode: 'connect' });
 
 // Pull particles toward cursor
-new ParticleSimulation(canvas, { mouseMode: 'attract' });
+createParticles({ mouseMode: 'attract' });
 
 // Push particles away from cursor
-new ParticleSimulation(canvas, { mouseMode: 'repel' });
+createParticles({ mouseMode: 'repel' });
 
 // No mouse interaction
-new ParticleSimulation(canvas, { mouseMode: 'none' });
+createParticles({ mouseMode: 'none' });
 ```
 
 ### Connection Distance
@@ -62,10 +62,10 @@ Control how close particles must be to connect:
 
 ```typescript
 // Short connections, dense clusters
-new ParticleSimulation(canvas, { connectionDistance: 60 });
+createParticles({ connectionDistance: 60 });
 
 // Long connections, web-like
-new ParticleSimulation(canvas, { connectionDistance: 200 });
+createParticles({ connectionDistance: 200 });
 ```
 
 ### Glow
@@ -73,7 +73,7 @@ new ParticleSimulation(canvas, { connectionDistance: 200 });
 Add a neon glow to particles:
 
 ```typescript
-new ParticleSimulation(canvas, {
+createParticles({
     glow: true,
     color: '#22d3ee',
     lineColor: '#22d3ee'
@@ -86,10 +86,10 @@ Set a solid background color:
 
 ```typescript
 // Dark background
-new ParticleSimulation(canvas, { background: '#0a0a1a' });
+createParticles({ background: '#0a0a1a' });
 
 // Transparent (default)
-new ParticleSimulation(canvas, { background: null });
+createParticles({ background: null });
 ```
 
 ::: tip Performance

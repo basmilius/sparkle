@@ -1,35 +1,25 @@
 # Rain API
 
-## `RainSimulation`
+## `Rain`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new RainSimulation(canvas: HTMLCanvasElement, config?: RainSimulationConfig)
+createRain(config?: RainConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the rain animation.
-
-#### `stop(): void`
-
-Stops the rain animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `RainSimulationConfig`
+## `RainConfig`
 
 ```typescript
-interface RainSimulationConfig {
+interface RainConfig {
     variant?: RainVariant;
     drops?: number;
     wind?: number;
@@ -38,21 +28,19 @@ interface RainSimulationConfig {
     color?: string;
     groundLevel?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                                             |
-|-----------------|------------------------------------|------------------------------|-----------------------------------------------------------------------------------------|
-| `variant`       | `RainVariant`                      | `'downpour'`                 | Rain intensity preset. Overrides defaults for `drops`, `speed`, `wind`, and `splashes`. |
-| `drops`         | `number`                           | Varies by variant            | Maximum number of raindrops. Automatically halved on small screens.                     |
-| `wind`          | `number`                           | Varies by variant            | Horizontal wind strength. Negative values blow left.                                    |
-| `speed`         | `number`                           | Varies by variant            | Fall speed multiplier.                                                                  |
-| `splashes`      | `boolean`                          | Varies by variant            | Enable splash particles on ground impact.                                               |
-| `color`         | `string`                           | `'rgba(174, 194, 224, 0.6)'` | CSS color string for raindrops and splashes.                                            |
-| `groundLevel`   | `number`                           | `1.0`                        | Normalized Y position of the ground (0-1).                                              |
-| `scale`         | `number`                           | `1`                          | Scales raindrop sizes proportionally.                                                   |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                                            |
+| Property     | Type          | Default                      | Description                                                                             |
+|--------------|---------------|------------------------------|-----------------------------------------------------------------------------------------|
+| `variant`    | `RainVariant` | `'downpour'`                 | Rain intensity preset. Overrides defaults for `drops`, `speed`, `wind`, and `splashes`. |
+| `drops`      | `number`      | Varies by variant            | Maximum number of raindrops. Automatically halved on small screens.                     |
+| `wind`       | `number`      | Varies by variant            | Horizontal wind strength. Negative values blow left.                                    |
+| `speed`      | `number`      | Varies by variant            | Fall speed multiplier.                                                                  |
+| `splashes`   | `boolean`     | Varies by variant            | Enable splash particles on ground impact.                                               |
+| `color`      | `string`      | `'rgba(174, 194, 224, 0.6)'` | CSS color string for raindrops and splashes.                                            |
+| `groundLevel`| `number`      | `1.0`                        | Normalized Y position of the ground (0-1).                                              |
+| `scale`      | `number`      | `1`                          | Scales raindrop sizes proportionally.                                                   |
 
 ---
 

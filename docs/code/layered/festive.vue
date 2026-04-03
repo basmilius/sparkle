@@ -8,16 +8,17 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { BalloonLayer, LayeredSimulation, SnowLayer } from '@basmilius/sparkle';
+    import { createBalloons, createScene, createSnow } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: LayeredSimulation | null = null;
+    let sim: ReturnType<typeof createScene> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new LayeredSimulation(canvasRef.value)
-                .add(new SnowLayer())
-                .add(new BalloonLayer({count: 8}));
+            sim = createScene()
+                .mount(canvasRef.value)
+                .layer(createSnow())
+                .layer(createBalloons({count: 8}));
             sim.start();
         }
     });

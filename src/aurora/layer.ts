@@ -1,20 +1,29 @@
 import { hexToRGB } from '@basmilius/utils';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { AuroraSimulationConfig } from './simulation';
 import type { AuroraBand } from './types';
 
 const DEFAULT_COLORS = ['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff'];
 const TOP_HUE = 265;
 
-export class AuroraLayer extends SimulationLayer {
+export interface AuroraConfig {
+    readonly bands?: number;
+    readonly colors?: string[];
+    readonly speed?: number;
+    readonly intensity?: number;
+    readonly waveAmplitude?: number;
+    readonly verticalPosition?: number;
+    readonly scale?: number;
+}
+
+export class Aurora extends Effect<AuroraConfig> {
     #speed: number;
     #intensity: number;
     #waveAmplitude: number;
     #verticalPosition: number;
     #bands: AuroraBand[] = [];
 
-    constructor(config: AuroraSimulationConfig = {}) {
+    constructor(config: AuroraConfig = {}) {
         super();
 
         const bandCount = config.bands ?? 5;
@@ -49,7 +58,7 @@ export class AuroraLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<AuroraConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

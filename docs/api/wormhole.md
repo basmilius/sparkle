@@ -1,52 +1,40 @@
 # Wormhole API
 
-## `WormholeSimulation`
+## `Wormhole`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new WormholeSimulation(canvas: HTMLCanvasElement, config?: WormholeSimulationConfig)
+createWormhole(config?: WormholeConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Initializes particles and starts the animation loop.
-
-#### `stop(): void`
-
-Stops the animation loop.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `WormholeSimulationConfig`
+## `WormholeConfig`
 
 ```typescript
-interface WormholeSimulationConfig {
+interface WormholeConfig {
     count?: number;
     speed?: number;
     color?: string;
     direction?: WormholeDirection;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                 |
-|-----------------|------------------------------------|------------------------------|-------------------------------------------------------------|
-| `count`         | `number`                           | `200`                        | Number of particles. Automatically halved on small screens. |
-| `speed`         | `number`                           | `1`                          | Global speed multiplier for particle movement.              |
-| `color`         | `string`                           | `'#6699ff'`                  | Particle and glow color (hex string).                       |
-| `direction`     | `WormholeDirection`                | `'inward'`                   | Direction of particle flow.                                 |
-| `scale`         | `number`                           | `1`                          | Global scale factor for particle sizes and trails.          |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                |
+| Property    | Type                 | Default     | Description                                                 |
+|-------------|----------------------|-------------|-------------------------------------------------------------|
+| `count`     | `number`             | `200`       | Number of particles. Automatically halved on small screens. |
+| `speed`     | `number`             | `1`         | Global speed multiplier for particle movement.              |
+| `color`     | `string`             | `'#6699ff'` | Particle and glow color (hex string).                       |
+| `direction` | `WormholeDirection`  | `'inward'`  | Direction of particle flow.                                 |
+| `scale`     | `number`             | `1`         | Global scale factor for particle sizes and trails.          |
 
 ---
 

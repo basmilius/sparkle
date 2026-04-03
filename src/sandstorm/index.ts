@@ -1,4 +1,10 @@
-export { SandstormLayer } from './layer';
-export { SandstormSimulation } from './simulation';
-export type { SandstormSimulationConfig } from './simulation';
+import { Sandstorm } from './layer';
+import type { SandstormConfig } from './layer';
+import type { Effect } from '../effect';
+
+export function createSandstorm(config?: SandstormConfig): Effect<SandstormConfig> {
+    return new Sandstorm(config);
+}
+
+export type { SandstormConfig };
 export type { SandGrain } from './types';

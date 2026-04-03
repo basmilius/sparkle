@@ -21,7 +21,7 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
     }
 
     withFade(fade: EdgeFade): this {
-        this.#simulation.withFade(fade);
+        this.#simulation.fade = fade;
         return this;
     }
 
@@ -57,10 +57,6 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
     tick(): void {
         const dt = (this.delta > 0 && this.delta < 200 ? this.delta / (1000 / 60) : 1) * this.speed * LimitedFrameRateCanvas.globalSpeed;
         this.#simulation.tick(dt, this.width, this.height);
-    }
-
-    configure(config: Record<string, unknown>): void {
-        this.#simulation.configure(config);
     }
 
     onResize(): void {

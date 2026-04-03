@@ -1,35 +1,25 @@
 # Particles API
 
-## `ParticleSimulation`
+## `Particles`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new ParticleSimulation(canvas: HTMLCanvasElement, config?: ParticleSimulationConfig)
+createParticles(config?: ParticlesConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the particle animation.
-
-#### `stop(): void`
-
-Stops the particle animation.
-
-#### `destroy(): void`
-
-Stops the animation, removes mouse listeners, and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `ParticleSimulationConfig`
+## `ParticlesConfig`
 
 ```typescript
-interface ParticleSimulationConfig {
+interface ParticlesConfig {
     count?: number;
     color?: string;
     lineColor?: string;
@@ -44,27 +34,25 @@ interface ParticleSimulationConfig {
     glow?: boolean;
     background?: string | null;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property             | Type                               | Default                      | Description                                                 |
-|----------------------|------------------------------------|------------------------------|-------------------------------------------------------------|
-| `count`              | `number`                           | `100`                        | Number of particles. Automatically halved on small screens. |
-| `color`              | `string`                           | `'#6366f1'`                  | Particle fill color (hex string).                           |
-| `lineColor`          | `string`                           | `'#6366f1'`                  | Connection line color (hex string).                         |
-| `size`               | `[number, number]`                 | `[1, 3]`                     | Min/max particle radius in pixels.                          |
-| `speed`              | `[number, number]`                 | `[0.2, 0.8]`                 | Min/max particle drift speed.                               |
-| `connectionDistance` | `number`                           | `120`                        | Maximum distance for connection lines (before scale).       |
-| `lineWidth`          | `number`                           | `0.5`                        | Connection line width in pixels.                            |
-| `mouseMode`          | `ParticleMouseMode`                | `'connect'`                  | Mouse interaction mode.                                     |
-| `mouseRadius`        | `number`                           | `150`                        | Mouse influence radius in pixels (before scale).            |
-| `mouseStrength`      | `number`                           | `0.03`                       | Mouse force strength (attract/repel modes).                 |
-| `particleForces`     | `boolean`                          | `false`                      | Enable inter-particle repulsion.                            |
-| `glow`               | `boolean`                          | `false`                      | Enable particle glow effect via shadowBlur.                 |
-| `background`         | `string \| null`                   | `null`                       | Background fill color. `null` for transparent.              |
-| `scale`              | `number`                           | `1`                          | Global scale factor.                                        |
-| `canvasOptions`      | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                |
+| Property             | Type                | Default     | Description                                                 |
+|----------------------|---------------------|-------------|-------------------------------------------------------------|
+| `count`              | `number`            | `100`       | Number of particles. Automatically halved on small screens. |
+| `color`              | `string`            | `'#6366f1'` | Particle fill color (hex string).                           |
+| `lineColor`          | `string`            | `'#6366f1'` | Connection line color (hex string).                         |
+| `size`               | `[number, number]`  | `[1, 3]`    | Min/max particle radius in pixels.                          |
+| `speed`              | `[number, number]`  | `[0.2, 0.8]`| Min/max particle drift speed.                               |
+| `connectionDistance` | `number`            | `120`       | Maximum distance for connection lines (before scale).       |
+| `lineWidth`          | `number`            | `0.5`       | Connection line width in pixels.                            |
+| `mouseMode`          | `ParticleMouseMode` | `'connect'` | Mouse interaction mode.                                     |
+| `mouseRadius`        | `number`            | `150`       | Mouse influence radius in pixels (before scale).            |
+| `mouseStrength`      | `number`            | `0.03`      | Mouse force strength (attract/repel modes).                 |
+| `particleForces`     | `boolean`           | `false`     | Enable inter-particle repulsion.                            |
+| `glow`               | `boolean`           | `false`     | Enable particle glow effect via shadowBlur.                 |
+| `background`         | `string \| null`    | `null`      | Background fill color. `null` for transparent.              |
+| `scale`              | `number`            | `1`         | Global scale factor.                                        |
 
 ---
 

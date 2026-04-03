@@ -21,9 +21,9 @@ example=../code/orbits/dense.vue
 All options are passed via a config object:
 
 ```typescript
-import { OrbitSimulation } from '@basmilius/sparkle';
+import { createOrbits } from '@basmilius/sparkle';
 
-const sim = new OrbitSimulation(canvas, {
+const orbits = createOrbits({
     centers: 3,
     orbitersPerCenter: 8,
     speed: 1,
@@ -31,7 +31,7 @@ const sim = new OrbitSimulation(canvas, {
     showCenters: true,
     scale: 1
 });
-sim.start();
+orbits.mount(canvas).start();
 ```
 
 ### Centers
@@ -40,10 +40,10 @@ Control the number of orbital center points:
 
 ```typescript
 // Single atom
-new OrbitSimulation(canvas, { centers: 1 });
+createOrbits({ centers: 1 });
 
 // Complex system
-new OrbitSimulation(canvas, { centers: 6 });
+createOrbits({ centers: 6 });
 ```
 
 ### Orbiters Per Center
@@ -52,10 +52,10 @@ Set how many particles orbit each center:
 
 ```typescript
 // Minimal
-new OrbitSimulation(canvas, { orbitersPerCenter: 4 });
+createOrbits({ orbitersPerCenter: 4 });
 
 // Dense
-new OrbitSimulation(canvas, { orbitersPerCenter: 16 });
+createOrbits({ orbitersPerCenter: 16 });
 ```
 
 ### Speed
@@ -64,10 +64,10 @@ Control the orbital velocity:
 
 ```typescript
 // Slow, meditative
-new OrbitSimulation(canvas, { speed: 0.5 });
+createOrbits({speed: 0.5});
 
 // Fast, energetic
-new OrbitSimulation(canvas, { speed: 2 });
+createOrbits({speed: 2});
 ```
 
 ### Trail Length
@@ -76,10 +76,10 @@ Set how long the trails are behind each orbiter:
 
 ```typescript
 // Short trails
-new OrbitSimulation(canvas, { trailLength: 5 });
+createOrbits({ trailLength: 5 });
 
 // Long, flowing trails
-new OrbitSimulation(canvas, { trailLength: 30 });
+createOrbits({ trailLength: 30 });
 ```
 
 ### Show Centers
@@ -88,7 +88,7 @@ Toggle the glow effect at each orbital center:
 
 ```typescript
 // Hide center glows
-new OrbitSimulation(canvas, { showCenters: false });
+createOrbits({ showCenters: false });
 ```
 
 ### Colors
@@ -96,7 +96,7 @@ new OrbitSimulation(canvas, { showCenters: false });
 Provide a custom palette for the orbiters:
 
 ```typescript
-new OrbitSimulation(canvas, {
+createOrbits({
     colors: ['#ff6b6b', '#ffd93d', '#6bcb77']
 });
 ```

@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { PlasmaSimulation } from '@basmilius/sparkle';
+    import { createPlasma } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: PlasmaSimulation | null = null;
+    let sim: ReturnType<typeof createPlasma> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new PlasmaSimulation(canvasRef.value);
-            sim.start();
+            sim = createPlasma();
+            sim.mount(canvasRef.value).start();
         }
     });
 

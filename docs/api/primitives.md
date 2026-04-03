@@ -11,7 +11,12 @@ A glowing line that travels from a start point to an end point. Sets `isDone` on
 ### Constructor
 
 ```typescript
-new Trail(start: Point, end: Point, config?: TrailConfig)
+new Trail(start
+:
+Point, end
+:
+Point, config ? : TrailConfig
+)
 ```
 
 | Parameter | Type                          | Description                               |
@@ -68,16 +73,22 @@ interface TrailConfig {
 
 ## `SparklerParticle`
 
-A glowing spark with a circular trail. The individual particle used by `SparklerSimulation`.
+A glowing spark with a circular trail. The individual particle used by `Sparklers`.
 
 ### Constructor
 
 ```typescript
 new SparklerParticle(
-    position: Point,
-    velocity: Point,
-    color: [number, number, number],
-    config?: SparklerParticleConfig
+    position
+:
+Point,
+    velocity
+:
+Point,
+    color
+:
+[number, number, number],
+    config ? : SparklerParticleConfig
 )
 ```
 
@@ -139,11 +150,19 @@ A single confetti piece with physics (velocity, gravity, swing, rotation, flip) 
 
 ```typescript
 new ConfettiParticle(
-    position: Point,
-    direction: number,
-    shape: ConfettiShape,
-    color: string,
-    config?: ConfettiParticleConfig
+    position
+:
+Point,
+    direction
+:
+number,
+    shape
+:
+ConfettiShape,
+    color
+:
+string,
+    config ? : ConfettiParticleConfig
 )
 ```
 
@@ -235,7 +254,12 @@ A floating balloon with gradient body, gloss highlight, knot, and swaying string
 ### Constructor
 
 ```typescript
-new BalloonParticle(position: Point, color: [number, number, number], config?: BalloonParticleConfig)
+new BalloonParticle(position
+:
+Point, color
+:
+[number, number, number], config ? : BalloonParticleConfig
+)
 ```
 
 | Parameter  | Type                                              | Description                               |
@@ -300,7 +324,14 @@ A line-rendered raindrop that moves along its velocity vector. `isDead` when it 
 ### Constructor
 
 ```typescript
-new RaindropParticle(position: Point, velocity: Point, color: [number, number, number], config?: RaindropParticleConfig)
+new RaindropParticle(position
+:
+Point, velocity
+:
+Point, color
+:
+[number, number, number], config ? : RaindropParticleConfig
+)
 ```
 
 | Parameter  | Type                                                | Description                                 |
@@ -356,7 +387,14 @@ A small circular particle that arcs upward and fades out. Spawned when a raindro
 ### Constructor
 
 ```typescript
-new SplashParticle(position: Point, velocity: Point, color: [number, number, number], config?: SplashParticleConfig)
+new SplashParticle(position
+:
+Point, velocity
+:
+Point, color
+:
+[number, number, number], config ? : SplashParticleConfig
+)
 ```
 
 ### Static methods
@@ -409,7 +447,19 @@ A softly pulsing glow dot with organic Lissajous-pattern drift. Wraps around can
 ### Constructor
 
 ```typescript
-new FireflyParticle(x: number, y: number, bounds: { width: number; height: number }, sprite: HTMLCanvasElement, config?: FireflyParticleConfig)
+new FireflyParticle(x
+:
+number, y
+:
+number, bounds
+:
+{
+    width: number;
+    height: number
+}
+,
+sprite: HTMLCanvasElement, config ? : FireflyParticleConfig
+)
 ```
 
 | Parameter | Type                                              | Description                               |
@@ -502,14 +552,22 @@ A single firework burst particle. See [Fireworks API](/api/fireworks) for `Firew
 
 ```typescript
 new Explosion(
-    position: Point,
-    hue: number,
-    lineWidth: number,
-    type: ExplosionType,
-    scale?: number,
-    angle?: number,
-    speed?: number,
-    vz?: number
+    position
+:
+Point,
+    hue
+:
+number,
+    lineWidth
+:
+number,
+    type
+:
+ExplosionType,
+    scale ? : number,
+    angle ? : number,
+    speed ? : number,
+    vz ? : number
 )
 ```
 
@@ -561,7 +619,18 @@ A rising projectile. Travels from start to target, dispatches `'remove'` on arri
 ### Constructor
 
 ```typescript
-new Firework(start: Point, target: Point, hue: number, tailWidth: number, baseSize: number)
+new Firework(start
+:
+Point, target
+:
+Point, hue
+:
+number, tailWidth
+:
+number, baseSize
+:
+number
+)
 ```
 
 ### Properties
@@ -600,7 +669,12 @@ A tiny physics particle used for trail sparks and crackle effects.
 ### Constructor
 
 ```typescript
-new Spark(position: Point, hue: number, velocityX?: number, velocityY?: number)
+new Spark(position
+:
+Point, hue
+:
+number, velocityX ? : number, velocityY ? : number
+)
 ```
 
 ### Properties

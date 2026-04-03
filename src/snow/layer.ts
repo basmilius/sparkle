@@ -1,14 +1,21 @@
 import { parseColor } from '../color';
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { SnowSimulationConfig } from './simulation';
 import type { Snowflake } from './snowflake';
+
+export interface SnowConfig {
+    readonly fillStyle?: string;
+    readonly particles?: number;
+    readonly scale?: number;
+    readonly size?: number;
+    readonly speed?: number;
+}
 
 const SPRITE_SIZE = 64;
 const SPRITE_CENTER = SPRITE_SIZE / 2;
 const SPRITE_RADIUS = SPRITE_SIZE / 2;
 
-export class SnowLayer extends SimulationLayer {
+export class Snow extends Effect<SnowConfig> {
     readonly #scale: number;
     readonly #size: number;
     #speed: number;
@@ -20,7 +27,7 @@ export class SnowLayer extends SimulationLayer {
     #sprites: HTMLCanvasElement[] = [];
     #height: number = 540;
 
-    constructor(config: SnowSimulationConfig = {}) {
+    constructor(config: SnowConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -42,9 +49,9 @@ export class SnowLayer extends SimulationLayer {
         }
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<SnowConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
     }
 

@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { GlitterSimulation } from '@basmilius/sparkle';
+    import { createGlitter } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: GlitterSimulation | null = null;
+    let sim: ReturnType<typeof createGlitter> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new GlitterSimulation(canvasRef.value);
-            sim.start();
+            sim = createGlitter();
+            sim.mount(canvasRef.value).start();
         }
     });
 

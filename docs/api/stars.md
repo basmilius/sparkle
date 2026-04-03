@@ -1,35 +1,25 @@
 # Stars API
 
-## `StarSimulation`
+## `Stars`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new StarSimulation(canvas: HTMLCanvasElement, config?: StarSimulationConfig)
+createStars(config?: StarsConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the star animation.
-
-#### `stop(): void`
-
-Stops the star animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `StarSimulationConfig`
+## `StarsConfig`
 
 ```typescript
-interface StarSimulationConfig {
+interface StarsConfig {
     mode?: StarMode;
     starCount?: number;
     shootingInterval?: [number, number];
@@ -39,22 +29,20 @@ interface StarSimulationConfig {
     shootingColor?: string;
     trailLength?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property           | Type                               | Default                      | Description                                                                  |
-|--------------------|------------------------------------|------------------------------|------------------------------------------------------------------------------|
-| `mode`             | `StarMode`                         | `'both'`                     | Which layers to display.                                                     |
-| `starCount`        | `number`                           | `150`                        | Number of twinkling background stars. Automatically halved on small screens. |
-| `shootingInterval` | `[number, number]`                 | `[120, 360]`                 | Tick range between shooting star spawns.                                     |
-| `shootingSpeed`    | `number`                           | `1`                          | Shooting star speed multiplier.                                              |
-| `twinkleSpeed`     | `number`                           | `1`                          | Twinkle animation speed multiplier.                                          |
-| `color`            | `string`                           | `'#ffffff'`                  | Star color (hex string).                                                     |
-| `shootingColor`    | `string`                           | `'#ffffff'`                  | Shooting star color (hex string).                                            |
-| `trailLength`      | `number`                           | `15`                         | Number of trail points per shooting star.                                    |
-| `scale`            | `number`                           | `1`                          | Global scale factor.                                                         |
-| `canvasOptions`    | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                                 |
+| Property           | Type               | Default      | Description                                                                  |
+|--------------------|--------------------|--------------|------------------------------------------------------------------------------|
+| `mode`             | `StarMode`         | `'both'`     | Which layers to display.                                                     |
+| `starCount`        | `number`           | `150`        | Number of twinkling background stars. Automatically halved on small screens. |
+| `shootingInterval` | `[number, number]` | `[120, 360]` | Tick range between shooting star spawns.                                     |
+| `shootingSpeed`    | `number`           | `1`          | Shooting star speed multiplier.                                              |
+| `twinkleSpeed`     | `number`           | `1`          | Twinkle animation speed multiplier.                                          |
+| `color`            | `string`           | `'#ffffff'`  | Star color (hex string).                                                     |
+| `shootingColor`    | `string`           | `'#ffffff'`  | Shooting star color (hex string).                                            |
+| `trailLength`      | `number`           | `15`         | Number of trail points per shooting star.                                    |
+| `scale`            | `number`           | `1`          | Global scale factor.                                                         |
 
 ---
 
@@ -102,6 +90,6 @@ type ShootingStar = {
     alpha: number; // Current opacity
     size: number;  // Head radius
     decay: number; // Alpha decay per frame
-    trail: {x: number; y: number}[]; // Trail positions
+    trail: { x: number; y: number }[]; // Trail positions
 };
 ```

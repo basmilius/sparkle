@@ -1,35 +1,25 @@
 # Orbits API
 
-## `OrbitSimulation`
+## `Orbits`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new OrbitSimulation(canvas: HTMLCanvasElement, config?: OrbitSimulationConfig)
+createOrbits(config?: OrbitsConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Initializes centers and orbiters, then starts the animation loop.
-
-#### `stop(): void`
-
-Stops the animation loop.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `OrbitSimulationConfig`
+## `OrbitsConfig`
 
 ```typescript
-interface OrbitSimulationConfig {
+interface OrbitsConfig {
     centers?: number;
     orbitersPerCenter?: number;
     speed?: number;
@@ -37,20 +27,18 @@ interface OrbitSimulationConfig {
     trailLength?: number;
     showCenters?: boolean;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property            | Type                               | Default                      | Description                                                            |
-|---------------------|------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `centers`           | `number`                           | `3`                          | Number of orbital center points.                                       |
-| `orbitersPerCenter` | `number`                           | `8`                          | Number of particles per center. Automatically halved on small screens. |
-| `speed`             | `number`                           | `1`                          | Orbital speed multiplier.                                              |
-| `colors`            | `string[]`                         | `ORBIT_COLORS`               | Array of hex color strings for the orbiters.                           |
-| `trailLength`       | `number`                           | `15`                         | Number of trail segments behind each orbiter.                          |
-| `showCenters`       | `boolean`                          | `true`                       | Whether to draw a subtle glow at each center point.                    |
-| `scale`             | `number`                           | `1`                          | Scales orbit radii and particle sizes proportionally.                  |
-| `canvasOptions`     | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                           |
+| Property            | Type       | Default        | Description                                                            |
+|---------------------|------------|----------------|------------------------------------------------------------------------|
+| `centers`           | `number`   | `3`            | Number of orbital center points.                                       |
+| `orbitersPerCenter` | `number`   | `8`            | Number of particles per center. Automatically halved on small screens. |
+| `speed`             | `number`   | `1`            | Orbital speed multiplier.                                              |
+| `colors`            | `string[]` | `ORBIT_COLORS` | Array of hex color strings for the orbiters.                           |
+| `trailLength`       | `number`   | `15`           | Number of trail segments behind each orbiter.                          |
+| `showCenters`       | `boolean`  | `true`         | Whether to draw a subtle glow at each center point.                    |
+| `scale`             | `number`   | `1`            | Scales orbit radii and particle sizes proportionally.                  |
 
 ---
 
@@ -81,6 +69,6 @@ type Orbiter = {
     tilt: number;          // Orbit plane tilt for 3D perspective
     size: number;          // Particle radius in pixels
     color: string;         // Hex color string
-    trail: {x: number; y: number}[];  // Trail positions
+    trail: { x: number; y: number }[];  // Trail positions
 };
 ```

@@ -1,3 +1,9 @@
-export { DonutLayer } from './layer';
-export { DonutSimulation } from './simulation';
-export type { DonutSimulationConfig } from './simulation';
+import { Donuts } from './layer';
+import type { DonutsConfig } from './layer';
+import type { Effect } from '../effect';
+
+export function createDonuts(config?: DonutsConfig): Effect<DonutsConfig> {
+    return new Donuts(config);
+}
+
+export type { DonutsConfig };

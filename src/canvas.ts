@@ -120,6 +120,18 @@ export class LimitedFrameRateCanvas {
         cancelAnimationFrame(this.#frame);
     }
 
+    pause(): void {
+        this.#isStopped = true;
+        cancelAnimationFrame(this.#frame);
+    }
+
+    resume(): void {
+        if (this.#isStopped) {
+            this.#isStopped = false;
+            this.#frame = requestAnimationFrame(this.loop.bind(this));
+        }
+    }
+
     draw(): void {
         throw new Error('LimitedFrameRateCanvas::draw() should be overwritten.');
     }

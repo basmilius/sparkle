@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { FirepitSimulation } from '@basmilius/sparkle';
+    import { createFirepit } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: FirepitSimulation | null = null;
+    let sim: ReturnType<typeof createFirepit> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new FirepitSimulation(canvasRef.value);
-            sim.start();
+            sim = createFirepit();
+            sim.mount(canvasRef.value).start();
         }
     });
 

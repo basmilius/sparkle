@@ -21,16 +21,16 @@ example=../code/lightning/storm.vue
 All options are passed via a config object:
 
 ```typescript
-import { LightningSimulation } from '@basmilius/sparkle';
+import { createLightning } from '@basmilius/sparkle';
 
-const sim = new LightningSimulation(canvas, {
+const lightning = createLightning({
     frequency: 2,
     color: '#b4c8ff',
     branches: true,
     flash: true,
     scale: 1
 });
-sim.start();
+lightning.mount(canvas).start();
 ```
 
 ### Frequency
@@ -39,10 +39,10 @@ Control how often bolts spawn. Higher values mean more frequent strikes:
 
 ```typescript
 // Rare bolts (roughly every 6 seconds)
-new LightningSimulation(canvas, { frequency: 0.5 });
+createLightning({ frequency: 0.5 });
 
 // Frequent storm
-new LightningSimulation(canvas, { frequency: 3 });
+createLightning({ frequency: 3 });
 ```
 
 ### Branches
@@ -51,10 +51,10 @@ Enable or disable smaller branch bolts that fork off the main bolt:
 
 ```typescript
 // Clean bolts without branches
-new LightningSimulation(canvas, { branches: false });
+createLightning({ branches: false });
 
 // With branches (default)
-new LightningSimulation(canvas, { branches: true });
+createLightning({ branches: true });
 ```
 
 ### Flash
@@ -63,10 +63,10 @@ Toggle the brief white screen flash when a bolt strikes:
 
 ```typescript
 // No screen flash
-new LightningSimulation(canvas, { flash: false });
+createLightning({ flash: false });
 
 // With flash (default)
-new LightningSimulation(canvas, { flash: true });
+createLightning({ flash: true });
 ```
 
 ### Color
@@ -75,11 +75,11 @@ Customize the bolt color:
 
 ```typescript
 // Default blue-white
-new LightningSimulation(canvas, { color: '#b4c8ff' });
+createLightning({ color: '#b4c8ff' });
 
 // Purple lightning
-new LightningSimulation(canvas, { color: '#c8a0ff' });
+createLightning({ color: '#c8a0ff' });
 
 // Warm golden
-new LightningSimulation(canvas, { color: '#ffe080' });
+createLightning({ color: '#ffe080' });
 ```

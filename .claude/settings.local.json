@@ -16,7 +16,8 @@
       "Bash(curl -s \"http://localhost:5177/src/views/SimulatorView.vue\")",
       "Bash(curl -s \"http://localhost:5177/\")",
       "Bash(pkill -f \"vite\")",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(python3:*)"
     ]
   }
 }

@@ -1,11 +1,21 @@
-import { SimulationLayer } from '../layer';
+import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { BubbleSimulationConfig } from './simulation';
 import type { Bubble, PopParticle } from './types';
 
 const DEFAULT_COLORS = ['#88ccff', '#aaddff', '#ccbbff'];
 
-export class BubbleLayer extends SimulationLayer {
+export interface BubblesConfig {
+    readonly count?: number;
+    readonly sizeRange?: [number, number];
+    readonly speed?: number;
+    readonly popOnClick?: boolean;
+    readonly popRadius?: number;
+    readonly colors?: string[];
+    readonly wobbleAmount?: number;
+    readonly scale?: number;
+}
+
+export class Bubbles extends Effect<BubblesConfig> {
     readonly #scale: number;
     #speed: number;
     readonly #sizeRange: [number, number];
@@ -20,7 +30,7 @@ export class BubbleLayer extends SimulationLayer {
     #popParticles: PopParticle[] = [];
     #canvas: HTMLCanvasElement | null = null;
 
-    constructor(config: BubbleSimulationConfig = {}) {
+    constructor(config: BubblesConfig = {}) {
         super();
 
         this.#scale = config.scale ?? 1;
@@ -58,7 +68,7 @@ export class BubbleLayer extends SimulationLayer {
         this.#canvas = null;
     }
 
-    configure(config: Record<string, unknown>): void {
+    configure(config: Partial<BubblesConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed as number;
         }

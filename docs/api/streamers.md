@@ -1,50 +1,38 @@
 # Streamers API
 
-## `StreamerSimulation`
+## `Streamers`
 
-Extends [`LimitedFrameRateCanvas`](./general#limitedframeratecanvas).
+Extends [`Effect`](./layered#effect-tconfig).
 
-### Constructor
+### Factory Function
 
 ```typescript
-new StreamerSimulation(canvas: HTMLCanvasElement, config?: StreamerSimulationConfig)
+createStreamers(config?: StreamersConfig)
 ```
 
 ### Methods
 
-#### `start(): void`
-
-Starts the streamers animation.
-
-#### `stop(): void`
-
-Stops the streamers animation.
-
-#### `destroy(): void`
-
-Stops the animation and removes all event listeners.
+See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---
 
-## `StreamerSimulationConfig`
+## `StreamersConfig`
 
 ```typescript
-interface StreamerSimulationConfig {
+interface StreamersConfig {
     count?: number;
     colors?: string[];
     speed?: number;
     scale?: number;
-    canvasOptions?: CanvasRenderingContext2DSettings;
 }
 ```
 
-| Property        | Type                               | Default                      | Description                                                      |
-|-----------------|------------------------------------|------------------------------|------------------------------------------------------------------|
-| `count`         | `number`                           | `20`                         | Number of streamers. Automatically halved on small screens.      |
-| `colors`        | `string[]`                         | `STREAMER_COLORS`            | Array of hex color strings for the streamers.                    |
-| `speed`         | `number`                           | `1`                          | Fall speed multiplier. Higher values make streamers fall faster. |
-| `scale`         | `number`                           | `1`                          | Scales streamer sizes, widths, and physics proportionally.       |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                     |
+| Property | Type       | Default           | Description                                                      |
+|----------|------------|-------------------|------------------------------------------------------------------|
+| `count`  | `number`   | `20`              | Number of streamers. Automatically halved on small screens.      |
+| `colors` | `string[]` | `STREAMER_COLORS` | Array of hex color strings for the streamers.                    |
+| `speed`  | `number`   | `1`               | Fall speed multiplier. Higher values make streamers fall faster. |
+| `scale`  | `number`   | `1`               | Scales streamer sizes, widths, and physics proportionally.       |
 
 ---
 
@@ -58,7 +46,7 @@ type Streamer = {
     y: number;            // Head Y position in pixels
     length: number;       // Total ribbon length in pixels
     width: number;        // Base ribbon width in pixels
-    segments: {x: number; y: number}[]; // Points forming the ribbon path
+    segments: { x: number; y: number }[]; // Points forming the ribbon path
     fallSpeed: number;    // Vertical fall speed per frame
     swayPhase: number;    // Current phase of the sway oscillation
     swaySpeed: number;    // Speed of the sway oscillation

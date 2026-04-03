@@ -7,27 +7,20 @@ export type EdgeFade = {
     readonly right?: EdgeFadeSide;
 };
 
-export abstract class SimulationLayer {
-    fade: EdgeFade | null = null;
+/**
+ * Internal interface implemented by all Effect subclasses. Used by SimulationCanvas
+ * and Scene to drive rendering without depending on the generic Effect<TConfig> type.
+ */
+export interface SimulationLayer {
+    fade: EdgeFade | null;
 
-    abstract tick(dt: number, width: number, height: number): void;
+    tick(dt: number, width: number, height: number): void;
 
-    abstract draw(ctx: CanvasRenderingContext2D, width: number, height: number): void;
+    draw(ctx: CanvasRenderingContext2D, width: number, height: number): void;
 
-    configure(_config: Record<string, unknown>): void {
-    }
+    onResize(width: number, height: number): void;
 
-    onResize(_width: number, _height: number): void {
-    }
+    onMount(canvas: HTMLCanvasElement): void;
 
-    onMount(_canvas: HTMLCanvasElement): void {
-    }
-
-    onUnmount(_canvas: HTMLCanvasElement): void {
-    }
-
-    withFade(fade: EdgeFade): this {
-        this.fade = fade;
-        return this;
-    }
+    onUnmount(canvas: HTMLCanvasElement): void;
 }

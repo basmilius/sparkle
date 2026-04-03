@@ -21,21 +21,21 @@ example=../code/plasma/fast.vue
 All options are passed via a config object:
 
 ```typescript
-import { PlasmaSimulation } from '@basmilius/sparkle';
+import { createPlasma } from '@basmilius/sparkle';
 
-const sim = new PlasmaSimulation(canvas, {
+const plasma = createPlasma({
     speed: 1,
     scale: 1,
     resolution: 4,
     palette: [
-        { r: 0, g: 255, b: 255 },
-        { r: 255, g: 0, b: 255 },
-        { r: 255, g: 255, b: 0 },
-        { r: 0, g: 100, b: 255 },
-        { r: 0, g: 255, b: 100 }
+        {r: 0, g: 255, b: 255},
+        {r: 255, g: 0, b: 255},
+        {r: 255, g: 255, b: 0},
+        {r: 0, g: 100, b: 255},
+        {r: 0, g: 255, b: 100}
     ]
 });
-sim.start();
+plasma.mount(canvas).start();
 ```
 
 ### Speed
@@ -44,10 +44,10 @@ Control the animation speed:
 
 ```typescript
 // Slow, meditative
-new PlasmaSimulation(canvas, { speed: 0.3 });
+createPlasma({speed: 0.3});
 
 // Fast, energetic
-new PlasmaSimulation(canvas, { speed: 3 });
+createPlasma({speed: 3});
 ```
 
 ### Scale
@@ -56,10 +56,10 @@ Adjust the size of the plasma patterns:
 
 ```typescript
 // Zoomed in, large patterns
-new PlasmaSimulation(canvas, { scale: 2 });
+createPlasma({ scale: 2 });
 
 // Zoomed out, fine detail
-new PlasmaSimulation(canvas, { scale: 0.5 });
+createPlasma({ scale: 0.5 });
 ```
 
 ### Resolution
@@ -68,10 +68,10 @@ Set the pixel block size for rendering. Higher values are faster but chunkier:
 
 ```typescript
 // Sharp, detailed (slower)
-new PlasmaSimulation(canvas, { resolution: 2 });
+createPlasma({ resolution: 2 });
 
 // Chunky, retro feel (faster)
-new PlasmaSimulation(canvas, { resolution: 8 });
+createPlasma({ resolution: 8 });
 ```
 
 ### Palette
@@ -80,7 +80,7 @@ Define custom colors for the plasma gradient:
 
 ```typescript
 // Fire palette
-new PlasmaSimulation(canvas, {
+createPlasma({
     palette: [
         { r: 255, g: 0, b: 0 },
         { r: 255, g: 165, b: 0 },
@@ -90,7 +90,7 @@ new PlasmaSimulation(canvas, {
 });
 
 // Ocean palette
-new PlasmaSimulation(canvas, {
+createPlasma({
     palette: [
         { r: 0, g: 20, b: 80 },
         { r: 0, g: 100, b: 200 },

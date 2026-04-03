@@ -20,7 +20,7 @@
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
     function onConfettiClick(evt: MouseEvent): void {
-        (sim as any)?.fire?.({
+        (sim as any)?.burst?.({
             ...config.value,
             x: evt.clientX / innerWidth,
             y: evt.clientY / innerHeight
@@ -29,7 +29,7 @@
 
     function onFireworksClick(evt: MouseEvent): void {
         const variant = FIREWORK_VARIANTS[Math.floor(Math.random() * FIREWORK_VARIANTS.length)];
-        (sim as any)?.fireExplosion?.(variant, {x: evt.clientX, y: evt.clientY});
+        (sim as any)?.launch?.(variant, {x: evt.clientX, y: evt.clientY});
     }
 
     function initConfig(): void {
@@ -61,7 +61,7 @@
     }
 
     function fireVariant(variant: string): void {
-        (sim as any)?.fireExplosion?.(variant, {
+        (sim as any)?.launch?.(variant, {
             x: innerWidth * 0.2 + Math.random() * innerWidth * 0.6,
             y: innerHeight * 0.15 + Math.random() * innerHeight * 0.35
         });

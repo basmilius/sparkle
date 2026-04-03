@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { SandstormSimulation } from '@basmilius/sparkle';
+    import { createSandstorm } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: SandstormSimulation | null = null;
+    let sim: ReturnType<typeof createSandstorm> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new SandstormSimulation(canvasRef.value);
-            sim.start();
+            sim = createSandstorm();
+            sim.mount(canvasRef.value).start();
         }
     });
 

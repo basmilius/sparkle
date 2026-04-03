@@ -8,15 +8,15 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { StreamerSimulation } from '@basmilius/sparkle';
+    import { createStreamers } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: StreamerSimulation | null = null;
+    let sim: ReturnType<typeof createStreamers> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = new StreamerSimulation(canvasRef.value);
-            sim.start();
+            sim = createStreamers();
+            sim.mount(canvasRef.value).start();
         }
     });
 
