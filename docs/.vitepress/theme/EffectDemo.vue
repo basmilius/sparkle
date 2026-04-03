@@ -16,6 +16,16 @@
             <div class="effect-demo__speed-divider"/>
 
             <button
+                v-for="option in FRAME_RATE_OPTIONS"
+                :key="String(option.value)"
+                :class="{'effect-demo__speed-button--active': frameRate === option.value}"
+                @click.stop="setFrameRate(option.value)">
+                {{ option.label }}
+            </button>
+
+            <div class="effect-demo__speed-divider"/>
+
+            <button
                 v-for="option in SPEED_OPTIONS"
                 :key="option.value"
                 :class="{'effect-demo__speed-button--active': speed === option.value}"
@@ -32,6 +42,14 @@
     import { onMounted, onUnmounted, ref, watch } from 'vue';
     import { speed } from './useSpeed';
     import { fpsEnabled, toggleFps } from './useFps';
+    import { frameRate } from './useFrameRate';
+
+    const FRAME_RATE_OPTIONS = [
+        {label: '15fps', value: 15},
+        {label: '30fps', value: 30},
+        {label: '60fps', value: null},
+        {label: '∞', value: 0}
+    ] as const;
 
     const SPEED_OPTIONS = [
         {label: '1x', value: 1},
@@ -47,12 +65,13 @@
 
     const el = ref<HTMLDivElement>();
 
-    let Canvas: { globalSpeed: number; showFps: boolean } | null = null;
+    let Canvas: { globalSpeed: number; globalFrameRate: number | null; showFps: boolean } | null = null;
 
     onMounted(async () => {
         const {LimitedFrameRateCanvas} = await import('@basmilius/sparkle');
         Canvas = LimitedFrameRateCanvas;
         Canvas.globalSpeed = speed.value;
+        Canvas.globalFrameRate = frameRate.value;
         Canvas.showFps = fpsEnabled.value;
     });
 
@@ -68,6 +87,12 @@
         }
     });
 
+    watch(frameRate, value => {
+        if (Canvas) {
+            Canvas.globalFrameRate = value;
+        }
+    });
+
     watch(fpsEnabled, value => {
         if (Canvas) {
             Canvas.showFps = value;
@@ -76,6 +101,10 @@
 
     function setSpeed(value: number): void {
         speed.value = value;
+    }
+
+    function setFrameRate(value: number | null): void {
+        frameRate.value = value;
     }
 
     defineExpose({

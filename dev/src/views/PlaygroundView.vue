@@ -18,6 +18,14 @@
     const background = ref('#0f0f11');
     const showAddMenu = ref(false);
     const globalSpeed = ref(LimitedFrameRateCanvas.globalSpeed);
+    const globalFrameRate = ref<number | null>(LimitedFrameRateCanvas.globalFrameRate);
+
+    const FRAME_RATE_OPTIONS = [
+        {label: '15fps', value: 15},
+        {label: '30fps', value: 30},
+        {label: '60fps', value: null},
+        {label: '∞', value: 0}
+    ] as const;
     let scene: Scene | null = null;
     // Holds effect instances in layer order for direct configure() calls
     const effectInstances: any[] = [];
@@ -112,6 +120,11 @@
         LimitedFrameRateCanvas.globalSpeed = val;
     }
 
+    function setFrameRate(val: number | null): void {
+        globalFrameRate.value = val;
+        LimitedFrameRateCanvas.globalFrameRate = val;
+    }
+
     onMounted(() => {
         addLayer('aurora');
         addLayer('stars');
@@ -163,6 +176,20 @@
                             :value="globalSpeed"
                             @input="(e) => onSpeedChange(parseFloat((e.target as HTMLInputElement).value))"
                         />
+                    </div>
+                    <div class="control">
+                        <label>Frame Rate</label>
+                        <div class="btn-group">
+                            <button
+                                v-for="option in FRAME_RATE_OPTIONS"
+                                :key="String(option.value)"
+                                type="button"
+                                class="btn-group-btn"
+                                :class="{'is-active': globalFrameRate === option.value}"
+                                @click="setFrameRate(option.value)">
+                                {{ option.label }}
+                            </button>
+                        </div>
                     </div>
 
                     <div class="control control-color">

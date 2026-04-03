@@ -1,5 +1,6 @@
 export class LimitedFrameRateCanvas {
     static #globalSpeed: number = 1;
+    static #globalFrameRate: number | null = null;
     static #showFps: boolean = false;
 
     static get globalSpeed(): number {
@@ -8,6 +9,20 @@ export class LimitedFrameRateCanvas {
 
     static set globalSpeed(value: number) {
         LimitedFrameRateCanvas.#globalSpeed = value;
+    }
+
+    /**
+     * Global frame rate override for all canvas instances.
+     * null = use each instance's own frame rate.
+     * 0 = unlimited (render as fast as the browser allows).
+     * Any positive number = cap at that many frames per second.
+     */
+    static get globalFrameRate(): number | null {
+        return LimitedFrameRateCanvas.#globalFrameRate;
+    }
+
+    static set globalFrameRate(value: number | null) {
+        LimitedFrameRateCanvas.#globalFrameRate = value;
     }
 
     static get showFps(): boolean {
@@ -60,6 +75,10 @@ export class LimitedFrameRateCanvas {
         this.#speed = value;
     }
 
+    get dpr(): number {
+        return devicePixelRatio;
+    }
+
     get frameRate(): number {
         return this.#frameRate;
     }
@@ -88,7 +107,7 @@ export class LimitedFrameRateCanvas {
         this.#canvas = canvas;
         this.#context = canvas.getContext('2d', options);
         this.#frameRate = frameRate;
-        this.#target = 1000 / frameRate;
+        this.#target = frameRate > 0 ? 1000 / frameRate : 0;
 
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
         this.onResize = this.onResize.bind(this);
@@ -105,7 +124,10 @@ export class LimitedFrameRateCanvas {
         this.#current = Date.now();
         this.#frame = requestAnimationFrame(this.loop.bind(this));
 
-        if (this.#then > 0 && this.#current - this.#then + 1 < this.#target) {
+        const globalRate = LimitedFrameRateCanvas.#globalFrameRate;
+        const effectiveTarget = globalRate !== null ? (globalRate > 0 ? 1000 / globalRate : 0) : this.#target;
+
+        if (effectiveTarget > 0 && this.#then > 0 && this.#current - this.#then + 1 < effectiveTarget) {
             return;
         }
 
@@ -165,13 +187,13 @@ export class LimitedFrameRateCanvas {
     #drawFps(): void {
         const ctx = this.#context;
         const text = `${this.#fps} FPS`;
-        const x = 8;
-        const y = 8;
+        const x = 9;
+        const y = 9;
         const paddingX = 6;
         const paddingY = 4;
 
         ctx.save();
-        ctx.font = '500 11px ui-monospace, monospace';
+        ctx.font = '700 10px ui-monospace, monospace';
 
         const textWidth = ctx.measureText(text).width;
         const boxWidth = textWidth + paddingX * 2;
@@ -179,12 +201,12 @@ export class LimitedFrameRateCanvas {
 
         ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
         ctx.beginPath();
-        ctx.roundRect(x, y, boxWidth, boxHeight, 4);
+        ctx.roundRect(x, y, boxWidth, boxHeight, 3);
         ctx.fill();
 
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.textBaseline = 'middle';
-        ctx.fillText(text, x + paddingX, y + boxHeight / 2);
+        ctx.fillText(text, x + paddingX, y + boxHeight / 1.9);
         ctx.restore();
     }
 

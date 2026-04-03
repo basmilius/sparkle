@@ -50,7 +50,7 @@ export abstract class Effect<TConfig = Record<string, unknown>> implements Simul
      * Mount this effect to a canvas element or CSS selector, creating the render loop.
      * Must be called before start().
      */
-    mount(canvas: HTMLCanvasElement | string, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}): this {
+    mount(canvas: HTMLCanvasElement | string, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}, frameRate: number = 60): this {
         if (typeof canvas === 'string') {
             const el = document.querySelector<HTMLCanvasElement>(canvas);
 
@@ -61,7 +61,7 @@ export abstract class Effect<TConfig = Record<string, unknown>> implements Simul
             canvas = el;
         }
 
-        this.#canvas = new SimulationCanvas(canvas, this as unknown as SimulationLayer, 60, options);
+        this.#canvas = new SimulationCanvas(canvas, this as unknown as SimulationLayer, frameRate, options);
         return this;
     }
 

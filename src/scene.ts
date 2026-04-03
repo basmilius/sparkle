@@ -38,19 +38,22 @@ class SceneCanvas extends LimitedFrameRateCanvas {
     }
 
     draw(): void {
-        this.canvas.height = this.height;
-        this.canvas.width = this.width;
+        const dpr = this.dpr;
+        this.canvas.height = this.height * dpr;
+        this.canvas.width = this.width * dpr;
 
         const ctx = this.context;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, this.width, this.height);
 
         for (const layer of this.#layers) {
             if (layer.fade) {
-                const offCtx = this.#getOffscreenCtx(this.width, this.height);
+                const offCtx = this.#getOffscreenCtx(this.width * dpr, this.height * dpr);
+                offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
                 offCtx.clearRect(0, 0, this.width, this.height);
                 layer.draw(offCtx, this.width, this.height);
                 applyEdgeFade(offCtx, this.width, this.height, layer.fade);
-                ctx.drawImage(this.#offscreen!, 0, 0);
+                ctx.drawImage(this.#offscreen!, 0, 0, this.width, this.height);
             } else {
                 ctx.save();
                 layer.draw(ctx, this.width, this.height);
@@ -71,8 +74,8 @@ class SceneCanvas extends LimitedFrameRateCanvas {
         super.onResize();
 
         if (this.#offscreen) {
-            this.#offscreen.width = this.width;
-            this.#offscreen.height = this.height;
+            this.#offscreen.width = this.width * this.dpr;
+            this.#offscreen.height = this.height * this.dpr;
         }
 
         for (const layer of this.#layers) {
