@@ -109,6 +109,21 @@ export class Aurora extends Effect<AuroraConfig> {
             const xStart = Math.max(0, Math.floor((cx - cutoff) / step) * step);
             const xEnd = Math.min(width, Math.ceil((cx + cutoff) / step) * step);
 
+            const centreWave = Math.sin(band.frequency1 * cx + band.phase2) * waveRange;
+            const centreBase = baseY + centreWave;
+            const centreTop = centreBase - rayHeight;
+            const centreFadeBottom = centreBase + rayHeight * 0.1;
+
+            const gradient = ctx.createLinearGradient(0, centreFadeBottom, 0, centreTop);
+            gradient.addColorStop(0, `hsla(${band.hue}, 100%, 90%, 0)`);
+            gradient.addColorStop(0.04, `hsla(${band.hue}, 100%, 90%, 0.55)`);
+            gradient.addColorStop(0.1, `hsla(${band.hue}, 90%, 72%, 1)`);
+            gradient.addColorStop(0.32, `hsla(${band.hue}, 85%, 62%, 0.75)`);
+            gradient.addColorStop(0.62, `hsla(${midHue}, 80%, 56%, 0.35)`);
+            gradient.addColorStop(0.86, `hsla(${TOP_HUE}, 75%, 50%, 0.12)`);
+            gradient.addColorStop(1, `hsla(${TOP_HUE}, 70%, 45%, 0)`);
+            ctx.fillStyle = gradient;
+
             for (let x = xStart; x < xEnd; x += step) {
                 const dx = x - cx;
                 const alpha = Math.exp(-dx * dx / sigmaSq2);
@@ -121,20 +136,12 @@ export class Aurora extends Effect<AuroraConfig> {
                 const colBase = baseY + waveOffset;
                 const colTop = colBase - rayHeight;
                 const fadeBottom = colBase + rayHeight * 0.1;
-                const eff = alpha * band.opacity * this.#intensity;
 
-                const gradient = ctx.createLinearGradient(0, fadeBottom, 0, colTop);
-                gradient.addColorStop(0, `hsla(${band.hue}, 100%, 90%, 0)`);
-                gradient.addColorStop(0.04, `hsla(${band.hue}, 100%, 90%, ${eff * 0.55})`);
-                gradient.addColorStop(0.1, `hsla(${band.hue}, 90%, 72%, ${eff})`);
-                gradient.addColorStop(0.32, `hsla(${band.hue}, 85%, 62%, ${eff * 0.75})`);
-                gradient.addColorStop(0.62, `hsla(${midHue}, 80%, 56%, ${eff * 0.35})`);
-                gradient.addColorStop(0.86, `hsla(${TOP_HUE}, 75%, 50%, ${eff * 0.12})`);
-                gradient.addColorStop(1, `hsla(${TOP_HUE}, 70%, 45%, 0)`);
-
-                ctx.fillStyle = gradient;
+                ctx.globalAlpha = alpha * band.opacity * this.#intensity;
                 ctx.fillRect(x, colTop, step, fadeBottom - colTop + 1);
             }
+
+            ctx.globalAlpha = 1;
         }
 
         ctx.globalCompositeOperation = 'source-over';

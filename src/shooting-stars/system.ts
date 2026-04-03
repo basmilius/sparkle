@@ -56,10 +56,17 @@ export class ShootingStarSystem {
         for (let i = 0; i < this.#stars.length; i++) {
             const star = this.#stars[i];
 
-            star.trail.push({x: star.x, y: star.y});
+            const trail = star.trail;
+            const maxLen = this.#trailLength;
 
-            if (star.trail.length > this.#trailLength) {
-                star.trail.shift();
+            if (trail.length < maxLen) {
+                trail.push({x: star.x, y: star.y});
+                star.trailHead = trail.length - 1;
+            } else {
+                const next = (star.trailHead + 1) % maxLen;
+                trail[next].x = star.x;
+                trail[next].y = star.y;
+                star.trailHead = next;
             }
 
             star.x += star.vx * this.#speed * dt;
@@ -82,8 +89,13 @@ export class ShootingStarSystem {
         ctx.globalCompositeOperation = 'lighter';
 
         for (const star of this.#stars) {
-            for (let t = 0; t < star.trail.length; t++) {
-                const progress = t / star.trail.length;
+            const trail = star.trail;
+            const trailLen = trail.length;
+            const isFull = trailLen === this.#trailLength;
+            const oldest = isFull ? (star.trailHead + 1) % trailLen : 0;
+
+            for (let t = 0; t < trailLen; t++) {
+                const progress = t / trailLen;
                 const trailAlpha = star.alpha * progress * this.#trailAlphaFactor;
                 const trailSize = star.size * progress * this.#scale;
 
@@ -91,9 +103,11 @@ export class ShootingStarSystem {
                     continue;
                 }
 
+                const idx = (oldest + t) % trailLen;
+
                 ctx.globalAlpha = trailAlpha;
                 ctx.beginPath();
-                ctx.arc(star.trail[t].x, star.trail[t].y, trailSize, 0, Math.PI * 2);
+                ctx.arc(trail[idx].x, trail[idx].y, trailSize, 0, Math.PI * 2);
                 ctx.fillStyle = `rgb(${cr}, ${cg}, ${cb})`;
                 ctx.fill();
             }
@@ -130,7 +144,8 @@ export class ShootingStarSystem {
             alpha: this.#alphaMin + this.#rng() * this.#alphaRange,
             size: 1.5 + this.#rng() * 2,
             decay: this.#decayMin + this.#rng() * this.#decayRange,
-            trail: []
+            trail: [],
+            trailHead: 0
         };
     }
 }

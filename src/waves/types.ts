@@ -6,4 +6,5 @@ export type Wave = {
     baseY: number;
     color: string;
     foamThreshold: number;
+    rgb: [number, number, number];
 };

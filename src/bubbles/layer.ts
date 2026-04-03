@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Bubble, PopParticle } from './types';
@@ -212,17 +213,10 @@ export class Bubbles extends Effect<BubblesConfig> {
     }
 
     #colorToHue(color: string): number {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-
-        let r = data[0] / 255;
-        let g = data[1] / 255;
-        let b = data[2] / 255;
+        const {r: r255, g: g255, b: b255} = parseColor(color);
+        let r = r255 / 255;
+        let g = g255 / 255;
+        let b = b255 / 255;
         const max = Math.max(r, g, b);
         const min = Math.min(r, g, b);
         const delta = max - min;

@@ -91,10 +91,17 @@ export class Orbits extends Effect<OrbitsConfig> {
             const px = cx + rotatedX;
             const py = cy + rotatedY;
 
-            orbiter.trail.push({x: px, y: py});
+            const trail = orbiter.trail;
+            const maxLen = this.#trailLength;
 
-            if (orbiter.trail.length > this.#trailLength) {
-                orbiter.trail.shift();
+            if (trail.length < maxLen) {
+                trail.push({x: px, y: py});
+                orbiter.trailHead = trail.length - 1;
+            } else {
+                const next = (orbiter.trailHead + 1) % maxLen;
+                trail[next].x = px;
+                trail[next].y = py;
+                orbiter.trailHead = next;
             }
         }
     }
@@ -128,10 +135,15 @@ export class Orbits extends Effect<OrbitsConfig> {
 
         for (const orbiter of this.#orbiters) {
             const [cr, cg, cb] = hexToRGB(orbiter.color);
+            const trail = orbiter.trail;
+            const trailLen = trail.length;
 
-            if (orbiter.trail.length > 1) {
-                for (let ti = 0; ti < orbiter.trail.length - 1; ti++) {
-                    const progress = (ti + 1) / orbiter.trail.length;
+            if (trailLen > 1) {
+                const isFull = trailLen === this.#trailLength;
+                const oldest = isFull ? (orbiter.trailHead + 1) % trailLen : 0;
+
+                for (let ti = 0; ti < trailLen - 1; ti++) {
+                    const progress = (ti + 1) / trailLen;
                     const trailAlpha = progress * 0.5;
                     const trailWidth = orbiter.size * progress * this.#scale;
 
@@ -139,18 +151,21 @@ export class Orbits extends Effect<OrbitsConfig> {
                         continue;
                     }
 
+                    const idx0 = (oldest + ti) % trailLen;
+                    const idx1 = (oldest + ti + 1) % trailLen;
+
                     ctx.globalAlpha = trailAlpha;
                     ctx.strokeStyle = `rgb(${cr}, ${cg}, ${cb})`;
                     ctx.lineWidth = trailWidth;
                     ctx.beginPath();
-                    ctx.moveTo(orbiter.trail[ti].x, orbiter.trail[ti].y);
-                    ctx.lineTo(orbiter.trail[ti + 1].x, orbiter.trail[ti + 1].y);
+                    ctx.moveTo(trail[idx0].x, trail[idx0].y);
+                    ctx.lineTo(trail[idx1].x, trail[idx1].y);
                     ctx.stroke();
                 }
             }
 
-            if (orbiter.trail.length > 0) {
-                const head = orbiter.trail[orbiter.trail.length - 1];
+            if (trailLen > 0) {
+                const head = trail[orbiter.trailHead];
                 const headSize = orbiter.size * this.#scale;
 
                 const glow = ctx.createRadialGradient(
@@ -191,7 +206,8 @@ export class Orbits extends Effect<OrbitsConfig> {
             tilt: MULBERRY.next() * Math.PI,
             size: 1.5 + MULBERRY.next() * 2.5,
             color: this.#colors[Math.floor(MULBERRY.next() * this.#colors.length)],
-            trail: []
+            trail: [],
+            trailHead: 0
         };
     }
 }

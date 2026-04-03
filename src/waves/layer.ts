@@ -1,3 +1,4 @@
+import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Wave } from './types';
@@ -15,9 +16,9 @@ export interface WavesConfig {
 
 export class Waves extends Effect<WavesConfig> {
     #speed: number;
-    readonly #foamColor: string;
     #foamAmount: number;
     #scale: number;
+    readonly #foamRGB: [number, number, number];
     #waves: Wave[] = [];
     #foamParticles: { x: number; y: number; alpha: number; size: number }[] = [];
     #maxFoamParticles: number;
@@ -28,10 +29,10 @@ export class Waves extends Effect<WavesConfig> {
         const layers = config.layers ?? 5;
         const colors = config.colors ?? DEFAULT_COLORS;
         this.#speed = config.speed ?? 1;
-        this.#foamColor = config.foamColor ?? '#ffffff';
         this.#foamAmount = config.foamAmount ?? 0.4;
         this.#scale = config.scale ?? 1;
         this.#maxFoamParticles = 120;
+        this.#foamRGB = hexToRGB(config.foamColor ?? '#ffffff');
 
         if (innerWidth < 991) {
             this.#maxFoamParticles = Math.floor(this.#maxFoamParticles / 2);
@@ -48,7 +49,8 @@ export class Waves extends Effect<WavesConfig> {
                 phase: MULBERRY.next() * Math.PI * 2,
                 baseY: 0.35 + depth * 0.13,
                 color,
-                foamThreshold: 0.6 + MULBERRY.next() * 0.3
+                foamThreshold: 0.6 + MULBERRY.next() * 0.3,
+                rgb: hexToRGB(color)
             });
         }
     }
@@ -117,6 +119,7 @@ export class Waves extends Effect<WavesConfig> {
 
         for (let wi = 0; wi < this.#waves.length; wi++) {
             const wave = this.#waves[wi];
+            const [wr, wg, wb] = wave.rgb;
             const centerY = wave.baseY * height;
 
             ctx.beginPath();
@@ -135,15 +138,17 @@ export class Waves extends Effect<WavesConfig> {
             ctx.closePath();
 
             const gradient = ctx.createLinearGradient(0, centerY - wave.amplitude * this.#scale, 0, height);
-            gradient.addColorStop(0, this.#adjustAlpha(wave.color, 0.85));
-            gradient.addColorStop(0.4, wave.color);
-            gradient.addColorStop(1, this.#darkenColor(wave.color, 0.6));
+            gradient.addColorStop(0, `rgba(${wr}, ${wg}, ${wb}, 0.85)`);
+            gradient.addColorStop(0.4, `rgb(${wr}, ${wg}, ${wb})`);
+            gradient.addColorStop(1, `rgb(${Math.floor(wr * 0.6)}, ${Math.floor(wg * 0.6)}, ${Math.floor(wb * 0.6)})`);
 
             ctx.fillStyle = gradient;
             ctx.fill();
         }
 
         if (this.#foamAmount > 0) {
+            const [fr, fg, fb] = this.#foamRGB;
+
             for (const foam of this.#foamParticles) {
                 if (foam.alpha <= 0) {
                     continue;
@@ -151,34 +156,9 @@ export class Waves extends Effect<WavesConfig> {
 
                 ctx.beginPath();
                 ctx.arc(foam.x, foam.y, foam.size * this.#scale, 0, Math.PI * 2);
-                ctx.fillStyle = this.#adjustAlpha(this.#foamColor, foam.alpha * this.#foamAmount);
+                ctx.fillStyle = `rgba(${fr}, ${fg}, ${fb}, ${foam.alpha * this.#foamAmount})`;
                 ctx.fill();
             }
         }
-    }
-
-    #adjustAlpha(color: string, alpha: number): string {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${alpha})`;
-    }
-
-    #darkenColor(color: string, factor: number): string {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        const r = Math.floor(data[0] * factor);
-        const g = Math.floor(data[1] * factor);
-        const b = Math.floor(data[2] * factor);
-        return `rgb(${r}, ${g}, ${b})`;
     }
 }

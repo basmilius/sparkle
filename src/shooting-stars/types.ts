@@ -7,4 +7,5 @@ export type ShootingStar = {
     size: number;
     decay: number;
     trail: { x: number; y: number }[];
+    trailHead: number;
 };

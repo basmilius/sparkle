@@ -11,6 +11,8 @@ export class Lanterns extends Effect<LanternsConfig> {
     #maxCount: number;
     #time: number = 0;
     #lanterns: Lantern[] = [];
+    #sortedLanterns: Lantern[] = [];
+    #sortDirty: boolean = true;
 
     constructor(config: LanternsConfig = {}) {
         super();
@@ -51,13 +53,19 @@ export class Lanterns extends Effect<LanternsConfig> {
 
             if (lantern.y < -0.15) {
                 this.#lanterns[i] = this.#createLantern(false);
+                this.#sortDirty = true;
             }
         }
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
 
-        const sorted = [...this.#lanterns].sort((a, b) => a.size - b.size);
+        if (this.#sortDirty) {
+            this.#sortedLanterns = [...this.#lanterns].sort((a, b) => a.size - b.size);
+            this.#sortDirty = false;
+        }
+
+        const sorted = this.#sortedLanterns;
 
         for (const lantern of sorted) {
             const px = lantern.x * width;

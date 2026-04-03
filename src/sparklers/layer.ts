@@ -35,6 +35,8 @@ export class Sparklers extends Effect<SparklersConfig> {
     #emitY: number = 0.5;
     #mouseOnCanvas: boolean = false;
     #sparks: SparklerSpark[] = [];
+    #mountedCanvas: HTMLCanvasElement | null = null;
+    #cachedRect: DOMRect | null = null;
 
     constructor(config: SparklersConfig = {}) {
         super();
@@ -62,6 +64,9 @@ export class Sparklers extends Effect<SparklersConfig> {
     }
 
     onMount(canvas: HTMLCanvasElement): void {
+        this.#mountedCanvas = canvas;
+        this.#cachedRect = canvas.getBoundingClientRect();
+
         if (this.#hoverMode) {
             canvas.addEventListener('mousemove', this.#onMouseMoveBound, {passive: true});
             canvas.addEventListener('mouseleave', this.#onMouseLeaveBound, {passive: true});
@@ -71,6 +76,14 @@ export class Sparklers extends Effect<SparklersConfig> {
     onUnmount(canvas: HTMLCanvasElement): void {
         canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
         canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+        this.#mountedCanvas = null;
+        this.#cachedRect = null;
+    }
+
+    onResize(): void {
+        if (this.#mountedCanvas) {
+            this.#cachedRect = this.#mountedCanvas.getBoundingClientRect();
+        }
     }
 
     configure(config: Partial<SparklersConfig>): void {
@@ -103,6 +116,7 @@ export class Sparklers extends Effect<SparklersConfig> {
             }
         }
 
+        const frictionFactor = Math.pow(this.#friction, dt);
         let alive = 0;
 
         for (let i = 0; i < this.#sparks.length; i++) {
@@ -114,8 +128,8 @@ export class Sparklers extends Effect<SparklersConfig> {
                 spark.trail.shift();
             }
 
-            spark.vx *= Math.pow(this.#friction, dt);
-            spark.vy *= Math.pow(this.#friction, dt);
+            spark.vx *= frictionFactor;
+            spark.vy *= frictionFactor;
             spark.vy += this.#gravity * this.#scale * dt;
 
             spark.x += spark.vx * dt;
@@ -176,8 +190,7 @@ export class Sparklers extends Effect<SparklersConfig> {
     }
 
     #onMouseMove(evt: MouseEvent): void {
-        const target = evt.currentTarget as HTMLCanvasElement;
-        const rect = target.getBoundingClientRect();
+        const rect = this.#cachedRect ?? (evt.currentTarget as HTMLCanvasElement).getBoundingClientRect();
         this.#emitX = (evt.clientX - rect.left) / rect.width;
         this.#emitY = (evt.clientY - rect.top) / rect.height;
         this.#mouseOnCanvas = true;

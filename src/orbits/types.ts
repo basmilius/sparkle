@@ -23,4 +23,5 @@ export type Orbiter = {
     size: number;
     color: string;
     trail: { x: number; y: number }[];
+    trailHead: number;
 };
