@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vitepress';
+import { DefaultTheme, defineConfig, UserConfig } from 'vitepress';
 import examplePlugin from 'vitepress-plugin-example';
 import renderPlugin from 'vitepress-plugin-render';
 
@@ -37,7 +37,6 @@ export default defineConfig({
             },
             {
                 text: 'Celebration',
-                collapsed: false,
                 items: [
                     {text: 'Fireworks', link: '/guide/fireworks'},
                     {text: 'Confetti', link: '/guide/confetti'},
@@ -50,7 +49,6 @@ export default defineConfig({
             },
             {
                 text: 'Nature',
-                collapsed: false,
                 items: [
                     {text: 'Snow', link: '/guide/snow'},
                     {text: 'Rain', link: '/guide/rain'},
@@ -66,7 +64,6 @@ export default defineConfig({
             },
             {
                 text: 'Ambient',
-                collapsed: false,
                 items: [
                     {text: 'Stars', link: '/guide/stars'},
                     {text: 'Particles', link: '/guide/particles'},
@@ -77,11 +74,16 @@ export default defineConfig({
             },
             {
                 text: 'Stylized',
-                collapsed: false,
                 items: [
                     {text: 'Matrix', link: '/guide/matrix'},
                     {text: 'Wormhole', link: '/guide/wormhole'},
                     {text: 'Donuts', link: '/guide/donuts'}
+                ]
+            },
+            {
+                text: 'Advanced',
+                items: [
+                    {text: 'Custom Effects', link: '/guide/custom-effects'}
                 ]
             },
             {
@@ -114,7 +116,8 @@ export default defineConfig({
                     {text: 'Stars', link: '/api/stars'},
                     {text: 'Streamers', link: '/api/streamers'},
                     {text: 'Waves', link: '/api/waves'},
-                    {text: 'Wormhole', link: '/api/wormhole'}
+                    {text: 'Wormhole', link: '/api/wormhole'},
+                    {text: 'Primitives', link: '/api/primitives'}
                 ]
             }
         ],
@@ -122,4 +125,4 @@ export default defineConfig({
             {icon: 'github', link: 'https://github.com/basmilius/sparkle'}
         ]
     }
-});
+}) as UserConfig<DefaultTheme.Config>;

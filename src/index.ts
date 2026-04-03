@@ -26,5 +26,6 @@ export * from './snow';
 export * from './sparklers';
 export * from './stars';
 export * from './streamers';
+export * from './trail';
 export * from './waves';
 export * from './wormhole';
