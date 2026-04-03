@@ -77,7 +77,7 @@ export class Explosion {
             return false;
         }
 
-        if (this.#alpha <= this.#decay * 3) {
+        if (this.#alpha <= 0.4) {
             this.#hasCrackled = true;
             return true;
         }

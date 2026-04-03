@@ -8,7 +8,7 @@ export class Spark {
     readonly #size: number;
     readonly #decay: number;
     readonly #friction: number = 0.94;
-    readonly #gravity: number = 0.6;
+    readonly #gravity: number = 0.3;
     #alpha: number = 1;
 
     get isDead(): boolean {
@@ -26,7 +26,7 @@ export class Spark {
         this.#decay = MULBERRY.nextBetween(0.03, 0.08);
         this.#velocity = {
             x: velocityX + MULBERRY.nextBetween(-1.5, 1.5),
-            y: velocityY + MULBERRY.nextBetween(-2, 0.5)
+            y: velocityY + MULBERRY.nextBetween(-2, 2)
         };
     }
 

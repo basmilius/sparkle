@@ -98,10 +98,15 @@ export class FireworkLayer extends SimulationLayer {
             }
 
             if (explosion.checkCrackle()) {
-                for (let j = 0; j < 8; j++) {
+                for (let j = 0; j < 14; j++) {
+                    const angle = MULBERRY.nextBetween(0, Math.PI * 2);
+                    const speed = MULBERRY.nextBetween(3, 8);
+
                     newSparks.push(new Spark(
                         explosion.position,
-                        explosion.hue + MULBERRY.nextBetween(-30, 30)
+                        explosion.hue + MULBERRY.nextBetween(-30, 30),
+                        Math.cos(angle) * speed,
+                        Math.sin(angle) * speed
                     ));
                 }
             }
