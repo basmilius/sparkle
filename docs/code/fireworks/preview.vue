@@ -1,20 +1,20 @@
 <template>
-    <div class="effect-demo">
+    <EffectDemo>
         <canvas ref="canvasRef"></canvas>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 
 const canvasRef = ref<HTMLCanvasElement>();
-let sim: { destroy(): void } | null = null;
+let sim: { start(): void; destroy(): void } | null = null;
 
 onMounted(async () => {
     const { FireworkSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new FireworkSimulation(canvasRef.value, {scale: 0.5});
+        sim = new FireworkSimulation(canvasRef.value);
         sim.start();
     }
 });

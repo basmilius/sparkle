@@ -1,12 +1,18 @@
 import './style.css';
 
-import { ConfettiSimulation, FIREWORK_VARIANTS, FireworkSimulation, SnowSimulation } from '@basmilius/sparkle';
+import { AuroraLayer, AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FirepitSimulation, FireworkSimulation, GlitterSimulation, LanternSimulation, LayeredSimulation, LeafSimulation, LightningLayer, LightningSimulation, MatrixSimulation, OrbitSimulation, ParticleSimulation, PetalSimulation, PlasmaSimulation, RainLayer, RainSimulation, SandstormSimulation, SnowSimulation, SparklerSimulation, StarLayer, StarSimulation, StreamerSimulation, WaveSimulation, WormholeSimulation } from '@basmilius/sparkle';
 import type { FireworkVariant } from '@basmilius/sparkle';
 
-type Effect = 'confetti' | 'fireworks' | 'fireworks-lab' | 'snow';
+type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'firepit' | 'fireworks' | 'fireworks-lab' | 'glitter' | 'lanterns' | 'layered' | 'leaves' | 'lightning' | 'matrix' | 'orbits' | 'particles' | 'petals' | 'plasma' | 'rain' | 'sandstorm' | 'snow' | 'sparklers' | 'stars' | 'streamers' | 'waves' | 'wormhole';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const variantGrid = document.getElementById('variant-grid') as HTMLDivElement;
+const nav = document.getElementById('nav') as HTMLElement;
+const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement;
+
+navToggle.addEventListener('click', () => {
+    nav.classList.toggle('is-hidden');
+}, {passive: true});
 
 let active: { stop(): void; destroy(): void } | null = null;
 let clickHandler: ((evt: MouseEvent) => void) | null = null;
@@ -76,8 +82,150 @@ function start(effect: Effect): void {
             canvas.addEventListener('click', clickHandler, {passive: true});
             break;
         }
+        case 'donuts': {
+            const sim = new DonutSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
         case 'snow': {
             const sim = new SnowSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'fireflies': {
+            const sim = new FireflySimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'rain': {
+            const sim = new RainSimulation(canvas, {variant: 'thunderstorm'});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'aurora': {
+            const sim = new AuroraSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'bubbles': {
+            const sim = new BubbleSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'sparklers': {
+            const sim = new SparklerSimulation(canvas, {hoverMode: true});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'balloons': {
+            const sim = new BalloonSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'stars': {
+            const sim = new StarSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'particles': {
+            const sim = new ParticleSimulation(canvas, {mouseMode: 'connect'});
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'leaves': {
+            const sim = new LeafSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'petals': {
+            const sim = new PetalSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'firepit': {
+            const sim = new FirepitSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'sandstorm': {
+            const sim = new SandstormSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'waves': {
+            const sim = new WaveSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'lanterns': {
+            const sim = new LanternSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'streamers': {
+            const sim = new StreamerSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'glitter': {
+            const sim = new GlitterSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'matrix': {
+            const sim = new MatrixSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'wormhole': {
+            const sim = new WormholeSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'plasma': {
+            const sim = new PlasmaSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'lightning': {
+            const sim = new LightningSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'orbits': {
+            const sim = new OrbitSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'layered': {
+            const sim = new LayeredSimulation(canvas);
+            sim.add(new AuroraLayer());
+            sim.add(new StarLayer({mode: 'shooting'}));
+            sim.add(new RainLayer({variant: 'drizzle'}));
+            sim.add(new LightningLayer({branches: true, flash: true, frequency: 0.3}));
             sim.start();
             active = sim;
             break;

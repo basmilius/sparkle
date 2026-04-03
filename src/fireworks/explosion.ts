@@ -147,21 +147,21 @@ export class Explosion {
         ctx.restore();
     }
 
-    tick(): void {
+    tick(dt: number): void {
         this.#trail.pop();
         this.#trail.unshift({...this.#position});
 
-        this.#speed *= this.#config.friction;
-        this.#vz *= this.#config.friction;
+        this.#speed *= Math.pow(this.#config.friction, dt);
+        this.#vz *= Math.pow(this.#config.friction, dt);
 
-        this.#position.x += Math.cos(this.#angle) * this.#speed;
-        this.#position.y += Math.sin(this.#angle) * this.#speed + this.#config.gravity;
-        this.#z += this.#vz;
+        this.#position.x += Math.cos(this.#angle) * this.#speed * dt;
+        this.#position.y += (Math.sin(this.#angle) * this.#speed + this.#config.gravity) * dt;
+        this.#z += this.#vz * dt;
 
         this.#depthScale = PERSPECTIVE / (PERSPECTIVE + this.#z);
 
-        this.#alpha -= this.#decay;
-        this.#sparkleTimer++;
+        this.#alpha -= this.#decay * dt;
+        this.#sparkleTimer += dt;
     }
 
     #drawShape(ctx: CanvasRenderingContext2D, ds: number, alpha: number): void {

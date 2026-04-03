@@ -1,0 +1,133 @@
+import { hexToRGB } from '@basmilius/utils';
+import { SimulationLayer } from '../layer';
+import { ShootingStarSystem } from '../shooting-stars';
+import { MULBERRY } from './consts';
+import type { StarSimulationConfig } from './simulation';
+import type { Star, StarMode } from './types';
+
+export class StarLayer extends SimulationLayer {
+    readonly #mode: StarMode;
+    readonly #twinkleSpeed: number;
+    readonly #colorRGB: [number, number, number];
+    readonly #scale: number;
+    readonly #verticalFade: [number, number] | null;
+    readonly #shootingStarSystem: ShootingStarSystem | null;
+    #starCount: number;
+    #time: number = 0;
+    #stars: Star[] = [];
+
+    constructor(config: StarSimulationConfig = {}) {
+        super();
+
+        this.#mode = config.mode ?? 'both';
+        this.#starCount = config.starCount ?? 150;
+        this.#twinkleSpeed = config.twinkleSpeed ?? 1;
+        this.#scale = config.scale ?? 1;
+        this.#verticalFade = config.verticalFade ?? null;
+
+        this.#colorRGB = hexToRGB(config.color ?? '#ffffff');
+
+        const shootingColorRGB = hexToRGB(config.shootingColor ?? '#ffffff');
+        const enableShooting = this.#mode === 'shooting' || this.#mode === 'both';
+
+        this.#shootingStarSystem = enableShooting
+            ? new ShootingStarSystem(
+                {
+                    interval: config.shootingInterval ?? [120, 360],
+                    color: shootingColorRGB,
+                    trailLength: config.trailLength ?? 15,
+                    trailAlphaFactor: 0.6,
+                    speed: config.shootingSpeed ?? 1,
+                    scale: this.#scale,
+                    alphaMin: 0.8,
+                    alphaRange: 0.2,
+                    decayMin: 0.01,
+                    decayRange: 0.015,
+                    verticalFade: this.#verticalFade ?? undefined
+                },
+                () => MULBERRY.next()
+            )
+            : null;
+
+        if (this.#mode === 'sky' || this.#mode === 'both') {
+            for (let i = 0; i < this.#starCount; ++i) {
+                this.#stars.push(this.#createStar());
+            }
+        }
+    }
+
+    tick(dt: number, width: number, height: number): void {
+        this.#time += 0.02 * dt;
+        this.#shootingStarSystem?.tick(dt, width, height);
+    }
+
+    draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        const [sr, sg, sb] = this.#colorRGB;
+
+        // Background stars
+        if (this.#mode === 'sky' || this.#mode === 'both') {
+            ctx.globalCompositeOperation = 'source-over';
+
+            for (const star of this.#stars) {
+                const px = star.x * width;
+                const py = star.y * height;
+                let alpha = star.brightness * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(this.#time * star.twinkleSpeed * this.#twinkleSpeed + star.twinklePhase)));
+
+                if (this.#verticalFade) {
+                    const [fadeStart, fadeEnd] = this.#verticalFade;
+                    const fadeFactor = 1 - Math.max(0, Math.min(1, (star.y - fadeStart) / (fadeEnd - fadeStart)));
+                    alpha *= fadeFactor;
+
+                    if (alpha <= 0) {
+                        continue;
+                    }
+                }
+
+                const size = star.size * this.#scale;
+
+                ctx.globalAlpha = alpha;
+
+                // Star dot
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgb(${sr}, ${sg}, ${sb})`;
+                ctx.fill();
+
+                // Cross sparkle for larger stars
+                if (star.size > 1.5) {
+                    const sparkleLength = size * 3;
+                    const sparkleAlpha = alpha * 0.4;
+                    ctx.globalAlpha = sparkleAlpha;
+                    ctx.strokeStyle = `rgb(${sr}, ${sg}, ${sb})`;
+                    ctx.lineWidth = 0.5;
+
+                    ctx.beginPath();
+                    ctx.moveTo(px - sparkleLength, py);
+                    ctx.lineTo(px + sparkleLength, py);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(px, py - sparkleLength);
+                    ctx.lineTo(px, py + sparkleLength);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Shooting stars
+        this.#shootingStarSystem?.draw(ctx);
+
+        ctx.globalAlpha = 1;
+    }
+
+    #createStar(): Star {
+        return {
+            x: MULBERRY.next(),
+            y: MULBERRY.next(),
+            size: 0.5 + MULBERRY.next() * 2,
+            twinklePhase: MULBERRY.next() * Math.PI * 2,
+            twinkleSpeed: 0.5 + MULBERRY.next() * 2,
+            brightness: 0.3 + MULBERRY.next() * 0.7
+        };
+    }
+}

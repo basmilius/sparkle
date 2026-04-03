@@ -5,7 +5,7 @@
     border-radius: 12px;
     overflow: hidden;
     margin: 1.5rem 0;
-    background: linear-gradient(to bottom, #0a0a1a, #1a1a2e);
+    background: #161618;
 }
 
 .effect-demo canvas {
@@ -64,5 +64,43 @@
 
 .effect-demo__controls button:hover {
     background: rgba(255, 255, 255, .2);
+    color: white;
+}
+
+.effect-demo__speed {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    display: flex;
+    gap: .25rem;
+    background: rgba(0, 0, 0, .4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 12px;
+    padding: 6px;
+    z-index: 10;
+}
+
+.effect-demo__speed button {
+    padding: 6px;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, .6);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .625rem;
+    font-weight: 500;
+    line-height: 1;
+    transition: background .15s, color .15s;
+}
+
+.effect-demo__speed button:hover {
+    background: rgba(255, 255, 255, .2);
+    color: white;
+}
+
+.effect-demo__speed .effect-demo__speed-button--active {
+    background: rgba(255, 255, 255, .25);
     color: white;
 }

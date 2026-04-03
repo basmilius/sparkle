@@ -1,11 +1,11 @@
 <template>
-    <div class="effect-demo">
+    <EffectDemo>
         <canvas ref="canvasRef"></canvas>
 
         <div class="effect-demo__controls">
             <button @click="celebrate">Celebrate!</button>
         </div>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +42,7 @@ onMounted(async () => {
     const { ConfettiSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new ConfettiSimulation(canvasRef.value, {scale: 0.5});
+        sim = new ConfettiSimulation(canvasRef.value);
     }
 });
 

@@ -37,14 +37,14 @@ export class Spark {
         ctx.fill();
     }
 
-    tick(): void {
-        this.#velocity.x *= this.#friction;
-        this.#velocity.y *= this.#friction;
-        this.#velocity.y += this.#gravity;
+    tick(dt: number): void {
+        this.#velocity.x *= Math.pow(this.#friction, dt);
+        this.#velocity.y *= Math.pow(this.#friction, dt);
+        this.#velocity.y += this.#gravity * dt;
 
-        this.#position.x += this.#velocity.x;
-        this.#position.y += this.#velocity.y;
+        this.#position.x += this.#velocity.x * dt;
+        this.#position.y += this.#velocity.y * dt;
 
-        this.#alpha -= this.#decay;
+        this.#alpha -= this.#decay * dt;
     }
 }

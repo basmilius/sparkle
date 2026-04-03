@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-    background: linear-gradient(to bottom, #0048b4, #062965);
+    background: #161618;
     font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -18,40 +18,80 @@ body {
     inset: 0;
 }
 
+.nav-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(21, 21, 21, .3);
+    background-clip: padding-box;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .06);
+    border-radius: 1rem;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, .21);
+    color: rgba(255, 255, 255, .8);
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0;
+    z-index: 20;
+    transition: background .15s, color .15s;
+}
+
+.nav-toggle:hover {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+}
+
 nav {
     position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 4rem;
+    left: 1rem;
     display: flex;
-    gap: .5rem;
-    background: rgba(0, 0, 0, .3);
+    flex-direction: column;
+    gap: 1px;
+    overflow-y: auto;
+    max-height: calc(100vh - 2rem);
+    background: rgba(21, 21, 21, .3);
+    background-clip: padding-box;
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, .15);
-    border-radius: 999px;
-    padding: .375rem;
+    border: 1px solid rgba(255, 255, 255, .06);
+    border-radius: 1rem;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, .21);
+    padding: .5rem;
+    width: 10rem;
     z-index: 10;
+    transition: opacity .2s, transform .2s;
+}
+
+nav.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-.5rem);
 }
 
 nav button {
-    padding: .5rem 1.25rem;
+    padding: .5rem .75rem;
     background: transparent;
     border: none;
-    border-radius: 999px;
+    border-radius: .5rem;
     color: rgba(255, 255, 255, .7);
     cursor: pointer;
-    font-size: .875rem;
+    font-size: .8125rem;
     font-weight: 500;
+    text-align: left;
     transition: background .15s, color .15s;
 }
 
 nav button:hover {
-    background: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .05);
     color: white;
 }
 
 nav button.is-active {
-    background: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, .1);
     color: white;
 }
 
