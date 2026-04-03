@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new LeafSimulation(canvasRef.value, {
             count: 120,
             wind: 0.7,
-            speed: 1.5,
-            scale: 0.5
+            speed: 1.5
         });
         sim.start();
     }

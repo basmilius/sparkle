@@ -19,7 +19,7 @@ const canvasRef = ref<HTMLCanvasElement>();
 const containerRef = ref<HTMLDivElement>();
 const ready = ref(false);
 const variants = ref<string[]>([]);
-let sim: { fireExplosion(variant: string, position: { x: number; y: number }): void; destroy(): void } | null = null;
+let sim: { fireExplosion(variant: string, position: { x: number; y: number }): void; start(): void; destroy(): void } | null = null;
 
 function fire(variant: string): void {
     if (!sim || !containerRef.value) {
@@ -40,7 +40,7 @@ onMounted(async () => {
     variants.value = [...FIREWORK_VARIANTS];
 
     if (canvasRef.value) {
-        sim = new FireworkSimulation(canvasRef.value, {scale: 0.5, autoSpawn: false});
+        sim = new FireworkSimulation(canvasRef.value, {autoSpawn: false});
         sim.start();
         ready.value = true;
     }

@@ -145,8 +145,14 @@ export class RainLayer extends SimulationLayer {
         const depth = 0.3 + MULBERRY.next() * 0.7;
         const fallSpeed = (3.5 + MULBERRY.next() * 5) * depth * this.#speed;
 
+        // Extend spawn range upstream of wind direction so the windward edge stays covered.
+        // Drops blowing right need to also spawn left of the canvas (negative x), and vice versa.
+        const windOffset = Math.abs(this.#wind) * 0.5;
+        const xMin = this.#wind > 0 ? -windOffset : 0;
+        const xMax = this.#wind < 0 ? 1 + windOffset : 1;
+
         return {
-            x: MULBERRY.next(),
+            x: xMin + MULBERRY.next() * (xMax - xMin),
             y: initialSpread ? MULBERRY.next() * this.#groundLevel : -MULBERRY.next() * 0.1,
             vx: this.#wind * fallSpeed * 0.6,
             vy: fallSpeed,

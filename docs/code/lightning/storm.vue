@@ -14,7 +14,7 @@ onMounted(async () => {
     const { LightningSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new LightningSimulation(canvasRef.value, {frequency: 3, flash: true, scale: 0.5});
+        sim = new LightningSimulation(canvasRef.value, {frequency: 3, flash: true});
         sim.start();
     }
 });

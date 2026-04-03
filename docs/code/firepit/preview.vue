@@ -14,7 +14,7 @@ onMounted(async () => {
     const { FirepitSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new FirepitSimulation(canvasRef.value, {scale: 0.5});
+        sim = new FirepitSimulation(canvasRef.value);
         sim.start();
     }
 });

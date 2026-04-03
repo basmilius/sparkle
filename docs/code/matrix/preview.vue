@@ -14,7 +14,7 @@ onMounted(async () => {
     const { MatrixSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new MatrixSimulation(canvasRef.value, {scale: 0.5});
+        sim = new MatrixSimulation(canvasRef.value);
         sim.start();
     }
 });

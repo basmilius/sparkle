@@ -14,7 +14,7 @@ onMounted(async () => {
     const { StreamerSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new StreamerSimulation(canvasRef.value, {scale: 0.5});
+        sim = new StreamerSimulation(canvasRef.value);
         sim.start();
     }
 });

@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new StarSimulation(canvasRef.value, {
             mode: 'sky',
             starCount: 250,
-            twinkleSpeed: 1.5,
-            scale: 0.5
+            twinkleSpeed: 1.5
         });
         sim.start();
     }

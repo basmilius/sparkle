@@ -14,7 +14,7 @@ onMounted(async () => {
     const { WaveSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new WaveSimulation(canvasRef.value, {scale: 0.5});
+        sim = new WaveSimulation(canvasRef.value);
         sim.start();
     }
 });

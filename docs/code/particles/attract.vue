@@ -18,8 +18,7 @@ onMounted(async () => {
         sim = new ParticleSimulation(canvasRef.value, {
             mouseMode: 'attract',
             mouseStrength: 0.05,
-            mouseRadius: 200,
-            scale: 0.5
+            mouseRadius: 200
         });
         sim.start();
     }

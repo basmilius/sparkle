@@ -14,7 +14,7 @@ onMounted(async () => {
     const { BalloonSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new BalloonSimulation(canvasRef.value, {scale: 0.5});
+        sim = new BalloonSimulation(canvasRef.value);
         sim.start();
     }
 });

@@ -16,8 +16,7 @@ onMounted(async () => {
     if (canvasRef.value) {
         sim = new RainSimulation(canvasRef.value, {
             variant: 'downpour',
-            wind: 0.6,
-            scale: 0.5
+            wind: 0.6
         });
         sim.start();
     }

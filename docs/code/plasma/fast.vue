@@ -16,8 +16,7 @@ onMounted(async () => {
     if (canvasRef.value) {
         sim = new PlasmaSimulation(canvasRef.value, {
             speed: 2,
-            resolution: 6,
-            scale: 0.5
+            resolution: 6
         });
         sim.start();
     }

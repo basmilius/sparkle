@@ -14,7 +14,7 @@ onMounted(async () => {
     const { PetalSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new PetalSimulation(canvasRef.value, {scale: 0.5});
+        sim = new PetalSimulation(canvasRef.value);
         sim.start();
     }
 });

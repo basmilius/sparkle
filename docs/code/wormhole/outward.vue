@@ -16,8 +16,7 @@ onMounted(async () => {
     if (canvasRef.value) {
         sim = new WormholeSimulation(canvasRef.value, {
             direction: 'outward',
-            speed: 1.5,
-            scale: 0.5
+            speed: 1.5
         });
         sim.start();
     }

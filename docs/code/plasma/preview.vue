@@ -14,9 +14,7 @@ onMounted(async () => {
     const { PlasmaSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new PlasmaSimulation(canvasRef.value, {
-            scale: 0.5
-        });
+        sim = new PlasmaSimulation(canvasRef.value);
         sim.start();
     }
 });

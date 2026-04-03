@@ -15,7 +15,6 @@ onMounted(async () => {
 
     if (canvasRef.value) {
         sim = new DonutSimulation(canvasRef.value, {
-            scale: 0.5,
             mouseAvoidance: true
         });
         sim.start();

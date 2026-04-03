@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new BalloonSimulation(canvasRef.value, {
             count: 30,
             sizeRange: [20, 55],
-            speed: 1.5,
-            scale: 0.5
+            speed: 1.5
         });
         sim.start();
     }

@@ -11,7 +11,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 const canvasRef = ref<HTMLCanvasElement>();
 const containerRef = ref<HTMLDivElement>();
-let sim: { fireExplosion(variant: string, position: { x: number; y: number }): void; destroy(): void } | null = null;
+let sim: { fireExplosion(variant: string, position: { x: number; y: number }): void; start(): void; destroy(): void } | null = null;
 let variants: string[] = [];
 
 function onClick(evt: MouseEvent): void {
@@ -34,7 +34,7 @@ onMounted(async () => {
     variants = [...FIREWORK_VARIANTS];
 
     if (canvasRef.value && containerRef.value) {
-        sim = new FireworkSimulation(canvasRef.value, {scale: 0.5, autoSpawn: false});
+        sim = new FireworkSimulation(canvasRef.value, {autoSpawn: false});
         sim.start();
         containerRef.value.addEventListener('click', onClick);
     }

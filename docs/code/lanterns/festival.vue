@@ -16,8 +16,7 @@ onMounted(async () => {
     if (canvasRef.value) {
         sim = new LanternSimulation(canvasRef.value, {
             count: 50,
-            speed: 0.7,
-            scale: 0.5
+            speed: 0.7
         });
         sim.start();
     }

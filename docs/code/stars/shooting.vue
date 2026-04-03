@@ -18,8 +18,7 @@ onMounted(async () => {
             mode: 'shooting',
             shootingInterval: [30, 90],
             shootingSpeed: 1.5,
-            trailLength: 20,
-            scale: 0.5
+            trailLength: 20
         });
         sim.start();
     }

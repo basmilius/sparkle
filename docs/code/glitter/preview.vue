@@ -14,7 +14,7 @@ onMounted(async () => {
     const { GlitterSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new GlitterSimulation(canvasRef.value, {scale: 0.5});
+        sim = new GlitterSimulation(canvasRef.value);
         sim.start();
     }
 });

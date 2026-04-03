@@ -19,8 +19,7 @@ onMounted(async () => {
             count: 50,
             sizeRange: [15, 50],
             popOnClick: true,
-            popRadius: 80,
-            scale: 0.5
+            popRadius: 80
         });
         sim.start();
     }

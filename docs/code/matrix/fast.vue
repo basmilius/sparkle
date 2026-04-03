@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new MatrixSimulation(canvasRef.value, {
             speed: 2,
             fontSize: 12,
-            columns: 60,
-            scale: 0.5
+            columns: 60
         });
         sim.start();
     }

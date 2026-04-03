@@ -14,7 +14,7 @@ onMounted(async () => {
     const { LanternSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new LanternSimulation(canvasRef.value, {scale: 0.5});
+        sim = new LanternSimulation(canvasRef.value);
         sim.start();
     }
 });

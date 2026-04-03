@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new PetalSimulation(canvasRef.value, {
             count: 200,
             size: 12,
-            wind: 0.3,
-            scale: 0.5
+            wind: 0.3
         });
         sim.start();
     }

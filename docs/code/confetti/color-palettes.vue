@@ -80,7 +80,7 @@ onMounted(async () => {
     const { ConfettiSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new ConfettiSimulation(canvasRef.value, { scale: 0.5 });
+        sim = new ConfettiSimulation(canvasRef.value);
     }
 });
 

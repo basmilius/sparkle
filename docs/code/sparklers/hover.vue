@@ -16,8 +16,7 @@ onMounted(async () => {
 
     if (canvasRef.value) {
         sim = new SparklerSimulation(canvasRef.value, {
-            hoverMode: true,
-            scale: 0.5
+            hoverMode: true
         });
         sim.start();
     }

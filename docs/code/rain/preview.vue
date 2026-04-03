@@ -14,7 +14,7 @@ onMounted(async () => {
     const { RainSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new RainSimulation(canvasRef.value, {variant: 'downpour', scale: 0.5});
+        sim = new RainSimulation(canvasRef.value, {variant: 'downpour'});
         sim.start();
     }
 });

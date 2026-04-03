@@ -14,7 +14,7 @@ onMounted(async () => {
     const { SparklerSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new SparklerSimulation(canvasRef.value, {scale: 0.5});
+        sim = new SparklerSimulation(canvasRef.value);
         sim.start();
     }
 });

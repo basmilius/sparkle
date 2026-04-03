@@ -18,8 +18,7 @@ onMounted(async () => {
             count: 500,
             wind: 1.5,
             turbulence: 1.5,
-            hazeOpacity: 0.25,
-            scale: 0.5
+            hazeOpacity: 0.25
         });
         sim.start();
     }

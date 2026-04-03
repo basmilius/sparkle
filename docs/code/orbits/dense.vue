@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new OrbitSimulation(canvasRef.value, {
             centers: 5,
             orbitersPerCenter: 12,
-            speed: 1.5,
-            scale: 0.5
+            speed: 1.5
         });
         sim.start();
     }

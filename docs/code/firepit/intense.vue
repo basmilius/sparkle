@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new FirepitSimulation(canvasRef.value, {
             embers: 120,
             intensity: 1.5,
-            flameHeight: 0.45,
-            scale: 0.5
+            flameHeight: 0.45
         });
         sim.start();
     }

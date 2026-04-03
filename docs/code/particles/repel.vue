@@ -21,8 +21,7 @@ onMounted(async () => {
             mouseRadius: 180,
             glow: true,
             color: '#22d3ee',
-            lineColor: '#22d3ee',
-            scale: 0.5
+            lineColor: '#22d3ee'
         });
         sim.start();
     }

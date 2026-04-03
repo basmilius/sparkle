@@ -14,7 +14,7 @@ onMounted(async () => {
     const { FireflySimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new FireflySimulation(canvasRef.value, {scale: 0.5});
+        sim = new FireflySimulation(canvasRef.value);
         sim.start();
     }
 });

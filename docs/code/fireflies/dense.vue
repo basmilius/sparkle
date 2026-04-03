@@ -17,8 +17,7 @@ onMounted(async () => {
         sim = new FireflySimulation(canvasRef.value, {
             count: 150,
             size: 8,
-            glowSpeed: 1.5,
-            scale: 0.5
+            glowSpeed: 1.5
         });
         sim.start();
     }

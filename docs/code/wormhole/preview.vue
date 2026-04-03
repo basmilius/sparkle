@@ -14,7 +14,7 @@ onMounted(async () => {
     const { WormholeSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new WormholeSimulation(canvasRef.value, {scale: 0.5});
+        sim = new WormholeSimulation(canvasRef.value);
         sim.start();
     }
 });

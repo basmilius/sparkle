@@ -57,9 +57,10 @@ export class StreamerLayer extends SimulationLayer {
 
             this.#updateSegments(streamer, dt);
 
-            const lowestY = Math.max(streamer.y, ...streamer.segments.map((seg) => seg.y));
+            const tail = streamer.segments[streamer.segments.length - 1];
+            const tailY = tail ? tail.y : streamer.y;
 
-            if (lowestY > height + 50) {
+            if (tailY > height + 50) {
                 this.#streamers[alive++] = this.#createStreamer(false);
             } else {
                 this.#streamers[alive++] = streamer;

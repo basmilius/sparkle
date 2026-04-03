@@ -14,7 +14,7 @@ onMounted(async () => {
     const { SandstormSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new SandstormSimulation(canvasRef.value, {scale: 0.5});
+        sim = new SandstormSimulation(canvasRef.value);
         sim.start();
     }
 });

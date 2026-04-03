@@ -14,7 +14,7 @@ onMounted(async () => {
     const { StarSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new StarSimulation(canvasRef.value, {mode: 'both', scale: 0.5});
+        sim = new StarSimulation(canvasRef.value, {mode: 'both'});
         sim.start();
     }
 });

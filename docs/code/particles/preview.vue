@@ -16,8 +16,7 @@ onMounted(async () => {
 
     if (canvasRef.value) {
         sim = new ParticleSimulation(canvasRef.value, {
-            mouseMode: 'connect',
-            scale: 0.5
+            mouseMode: 'connect'
         });
         sim.start();
     }

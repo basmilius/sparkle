@@ -14,7 +14,7 @@ onMounted(async () => {
     const { OrbitSimulation } = await import('@basmilius/sparkle');
 
     if (canvasRef.value) {
-        sim = new OrbitSimulation(canvasRef.value, {scale: 0.5});
+        sim = new OrbitSimulation(canvasRef.value);
         sim.start();
     }
 });
