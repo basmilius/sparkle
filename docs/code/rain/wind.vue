@@ -4,26 +4,27 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { RainSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: RainSimulation | null = null;
 
-onMounted(async () => {
-    const { RainSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new RainSimulation(canvasRef.value, {
+                variant: 'downpour',
+                wind: 0.6
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new RainSimulation(canvasRef.value, {
-            variant: 'downpour',
-            wind: 0.6
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

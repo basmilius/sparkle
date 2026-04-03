@@ -50,10 +50,18 @@ export class AuroraLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.intensity !== undefined) { this.#intensity = config.intensity as number; }
-        if (config.waveAmplitude !== undefined) { this.#waveAmplitude = config.waveAmplitude as number; }
-        if (config.verticalPosition !== undefined) { this.#verticalPosition = config.verticalPosition as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.intensity !== undefined) {
+            this.#intensity = config.intensity as number;
+        }
+        if (config.waveAmplitude !== undefined) {
+            this.#waveAmplitude = config.waveAmplitude as number;
+        }
+        if (config.verticalPosition !== undefined) {
+            this.#verticalPosition = config.verticalPosition as number;
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {

@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { ColorControl } from '../../config/types';
 
     const props = defineProps<{ control: ColorControl; modelValue: string }>();

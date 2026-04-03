@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import { ref } from 'vue';
     import type { ControlDef } from '../config/types';
     import ColorControl from './controls/ColorControl.vue';
@@ -24,8 +26,13 @@
 </script>
 
 <template>
-    <div class="config-panel" :class="{ 'is-open': isOpen }">
-        <button class="config-panel-toggle" type="button" @click="isOpen = !isOpen">
+    <div
+        class="config-panel"
+        :class="{ 'is-open': isOpen }">
+        <button
+            class="config-panel-toggle"
+            type="button"
+            @click="isOpen = !isOpen">
             <span class="config-panel-title">{{ title }}</span>
             <svg
                 class="config-panel-chevron"
@@ -37,14 +44,18 @@
                 stroke-width="2"
                 stroke-linecap="round"
             >
-                <polyline points="6 9 12 15 18 9" />
+                <polyline points="6 9 12 15 18 9"/>
             </svg>
         </button>
 
-        <div v-if="isOpen" class="config-panel-body">
-            <slot name="prepend" />
+        <div
+            v-if="isOpen"
+            class="config-panel-body">
+            <slot name="prepend"/>
 
-            <template v-for="control in schema" :key="control.key">
+            <template
+                v-for="control in schema"
+                :key="control.key">
                 <SliderControl
                     v-if="control.type === 'slider'"
                     :control="control"
@@ -89,7 +100,7 @@
                 />
             </template>
 
-            <slot name="append" />
+            <slot name="append"/>
         </div>
     </div>
 </template>

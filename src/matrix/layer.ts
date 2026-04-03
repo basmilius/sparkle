@@ -54,8 +54,12 @@ export class MatrixLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.trailLength !== undefined) {
+            this.#trailLength = config.trailLength as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

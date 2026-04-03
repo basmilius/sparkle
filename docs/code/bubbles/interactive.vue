@@ -5,28 +5,29 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { BubbleSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: BubbleSimulation | null = null;
 
-onMounted(async () => {
-    const { BubbleSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new BubbleSimulation(canvasRef.value, {
+                count: 50,
+                sizeRange: [15, 50],
+                popOnClick: true,
+                popRadius: 80
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new BubbleSimulation(canvasRef.value, {
-            count: 50,
-            sizeRange: [15, 50],
-            popOnClick: true,
-            popRadius: 80
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { ToggleControl } from '../../config/types';
 
     const props = defineProps<{ control: ToggleControl; modelValue: boolean }>();
@@ -14,7 +16,7 @@
             type="button"
             @click="emit('update:modelValue', !modelValue)"
         >
-            <span class="toggle-knob" />
+            <span class="toggle-knob"/>
         </button>
     </div>
 </template>

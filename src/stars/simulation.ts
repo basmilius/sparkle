@@ -11,7 +11,6 @@ export interface StarSimulationConfig {
     readonly shootingColor?: string;
     readonly trailLength?: number;
     readonly scale?: number;
-    readonly verticalFade?: [number, number];
     readonly canvasOptions?: CanvasRenderingContext2DSettings;
 }
 

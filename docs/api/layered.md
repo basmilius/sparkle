@@ -16,20 +16,20 @@ new LayeredSimulation(
 )
 ```
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `canvas` | — | The canvas element to render to. |
-| `frameRate` | `60` | Target frame rate. |
-| `options` | `{colorSpace: 'display-p3'}` | Canvas context options. |
+| Parameter   | Default                      | Description                      |
+|-------------|------------------------------|----------------------------------|
+| `canvas`    | —                            | The canvas element to render to. |
+| `frameRate` | `60`                         | Target frame rate.               |
+| `options`   | `{colorSpace: 'display-p3'}` | Canvas context options.          |
 
 ### Methods
 
-| Method | Description |
-|--------|-------------|
+| Method       | Description                                                                            |
+|--------------|----------------------------------------------------------------------------------------|
 | `add(layer)` | Add a layer. Returns `this` for chaining. Attaches event listeners if already running. |
-| `start()` | Start the animation loop and mount all layers. |
-| `stop()` | Stop the animation loop. |
-| `destroy()` | Stop the loop, unmount all layers, and remove event listeners. |
+| `start()`    | Start the animation loop and mount all layers.                                         |
+| `stop()`     | Stop the animation loop.                                                               |
+| `destroy()`  | Stop the loop, unmount all layers, and remove event listeners.                         |
 
 ### Example
 
@@ -59,13 +59,13 @@ abstract class SimulationLayer {
 }
 ```
 
-| Method | Description |
-|--------|-------------|
-| `tick(dt, width, height)` | Called every frame. `dt` is the normalized frame delta (1.0 = target frame rate). |
-| `draw(ctx, width, height)` | Called every frame after `tick`. Render into `ctx`. |
-| `onResize(width, height)` | Called when the canvas is resized. Use for pixel-coordinate initialization. |
-| `onMount(canvas)` | Called when added to a running simulation or when it starts. Use to attach event listeners. |
-| `onUnmount(canvas)` | Called when the simulation is destroyed. Use to remove event listeners. |
+| Method                     | Description                                                                                 |
+|----------------------------|---------------------------------------------------------------------------------------------|
+| `tick(dt, width, height)`  | Called every frame. `dt` is the normalized frame delta (1.0 = target frame rate).           |
+| `draw(ctx, width, height)` | Called every frame after `tick`. Render into `ctx`.                                         |
+| `onResize(width, height)`  | Called when the canvas is resized. Use for pixel-coordinate initialization.                 |
+| `onMount(canvas)`          | Called when added to a running simulation or when it starts. Use to attach event listeners. |
+| `onUnmount(canvas)`        | Called when the simulation is destroyed. Use to remove event listeners.                     |
 
 ### Custom Layer Example
 
@@ -124,30 +124,30 @@ class MySnow extends SimulationCanvas {
 
 Every simulation has a matching layer class:
 
-| Layer | Simulation |
-|-------|-----------|
-| `AuroraLayer` | `AuroraSimulation` |
-| `BalloonLayer` | `BalloonSimulation` |
-| `BubbleLayer` | `BubbleSimulation` |
-| `ConfettiLayer` | `ConfettiSimulation` |
-| `DonutLayer` | `DonutSimulation` |
-| `FireflyLayer` | `FireflySimulation` |
-| `FirepitLayer` | `FirepitSimulation` |
-| `FireworkLayer` | `FireworkSimulation` |
-| `GlitterLayer` | `GlitterSimulation` |
-| `LanternLayer` | `LanternSimulation` |
-| `LeafLayer` | `LeafSimulation` |
+| Layer            | Simulation            |
+|------------------|-----------------------|
+| `AuroraLayer`    | `AuroraSimulation`    |
+| `BalloonLayer`   | `BalloonSimulation`   |
+| `BubbleLayer`    | `BubbleSimulation`    |
+| `ConfettiLayer`  | `ConfettiSimulation`  |
+| `DonutLayer`     | `DonutSimulation`     |
+| `FireflyLayer`   | `FireflySimulation`   |
+| `FirepitLayer`   | `FirepitSimulation`   |
+| `FireworkLayer`  | `FireworkSimulation`  |
+| `GlitterLayer`   | `GlitterSimulation`   |
+| `LanternLayer`   | `LanternSimulation`   |
+| `LeafLayer`      | `LeafSimulation`      |
 | `LightningLayer` | `LightningSimulation` |
-| `MatrixLayer` | `MatrixSimulation` |
-| `OrbitLayer` | `OrbitSimulation` |
-| `ParticleLayer` | `ParticleSimulation` |
-| `PetalLayer` | `PetalSimulation` |
-| `PlasmaLayer` | `PlasmaSimulation` |
-| `RainLayer` | `RainSimulation` |
+| `MatrixLayer`    | `MatrixSimulation`    |
+| `OrbitLayer`     | `OrbitSimulation`     |
+| `ParticleLayer`  | `ParticleSimulation`  |
+| `PetalLayer`     | `PetalSimulation`     |
+| `PlasmaLayer`    | `PlasmaSimulation`    |
+| `RainLayer`      | `RainSimulation`      |
 | `SandstormLayer` | `SandstormSimulation` |
-| `SnowLayer` | `SnowSimulation` |
-| `SparklerLayer` | `SparklerSimulation` |
-| `StarLayer` | `StarSimulation` |
-| `StreamerLayer` | `StreamerSimulation` |
-| `WaveLayer` | `WaveSimulation` |
-| `WormholeLayer` | `WormholeSimulation` |
+| `SnowLayer`      | `SnowSimulation`      |
+| `SparklerLayer`  | `SparklerSimulation`  |
+| `StarLayer`      | `StarSimulation`      |
+| `StreamerLayer`  | `StreamerSimulation`  |
+| `WaveLayer`      | `WaveSimulation`      |
+| `WormholeLayer`  | `WormholeSimulation`  |

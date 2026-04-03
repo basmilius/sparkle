@@ -13,12 +13,15 @@ new SnowSimulation(canvas: HTMLCanvasElement, config?: SnowSimulationConfig)
 ### Methods
 
 #### `start(): void`
+
 Starts the snowfall animation.
 
 #### `stop(): void`
+
 Stops the snowfall animation.
 
 #### `destroy(): void`
+
 Stops the animation and removes all event listeners.
 
 ---
@@ -36,14 +39,14 @@ interface SnowSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `fillStyle` | `string` | `'rgb(255 255 255 / .75)'` | CSS color string for the snowflake fill. |
-| `particles` | `number` | `200` | Number of snowflakes. Automatically halved on small screens. |
-| `scale` | `number` | `1` | Scales all snowflake sizes proportionally. |
-| `size` | `number` | `6` | Maximum snowflake radius in pixels (before scale). |
-| `speed` | `number` | `2` | Fall speed multiplier. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                  |
+|-----------------|------------------------------------|------------------------------|--------------------------------------------------------------|
+| `fillStyle`     | `string`                           | `'rgb(255 255 255 / .75)'`   | CSS color string for the snowflake fill.                     |
+| `particles`     | `number`                           | `200`                        | Number of snowflakes. Automatically halved on small screens. |
+| `scale`         | `number`                           | `1`                          | Scales all snowflake sizes proportionally.                   |
+| `size`          | `number`                           | `6`                          | Maximum snowflake radius in pixels (before scale).           |
+| `speed`         | `number`                           | `2`                          | Fall speed multiplier.                                       |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                 |
 
 ---
 

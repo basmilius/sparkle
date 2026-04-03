@@ -1,97 +1,92 @@
 <template>
-    <EffectDemo ref="containerRef" clickable @click="onClick">
+    <div
+        class="effect-demo effect-demo--clickable"
+        @click="onClick">
         <canvas ref="canvasRef"></canvas>
         <span class="effect-demo__hint">Click to release a balloon</span>
-    </EffectDemo>
+    </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-import { speed } from '../../.vitepress/theme/useSpeed';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { BalloonParticle } from '@basmilius/sparkle';
 
-interface BalloonInstance {
-    tick(dt?: number): void;
-    draw(ctx: CanvasRenderingContext2D): void;
-    isDone: boolean;
-}
+    const canvasRef = ref<HTMLCanvasElement>();
 
-const canvasRef = ref<HTMLCanvasElement>();
-const containerRef = ref<HTMLDivElement>();
+    let ctx: CanvasRenderingContext2D | null = null;
+    let width = 0;
+    let height = 0;
+    let running = false;
+    let animFrame = 0;
+    let then = 0;
+    let balloons: BalloonParticle[] = [];
 
-let ctx: CanvasRenderingContext2D | null = null;
-let width = 0;
-let height = 0;
-let running = false;
-let animFrame = 0;
-let then = 0;
-let balloons: BalloonInstance[] = [];
+    const COLORS: [number, number, number][] = [
+        [255, 68, 68],
+        [68, 136, 255],
+        [68, 204, 68],
+        [255, 204, 0],
+        [255, 136, 204],
+        [136, 68, 255]
+    ];
 
-const COLORS: [number, number, number][] = [
-    [255, 68, 68],
-    [68, 136, 255],
-    [68, 204, 68],
-    [255, 204, 0],
-    [255, 136, 204],
-    [136, 68, 255]
-];
+    function onClick(evt: MouseEvent): void {
+        if (!canvasRef.value) {
+            return;
+        }
 
-async function onClick(evt: MouseEvent): Promise<void> {
-    if (!containerRef.value) {
-        return;
+        const rect = canvasRef.value.getBoundingClientRect();
+        const x = evt.clientX - rect.left;
+        const y = evt.clientY - rect.top;
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+        balloons.push(new BalloonParticle({x, y}, color));
     }
 
-    const { BalloonParticle } = await import('@basmilius/sparkle');
-    const rect = containerRef.value.getBoundingClientRect();
-    const x = evt.clientX - rect.left;
-    const y = evt.clientY - rect.top;
-    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    function loop(now: number): void {
+        if (!running || !canvasRef.value || !ctx) {
+            return;
+        }
 
-    balloons.push(new BalloonParticle({x, y}, color));
-}
+        animFrame = requestAnimationFrame(loop);
 
-function loop(now: number): void {
-    if (!running || !canvasRef.value || !ctx) {
-        return;
-    }
+        const dt = then > 0 ? (now - then) / (1000 / 60) : 1;
+        then = now;
 
-    animFrame = requestAnimationFrame(loop);
+        canvasRef.value.width = width;
+        canvasRef.value.height = height;
 
-    const dt = (then > 0 ? (now - then) / (1000 / 60) : 1) * speed.value;
-    then = now;
+        for (let i = balloons.length - 1; i >= 0; i--) {
+            balloons[i].tick(dt);
 
-    canvasRef.value.width = width;
-    canvasRef.value.height = height;
-
-    for (let i = balloons.length - 1; i >= 0; i--) {
-        balloons[i].tick(dt);
-
-        if (balloons[i].isDone) {
-            balloons.splice(i, 1);
-        } else {
-            balloons[i].draw(ctx);
+            if (balloons[i].isDone) {
+                balloons.splice(i, 1);
+            } else {
+                balloons[i].draw(ctx);
+            }
         }
     }
-}
 
-onMounted(() => {
-    if (!canvasRef.value || !containerRef.value) {
-        return;
-    }
+    onMounted(() => {
+        if (!canvasRef.value) {
+            return;
+        }
 
-    const rect = containerRef.value.getBoundingClientRect();
-    width = rect.width;
-    height = rect.height;
+        width = canvasRef.value.offsetWidth;
+        height = canvasRef.value.offsetHeight;
 
-    ctx = canvasRef.value.getContext('2d', {colorSpace: 'display-p3'});
-    running = true;
-    animFrame = requestAnimationFrame(loop);
-});
+        ctx = canvasRef.value.getContext('2d', {colorSpace: 'display-p3'});
+        running = true;
+        animFrame = requestAnimationFrame(loop);
+    });
 
-onUnmounted(() => {
-    running = false;
-    cancelAnimationFrame(animFrame);
-    then = 0;
-    balloons = [];
-    ctx = null;
-});
+    onUnmounted(() => {
+        running = false;
+        cancelAnimationFrame(animFrame);
+        then = 0;
+        balloons = [];
+        ctx = null;
+    });
 </script>

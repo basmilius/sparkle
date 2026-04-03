@@ -1,25 +1,33 @@
 # Custom Effects
 
-Sparkle exposes its internal particle classes so you can build fully custom simulations without using a pre-built `*Simulation` wrapper. You pick the particles you want, manage the canvas yourself, and write your own render loop.
+Sparkle exposes its internal particle classes and standalone systems so you can build fully custom simulations without using a pre-built `*Simulation` wrapper. You pick the particles you want, manage the canvas yourself, and write your own render loop.
 
 ## The basic pattern
 
 Every custom effect needs: a canvas, a `requestAnimationFrame` loop, and a list of particles you tick and draw each frame.
 
+::: example Demo || Click anywhere to fire an explosion.
+example=../code/custom-effects/basic.vue
+:::
+
 ```typescript
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d', { colorSpace: 'display-p3' });
 const particles = [];
+let then = 0;
 
-function loop() {
+function loop(now: number) {
     requestAnimationFrame(loop);
+
+    const dt = then > 0 ? (now - then) / (1000 / 60) : 1;
+    then = now;
 
     // Setting canvas.width clears the canvas and resets context state
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
     for (let i = particles.length - 1; i >= 0; i--) {
-        particles[i].tick();
+        particles[i].tick(dt);
 
         if (particles[i].isDead || particles[i].isDone) {
             particles.splice(i, 1);
@@ -29,10 +37,10 @@ function loop() {
     }
 }
 
-loop();
+requestAnimationFrame(loop);
 ```
 
-All particle classes follow the same interface: `tick()`, `draw(ctx)`, and either `isDead` or `isDone` to signal when to remove them.
+All particle classes follow the same interface: `tick(dt)`, `draw(ctx)`, and either `isDead` or `isDone` to signal when to remove them. The `dt` value is a frame-normalized delta — `1.0` at 60 FPS, `2.0` at 30 FPS — which keeps physics frame-rate independent.
 
 ## Available particles
 
@@ -48,13 +56,13 @@ example=../code/custom-effects/trail.vue
 import { Trail, Explosion } from '@basmilius/sparkle';
 
 const trail = new Trail(
-    { x: canvas.width / 2, y: canvas.height },
-    { x: canvas.width / 2, y: 100 },
-    { hue: 45, width: 3, length: 8 }
+    {x: canvas.width / 2, y: canvas.height},
+    {x: canvas.width / 2, y: 100},
+    {hue: 45, width: 3, length: 8}
 );
 
 // In your loop:
-trail.tick();
+trail.tick(dt);
 sparks.push(...trail.collectSparks());
 
 if (trail.isDone) {
@@ -87,7 +95,7 @@ const spark = new SparklerParticle(
 
 // Use 'lighter' composite for additive glow
 ctx.globalCompositeOperation = 'lighter';
-spark.tick();
+spark.tick(dt);
 spark.draw(ctx);
 ```
 
@@ -177,18 +185,18 @@ example=../code/custom-effects/firefly-particle.vue
 import { FireflyParticle, createFireflySprite } from '@basmilius/sparkle';
 
 const sprite = createFireflySprite('#b4ff6a');
-const bounds = { width: canvas.width, height: canvas.height };
+const bounds = {width: canvas.width, height: canvas.height};
 
 const firefly = new FireflyParticle(
     Math.random() * canvas.width,
     Math.random() * canvas.height,
     bounds,
     sprite,
-    { size: 6, glowSpeed: 1.2 }
+    {size: 6, glowSpeed: 1.2}
 );
 
 ctx.globalCompositeOperation = 'lighter';
-firefly.tick();
+firefly.tick(dt);
 firefly.draw(ctx);
 ```
 
@@ -200,7 +208,7 @@ A self-contained system that spawns and animates shooting stars at configurable 
 import { ShootingStarSystem } from '@basmilius/sparkle';
 
 const system = new ShootingStarSystem(
-    { interval: [60, 180], color: [200, 230, 255], trailLength: 20 },
+    {interval: [60, 180], color: [200, 230, 255], trailLength: 20},
     Math.random
 );
 
@@ -210,87 +218,97 @@ ctx.globalCompositeOperation = 'lighter';
 system.draw(ctx);
 ```
 
-## Firework particles
+### LightningSystem
 
-The firework simulation exposes its internal particle classes directly.
+A procedural lightning bolt generator that fires bolts at configurable intervals. Uses normalized coordinates (0–1) internally; pass `width` and `height` to `draw()` to scale to your canvas. Read `flashAlpha` to overlay a screen-wide light flash on each strike.
 
-### Explosion
-
-A single burst particle. Moves outward from a position, leaves a trail, and fades out. Most types work with random angles; a few require pre-calculated angles to form their shape.
-
-**Simple types** (random angles work fine): `peony`, `chrysanthemum`, `willow`, `brocade`, `horsetail`, `strobe`, `crackle`, `crossette`
+::: example Demo || Automatic lightning bolts with branching and screen flash.
+example=../code/custom-effects/lightning-system.vue
+:::
 
 ```typescript
-import { Explosion, EXPLOSION_CONFIGS } from '@basmilius/sparkle';
+import { LightningSystem } from '@basmilius/sparkle';
 
-const config = EXPLOSION_CONFIGS['chrysanthemum'];
-const count = Math.floor(config.particleCount[0] + Math.random() * (config.particleCount[1] - config.particleCount[0]));
+const system = new LightningSystem(
+    { frequency: 0.5, color: [180, 200, 255], branches: true, flash: true },
+    Math.random
+);
 
-for (let i = 0; i < count; i++) {
-    explosions.push(new Explosion(position, hue, 3, 'chrysanthemum'));
+// In your loop:
+system.tick(dt);
+
+if (system.flashAlpha > 0) {
+    ctx.fillStyle = `rgba(180, 200, 255, ${system.flashAlpha})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
+
+system.draw(ctx, canvas.width, canvas.height);
 ```
 
-**Shaped types** — require pre-calculated angles:
+## Fireworks
+
+### createExplosion
+
+Creates an array of `Explosion` particles for any of the 16 firework variants. This is the main entry point for using fireworks in a custom simulator — no `FireworkSimulation` needed.
+
+::: example Demo || Select a variant and click anywhere to fire.
+example=../code/custom-effects/playground.vue
+:::
 
 ```typescript
-// ring — evenly distributed circle
-const count = 50;
-for (let i = 0; i < count; i++) {
-    const angle = (i / count) * Math.PI * 2;
-    explosions.push(new Explosion(position, hue, 3, 'ring', 1, angle));
-}
+import { createExplosion, FIREWORK_VARIANTS } from '@basmilius/sparkle';
 
-// heart — parametric heart curve
-const velocity = 3 + Math.random() * 2;
-const rotation = (Math.random() - 0.5) * 0.6;
-const cosR = Math.cos(rotation), sinR = Math.sin(rotation);
-for (let i = 0; i < 70; i++) {
-    const t = (i / 70) * Math.PI * 2;
-    const hx = 16 * Math.pow(Math.sin(t), 3);
-    const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-    const scale = velocity / 16;
-    const vx = hx * scale * cosR - hy * scale * sinR;
-    const vy = hx * scale * sinR + hy * scale * cosR;
-    explosions.push(new Explosion(position, hue, 3, 'heart', 1, Math.atan2(vy, vx), Math.sqrt(vx * vx + vy * vy)));
-}
+// Fire any variant at a position with a given hue
+const hue = Math.random() * 360;
+explosions.push(...createExplosion('heart', { x: 400, y: 300 }, hue));
 
-// flower — rose curve
-const petals = 2 + Math.floor(Math.random() * 3);
-const speed = 4 + Math.random() * 3;
-for (let i = 0; i < 80; i++) {
-    const t = (i / 80) * Math.PI * 2;
-    const r = Math.abs(Math.cos(petals * t));
-    if (r * speed < 0.3) continue;
-    explosions.push(new Explosion(position, hue, 3, 'flower', 1, t, r * speed));
-}
+// Optional: custom line width, scale, and seeded RNG
+explosions.push(...createExplosion('saturn', position, hue, { lineWidth: 5, scale: 1 }, Math.random));
 ```
+
+All 16 variants work: `peony`, `chrysanthemum`, `willow`, `ring`, `palm`, `crackle`, `crossette`, `saturn`, `dahlia`, `brocade`, `horsetail`, `strobe`, `heart`, `spiral`, `flower`, `concentric`.
 
 ### Split and crackle
 
-`crossette` splits mid-flight; `crackle` emits sparks when dying. Both `checkSplit()` and `checkCrackle()` fire only once per particle.
+`crossette` and `crackle` particles have secondary effects that trigger mid-flight. Handle them in your loop with `checkSplit()` and `checkCrackle()` — each fires only once per particle.
 
 ```typescript
-if (explosion.checkSplit()) {
-    for (let j = 0; j < 4; j++) {
-        const angle = explosion.angle + (Math.PI / 2) * j + Math.PI / 4;
-        newExplosions.push(new Explosion(explosion.position, explosion.hue, 2, 'peony', 1, angle, 3 + Math.random() * 3));
-    }
-}
+import { createExplosion, Explosion, Spark } from '@basmilius/sparkle';
 
-if (explosion.checkCrackle()) {
-    for (let j = 0; j < 8; j++) {
-        newSparks.push(new Spark(explosion.position, explosion.hue));
+// In your tick loop:
+for (let i = explosions.length - 1; i >= 0; i--) {
+    const explosion = explosions[i];
+    explosion.tick(dt);
+
+    if (explosion.checkSplit()) {
+        for (let j = 0; j < 4; j++) {
+            const angle = explosion.angle + (Math.PI / 2) * j + Math.PI / 4;
+            explosions.push(new Explosion(explosion.position, explosion.hue, 3, 'peony', 1, angle, 3 + Math.random() * 3));
+        }
+    }
+
+    if (explosion.checkCrackle()) {
+        for (let j = 0; j < 8; j++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 3 + Math.random() * 5;
+            sparks.push(new Spark(explosion.position, explosion.hue, Math.cos(angle) * speed, Math.sin(angle) * speed));
+        }
+    }
+
+    if (explosion.isDead) {
+        explosions.splice(i, 1);
+    } else {
+        explosion.draw(ctx);
     }
 }
 ```
 
-### Trail + Firework
+### Firework projectile
 
-`Trail` is the simpler way to move from A to B. Use `Firework` when you need the projectile to emit sparks along the way and dispatch a `'remove'` event on arrival.
+`Trail` moves from A to B with no event system. Use `Firework` when you want the projectile to emit sparks along the way and fire a `'remove'` event on arrival.
 
 ```typescript
-import { Firework, Explosion } from '@basmilius/sparkle';
+import { Firework, createExplosion } from '@basmilius/sparkle';
 
 const firework = new Firework(
     { x: canvas.width / 2, y: canvas.height },
@@ -299,16 +317,7 @@ const firework = new Firework(
 );
 
 firework.addEventListener('remove', () => {
-    for (let i = 0; i < 60; i++) {
-        explosions.push(new Explosion(firework.position, firework.hue, 3, 'peony'));
-    }
-});
+    const hue = Math.random() * 360;
+    explosions.push(...createExplosion('peony', firework.position, hue));
+}, { once: true });
 ```
-
-### Playground
-
-All 16 firework variants, click to fire:
-
-::: example Demo || Select a variant and click anywhere to fire.
-example=../code/custom-effects/playground.vue
-:::

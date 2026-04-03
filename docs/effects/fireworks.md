@@ -23,11 +23,11 @@ const sim = new FireworkSimulation(canvas, {
 });
 ```
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `scale` | `number` | `1` | Scales all particle sizes, trail widths, and glow proportionally. |
-| `autoSpawn` | `boolean` | `true` | When `false`, no fireworks are launched automatically. Use `fireExplosion()` for manual control. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Option          | Type                               | Default                      | Description                                                                                      |
+|-----------------|------------------------------------|------------------------------|--------------------------------------------------------------------------------------------------|
+| `scale`         | `number`                           | `1`                          | Scales all particle sizes, trail widths, and glow proportionally.                                |
+| `autoSpawn`     | `boolean`                          | `true`                       | When `false`, no fireworks are launched automatically. Use `fireExplosion()` for manual control. |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                                                     |
 
 ## Manual Explosions
 

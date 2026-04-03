@@ -3,15 +3,19 @@
 ## Installation
 
 ::: code-group
+
 ```bash [bun]
 bun add @basmilius/sparkle
 ```
+
 ```bash [npm]
 npm install @basmilius/sparkle
 ```
+
 ```bash [pnpm]
 pnpm add @basmilius/sparkle
 ```
+
 :::
 
 ## Setup
@@ -19,6 +23,7 @@ pnpm add @basmilius/sparkle
 Every effect requires an HTML `<canvas>` element. The canvas is used as the rendering surface for the effect.
 
 ```html
+
 <canvas id="canvas"></canvas>
 ```
 

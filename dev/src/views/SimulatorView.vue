@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import { LimitedFrameRateCanvas } from '@basmilius/sparkle';
     import { onMounted, onUnmounted, ref } from 'vue';
     import { FIREWORK_VARIANTS, SIMULATOR_MAP } from '../config/registry';
@@ -27,14 +29,14 @@
 
     function onFireworksClick(evt: MouseEvent): void {
         const variant = FIREWORK_VARIANTS[Math.floor(Math.random() * FIREWORK_VARIANTS.length)];
-        (sim as any)?.fireExplosion?.(variant, { x: evt.clientX, y: evt.clientY });
+        (sim as any)?.fireExplosion?.(variant, {x: evt.clientX, y: evt.clientY});
     }
 
     function initConfig(): void {
         if (!def) {
             return;
         }
-        config.value = { ...def.defaultConfig };
+        config.value = {...def.defaultConfig};
     }
 
     function startSim(): void {
@@ -46,10 +48,10 @@
     }
 
     function onConfigChange(key: string, value: unknown): void {
-        config.value = { ...config.value, [key]: value };
+        config.value = {...config.value, [key]: value};
 
         if (def?.liveKeys.includes(key)) {
-            sim?.configure?.({ [key]: value });
+            sim?.configure?.({[key]: value});
         } else {
             if (debounceTimer) {
                 clearTimeout(debounceTimer);
@@ -75,10 +77,10 @@
         startSim();
 
         if (def?.interactive === 'confetti') {
-            canvasRef.value?.addEventListener('click', onConfettiClick, { passive: true });
+            canvasRef.value?.addEventListener('click', onConfettiClick, {passive: true});
         }
         if (def?.interactive === 'fireworks') {
-            canvasRef.value?.addEventListener('click', onFireworksClick, { passive: true });
+            canvasRef.value?.addEventListener('click', onFireworksClick, {passive: true});
         }
     });
 
@@ -95,29 +97,38 @@
 
 <template>
     <div class="sim-view">
-        <canvas ref="canvasRef" class="sim-canvas" />
+        <canvas
+            ref="canvasRef"
+            class="sim-canvas"/>
 
         <template v-if="!def">
             <div class="sim-not-found">Simulator "{{ id }}" not found.</div>
         </template>
 
         <template v-else>
-            <div v-if="def.interactive === 'confetti'" class="sim-hint">
+            <div
+                v-if="def.interactive === 'confetti'"
+                class="sim-hint">
                 Click anywhere to fire confetti
             </div>
 
-            <div v-if="def.interactive === 'fireworks'" class="sim-hint">
+            <div
+                v-if="def.interactive === 'fireworks'"
+                class="sim-hint">
                 Click anywhere to fire a random variant
             </div>
 
-            <div v-if="def.interactive === 'fireworks'" class="fireworks-variants">
+            <div
+                v-if="def.interactive === 'fireworks'"
+                class="fireworks-variants">
                 <button
                     v-for="variant in FIREWORK_VARIANTS"
                     :key="variant"
                     class="variant-btn"
                     type="button"
                     @click="fireVariant(variant)"
-                >{{ variant }}</button>
+                >{{ variant }}
+                </button>
             </div>
 
             <div class="sim-panel-wrap">
@@ -143,10 +154,14 @@
                                 @input="(e) => onSpeedChange(parseFloat((e.target as HTMLInputElement).value))"
                             />
                         </div>
-                        <div class="panel-sep" />
+                        <div class="panel-sep"/>
                     </template>
                     <template #append>
-                        <button class="restart-btn" type="button" @click="startSim">Restart</button>
+                        <button
+                            class="restart-btn"
+                            type="button"
+                            @click="startSim">Restart
+                        </button>
                     </template>
                 </ConfigPanel>
             </div>

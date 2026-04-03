@@ -30,8 +30,12 @@ export class PlasmaLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale as number;
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {

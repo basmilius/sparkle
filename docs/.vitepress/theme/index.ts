@@ -5,7 +5,7 @@ import './custom.css';
 
 export default {
     extends: DefaultTheme,
-    enhanceApp({ app }) {
+    enhanceApp({app}) {
         app.component('EffectDemo', EffectDemo);
     }
 } satisfies Theme;

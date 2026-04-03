@@ -4,27 +4,28 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { MatrixSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: MatrixSimulation | null = null;
 
-onMounted(async () => {
-    const { MatrixSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new MatrixSimulation(canvasRef.value, {
+                speed: 2,
+                fontSize: 12,
+                columns: 60
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new MatrixSimulation(canvasRef.value, {
-            speed: 2,
-            fontSize: 12,
-            columns: 60
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

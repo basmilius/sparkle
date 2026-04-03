@@ -34,7 +34,9 @@ export class LanternLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

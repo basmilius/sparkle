@@ -12,5 +12,5 @@ export type Orbiter = {
     tilt: number;
     size: number;
     color: string;
-    trail: {x: number; y: number}[];
+    trail: { x: number; y: number }[];
 };

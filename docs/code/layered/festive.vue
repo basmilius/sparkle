@@ -4,25 +4,26 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { BalloonLayer, LayeredSimulation, SnowLayer } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: LayeredSimulation | null = null;
 
-onMounted(async () => {
-    const { BalloonLayer, LayeredSimulation, SnowLayer } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new LayeredSimulation(canvasRef.value)
+                .add(new SnowLayer())
+                .add(new BalloonLayer({count: 8}));
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new LayeredSimulation(canvasRef.value)
-            .add(new SnowLayer())
-            .add(new BalloonLayer({ count: 8 }));
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

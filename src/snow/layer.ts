@@ -43,7 +43,9 @@ export class SnowLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
     }
 
     onResize(_width: number, height: number): void {
@@ -58,8 +60,8 @@ export class SnowLayer extends SimulationLayer {
         this.#time += 0.015 * speedFactor * dt;
 
         const wind = Math.sin(this.#time * 0.7) * 0.5
-                   + Math.sin(this.#time * 1.9 + 3) * 0.25
-                   + Math.sin(this.#time * 4.3 + 1) * 0.1;
+            + Math.sin(this.#time * 1.9 + 3) * 0.25
+            + Math.sin(this.#time * 4.3 + 1) * 0.1;
 
         for (let index = 0; index < this.#snowflakes.length; index++) {
             const snowflake = this.#snowflakes[index];

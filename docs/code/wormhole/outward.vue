@@ -4,26 +4,27 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { WormholeSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: WormholeSimulation | null = null;
 
-onMounted(async () => {
-    const { WormholeSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new WormholeSimulation(canvasRef.value, {
+                direction: 'outward',
+                speed: 1.5
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new WormholeSimulation(canvasRef.value, {
-            direction: 'outward',
-            speed: 1.5
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

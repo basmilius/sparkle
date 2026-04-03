@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { SelectControl } from '../../config/types';
 
     const props = defineProps<{ control: SelectControl; modelValue: string }>();
@@ -12,12 +14,15 @@
 <template>
     <div class="control control-select">
         <label>{{ control.label }}</label>
-        <select :value="modelValue" @change="onChange">
+        <select
+            :value="modelValue"
+            @change="onChange">
             <option
                 v-for="opt in control.options"
                 :key="opt.value"
                 :value="opt.value"
-            >{{ opt.label }}</option>
+            >{{ opt.label }}
+            </option>
         </select>
     </div>
 </template>

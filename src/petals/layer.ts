@@ -36,8 +36,12 @@ export class PetalLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.wind !== undefined) { this.#wind = config.wind as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.wind !== undefined) {
+            this.#wind = config.wind as number;
+        }
     }
 
     tick(dt: number, _width: number, height: number): void {
@@ -46,8 +50,8 @@ export class PetalLayer extends SimulationLayer {
         this.#time += 0.012 * dt;
 
         const globalWind = Math.sin(this.#time * 0.4) * 0.3
-                         + Math.sin(this.#time * 1.1 + 1.5) * 0.15
-                         + Math.sin(this.#time * 2.7) * 0.08;
+            + Math.sin(this.#time * 1.1 + 1.5) * 0.15
+            + Math.sin(this.#time * 2.7) * 0.08;
 
         for (let index = 0; index < this.#petals.length; index++) {
             const petal = this.#petals[index];

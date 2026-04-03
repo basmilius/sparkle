@@ -101,7 +101,7 @@ export class LightningSystem {
         ctx.globalCompositeOperation = 'source-over';
     }
 
-    #drawSegments(ctx: CanvasRenderingContext2D, segments: {x: number; y: number}[], alpha: number, outerWidth: number, innerWidth: number, width: number, height: number): void {
+    #drawSegments(ctx: CanvasRenderingContext2D, segments: { x: number; y: number }[], alpha: number, outerWidth: number, innerWidth: number, width: number, height: number): void {
         if (segments.length < 2) {
             return;
         }
@@ -133,7 +133,7 @@ export class LightningSystem {
 
     #createBolt(): LightningBolt {
         const startX = 0.1 + this.#rng() * 0.8;
-        const segments: {x: number; y: number}[] = [{x: startX, y: 0}];
+        const segments: { x: number; y: number }[] = [{x: startX, y: 0}];
         const branches: LightningBranch[] = [];
 
         let currentX = startX;
@@ -165,7 +165,7 @@ export class LightningSystem {
     }
 
     #createBranch(startX: number, startY: number): LightningBranch {
-        const segments: {x: number; y: number}[] = [{x: startX, y: startY}];
+        const segments: { x: number; y: number }[] = [{x: startX, y: startY}];
         const direction = this.#rng() > 0.5 ? 1 : -1;
         const branchSteps = 3 + Math.floor(this.#rng() * 5);
 

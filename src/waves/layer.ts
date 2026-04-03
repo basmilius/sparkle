@@ -11,7 +11,7 @@ export class WaveLayer extends SimulationLayer {
     #foamAmount: number;
     #scale: number;
     #waves: Wave[] = [];
-    #foamParticles: {x: number; y: number; alpha: number; size: number}[] = [];
+    #foamParticles: { x: number; y: number; alpha: number; size: number }[] = [];
     #maxFoamParticles: number;
 
     constructor(config: WaveSimulationConfig = {}) {
@@ -46,9 +46,15 @@ export class WaveLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.foamAmount !== undefined) { this.#foamAmount = config.foamAmount as number; }
-        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.foamAmount !== undefined) {
+            this.#foamAmount = config.foamAmount as number;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { RangeControl } from '../../config/types';
 
     const props = defineProps<{ control: RangeControl; modelValue: [number, number] }>();

@@ -83,10 +83,18 @@ export class DonutLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.mouseAvoidance !== undefined) { this.#mouseAvoidance = config.mouseAvoidance as boolean; }
-        if (config.mouseAvoidanceRadius !== undefined) { this.#mouseAvoidanceRadius = config.mouseAvoidanceRadius as number; }
-        if (config.mouseAvoidanceStrength !== undefined) { this.#mouseAvoidanceStrength = config.mouseAvoidanceStrength as number; }
-        if (config.repulsionStrength !== undefined) { this.#repulsionStrength = config.repulsionStrength as number; }
+        if (config.mouseAvoidance !== undefined) {
+            this.#mouseAvoidance = config.mouseAvoidance as boolean;
+        }
+        if (config.mouseAvoidanceRadius !== undefined) {
+            this.#mouseAvoidanceRadius = config.mouseAvoidanceRadius as number;
+        }
+        if (config.mouseAvoidanceStrength !== undefined) {
+            this.#mouseAvoidanceStrength = config.mouseAvoidanceStrength as number;
+        }
+        if (config.repulsionStrength !== undefined) {
+            this.#repulsionStrength = config.repulsionStrength as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

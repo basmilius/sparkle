@@ -108,8 +108,8 @@ Layers with mouse or click interaction (bubbles, donuts, particles, sparklers) a
 
 ```typescript
 new LayeredSimulation(canvas)
-    .add(new ParticleLayer({ mouseMode: 'connect' }))
-    .add(new SparklerLayer({ hoverMode: true }))
+    .add(new ParticleLayer({mouseMode: 'connect'}))
+    .add(new SparklerLayer({hoverMode: true}))
     .start();
 ```
 

@@ -21,12 +21,15 @@ sim.fire(config: Partial<Config>): void
 ```
 
 #### `start(): void`
+
 Starts the simulation loop. Called automatically by `fire()` if not already running.
 
 #### `stop(): void`
+
 Stops the simulation loop.
 
 #### `destroy(): void`
+
 Stops the simulation and removes all event listeners.
 
 ---
@@ -52,20 +55,20 @@ interface Config {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `angle` | `number` | `90` | Launch angle in degrees. `90` is straight up. |
-| `colors` | `string[]` | — | Array of hex color strings. Overrides `palette` when set. |
-| `decay` | `number` | `0.9` | Velocity decay factor per tick. Lower = faster slowdown. |
-| `gravity` | `number` | `1` | Gravity acceleration. Higher = faster fall. |
-| `palette` | [`Palette`](#palette) | `'vibrant'` | Built-in color palette. Ignored when `colors` is set. |
-| `particles` | `number` | `50` | Number of confetti particles to emit. |
-| `shapes` | [`Shape[]`](#shape) | All 11 shapes | Shapes to randomly select from. |
-| `spread` | `number` | `45` | Spread angle in degrees. |
-| `startVelocity` | `number` | `45` | Initial particle velocity. |
-| `ticks` | `number` | `200` | Lifetime in ticks before a particle disappears. |
-| `x` | `number` | `0.5` | Horizontal position (0-1, normalized to canvas width). |
-| `y` | `number` | `0.5` | Vertical position (0-1, normalized to canvas height). |
+| Property        | Type                  | Default       | Description                                               |
+|-----------------|-----------------------|---------------|-----------------------------------------------------------|
+| `angle`         | `number`              | `90`          | Launch angle in degrees. `90` is straight up.             |
+| `colors`        | `string[]`            | —             | Array of hex color strings. Overrides `palette` when set. |
+| `decay`         | `number`              | `0.9`         | Velocity decay factor per tick. Lower = faster slowdown.  |
+| `gravity`       | `number`              | `1`           | Gravity acceleration. Higher = faster fall.               |
+| `palette`       | [`Palette`](#palette) | `'vibrant'`   | Built-in color palette. Ignored when `colors` is set.     |
+| `particles`     | `number`              | `50`          | Number of confetti particles to emit.                     |
+| `shapes`        | [`Shape[]`](#shape)   | All 11 shapes | Shapes to randomly select from.                           |
+| `spread`        | `number`              | `45`          | Spread angle in degrees.                                  |
+| `startVelocity` | `number`              | `45`          | Initial particle velocity.                                |
+| `ticks`         | `number`              | `200`         | Lifetime in ticks before a particle disappears.           |
+| `x`             | `number`              | `0.5`         | Horizontal position (0-1, normalized to canvas width).    |
+| `y`             | `number`              | `0.5`         | Vertical position (0-1, normalized to canvas height).     |
 
 All properties are optional when calling `fire()`. Omitted properties use the defaults above.
 
@@ -84,10 +87,10 @@ interface ConfettiSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `scale` | `number` | `1` | Scales particle size, velocity, and gravity proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                 |
+|-----------------|------------------------------------|------------------------------|-------------------------------------------------------------|
+| `scale`         | `number`                           | `1`                          | Scales particle size, velocity, and gravity proportionally. |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                |
 
 ---
 
@@ -99,12 +102,12 @@ A built-in color palette. Use `palette` in config for a quick preset, or provide
 type Palette = 'classic' | 'pastel' | 'vibrant' | 'warm';
 ```
 
-| Palette | Description |
-|---------|-------------|
-| `classic` | The original neon color set. |
-| `pastel` | Soft, muted pastels. |
+| Palette   | Description                     |
+|-----------|---------------------------------|
+| `classic` | The original neon color set.    |
+| `pastel`  | Soft, muted pastels.            |
 | `vibrant` | Bright, modern tones (default). |
-| `warm` | Rich, warm and deep colors. |
+| `warm`    | Rich, warm and deep colors.     |
 
 The `PALETTES` constant is exported and maps each palette name to its color array:
 

@@ -11,7 +11,6 @@ export interface ShootingStarSystemConfig {
     readonly alphaRange?: number;
     readonly decayMin?: number;
     readonly decayRange?: number;
-    readonly verticalFade?: [number, number];
 }
 
 export class ShootingStarSystem {
@@ -25,10 +24,8 @@ export class ShootingStarSystem {
     readonly #alphaRange: number;
     readonly #decayMin: number;
     readonly #decayRange: number;
-    readonly #verticalFade: [number, number] | null;
     readonly #rng: () => number;
     #cooldown: number;
-    #height: number = 0;
     #stars: ShootingStar[] = [];
 
     constructor(config: ShootingStarSystemConfig, rng: () => number) {
@@ -42,13 +39,11 @@ export class ShootingStarSystem {
         this.#alphaRange = config.alphaRange ?? 0.3;
         this.#decayMin = config.decayMin ?? 0.008;
         this.#decayRange = config.decayRange ?? 0.01;
-        this.#verticalFade = config.verticalFade ?? null;
         this.#rng = rng;
         this.#cooldown = this.#interval[0] + this.#rng() * (this.#interval[1] - this.#interval[0]);
     }
 
     tick(dt: number, width: number, height: number): void {
-        this.#height = height;
         this.#cooldown -= dt;
 
         if (this.#cooldown <= 0) {
@@ -72,9 +67,8 @@ export class ShootingStarSystem {
             star.alpha -= star.decay * dt;
 
             const inBounds = star.alpha > 0 && star.x > -50 && star.x < width + 50 && star.y < height + 50;
-            const fullyFaded = this.#verticalFade !== null && star.y / height >= this.#verticalFade[1];
 
-            if (inBounds && !fullyFaded) {
+            if (inBounds) {
                 this.#stars[alive++] = star;
             }
         }
@@ -88,16 +82,9 @@ export class ShootingStarSystem {
         ctx.globalCompositeOperation = 'lighter';
 
         for (const star of this.#stars) {
-            let fadeFactor = 1;
-
-            if (this.#verticalFade && this.#height > 0) {
-                const [fadeStart, fadeEnd] = this.#verticalFade;
-                fadeFactor = 1 - Math.max(0, Math.min(1, (star.y / this.#height - fadeStart) / (fadeEnd - fadeStart)));
-            }
-
             for (let t = 0; t < star.trail.length; t++) {
                 const progress = t / star.trail.length;
-                const trailAlpha = star.alpha * progress * this.#trailAlphaFactor * fadeFactor;
+                const trailAlpha = star.alpha * progress * this.#trailAlphaFactor;
                 const trailSize = star.size * progress * this.#scale;
 
                 if (trailAlpha < 0.01) {
@@ -111,7 +98,7 @@ export class ShootingStarSystem {
                 ctx.fill();
             }
 
-            const alpha = star.alpha * fadeFactor;
+            const alpha = star.alpha;
             const headSize = star.size * 2 * this.#scale;
             const glow = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, headSize);
             glow.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, ${alpha})`);

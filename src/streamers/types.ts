@@ -3,7 +3,7 @@ export type Streamer = {
     y: number;
     length: number;
     width: number;
-    segments: {x: number; y: number}[];
+    segments: { x: number; y: number }[];
     fallSpeed: number;
     swayPhase: number;
     swaySpeed: number;

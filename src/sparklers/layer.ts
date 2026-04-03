@@ -62,12 +62,24 @@ export class SparklerLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.scale !== undefined) { this.#scale = config.scale as number; }
-        if (config.emitRate !== undefined) { this.#emitRate = config.emitRate as number; }
-        if (config.friction !== undefined) { this.#friction = config.friction as number; }
-        if (config.gravity !== undefined) { this.#gravity = config.gravity as number; }
-        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
-        if (config.hoverMode !== undefined) { this.#hoverMode = config.hoverMode as boolean; }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale as number;
+        }
+        if (config.emitRate !== undefined) {
+            this.#emitRate = config.emitRate as number;
+        }
+        if (config.friction !== undefined) {
+            this.#friction = config.friction as number;
+        }
+        if (config.gravity !== undefined) {
+            this.#gravity = config.gravity as number;
+        }
+        if (config.trailLength !== undefined) {
+            this.#trailLength = config.trailLength as number;
+        }
+        if (config.hoverMode !== undefined) {
+            this.#hoverMode = config.hoverMode as boolean;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

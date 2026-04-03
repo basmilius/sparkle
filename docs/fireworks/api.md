@@ -11,24 +11,28 @@ new FireworkSimulation(canvas: HTMLCanvasElement, config?: FireworkSimulationCon
 ### Methods
 
 #### `start()`
+
 Starts the simulation loop.
 
 #### `stop()`
+
 Stops the simulation loop.
 
 #### `destroy()`
+
 Stops the simulation and removes all event listeners.
 
 #### `fireExplosion(variant, position?)`
+
 Fires a single explosion of the given variant.
 
 ```typescript
 fireExplosion(variant: FireworkVariant, position?: Point): void
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `variant` | `FireworkVariant` | The explosion variant to fire. |
+| Parameter  | Type                       | Description                                        |
+|------------|----------------------------|----------------------------------------------------|
+| `variant`  | `FireworkVariant`          | The explosion variant to fire.                     |
 | `position` | `{ x: number; y: number }` | Screen position. Defaults to center at 40% height. |
 
 ## `FireworkSimulationConfig`

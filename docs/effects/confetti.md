@@ -23,14 +23,14 @@ sim.fire({
 
 ## Fire Options
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `angle` | `number` | Launch angle in degrees (90 = upward). |
-| `spread` | `number` | Spread angle in degrees. |
-| `particles` | `number` | Number of confetti particles. |
-| `startVelocity` | `number` | Initial velocity of particles. |
-| `x` | `number` | Horizontal position (0-1, relative to canvas width). |
-| `y` | `number` | Vertical position (0-1, relative to canvas height). |
+| Option          | Type     | Description                                          |
+|-----------------|----------|------------------------------------------------------|
+| `angle`         | `number` | Launch angle in degrees (90 = upward).               |
+| `spread`        | `number` | Spread angle in degrees.                             |
+| `particles`     | `number` | Number of confetti particles.                        |
+| `startVelocity` | `number` | Initial velocity of particles.                       |
+| `x`             | `number` | Horizontal position (0-1, relative to canvas width). |
+| `y`             | `number` | Vertical position (0-1, relative to canvas height).  |
 
 ## Example: Click to Confetti
 

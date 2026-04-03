@@ -55,10 +55,18 @@ export class OrbitLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
-        if (config.showCenters !== undefined) { this.#showCenters = config.showCenters as boolean; }
-        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.trailLength !== undefined) {
+            this.#trailLength = config.trailLength as number;
+        }
+        if (config.showCenters !== undefined) {
+            this.#showCenters = config.showCenters as boolean;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

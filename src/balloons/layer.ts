@@ -40,9 +40,15 @@ export class BalloonLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.driftAmount !== undefined) { this.#driftAmount = config.driftAmount as number; }
-        if (config.stringLength !== undefined) { this.#stringLengthMul = config.stringLength as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.driftAmount !== undefined) {
+            this.#driftAmount = config.driftAmount as number;
+        }
+        if (config.stringLength !== undefined) {
+            this.#stringLengthMul = config.stringLength as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -120,9 +126,9 @@ export class BalloonLayer extends SimulationLayer {
             ctx.beginPath();
             ctx.moveTo(0, knotBaseY);
             ctx.bezierCurveTo(
-                midSwing * 0.35,          knotBaseY + stringLen * 0.3,
+                midSwing * 0.35, knotBaseY + stringLen * 0.3,
                 midSwing + flutter * 0.5, knotBaseY + stringLen * 0.65,
-                tipSwing + flutter,       knotBaseY + stringLen
+                tipSwing + flutter, knotBaseY + stringLen
             );
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             ctx.lineWidth = 1;

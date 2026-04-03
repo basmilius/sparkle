@@ -13,12 +13,15 @@ new MatrixSimulation(canvas: HTMLCanvasElement, config?: MatrixSimulationConfig)
 ### Methods
 
 #### `start(): void`
+
 Starts the matrix rain animation. Creates columns based on the current canvas dimensions.
 
 #### `stop(): void`
+
 Stops the matrix rain animation.
 
 #### `destroy(): void`
+
 Stops the animation and removes all event listeners.
 
 ---
@@ -37,15 +40,15 @@ interface MatrixSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `columns` | `number` | `40` | Maximum number of active falling columns. Automatically halved on small screens. |
-| `speed` | `number` | `1` | Fall speed multiplier. Higher values make characters fall faster. |
-| `color` | `string` | `'#00ff41'` | Hex color string for the trailing characters. The head character is always white. |
-| `fontSize` | `number` | `14` | Character size in pixels. Also determines column spacing. Scaled by `scale`. |
-| `trailLength` | `number` | `20` | Base number of characters per column trail. Actual length varies randomly. |
-| `scale` | `number` | `1` | Scales font size proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                                       |
+|-----------------|------------------------------------|------------------------------|-----------------------------------------------------------------------------------|
+| `columns`       | `number`                           | `40`                         | Maximum number of active falling columns. Automatically halved on small screens.  |
+| `speed`         | `number`                           | `1`                          | Fall speed multiplier. Higher values make characters fall faster.                 |
+| `color`         | `string`                           | `'#00ff41'`                  | Hex color string for the trailing characters. The head character is always white. |
+| `fontSize`      | `number`                           | `14`                         | Character size in pixels. Also determines column spacing. Scaled by `scale`.      |
+| `trailLength`   | `number`                           | `20`                         | Base number of characters per column trail. Actual length varies randomly.        |
+| `scale`         | `number`                           | `1`                          | Scales font size proportionally.                                                  |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                                      |
 
 ---
 

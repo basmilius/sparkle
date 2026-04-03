@@ -4,27 +4,28 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { FireflySimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: FireflySimulation | null = null;
 
-onMounted(async () => {
-    const { FireflySimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new FireflySimulation(canvasRef.value, {
+                count: 150,
+                size: 8,
+                glowSpeed: 1.5
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new FireflySimulation(canvasRef.value, {
-            count: 150,
-            size: 8,
-            glowSpeed: 1.5
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

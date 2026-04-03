@@ -13,12 +13,15 @@ new LanternSimulation(canvas: HTMLCanvasElement, config?: LanternSimulationConfi
 ### Methods
 
 #### `start(): void`
+
 Starts the lantern animation.
 
 #### `stop(): void`
+
 Stops the lantern animation.
 
 #### `destroy(): void`
+
 Stops the animation and removes all event listeners.
 
 ---
@@ -36,14 +39,14 @@ interface LanternSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `count` | `number` | `25` | Number of lanterns. Automatically halved on small screens. |
-| `colors` | `string[]` | `LANTERN_COLORS` | Array of hex color strings for the lantern colors. |
-| `size` | `number` | `20` | Base lantern size in pixels (before scale). |
-| `speed` | `number` | `0.5` | Rise speed multiplier. |
-| `scale` | `number` | `1` | Scales all lantern sizes proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                |
+|-----------------|------------------------------------|------------------------------|------------------------------------------------------------|
+| `count`         | `number`                           | `25`                         | Number of lanterns. Automatically halved on small screens. |
+| `colors`        | `string[]`                         | `LANTERN_COLORS`             | Array of hex color strings for the lantern colors.         |
+| `size`          | `number`                           | `20`                         | Base lantern size in pixels (before scale).                |
+| `speed`         | `number`                           | `0.5`                        | Rise speed multiplier.                                     |
+| `scale`         | `number`                           | `1`                          | Scales all lantern sizes proportionally.                   |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.               |
 
 ---
 

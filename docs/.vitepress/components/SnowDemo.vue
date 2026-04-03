@@ -1,21 +1,23 @@
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-import { SnowSimulation } from '@basmilius/effects';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { SnowSimulation } from '@basmilius/effects';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: SnowSimulation | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: SnowSimulation | null = null;
 
-onMounted(() => {
-    if (canvasRef.value) {
-        sim = new SnowSimulation(canvasRef.value);
-        sim.start();
-    }
-});
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new SnowSimulation(canvasRef.value);
+            sim.start();
+        }
+    });
 
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>
 
 <template>

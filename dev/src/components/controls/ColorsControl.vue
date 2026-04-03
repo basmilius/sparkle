@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { ColorsControl } from '../../config/types';
 
     const props = defineProps<{ control: ColorsControl; modelValue: string[] }>();
@@ -43,9 +45,14 @@
                     class="colors-remove"
                     type="button"
                     @click="removeColor(index)"
-                >✕</button>
+                >✕
+                </button>
             </div>
-            <button class="colors-add" type="button" @click="addColor">+ Add color</button>
+            <button
+                class="colors-add"
+                type="button"
+                @click="addColor">+ Add color
+            </button>
         </div>
     </div>
 </template>

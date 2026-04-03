@@ -10,7 +10,6 @@ export class StarLayer extends SimulationLayer {
     #twinkleSpeed: number;
     readonly #colorRGB: [number, number, number];
     #scale: number;
-    readonly #verticalFade: [number, number] | null;
     readonly #shootingStarSystem: ShootingStarSystem | null;
     #starCount: number;
     #time: number = 0;
@@ -23,7 +22,6 @@ export class StarLayer extends SimulationLayer {
         this.#starCount = config.starCount ?? 150;
         this.#twinkleSpeed = config.twinkleSpeed ?? 1;
         this.#scale = config.scale ?? 1;
-        this.#verticalFade = config.verticalFade ?? null;
 
         this.#colorRGB = hexToRGB(config.color ?? '#ffffff');
 
@@ -42,8 +40,7 @@ export class StarLayer extends SimulationLayer {
                     alphaMin: 0.8,
                     alphaRange: 0.2,
                     decayMin: 0.01,
-                    decayRange: 0.015,
-                    verticalFade: this.#verticalFade ?? undefined
+                    decayRange: 0.015
                 },
                 () => MULBERRY.next()
             )
@@ -57,8 +54,12 @@ export class StarLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.twinkleSpeed !== undefined) { this.#twinkleSpeed = config.twinkleSpeed as number; }
-        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.twinkleSpeed !== undefined) {
+            this.#twinkleSpeed = config.twinkleSpeed as number;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -76,18 +77,7 @@ export class StarLayer extends SimulationLayer {
             for (const star of this.#stars) {
                 const px = star.x * width;
                 const py = star.y * height;
-                let alpha = star.brightness * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(this.#time * star.twinkleSpeed * this.#twinkleSpeed + star.twinklePhase)));
-
-                if (this.#verticalFade) {
-                    const [fadeStart, fadeEnd] = this.#verticalFade;
-                    const fadeFactor = 1 - Math.max(0, Math.min(1, (star.y - fadeStart) / (fadeEnd - fadeStart)));
-                    alpha *= fadeFactor;
-
-                    if (alpha <= 0) {
-                        continue;
-                    }
-                }
-
+                const alpha = star.brightness * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(this.#time * star.twinkleSpeed * this.#twinkleSpeed + star.twinklePhase)));
                 const size = star.size * this.#scale;
 
                 ctx.globalAlpha = alpha;

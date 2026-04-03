@@ -35,10 +35,10 @@ Control the density of the snowfall:
 
 ```typescript
 // Light snowfall
-new SnowSimulation(canvas, { particles: 50 });
+new SnowSimulation(canvas, {particles: 50});
 
 // Heavy blizzard
-new SnowSimulation(canvas, { particles: 500 });
+new SnowSimulation(canvas, {particles: 500});
 ```
 
 ### Snowflake Size
@@ -47,20 +47,20 @@ Set the maximum snowflake radius in pixels:
 
 ```typescript
 // Small, fine snow
-new SnowSimulation(canvas, { size: 3 });
+new SnowSimulation(canvas, {size: 3});
 
 // Large, fluffy snowflakes
-new SnowSimulation(canvas, { size: 10 });
+new SnowSimulation(canvas, {size: 10});
 ```
 
 ### Fall Speed
 
 ```typescript
 // Gentle, slow drift
-new SnowSimulation(canvas, { speed: 1 });
+new SnowSimulation(canvas, {speed: 1});
 
 // Fast snowstorm
-new SnowSimulation(canvas, { speed: 4 });
+new SnowSimulation(canvas, {speed: 4});
 ```
 
 ### Scale
@@ -69,8 +69,8 @@ Scale all snowflake sizes proportionally:
 
 ```typescript
 // Half-size snowflakes
-new SnowSimulation(canvas, { scale: 0.5 });
+new SnowSimulation(canvas, {scale: 0.5});
 
 // Double-size snowflakes
-new SnowSimulation(canvas, { scale: 2 });
+new SnowSimulation(canvas, {scale: 2});
 ```

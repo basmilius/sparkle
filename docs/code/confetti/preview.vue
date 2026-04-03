@@ -1,45 +1,49 @@
 <template>
-    <EffectDemo ref="containerRef" clickable @click="onClick">
+    <EffectDemo
+        ref="containerRef"
+        clickable
+        @click="onClick">
         <canvas ref="canvasRef"></canvas>
 
         <span class="effect-demo__hint">Click anywhere</span>
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { ConfettiSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-const containerRef = ref<HTMLDivElement>();
-let sim: { fire(config: Record<string, unknown>): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    const containerRef = ref<HTMLDivElement>();
+    let sim: ConfettiSimulation | null = null;
 
-function onClick(evt: MouseEvent): void {
-    if (!sim || !containerRef.value) {
-        return;
+    function onClick(evt: MouseEvent): void {
+        if (!sim || !containerRef.value) {
+            return;
+        }
+
+        const rect = containerRef.value.getBoundingClientRect();
+
+        sim.fire({
+            angle: 90,
+            spread: 60,
+            particles: 120,
+            startVelocity: 45,
+            x: (evt.clientX - rect.left) / rect.width,
+            y: (evt.clientY - rect.top) / rect.height
+        });
     }
 
-    const rect = containerRef.value.getBoundingClientRect();
-
-    sim.fire({
-        angle: 90,
-        spread: 60,
-        particles: 120,
-        startVelocity: 45,
-        x: (evt.clientX - rect.left) / rect.width,
-        y: (evt.clientY - rect.top) / rect.height
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new ConfettiSimulation(canvasRef.value);
+        }
     });
-}
 
-onMounted(async () => {
-    const { ConfettiSimulation } = await import('@basmilius/sparkle');
-
-    if (canvasRef.value) {
-        sim = new ConfettiSimulation(canvasRef.value);
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

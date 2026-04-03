@@ -40,8 +40,12 @@ export class FireflyLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.glowSpeed !== undefined) { this.#glowSpeed = config.glowSpeed as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.glowSpeed !== undefined) {
+            this.#glowSpeed = config.glowSpeed as number;
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {
@@ -49,10 +53,10 @@ export class FireflyLayer extends SimulationLayer {
 
         for (const firefly of this.#fireflies) {
             const moveX = Math.sin(this.#time * firefly.freqX1 + firefly.phaseX1) * firefly.amplitudeX
-                        + Math.sin(this.#time * firefly.freqX2 + firefly.phaseX2) * firefly.amplitudeX * 0.5;
+                + Math.sin(this.#time * firefly.freqX2 + firefly.phaseX2) * firefly.amplitudeX * 0.5;
 
             const moveY = Math.sin(this.#time * firefly.freqY1 + firefly.phaseY1) * firefly.amplitudeY
-                        + Math.sin(this.#time * firefly.freqY2 + firefly.phaseY2) * firefly.amplitudeY * 0.5;
+                + Math.sin(this.#time * firefly.freqY2 + firefly.phaseY2) * firefly.amplitudeY * 0.5;
 
             firefly.x += moveX * dt / (3000 * (1 / this.#speed));
             firefly.y += moveY * dt / (3000 * (1 / this.#speed));
@@ -99,7 +103,7 @@ export class FireflyLayer extends SimulationLayer {
         ctx.globalAlpha = 1;
     }
 
-    #parseColor(color: string): {r: number; g: number; b: number} {
+    #parseColor(color: string): { r: number; g: number; b: number } {
         const canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = 1;

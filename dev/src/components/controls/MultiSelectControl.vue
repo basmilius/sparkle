@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { MultiSelectControl } from '../../config/types';
 
     const props = defineProps<{ control: MultiSelectControl; modelValue: string[] }>();
@@ -28,7 +30,8 @@
                 :class="{ 'is-active': modelValue.includes(opt.value) }"
                 type="button"
                 @click="toggle(opt.value)"
-            >{{ opt.label }}</button>
+            >{{ opt.label }}
+            </button>
         </div>
     </div>
 </template>

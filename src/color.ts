@@ -1,4 +1,4 @@
-export function parseColor(fillStyle: string): {r: number; g: number; b: number; a: number} {
+export function parseColor(fillStyle: string): { r: number; g: number; b: number; a: number } {
     const canvas = document.createElement('canvas');
     canvas.width = 1;
     canvas.height = 1;

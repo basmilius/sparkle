@@ -39,8 +39,12 @@ export class GlitterLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.groundLevel !== undefined) { this.#groundLevel = config.groundLevel as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.groundLevel !== undefined) {
+            this.#groundLevel = config.groundLevel as number;
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {

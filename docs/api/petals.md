@@ -13,12 +13,15 @@ new PetalSimulation(canvas: HTMLCanvasElement, config?: PetalSimulationConfig)
 ### Methods
 
 #### `start(): void`
+
 Starts the petal animation.
 
 #### `stop(): void`
+
 Stops the petal animation.
 
 #### `destroy(): void`
+
 Stops the animation and removes all event listeners.
 
 ---
@@ -37,15 +40,15 @@ interface PetalSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `count` | `number` | `100` | Number of petals. Automatically halved on small screens. |
-| `colors` | `string[]` | Sakura palette (7 pinks) | Array of CSS color strings for petal colors. |
-| `size` | `number` | `10` | Maximum petal size in pixels (before scale). |
-| `speed` | `number` | `0.7` | Fall speed multiplier. |
-| `wind` | `number` | `0.15` | Horizontal wind strength. Positive = right, negative = left. |
-| `scale` | `number` | `1` | Scales all petal sizes proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                  |
+|-----------------|------------------------------------|------------------------------|--------------------------------------------------------------|
+| `count`         | `number`                           | `100`                        | Number of petals. Automatically halved on small screens.     |
+| `colors`        | `string[]`                         | Sakura palette (7 pinks)     | Array of CSS color strings for petal colors.                 |
+| `size`          | `number`                           | `10`                         | Maximum petal size in pixels (before scale).                 |
+| `speed`         | `number`                           | `0.7`                        | Fall speed multiplier.                                       |
+| `wind`          | `number`                           | `0.15`                       | Horizontal wind strength. Positive = right, negative = left. |
+| `scale`         | `number`                           | `1`                          | Scales all petal sizes proportionally.                       |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                 |
 
 ---
 

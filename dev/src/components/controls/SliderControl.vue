@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import type { SliderControl } from '../../config/types';
 
     const props = defineProps<{ control: SliderControl; modelValue: number }>();

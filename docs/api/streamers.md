@@ -13,12 +13,15 @@ new StreamerSimulation(canvas: HTMLCanvasElement, config?: StreamerSimulationCon
 ### Methods
 
 #### `start(): void`
+
 Starts the streamers animation.
 
 #### `stop(): void`
+
 Stops the streamers animation.
 
 #### `destroy(): void`
+
 Stops the animation and removes all event listeners.
 
 ---
@@ -35,13 +38,13 @@ interface StreamerSimulationConfig {
 }
 ```
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `count` | `number` | `20` | Number of streamers. Automatically halved on small screens. |
-| `colors` | `string[]` | `STREAMER_COLORS` | Array of hex color strings for the streamers. |
-| `speed` | `number` | `1` | Fall speed multiplier. Higher values make streamers fall faster. |
-| `scale` | `number` | `1` | Scales streamer sizes, widths, and physics proportionally. |
-| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
+| Property        | Type                               | Default                      | Description                                                      |
+|-----------------|------------------------------------|------------------------------|------------------------------------------------------------------|
+| `count`         | `number`                           | `20`                         | Number of streamers. Automatically halved on small screens.      |
+| `colors`        | `string[]`                         | `STREAMER_COLORS`            | Array of hex color strings for the streamers.                    |
+| `speed`         | `number`                           | `1`                          | Fall speed multiplier. Higher values make streamers fall faster. |
+| `scale`         | `number`                           | `1`                          | Scales streamer sizes, widths, and physics proportionally.       |
+| `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`.                     |
 
 ---
 

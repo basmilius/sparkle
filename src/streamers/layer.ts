@@ -41,7 +41,9 @@ export class StreamerLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -102,7 +104,7 @@ export class StreamerLayer extends SimulationLayer {
         const swayPhase = MULBERRY.next() * Math.PI * 2;
         const color = this.#colors[Math.floor(MULBERRY.next() * this.#colors.length)];
 
-        const segments: {x: number; y: number}[] = [];
+        const segments: { x: number; y: number }[] = [];
         const segmentLength = length / segmentCount;
 
         for (let i = 0; i < segmentCount; i++) {

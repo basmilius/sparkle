@@ -4,27 +4,28 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { BalloonSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: BalloonSimulation | null = null;
 
-onMounted(async () => {
-    const { BalloonSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new BalloonSimulation(canvasRef.value, {
+                count: 30,
+                sizeRange: [20, 55],
+                speed: 1.5
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new BalloonSimulation(canvasRef.value, {
-            count: 30,
-            sizeRange: [20, 55],
-            speed: 1.5
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

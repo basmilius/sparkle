@@ -18,26 +18,26 @@ new LimitedFrameRateCanvas(
 
 ### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `canvas` | `HTMLCanvasElement` | The canvas element. |
-| `context` | `CanvasRenderingContext2D` | The 2D rendering context. |
-| `delta` | `number` | Milliseconds since last frame. |
-| `deltaFactor` | `number` | Frame rate adjustment factor for consistent speed across frame rates. |
-| `frameRate` | `number` | Target frame rate. |
-| `isSmall` | `boolean` | `true` when viewport is narrower than 991px. |
-| `isTicking` | `boolean` | `true` when the animation loop is running. |
-| `ticks` | `number` | Total frame count since start. |
-| `height` | `number` | Canvas display height in pixels. |
-| `width` | `number` | Canvas display width in pixels. |
+| Property      | Type                       | Description                                                           |
+|---------------|----------------------------|-----------------------------------------------------------------------|
+| `canvas`      | `HTMLCanvasElement`        | The canvas element.                                                   |
+| `context`     | `CanvasRenderingContext2D` | The 2D rendering context.                                             |
+| `delta`       | `number`                   | Milliseconds since last frame.                                        |
+| `deltaFactor` | `number`                   | Frame rate adjustment factor for consistent speed across frame rates. |
+| `frameRate`   | `number`                   | Target frame rate.                                                    |
+| `isSmall`     | `boolean`                  | `true` when viewport is narrower than 991px.                          |
+| `isTicking`   | `boolean`                  | `true` when the animation loop is running.                            |
+| `ticks`       | `number`                   | Total frame count since start.                                        |
+| `height`      | `number`                   | Canvas display height in pixels.                                      |
+| `width`       | `number`                   | Canvas display width in pixels.                                       |
 
 ### Methods
 
-| Method | Description |
-|--------|-------------|
-| `start()` | Start the animation loop. Calls `onResize()` and begins `requestAnimationFrame`. |
-| `stop()` | Stop the animation loop. Cancels the pending animation frame. |
-| `destroy()` | Stop the loop and remove all event listeners (`resize`, `visibilitychange`). |
+| Method      | Description                                                                      |
+|-------------|----------------------------------------------------------------------------------|
+| `start()`   | Start the animation loop. Calls `onResize()` and begins `requestAnimationFrame`. |
+| `stop()`    | Stop the animation loop. Cancels the pending animation frame.                    |
+| `destroy()` | Stop the loop and remove all event listeners (`resize`, `visibilitychange`).     |
 
 ### Behavior
 

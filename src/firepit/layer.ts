@@ -39,9 +39,15 @@ export class FirepitLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.intensity !== undefined) { this.#intensity = config.intensity as number; }
-        if (config.flameWidth !== undefined) { this.#flameWidth = config.flameWidth as number; }
-        if (config.flameHeight !== undefined) { this.#flameHeight = config.flameHeight as number; }
+        if (config.intensity !== undefined) {
+            this.#intensity = config.intensity as number;
+        }
+        if (config.flameWidth !== undefined) {
+            this.#flameWidth = config.flameWidth as number;
+        }
+        if (config.flameHeight !== undefined) {
+            this.#flameHeight = config.flameHeight as number;
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {

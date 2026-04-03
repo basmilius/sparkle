@@ -8,7 +8,7 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { createFireflySprite, FireflyParticle } from '@basmilius/sparkle';
+    import { LightningSystem } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
 
@@ -18,10 +18,10 @@
     let running = false;
     let animFrame = 0;
     let then = 0;
-    let fireflies: FireflyParticle[] = [];
+    let system: LightningSystem | null = null;
 
     function loop(now: number): void {
-        if (!running || !canvasRef.value || !ctx) {
+        if (!running || !canvasRef.value || !ctx || !system) {
             return;
         }
 
@@ -33,14 +33,17 @@
         canvasRef.value.width = width;
         canvasRef.value.height = height;
 
-        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = '#090912';
+        ctx.fillRect(0, 0, width, height);
 
-        for (const firefly of fireflies) {
-            firefly.tick(dt);
-            firefly.draw(ctx);
+        system.tick(dt);
+
+        if (system.flashAlpha > 0) {
+            ctx.fillStyle = `rgba(180, 200, 255, ${system.flashAlpha})`;
+            ctx.fillRect(0, 0, width, height);
         }
 
-        ctx.globalCompositeOperation = 'source-over';
+        system.draw(ctx, width, height);
     }
 
     onMounted(() => {
@@ -51,20 +54,10 @@
         width = canvasRef.value.offsetWidth;
         height = canvasRef.value.offsetHeight;
 
-        const greenSprite = createFireflySprite('#b4ff6a');
-        const amberSprite = createFireflySprite('#ffcc44');
-        const bounds = {width, height};
-
-        for (let i = 0; i < 40; i++) {
-            const sprite = Math.random() < 0.7 ? greenSprite : amberSprite;
-            fireflies.push(new FireflyParticle(
-                Math.random() * width,
-                Math.random() * height,
-                bounds,
-                sprite,
-                {size: 4 + Math.random() * 4}
-            ));
-        }
+        system = new LightningSystem(
+            {frequency: 0.5, color: [180, 200, 255], branches: true, flash: true},
+            Math.random
+        );
 
         ctx = canvasRef.value.getContext('2d', {colorSpace: 'display-p3'});
         running = true;
@@ -75,7 +68,7 @@
         running = false;
         cancelAnimationFrame(animFrame);
         then = 0;
-        fireflies = [];
+        system = null;
         ctx = null;
     });
 </script>

@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts">
     import { LayeredSimulation, LimitedFrameRateCanvas } from '@basmilius/sparkle';
     import { onMounted, onUnmounted, ref } from 'vue';
     import { SIMULATOR_MAP, SIMULATORS } from '../config/registry';
@@ -55,7 +57,7 @@
         layers.value.push({
             uid: ++uidCounter,
             simulatorId,
-            config: { ...def.defaultConfig },
+            config: {...def.defaultConfig},
             expanded: false
         });
         showAddMenu.value = false;
@@ -90,12 +92,12 @@
         if (!entry) {
             return;
         }
-        entry.config = { ...entry.config, [key]: value };
+        entry.config = {...entry.config, [key]: value};
 
         const def = SIMULATOR_MAP.get(entry.simulatorId);
         if (def?.liveKeys.includes(key)) {
             const index = layers.value.indexOf(entry);
-            layeredSim?.configureLayer(index, { [key]: value });
+            layeredSim?.configureLayer(index, {[key]: value});
         } else {
             scheduleRebuild();
         }
@@ -131,11 +133,15 @@
             class="sim-canvas-bg"
             :style="{ background: background }"
         />
-        <canvas ref="canvasRef" class="sim-canvas" />
+        <canvas
+            ref="canvasRef"
+            class="sim-canvas"/>
 
         <div class="sim-panel-wrap">
             <div class="config-panel is-open">
-                <div class="config-panel-toggle" style="cursor: default;">
+                <div
+                    class="config-panel-toggle"
+                    style="cursor: default;">
                     <span class="config-panel-title">Playground</span>
                 </div>
 
@@ -167,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="panel-sep" />
+                    <div class="panel-sep"/>
 
                     <div class="layers-header">
                         <span class="layers-title">Layers</span>
@@ -176,20 +182,26 @@
                                 class="add-layer-btn"
                                 type="button"
                                 @click="showAddMenu = !showAddMenu"
-                            >+ Add Layer</button>
-                            <div v-if="showAddMenu" class="add-layer-menu">
+                            >+ Add Layer
+                            </button>
+                            <div
+                                v-if="showAddMenu"
+                                class="add-layer-menu">
                                 <button
                                     v-for="s in SIMULATORS"
                                     :key="s.id"
                                     class="add-layer-item"
                                     type="button"
                                     @click="addLayer(s.id)"
-                                >{{ s.name }}</button>
+                                >{{ s.name }}
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <div v-if="layers.length === 0" class="layers-empty">
+                    <div
+                        v-if="layers.length === 0"
+                        class="layers-empty">
                         No layers yet. Add one above.
                     </div>
 
@@ -215,7 +227,7 @@
                                         stroke-width="2"
                                         stroke-linecap="round"
                                     >
-                                        <polyline points="9 18 15 12 9 6" />
+                                        <polyline points="9 18 15 12 9 6"/>
                                     </svg>
                                 </button>
                                 <span class="layer-name">{{ SIMULATOR_MAP.get(entry.simulatorId)?.name }}</span>
@@ -225,22 +237,27 @@
                                         type="button"
                                         :disabled="index === 0"
                                         @click="moveLayer(entry.uid, -1)"
-                                    >↑</button>
+                                    >↑
+                                    </button>
                                     <button
                                         class="layer-action"
                                         type="button"
                                         :disabled="index === layers.length - 1"
                                         @click="moveLayer(entry.uid, 1)"
-                                    >↓</button>
+                                    >↓
+                                    </button>
                                     <button
                                         class="layer-action layer-action-remove"
                                         type="button"
                                         @click="removeLayer(entry.uid)"
-                                    >✕</button>
+                                    >✕
+                                    </button>
                                 </div>
                             </div>
 
-                            <div v-if="entry.expanded" class="layer-config">
+                            <div
+                                v-if="entry.expanded"
+                                class="layer-config">
                                 <ConfigPanel
                                     :title="SIMULATOR_MAP.get(entry.simulatorId)?.name ?? ''"
                                     :schema="SIMULATOR_MAP.get(entry.simulatorId)?.schema ?? []"

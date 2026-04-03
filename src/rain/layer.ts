@@ -4,7 +4,7 @@ import { MULBERRY } from './consts';
 import type { RainSimulationConfig } from './simulation';
 import type { Raindrop, RainVariant, Splash } from './types';
 
-const VARIANT_PRESETS: Record<RainVariant, {drops: number; speed: number; wind: number; splashes: boolean}> = {
+const VARIANT_PRESETS: Record<RainVariant, { drops: number; speed: number; wind: number; splashes: boolean }> = {
     drizzle: {drops: 70, speed: 0.55, wind: 0.1, splashes: false},
     downpour: {drops: 200, speed: 0.85, wind: 0.25, splashes: true},
     thunderstorm: {drops: 300, speed: 1, wind: 0.4, splashes: true}
@@ -51,9 +51,15 @@ export class RainLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.wind !== undefined) { this.#wind = config.wind as number; }
-        if (config.splashes !== undefined) { this.#enableSplashes = config.splashes as boolean; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.wind !== undefined) {
+            this.#wind = config.wind as number;
+        }
+        if (config.splashes !== undefined) {
+            this.#enableSplashes = config.splashes as boolean;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {

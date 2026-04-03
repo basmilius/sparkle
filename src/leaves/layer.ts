@@ -41,8 +41,12 @@ export class LeafLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.speed !== undefined) { this.#speed = config.speed as number; }
-        if (config.wind !== undefined) { this.#wind = config.wind as number; }
+        if (config.speed !== undefined) {
+            this.#speed = config.speed as number;
+        }
+        if (config.wind !== undefined) {
+            this.#wind = config.wind as number;
+        }
     }
 
     tick(dt: number, _width: number, height: number): void {
@@ -52,8 +56,8 @@ export class LeafLayer extends SimulationLayer {
         this.#time += 0.015 * dt;
 
         const globalWind = Math.sin(this.#time * 0.5) * 0.4
-                         + Math.sin(this.#time * 1.3 + 2) * 0.2
-                         + Math.sin(this.#time * 3.1) * 0.1;
+            + Math.sin(this.#time * 1.3 + 2) * 0.2
+            + Math.sin(this.#time * 3.1) * 0.1;
 
         for (let index = 0; index < this.#leaves.length; index++) {
             const leaf = this.#leaves[index];

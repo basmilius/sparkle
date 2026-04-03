@@ -1,3 +1,4 @@
+export { createExplosion } from './create-explosion';
 export { Explosion } from './explosion';
 export { Firework } from './firework';
 export { FireworkLayer } from './layer';

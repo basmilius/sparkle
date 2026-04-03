@@ -101,10 +101,10 @@ export class FireflyParticle {
         this.#time += 0.02 * dt * this.#speed;
 
         const moveX = Math.sin(this.#time * this.#freqX1 + this.#phaseX1) * this.#amplitudeX * this.#bounds.width
-                    + Math.sin(this.#time * this.#freqX2 + this.#phaseX2) * this.#amplitudeX * this.#bounds.width * 0.5;
+            + Math.sin(this.#time * this.#freqX2 + this.#phaseX2) * this.#amplitudeX * this.#bounds.width * 0.5;
 
         const moveY = Math.sin(this.#time * this.#freqY1 + this.#phaseY1) * this.#amplitudeY * this.#bounds.height
-                    + Math.sin(this.#time * this.#freqY2 + this.#phaseY2) * this.#amplitudeY * this.#bounds.height * 0.5;
+            + Math.sin(this.#time * this.#freqY2 + this.#phaseY2) * this.#amplitudeY * this.#bounds.height * 0.5;
 
         this.#x += (moveX / 3000) * dt;
         this.#y += (moveY / 3000) * dt;

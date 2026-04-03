@@ -59,10 +59,15 @@ export type ControlDef = SliderControl | ToggleControl | ColorControl | SelectCo
 
 export interface SimInstance {
     start(): void;
+
     stop(): void;
+
     destroy(): void;
+
     configure?(config: Record<string, unknown>): void;
+
     fire?(config: unknown): void;
+
     fireExplosion?(variant: string, pos: { x: number; y: number }): void;
 }
 
@@ -74,6 +79,8 @@ export interface SimulatorDef {
     readonly defaultConfig: Record<string, unknown>;
     readonly liveKeys: string[];
     readonly interactive?: 'confetti' | 'fireworks';
+
     create(canvas: HTMLCanvasElement, config: Record<string, unknown>): SimInstance;
+
     createLayer(config: Record<string, unknown>): unknown;
 }

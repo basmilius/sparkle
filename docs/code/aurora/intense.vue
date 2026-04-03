@@ -4,28 +4,29 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { AuroraSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: AuroraSimulation | null = null;
 
-onMounted(async () => {
-    const { AuroraSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new AuroraSimulation(canvasRef.value, {
+                bands: 6,
+                intensity: 1,
+                waveAmplitude: 1.5,
+                speed: 1.5
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new AuroraSimulation(canvasRef.value, {
-            bands: 6,
-            intensity: 1,
-            waveAmplitude: 1.5,
-            speed: 1.5
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>

@@ -39,16 +39,20 @@ export class SandstormLayer extends SimulationLayer {
     }
 
     configure(config: Record<string, unknown>): void {
-        if (config.wind !== undefined) { this.#wind = config.wind as number; }
-        if (config.turbulence !== undefined) { this.#turbulence = config.turbulence as number; }
+        if (config.wind !== undefined) {
+            this.#wind = config.wind as number;
+        }
+        if (config.turbulence !== undefined) {
+            this.#turbulence = config.turbulence as number;
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
         this.#time += 0.02 * dt;
 
         const gustX = Math.sin(this.#time * 0.3) * 0.5
-                     + Math.sin(this.#time * 0.8 + 1) * 0.3
-                     + Math.sin(this.#time * 2.1) * 0.2;
+            + Math.sin(this.#time * 0.8 + 1) * 0.3
+            + Math.sin(this.#time * 2.1) * 0.2;
 
         const gustY = Math.sin(this.#time * 0.5 + 2) * 0.15;
 
@@ -112,7 +116,7 @@ export class SandstormLayer extends SimulationLayer {
         }
     }
 
-    #parseColor(color: string): {r: number; g: number; b: number} {
+    #parseColor(color: string): { r: number; g: number; b: number } {
         const canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = 1;

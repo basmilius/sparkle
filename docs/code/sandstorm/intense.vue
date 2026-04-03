@@ -4,28 +4,29 @@
     </EffectDemo>
 </template>
 
-<script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { SandstormSimulation } from '@basmilius/sparkle';
 
-const canvasRef = ref<HTMLCanvasElement>();
-let sim: { start(): void; destroy(): void } | null = null;
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: SandstormSimulation | null = null;
 
-onMounted(async () => {
-    const { SandstormSimulation } = await import('@basmilius/sparkle');
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = new SandstormSimulation(canvasRef.value, {
+                count: 500,
+                wind: 1.5,
+                turbulence: 1.5,
+                hazeOpacity: 0.25
+            });
+            sim.start();
+        }
+    });
 
-    if (canvasRef.value) {
-        sim = new SandstormSimulation(canvasRef.value, {
-            count: 500,
-            wind: 1.5,
-            turbulence: 1.5,
-            hazeOpacity: 0.25
-        });
-        sim.start();
-    }
-});
-
-onUnmounted(() => {
-    sim?.destroy();
-    sim = null;
-});
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
 </script>
