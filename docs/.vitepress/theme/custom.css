@@ -1,11 +1,11 @@
 .effect-demo {
     position: relative;
-    width: 100%;
-    height: 420px;
-    border-radius: 12px;
     overflow: hidden;
+    height: 420px;
+    width: 100%;
     margin: 1.5rem 0;
     background: #161618;
+    border-radius: 12px;
 }
 
 .effect-demo canvas {
@@ -23,31 +23,31 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     color: rgba(255, 255, 255, .3);
     font-size: .875rem;
     font-weight: 500;
     pointer-events: none;
     user-select: none;
+    transform: translate(-50%, -50%);
 }
 
 .effect-demo__controls {
     position: absolute;
     bottom: .75rem;
     left: 50%;
-    transform: translateX(-50%);
+    z-index: 10;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: .25rem;
     max-width: calc(100% - 1.5rem);
     width: 100%;
-    justify-content: center;
+    padding: .375rem;
     background: rgba(0, 0, 0, .4);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, .12);
     border-radius: .75rem;
-    padding: .375rem;
-    z-index: 10;
+    transform: translateX(-50%);
 }
 
 .effect-demo__controls button {
@@ -56,10 +56,10 @@
     border: 1px solid rgba(255, 255, 255, .1);
     border-radius: .375rem;
     color: rgba(255, 255, 255, .8);
-    cursor: pointer;
     font-family: inherit;
     font-size: .6875rem;
     font-weight: 500;
+    cursor: pointer;
     transition: background .15s, color .15s;
 }
 
@@ -72,14 +72,14 @@
     position: absolute;
     top: 9px;
     right: 9px;
+    z-index: 10;
     display: flex;
     gap: .25rem;
+    padding: 6px;
     background: rgba(0, 0, 0, .4);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, .12);
     border-radius: 12px;
-    padding: 6px;
-    z-index: 10;
 }
 
 .effect-demo__speed button {
@@ -88,11 +88,11 @@
     border: 1px solid rgba(255, 255, 255, .1);
     border-radius: 6px;
     color: rgba(255, 255, 255, .6);
-    cursor: pointer;
     font-family: inherit;
     font-size: .625rem;
     font-weight: 500;
     line-height: 1;
+    cursor: pointer;
     transition: background .15s, color .15s;
 }
 
