@@ -1,4 +1,4 @@
-import { createAurora, createBalloons, createBubbles, createConfetti, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitter, createLanterns, createLeaves, createLightning, createMatrix, createOrbits, createParticles, createPetals, createPlasma, createRain, createSandstorm, createSnow, createSparklers, createStars, createStreamers, createWaves, createWormhole } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createClouds, createConfetti, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitter, createHyperSpace, createLanterns, createLava, createLeaves, createLightning, createMatrix, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSparklers, createStars, createStreamers, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -758,6 +758,268 @@ export const SIMULATORS: SimulatorDef[] = [
             return sim;
         },
         createLayer: (config) => createWaves(config)
+    },
+    {
+        id: 'boids',
+        name: 'Boids',
+        description: 'Classic flocking simulation with separation, alignment, and cohesion.',
+        defaultConfig: {
+            count: 80,
+            speed: 1,
+            separation: 1,
+            alignment: 1,
+            cohesion: 1,
+            color: '#44aaff',
+            size: 6,
+            scale: 1
+        },
+        liveKeys: ['speed', 'separation', 'alignment', 'cohesion'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 10, max: 300, step: 10, default: 80},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'separation', label: 'Separation', min: 0, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'alignment', label: 'Alignment', min: 0, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'cohesion', label: 'Cohesion', min: 0, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'size', label: 'Size', min: 2, max: 20, step: 1, default: 6},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#44aaff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createBoids(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createBoids(config)
+    },
+    {
+        id: 'butterflies',
+        name: 'Butterflies',
+        description: 'Colorful butterflies with flapping wings following organic flight paths.',
+        defaultConfig: {
+            count: 12,
+            speed: 1,
+            size: 20,
+            scale: 1,
+            colors: ['#f4a261', '#e76f51', '#e9c46a', '#2a9d8f', '#8ecae6', '#ffb7c5', '#c77dff', '#f8edeb']
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 1, max: 40, step: 1, default: 12},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'size', label: 'Wing Size', min: 8, max: 60, step: 2, default: 20},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#f4a261', '#e76f51', '#e9c46a', '#2a9d8f', '#8ecae6', '#ffb7c5', '#c77dff', '#f8edeb']}
+        ],
+        create: (canvas, config) => {
+            const sim = createButterflies(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createButterflies(config)
+    },
+    {
+        id: 'black-hole',
+        name: 'Black Hole',
+        description: 'Particles spiral inward toward a central black hole, accelerating near the event horizon.',
+        defaultConfig: {
+            count: 300,
+            speed: 1,
+            color: '#6644ff',
+            size: 2,
+            scale: 1
+        },
+        liveKeys: ['speed', 'color'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'size', label: 'Size', min: 0.5, max: 6, step: 0.5, default: 2},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#6644ff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createBlackHole(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createBlackHole(config)
+    },
+    {
+        id: 'clouds',
+        name: 'Clouds',
+        description: 'Layered soft clouds slowly drifting with parallax depth.',
+        defaultConfig: {
+            count: 8,
+            speed: 0.3,
+            color: '#ffffff',
+            opacity: 0.8,
+            scale: 1
+        },
+        liveKeys: ['speed', 'opacity'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 2, max: 20, step: 1, default: 8},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.05, max: 2, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'opacity', label: 'Opacity', min: 0.1, max: 1, step: 0.05, default: 0.8},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#ffffff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createClouds(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createClouds(config)
+    },
+    {
+        id: 'hyper-space',
+        name: 'HyperSpace',
+        description: 'Warp-speed hyperspace effect with stars stretching into radial motion-blur streaks.',
+        defaultConfig: {
+            count: 250,
+            speed: 1,
+            color: '#ffffff',
+            scale: 1
+        },
+        liveKeys: ['speed', 'color'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 50, max: 600, step: 25, default: 250},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#ffffff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createHyperSpace(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createHyperSpace(config)
+    },
+    {
+        id: 'lava',
+        name: 'Lava',
+        description: 'Lava lamp effect with soft glowing blobs blending with screen compositing.',
+        defaultConfig: {
+            count: 12,
+            speed: 1,
+            colors: ['#ff4400', '#ff8800', '#ffcc00', '#ff0066'],
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 1, max: 40, step: 1, default: 12},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff4400', '#ff8800', '#ffcc00', '#ff0066']}
+        ],
+        create: (canvas, config) => {
+            const sim = createLava(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createLava(config)
+    },
+    {
+        id: 'nebula',
+        name: 'Nebula',
+        description: 'Atmospheric space nebula with softly drifting color clouds and twinkling stars.',
+        defaultConfig: {
+            starCount: 150,
+            speed: 0.3,
+            colors: ['#ff6b9d', '#c44dff', '#4d79ff', '#00d4ff'],
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'starCount', label: 'Star Count', min: 10, max: 500, step: 10, default: 150},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b9d', '#c44dff', '#4d79ff', '#00d4ff']}
+        ],
+        create: (canvas, config) => {
+            const sim = createNebula(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createNebula(config)
+    },
+    {
+        id: 'neon',
+        name: 'Neon',
+        description: 'Animated neon glow tubes — circles, waves, zig-zags — with flicker effects.',
+        defaultConfig: {
+            count: 8,
+            speed: 1,
+            colors: ['#ff0080', '#00ffff', '#ffff00', '#ff6600', '#aa00ff'],
+            flicker: true,
+            scale: 1
+        },
+        liveKeys: ['speed', 'flicker'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 1, max: 32, step: 1, default: 8},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'toggle', key: 'flicker', label: 'Flicker', default: true},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff0080', '#00ffff', '#ffff00', '#ff6600', '#aa00ff']}
+        ],
+        create: (canvas, config) => {
+            const sim = createNeon(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createNeon(config)
+    },
+    {
+        id: 'roots',
+        name: 'Roots',
+        description: 'Procedurally growing root systems rising from the bottom with organic bezier curves.',
+        defaultConfig: {
+            count: 5,
+            speed: 1,
+            color: '#4a3728',
+            branchProbability: 0.3,
+            maxSegments: 200,
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 1, max: 20, step: 1, default: 5},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'branchProbability', label: 'Branch Probability', min: 0, max: 1, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'maxSegments', label: 'Max Segments', min: 50, max: 500, step: 25, default: 200},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#4a3728'}
+        ],
+        create: (canvas, config) => {
+            const sim = createRoots(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createRoots(config)
+    },
+    {
+        id: 'smoke',
+        name: 'Smoke',
+        description: 'Soft rising smoke particles drifting upward with organic turbulence.',
+        defaultConfig: {
+            count: 40,
+            speed: 1,
+            color: '#888888',
+            spread: 0.3,
+            scale: 1
+        },
+        liveKeys: ['speed', 'spread'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 5, max: 120, step: 5, default: 40},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'spread', label: 'Spread', min: 0.05, max: 1, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#888888'}
+        ],
+        create: (canvas, config) => {
+            const sim = createSmoke(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createSmoke(config)
     },
     {
         id: 'wormhole',

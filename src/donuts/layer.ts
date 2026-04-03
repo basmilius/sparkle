@@ -135,7 +135,9 @@ export class Donuts extends Effect<DonutsConfig> {
         for (const donut of this.#donuts) {
             const cos = Math.cos(donut.angle);
             const sin = Math.sin(donut.angle);
-            ctx.setTransform(cos, sin, -sin, cos, donut.x, donut.y);
+
+            ctx.save();
+            ctx.transform(cos, sin, -sin, cos, donut.x, donut.y);
 
             ctx.beginPath();
             ctx.arc(0, 0, donut.outerRadius, 0, Math.PI * 2);
@@ -144,9 +146,9 @@ export class Donuts extends Effect<DonutsConfig> {
 
             ctx.fillStyle = donut.color;
             ctx.fill();
-        }
 
-        ctx.resetTransform();
+            ctx.restore();
+        }
     }
 
     #updateDonut(donut: Donut, dt: number): void {

@@ -33,32 +33,33 @@
 
 .effect-demo__controls {
     position: absolute;
-    bottom: .75rem;
+    bottom: 9px;
     left: 50%;
     z-index: 10;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: .25rem;
-    max-width: calc(100% - 1.5rem);
+    gap: 3px;
+    max-width: calc(100% - 18px);
     width: 100%;
-    padding: .375rem;
+    padding: 6px;
     background: rgba(0, 0, 0, .4);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: .75rem;
+    border-radius: 12px;
     transform: translateX(-50%);
 }
 
 .effect-demo__controls button {
-    padding: .25rem .625rem;
+    padding: 6px;
     background: rgba(255, 255, 255, .08);
     border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: .375rem;
+    border-radius: 6px;
     color: rgba(255, 255, 255, .8);
     font-family: inherit;
     font-size: .6875rem;
     font-weight: 500;
+    line-height: 1;
     cursor: pointer;
     transition: background .15s, color .15s;
 }
@@ -74,7 +75,7 @@
     right: 9px;
     z-index: 10;
     display: flex;
-    gap: .25rem;
+    gap: 3px;
     padding: 6px;
     background: rgba(0, 0, 0, .4);
     backdrop-filter: blur(12px);

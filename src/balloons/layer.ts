@@ -90,7 +90,8 @@ export class Balloons extends Effect<BalloonsConfig> {
             const cos = Math.cos(balloon.rotation);
             const sin = Math.sin(balloon.rotation);
 
-            ctx.setTransform(cos, sin, -sin, cos, px, py);
+            ctx.save();
+            ctx.transform(cos, sin, -sin, cos, px, py);
 
             const gradient = ctx.createRadialGradient(
                 -rx * 0.3, -ry * 0.3, rx * 0.1,
@@ -142,9 +143,9 @@ export class Balloons extends Effect<BalloonsConfig> {
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             ctx.lineWidth = 1;
             ctx.stroke();
-        }
 
-        ctx.resetTransform();
+            ctx.restore();
+        }
     }
 
     #createBalloon(initialSpread: boolean): Balloon {

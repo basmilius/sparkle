@@ -119,7 +119,8 @@ export class Snow extends Effect<SnowConfig> {
             if (snowflake.spriteIndex === 3) {
                 const cos = Math.cos(snowflake.rotation);
                 const sin = Math.sin(snowflake.rotation);
-                ctx.setTransform(cos, sin, -sin, cos, px, py);
+                ctx.save();
+                ctx.transform(cos, sin, -sin, cos, px, py);
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],
                     -displayRadius,
@@ -127,7 +128,7 @@ export class Snow extends Effect<SnowConfig> {
                     displaySize,
                     displaySize
                 );
-                ctx.resetTransform();
+                ctx.restore();
             } else {
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],

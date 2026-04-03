@@ -63,7 +63,18 @@ export default defineConfig({
                         {text: 'Bubbles', link: '/guide/bubbles'},
                         {text: 'Waves', link: '/guide/waves'},
                         {text: 'Lightning', link: '/guide/lightning'},
-                        {text: 'Sandstorm', link: '/guide/sandstorm'}
+                        {text: 'Sandstorm', link: '/guide/sandstorm'},
+                        {text: 'Smoke', link: '/guide/smoke'},
+                        {text: 'Butterflies', link: '/guide/butterflies'},
+                        {text: 'Clouds', link: '/guide/clouds'}
+                    ]
+                },
+                {
+                    text: 'Space',
+                    items: [
+                        {text: 'Nebula', link: '/guide/nebula'},
+                        {text: 'Black Hole', link: '/guide/black-hole'},
+                        {text: 'HyperSpace', link: '/guide/hyper-space'}
                     ]
                 },
                 {
@@ -73,7 +84,16 @@ export default defineConfig({
                         {text: 'Particles', link: '/guide/particles'},
                         {text: 'Firepit', link: '/guide/firepit'},
                         {text: 'Plasma', link: '/guide/plasma'},
-                        {text: 'Orbits', link: '/guide/orbits'}
+                        {text: 'Orbits', link: '/guide/orbits'},
+                        {text: 'Lava', link: '/guide/lava'},
+                        {text: 'Neon', link: '/guide/neon'}
+                    ]
+                },
+                {
+                    text: 'Organic',
+                    items: [
+                        {text: 'Boids', link: '/guide/boids'},
+                        {text: 'Roots', link: '/guide/roots'}
                     ]
                 },
                 {
@@ -134,7 +154,18 @@ export default defineConfig({
                         {text: 'Bubbles', link: '/api/bubbles'},
                         {text: 'Waves', link: '/api/waves'},
                         {text: 'Lightning', link: '/api/lightning'},
-                        {text: 'Sandstorm', link: '/api/sandstorm'}
+                        {text: 'Sandstorm', link: '/api/sandstorm'},
+                        {text: 'Smoke', link: '/api/smoke'},
+                        {text: 'Butterflies', link: '/api/butterflies'},
+                        {text: 'Clouds', link: '/api/clouds'}
+                    ]
+                },
+                {
+                    text: 'Space',
+                    items: [
+                        {text: 'Nebula', link: '/api/nebula'},
+                        {text: 'Black Hole', link: '/api/black-hole'},
+                        {text: 'HyperSpace', link: '/api/hyper-space'}
                     ]
                 },
                 {
@@ -144,7 +175,16 @@ export default defineConfig({
                         {text: 'Particles', link: '/api/particles'},
                         {text: 'Firepit', link: '/api/firepit'},
                         {text: 'Plasma', link: '/api/plasma'},
-                        {text: 'Orbits', link: '/api/orbits'}
+                        {text: 'Orbits', link: '/api/orbits'},
+                        {text: 'Lava', link: '/api/lava'},
+                        {text: 'Neon', link: '/api/neon'}
+                    ]
+                },
+                {
+                    text: 'Organic',
+                    items: [
+                        {text: 'Boids', link: '/api/boids'},
+                        {text: 'Roots', link: '/api/roots'}
                     ]
                 },
                 {

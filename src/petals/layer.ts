@@ -98,7 +98,8 @@ export class Petals extends Effect<PetalsConfig> {
             const cos = Math.cos(petal.rotation);
             const sin = Math.sin(petal.rotation);
 
-            ctx.setTransform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
+            ctx.save();
+            ctx.transform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
             ctx.globalAlpha = 0.4 + petal.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[petal.colorIndex % this.#sprites.length],
@@ -107,9 +108,9 @@ export class Petals extends Effect<PetalsConfig> {
                 displaySize,
                 displaySize
             );
+            ctx.restore();
         }
 
-        ctx.resetTransform();
         ctx.globalAlpha = 1;
     }
 

@@ -98,7 +98,8 @@ export class Leaves extends Effect<LeavesConfig> {
             const cos = Math.cos(leaf.rotation);
             const sin = Math.sin(leaf.rotation);
 
-            ctx.setTransform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
+            ctx.save();
+            ctx.transform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
             ctx.globalAlpha = 0.3 + leaf.depth * 0.7;
             ctx.drawImage(
                 this.#sprites[leaf.colorIndex % this.#sprites.length],
@@ -107,9 +108,9 @@ export class Leaves extends Effect<LeavesConfig> {
                 displaySize,
                 displaySize
             );
+            ctx.restore();
         }
 
-        ctx.resetTransform();
         ctx.globalAlpha = 1;
     }
 

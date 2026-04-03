@@ -89,7 +89,8 @@ export class Confetti extends Effect<ConfettiConfig> {
             const flipCos = Math.cos(p.flipAngle);
             const size = p.size;
 
-            ctx.setTransform(
+            ctx.save();
+            ctx.transform(
                 p.rotCos * flipCos * size,
                 p.rotSin * flipCos * size,
                 -p.rotSin * size,
@@ -100,9 +101,9 @@ export class Confetti extends Effect<ConfettiConfig> {
             ctx.globalAlpha = 1 - p.tick / p.totalTicks;
             ctx.fillStyle = p.colorStr;
             ctx.fill(SHAPE_PATHS[p.shape]);
+            ctx.restore();
         }
 
-        ctx.resetTransform();
         ctx.globalAlpha = 1;
     }
 
