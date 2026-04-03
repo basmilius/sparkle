@@ -104,7 +104,7 @@ export class Trail {
         ctx.restore();
     }
 
-    tick(): void {
+    tick(dt: number = 1): void {
         if (this.#isDone) {
             return;
         }
@@ -112,14 +112,14 @@ export class Trail {
         this.#trail.pop();
         this.#trail.unshift({...this.#position});
 
-        this.#speed *= this.#acceleration;
+        this.#speed *= Math.pow(this.#acceleration, dt);
 
         const vx = Math.cos(this.#angle) * this.#speed;
         const vy = Math.sin(this.#angle) * this.#speed;
 
         this.#distanceTraveled = distance(this.#startPosition, {
-            x: this.#position.x + vx,
-            y: this.#position.y + vy
+            x: this.#position.x + vx * dt,
+            y: this.#position.y + vy * dt
         });
 
         if (this.#distanceTraveled >= this.#totalDistance) {
@@ -127,12 +127,13 @@ export class Trail {
             return;
         }
 
-        this.#position.x += vx;
-        this.#position.y += vy;
+        this.#position.x += vx * dt;
+        this.#position.y += vy * dt;
 
-        this.#sparkTimer++;
+        this.#sparkTimer += dt;
 
-        if (this.#sparkTimer % 3 === 0) {
+        if (this.#sparkTimer >= 3) {
+            this.#sparkTimer -= 3;
             this.#pendingSparks.push(new Spark(this.#position, this.#hue, -vx * 0.1, -vy * 0.1));
         }
     }

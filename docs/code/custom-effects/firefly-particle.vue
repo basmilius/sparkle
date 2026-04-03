@@ -1,11 +1,12 @@
 <template>
-    <div ref="containerRef" class="effect-demo">
+    <EffectDemo ref="containerRef">
         <canvas ref="canvasRef"></canvas>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import { speed } from '../../.vitepress/theme/useSpeed';
 
 interface FireflyInstance {
     tick(dt?: number): void;
@@ -20,14 +21,18 @@ let width = 0;
 let height = 0;
 let running = false;
 let animFrame = 0;
+let then = 0;
 let fireflies: FireflyInstance[] = [];
 
-function loop(): void {
+function loop(now: number): void {
     if (!running || !canvasRef.value || !ctx) {
         return;
     }
 
     animFrame = requestAnimationFrame(loop);
+
+    const dt = (then > 0 ? (now - then) / (1000 / 60) : 1) * speed.value;
+    then = now;
 
     canvasRef.value.width = width;
     canvasRef.value.height = height;
@@ -35,7 +40,7 @@ function loop(): void {
     ctx.globalCompositeOperation = 'lighter';
 
     for (const firefly of fireflies) {
-        firefly.tick();
+        firefly.tick(dt);
         firefly.draw(ctx);
     }
 
@@ -77,6 +82,7 @@ onMounted(async () => {
 onUnmounted(() => {
     running = false;
     cancelAnimationFrame(animFrame);
+    then = 0;
     fireflies = [];
     ctx = null;
 });

@@ -1,4 +1,14 @@
 export class LimitedFrameRateCanvas {
+    static #globalSpeed: number = 1;
+
+    static get globalSpeed(): number {
+        return LimitedFrameRateCanvas.#globalSpeed;
+    }
+
+    static set globalSpeed(value: number) {
+        LimitedFrameRateCanvas.#globalSpeed = value;
+    }
+
     readonly #canvas: HTMLCanvasElement;
     readonly #context: CanvasRenderingContext2D;
     readonly #frameRate: number;
@@ -7,6 +17,7 @@ export class LimitedFrameRateCanvas {
     #delta: number = 0;
     #frame: number = 0;
     #now: number = 0;
+    #speed: number = 1;
     #then: number = 0;
     #ticks: number = 0;
     #isStopped: boolean = true;
@@ -26,7 +37,15 @@ export class LimitedFrameRateCanvas {
     }
 
     get deltaFactor(): number {
-        return this.#then === 0 ? 1 : this.#target / this.#delta;
+        return this.#then === 0 ? 1 : (this.#target / this.#delta) * this.#speed * LimitedFrameRateCanvas.#globalSpeed;
+    }
+
+    get speed(): number {
+        return this.#speed;
+    }
+
+    set speed(value: number) {
+        this.#speed = value;
     }
 
     get frameRate(): number {

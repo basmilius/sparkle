@@ -1,9 +1,9 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--clickable" @click="onClick">
+    <EffectDemo ref="containerRef" clickable @click="onClick">
         <canvas ref="canvasRef"></canvas>
 
         <span class="effect-demo__hint">Click anywhere</span>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">

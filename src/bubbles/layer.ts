@@ -65,7 +65,7 @@ export class BubbleLayer extends SimulationLayer {
             const bubble = this.#bubbles[i];
 
             const wobble = Math.sin(this.#time * bubble.wobbleFreq + bubble.wobblePhase) * bubble.wobbleAmp * this.#wobbleAmount;
-            bubble.x += wobble / (width * 3);
+            bubble.x += wobble * dt / (width * 3);
             bubble.y -= (bubble.speed * this.#speed * dt) / (height * 0.8);
 
             bubble.hue += 0.1 * dt;

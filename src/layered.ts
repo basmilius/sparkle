@@ -146,7 +146,7 @@ export class LayeredSimulation extends LimitedFrameRateCanvas {
     }
 
     tick(): void {
-        const dt = this.delta > 0 && this.delta < 200 ? this.delta / (1000 / 60) : 1;
+        const dt = (this.delta > 0 && this.delta < 200 ? this.delta / (1000 / 60) : 1) * this.speed * LimitedFrameRateCanvas.globalSpeed;
 
         for (const layer of this.#layers) {
             layer.tick(dt, this.width, this.height);

@@ -49,8 +49,8 @@ export class FireflyLayer extends SimulationLayer {
             const moveY = Math.sin(this.#time * firefly.freqY1 + firefly.phaseY1) * firefly.amplitudeY
                         + Math.sin(this.#time * firefly.freqY2 + firefly.phaseY2) * firefly.amplitudeY * 0.5;
 
-            firefly.x += moveX / (3000 * (1 / this.#speed));
-            firefly.y += moveY / (3000 * (1 / this.#speed));
+            firefly.x += moveX * dt / (3000 * (1 / this.#speed));
+            firefly.y += moveY * dt / (3000 * (1 / this.#speed));
 
             if (firefly.x > 1.1) {
                 firefly.x = -0.1;

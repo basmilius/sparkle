@@ -48,7 +48,7 @@ export class BalloonLayer extends SimulationLayer {
             balloon.y -= (balloon.riseSpeed * this.#speed * dt) / (height * 1.2);
 
             const drift = Math.sin(this.#time * balloon.driftFreq + balloon.driftPhase) * balloon.driftAmp * this.#driftAmount;
-            balloon.x += drift / (width * 5);
+            balloon.x += drift * dt / (width * 5);
 
             balloon.rotation = Math.sin(this.#time * balloon.rotationSpeed + balloon.driftPhase) * 0.08;
 

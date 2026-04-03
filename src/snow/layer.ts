@@ -48,10 +48,9 @@ export class SnowLayer extends SimulationLayer {
     tick(dt: number, _width: number, height: number): void {
         this.#height = height;
 
-        // dt is normalized to 60fps already (equivalent to deltaFactor)
-        const speedFactor = (height / (420 * this.#ratio) / this.#speed) * dt;
+        const speedFactor = height / (420 * this.#ratio) / this.#speed;
 
-        this.#time += 0.015 * speedFactor;
+        this.#time += 0.015 * speedFactor * dt;
 
         const wind = Math.sin(this.#time * 0.7) * 0.5
                    + Math.sin(this.#time * 1.9 + 3) * 0.25
@@ -62,10 +61,10 @@ export class SnowLayer extends SimulationLayer {
 
             const swing = Math.sin(this.#time * snowflake.swingFrequency + snowflake.swingOffset) * snowflake.swingAmplitude;
 
-            snowflake.x += (swing + wind * snowflake.depth * 2) / (4000 * speedFactor);
-            snowflake.y += (snowflake.fallSpeed * 2 + snowflake.depth + snowflake.radius * 0.15) / (700 * speedFactor);
+            snowflake.x += (swing + wind * snowflake.depth * 2) * dt / (4000 * speedFactor);
+            snowflake.y += (snowflake.fallSpeed * 2 + snowflake.depth + snowflake.radius * 0.15) * dt / (700 * speedFactor);
 
-            snowflake.rotation += snowflake.rotationSpeed / speedFactor;
+            snowflake.rotation += snowflake.rotationSpeed * dt / speedFactor;
 
             if (snowflake.x > 1.15 || snowflake.x < -0.15 || snowflake.y > 1.05) {
                 const recycled = this.#createSnowflake(false);

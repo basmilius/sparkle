@@ -1,11 +1,11 @@
 <template>
-    <div class="effect-demo">
+    <EffectDemo>
         <canvas ref="canvasRef"></canvas>
 
         <div class="effect-demo__controls">
             <button @click="celebrate">Celebrate!</button>
         </div>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">

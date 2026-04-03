@@ -1,7 +1,7 @@
 <template>
-    <div class="effect-demo">
+    <EffectDemo>
         <canvas ref="canvasRef"></canvas>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">

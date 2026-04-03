@@ -67,7 +67,10 @@ export class ConfettiLayer extends SimulationLayer {
 
             if (p.tick < p.totalTicks) {
                 this.#tickParticle(p, dt);
-                particles[alive++] = p;
+
+                if (p.tick < p.totalTicks) {
+                    particles[alive++] = p;
+                }
             }
         }
 

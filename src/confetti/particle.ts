@@ -82,7 +82,7 @@ export class ConfettiParticle {
             this.#x,
             this.#y
         );
-        ctx.globalAlpha = 1 - this.#tick / this.#totalTicks;
+        ctx.globalAlpha = Math.max(0, 1 - this.#tick / this.#totalTicks);
         ctx.fillStyle = this.#colorStr;
         ctx.fill(SHAPE_PATHS[this.#shape]);
         ctx.restore();

@@ -11,7 +11,7 @@ export class FireworkLayer extends SimulationLayer {
     #fireworks: Firework[] = [];
     #sparks: Spark[] = [];
     #hue: number = 120;
-    #ticks: number = 0;
+    #spawnTimer: number = 0;
     #positionRandom = MULBERRY.fork();
     readonly #autoSpawn: boolean;
     readonly #baseSize: number;
@@ -44,11 +44,13 @@ export class FireworkLayer extends SimulationLayer {
     tick(dt: number, width: number, height: number): void {
         this.#width = width;
         this.#height = height;
-        this.#ticks++;
+        this.#spawnTimer += dt;
 
         const isSmall = innerWidth < 991;
+        const spawnInterval = isSmall ? 60 : 30;
 
-        if (this.#autoSpawn && this.#fireworks.length < 6 && this.#ticks % (isSmall ? 60 : 30) === 0) {
+        if (this.#autoSpawn && this.#fireworks.length < 6 && this.#spawnTimer >= spawnInterval) {
+            this.#spawnTimer -= spawnInterval;
             let count = MULBERRY.nextBetween(1, 100) < 10 ? 2 : 1;
 
             while (count--) {
@@ -58,16 +60,16 @@ export class FireworkLayer extends SimulationLayer {
         }
 
         for (const firework of this.#fireworks) {
-            firework.tick();
+            firework.tick(dt);
             this.#sparks.push(...firework.collectSparks());
         }
 
         for (const explosion of this.#explosions) {
-            explosion.tick();
+            explosion.tick(dt);
         }
 
         for (const spark of this.#sparks) {
-            spark.tick();
+            spark.tick(dt);
         }
 
         const newExplosions: Explosion[] = [];

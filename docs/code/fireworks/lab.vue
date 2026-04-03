@@ -1,5 +1,5 @@
 <template>
-    <div ref="containerRef" class="effect-demo">
+    <EffectDemo ref="containerRef">
         <canvas ref="canvasRef"></canvas>
 
         <div v-if="ready" class="effect-demo__controls">
@@ -9,7 +9,7 @@
                 {{ variant }}
             </button>
         </div>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">

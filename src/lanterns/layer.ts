@@ -42,7 +42,7 @@ export class LanternLayer extends SimulationLayer {
             lantern.y -= (lantern.vy * this.#speed * dt) / (height * 1.5);
 
             const sway = Math.sin(this.#time * lantern.swaySpeed + lantern.swayPhase) * lantern.swayAmplitude;
-            lantern.x += sway / (width * 8);
+            lantern.x += sway * dt / (width * 8);
 
             if (lantern.y < -0.15) {
                 this.#lanterns[i] = this.#createLantern(false);

@@ -1,12 +1,13 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--clickable" @click="onClick">
+    <EffectDemo ref="containerRef" clickable @click="onClick">
         <canvas ref="canvasRef"></canvas>
         <span class="effect-demo__hint">Click anywhere</span>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import { speed } from '../../.vitepress/theme/useSpeed';
 
 interface SparkInstance {
     tick(dt?: number): void;
@@ -22,6 +23,7 @@ let width = 0;
 let height = 0;
 let running = false;
 let animFrame = 0;
+let then = 0;
 let sparks: SparkInstance[] = [];
 
 const COLORS: [number, number, number][] = [
@@ -56,19 +58,22 @@ async function onClick(evt: MouseEvent): Promise<void> {
     }
 }
 
-function loop(): void {
+function loop(now: number): void {
     if (!running || !canvasRef.value || !ctx) {
         return;
     }
 
     animFrame = requestAnimationFrame(loop);
 
+    const dt = (then > 0 ? (now - then) / (1000 / 60) : 1) * speed.value;
+    then = now;
+
     canvasRef.value.width = width;
     canvasRef.value.height = height;
     ctx.globalCompositeOperation = 'lighter';
 
     for (let i = sparks.length - 1; i >= 0; i--) {
-        sparks[i].tick();
+        sparks[i].tick(dt);
 
         if (sparks[i].isDead) {
             sparks.splice(i, 1);
@@ -95,6 +100,7 @@ onMounted(() => {
 onUnmounted(() => {
     running = false;
     cancelAnimationFrame(animFrame);
+    then = 0;
     sparks = [];
     ctx = null;
 });

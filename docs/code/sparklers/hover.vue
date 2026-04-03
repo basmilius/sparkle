@@ -1,8 +1,8 @@
 <template>
-    <div class="effect-demo">
+    <EffectDemo>
         <canvas ref="canvasRef"></canvas>
         <span class="effect-demo__hint">Move your mouse over the canvas</span>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">

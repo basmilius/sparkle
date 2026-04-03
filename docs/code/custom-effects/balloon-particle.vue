@@ -1,12 +1,13 @@
 <template>
-    <div ref="containerRef" class="effect-demo effect-demo--clickable" @click="onClick">
+    <EffectDemo ref="containerRef" clickable @click="onClick">
         <canvas ref="canvasRef"></canvas>
         <span class="effect-demo__hint">Click to release a balloon</span>
-    </div>
+    </EffectDemo>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import { speed } from '../../.vitepress/theme/useSpeed';
 
 interface BalloonInstance {
     tick(dt?: number): void;
@@ -22,6 +23,7 @@ let width = 0;
 let height = 0;
 let running = false;
 let animFrame = 0;
+let then = 0;
 let balloons: BalloonInstance[] = [];
 
 const COLORS: [number, number, number][] = [
@@ -47,18 +49,21 @@ async function onClick(evt: MouseEvent): Promise<void> {
     balloons.push(new BalloonParticle({x, y}, color));
 }
 
-function loop(): void {
+function loop(now: number): void {
     if (!running || !canvasRef.value || !ctx) {
         return;
     }
 
     animFrame = requestAnimationFrame(loop);
 
+    const dt = (then > 0 ? (now - then) / (1000 / 60) : 1) * speed.value;
+    then = now;
+
     canvasRef.value.width = width;
     canvasRef.value.height = height;
 
     for (let i = balloons.length - 1; i >= 0; i--) {
-        balloons[i].tick();
+        balloons[i].tick(dt);
 
         if (balloons[i].isDone) {
             balloons.splice(i, 1);
@@ -85,6 +90,7 @@ onMounted(() => {
 onUnmounted(() => {
     running = false;
     cancelAnimationFrame(animFrame);
+    then = 0;
     balloons = [];
     ctx = null;
 });

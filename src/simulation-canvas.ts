@@ -30,7 +30,7 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
     }
 
     tick(): void {
-        const dt = this.delta > 0 && this.delta < 200 ? this.delta / (1000 / 60) : 1;
+        const dt = (this.delta > 0 && this.delta < 200 ? this.delta / (1000 / 60) : 1) * this.speed * LimitedFrameRateCanvas.globalSpeed;
         this.#simulation.tick(dt, this.width, this.height);
     }
 

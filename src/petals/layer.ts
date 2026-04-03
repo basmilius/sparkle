@@ -49,8 +49,8 @@ export class PetalLayer extends SimulationLayer {
 
             const swing = Math.sin(this.#time * petal.swingFrequency + petal.swingOffset) * petal.swingAmplitude;
 
-            petal.x += (swing + (this.#wind + globalWind * 0.4) * petal.depth) / (3000 * speedFactor);
-            petal.y += (petal.fallSpeed * 1.5 + petal.depth * 0.5) / (600 * speedFactor);
+            petal.x += (swing + (this.#wind + globalWind * 0.4) * petal.depth) * dt / (3000 * speedFactor);
+            petal.y += (petal.fallSpeed * 1.5 + petal.depth * 0.5) * dt / (600 * speedFactor);
 
             petal.rotation += petal.rotationSpeed * dt;
             petal.flipAngle += petal.flipSpeed * dt;

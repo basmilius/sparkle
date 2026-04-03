@@ -55,8 +55,8 @@ export class LeafLayer extends SimulationLayer {
 
             const swing = Math.sin(this.#time * leaf.swingFrequency + leaf.swingOffset) * leaf.swingAmplitude;
 
-            leaf.x += (swing + (this.#wind + globalWind * 0.5) * leaf.depth) / (2500 * speedFactor);
-            leaf.y += (leaf.fallSpeed * 2 + leaf.depth + leaf.size * 0.05) / (500 * speedFactor);
+            leaf.x += (swing + (this.#wind + globalWind * 0.5) * leaf.depth) * dt / (2500 * speedFactor);
+            leaf.y += (leaf.fallSpeed * 2 + leaf.depth + leaf.size * 0.05) * dt / (500 * speedFactor);
 
             leaf.rotation += leaf.rotationSpeed * dt;
             leaf.flipAngle += leaf.flipSpeed * dt;
