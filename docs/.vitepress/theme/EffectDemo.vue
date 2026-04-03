@@ -8,6 +8,14 @@
 
         <div class="effect-demo__speed">
             <button
+                :class="{'effect-demo__speed-button--active': fpsEnabled}"
+                @click.stop="toggleFps">
+                FPS
+            </button>
+
+            <div class="effect-demo__speed-divider"/>
+
+            <button
                 v-for="option in SPEED_OPTIONS"
                 :key="option.value"
                 :class="{'effect-demo__speed-button--active': speed === option.value}"
@@ -21,8 +29,9 @@
 <script
     setup
     lang="ts">
-    import { onMounted, ref, watch } from 'vue';
+    import { onMounted, onUnmounted, ref, watch } from 'vue';
     import { speed } from './useSpeed';
+    import { fpsEnabled, toggleFps } from './useFps';
 
     const SPEED_OPTIONS = [
         {label: '1x', value: 1},
@@ -30,22 +39,38 @@
         {label: '0.25x', value: 0.25}
     ] as const;
 
-    defineProps<{ clickable?: boolean }>();
+    const props = defineProps<{
+        clickable?: boolean;
+    }>();
+
     defineOptions({inheritAttrs: false});
 
     const el = ref<HTMLDivElement>();
 
-    let Canvas: { globalSpeed: number } | null = null;
+    let Canvas: { globalSpeed: number; showFps: boolean } | null = null;
 
     onMounted(async () => {
         const {LimitedFrameRateCanvas} = await import('@basmilius/sparkle');
         Canvas = LimitedFrameRateCanvas;
         Canvas.globalSpeed = speed.value;
+        Canvas.showFps = fpsEnabled.value;
+    });
+
+    onUnmounted(() => {
+        if (Canvas) {
+            Canvas.showFps = false;
+        }
     });
 
     watch(speed, value => {
         if (Canvas) {
             Canvas.globalSpeed = value;
+        }
+    });
+
+    watch(fpsEnabled, value => {
+        if (Canvas) {
+            Canvas.showFps = value;
         }
     });
 

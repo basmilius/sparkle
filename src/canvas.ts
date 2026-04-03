@@ -1,5 +1,6 @@
 export class LimitedFrameRateCanvas {
     static #globalSpeed: number = 1;
+    static #showFps: boolean = false;
 
     static get globalSpeed(): number {
         return LimitedFrameRateCanvas.#globalSpeed;
@@ -7,6 +8,14 @@ export class LimitedFrameRateCanvas {
 
     static set globalSpeed(value: number) {
         LimitedFrameRateCanvas.#globalSpeed = value;
+    }
+
+    static get showFps(): boolean {
+        return LimitedFrameRateCanvas.#showFps;
+    }
+
+    static set showFps(value: boolean) {
+        LimitedFrameRateCanvas.#showFps = value;
     }
 
     readonly #canvas: HTMLCanvasElement;
@@ -23,6 +32,9 @@ export class LimitedFrameRateCanvas {
     #isStopped: boolean = true;
     #height: number = 540;
     #width: number = 960;
+    #fps: string = '0.0';
+    #fpsFrames: number = 0;
+    #fpsTime: number = 0;
 
     get canvas(): HTMLCanvasElement {
         return this.#canvas;
@@ -105,6 +117,24 @@ export class LimitedFrameRateCanvas {
         this.tick();
         this.draw();
 
+        if (LimitedFrameRateCanvas.#showFps) {
+            ++this.#fpsFrames;
+
+            if (this.#fpsTime === 0) {
+                this.#fpsTime = this.#current;
+            } else {
+                const elapsed = this.#current - this.#fpsTime;
+
+                if (elapsed >= 1000) {
+                    this.#fps = (Math.round(this.#fpsFrames * 10000 / elapsed) / 10).toFixed(1);
+                    this.#fpsFrames = 0;
+                    this.#fpsTime = this.#current;
+                }
+            }
+
+            this.#drawFps();
+        }
+
         this.#then = this.#now;
     }
 
@@ -130,6 +160,32 @@ export class LimitedFrameRateCanvas {
             this.#isStopped = false;
             this.#frame = requestAnimationFrame(this.loop.bind(this));
         }
+    }
+
+    #drawFps(): void {
+        const ctx = this.#context;
+        const text = `${this.#fps} FPS`;
+        const x = 8;
+        const y = 8;
+        const paddingX = 6;
+        const paddingY = 4;
+
+        ctx.save();
+        ctx.font = '500 11px ui-monospace, monospace';
+
+        const textWidth = ctx.measureText(text).width;
+        const boxWidth = textWidth + paddingX * 2;
+        const boxHeight = 11 + paddingY * 2;
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        ctx.beginPath();
+        ctx.roundRect(x, y, boxWidth, boxHeight, 4);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, x + paddingX, y + boxHeight / 2);
+        ctx.restore();
     }
 
     draw(): void {

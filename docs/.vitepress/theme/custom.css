@@ -82,6 +82,11 @@
     border-radius: 12px;
 }
 
+.effect-demo__speed-divider {
+    width: 1px;
+    background: rgba(255, 255, 255, .12);
+}
+
 .effect-demo__speed button {
     padding: 6px;
     background: rgba(255, 255, 255, .08);
