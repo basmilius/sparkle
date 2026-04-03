@@ -8,11 +8,11 @@ export class DonutLayer extends SimulationLayer {
     readonly #collisionPadding: number;
     readonly #colors: string[];
     readonly #count: number;
-    readonly #mouseAvoidance: boolean;
-    readonly #mouseAvoidanceRadius: number;
-    readonly #mouseAvoidanceStrength: number;
+    #mouseAvoidance: boolean;
+    #mouseAvoidanceRadius: number;
+    #mouseAvoidanceStrength: number;
     readonly #radiusRange: [number, number];
-    readonly #repulsionStrength: number;
+    #repulsionStrength: number;
     readonly #rotationSpeedRange: [number, number];
     readonly #scale: number;
     readonly #speedRange: [number, number];
@@ -80,6 +80,13 @@ export class DonutLayer extends SimulationLayer {
     onUnmount(canvas: HTMLCanvasElement): void {
         canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
         canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.mouseAvoidance !== undefined) { this.#mouseAvoidance = config.mouseAvoidance as boolean; }
+        if (config.mouseAvoidanceRadius !== undefined) { this.#mouseAvoidanceRadius = config.mouseAvoidanceRadius as number; }
+        if (config.mouseAvoidanceStrength !== undefined) { this.#mouseAvoidanceStrength = config.mouseAvoidanceStrength as number; }
+        if (config.repulsionStrength !== undefined) { this.#repulsionStrength = config.repulsionStrength as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

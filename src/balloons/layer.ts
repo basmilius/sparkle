@@ -8,9 +8,9 @@ const DEFAULT_COLORS = ['#ff4444', '#4488ff', '#44cc44', '#ffcc00', '#ff88cc', '
 
 export class BalloonLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #speed: number;
-    readonly #driftAmount: number;
-    readonly #stringLengthMul: number;
+    #speed: number;
+    #driftAmount: number;
+    #stringLengthMul: number;
     readonly #sizeRange: [number, number];
     readonly #colorRGBs: [number, number, number][];
     #maxCount: number;
@@ -37,6 +37,12 @@ export class BalloonLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#balloons.push(this.#createBalloon(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.driftAmount !== undefined) { this.#driftAmount = config.driftAmount as number; }
+        if (config.stringLength !== undefined) { this.#stringLengthMul = config.stringLength as number; }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -99,14 +105,24 @@ export class BalloonLayer extends SimulationLayer {
             ctx.fill();
 
             const stringLen = balloon.stringLength * this.#scale * this.#stringLengthMul;
-            const drift = Math.sin(this.#time * 2 + balloon.driftPhase) * 8 * this.#scale * this.#driftAmount;
+            const knotBaseY = knotY + 5 * this.#scale;
+            const ph = balloon.driftPhase;
+            const fr = balloon.driftFreq;
+            const swingAmt = 10 * this.#scale * this.#driftAmount;
+
+            // Each control point lags further behind the balloon's lateral oscillation,
+            // so the string trails the direction of movement like a real hanging string.
+            const midSwing = Math.sin(this.#time * fr + ph - 0.3) * swingAmt * 0.55;
+            const tipSwing = Math.sin(this.#time * fr + ph - 0.8) * swingAmt;
+            // Subtle high-frequency flutter at the tip for lightness.
+            const flutter = Math.sin(this.#time * fr * 2.5 + ph * 1.4 + 1.8) * 2.5 * this.#scale;
+
             ctx.beginPath();
-            ctx.moveTo(0, knotY + 5 * this.#scale);
-            ctx.quadraticCurveTo(
-                drift,
-                knotY + 5 * this.#scale + stringLen * 0.5,
-                -drift * 0.5,
-                knotY + 5 * this.#scale + stringLen
+            ctx.moveTo(0, knotBaseY);
+            ctx.bezierCurveTo(
+                midSwing * 0.35,          knotBaseY + stringLen * 0.3,
+                midSwing + flutter * 0.5, knotBaseY + stringLen * 0.65,
+                tipSwing + flutter,       knotBaseY + stringLen
             );
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             ctx.lineWidth = 1;

@@ -13,9 +13,9 @@ export class FireworkLayer extends SimulationLayer {
     #hue: number = 120;
     #spawnTimer: number = 0;
     #positionRandom = MULBERRY.fork();
-    readonly #autoSpawn: boolean;
+    #autoSpawn: boolean;
     readonly #baseSize: number;
-    readonly #scale: number;
+    #scale: number;
     readonly #tailWidth: number;
     #width: number = 960;
     #height: number = 540;
@@ -39,6 +39,11 @@ export class FireworkLayer extends SimulationLayer {
         const pos = position ?? {x: this.#width / 2, y: this.#height * 0.4};
         this.#hue = MULBERRY.nextBetween(0, 360);
         this.#createExplosion(pos, this.#hue, variant);
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.autoSpawn !== undefined) { this.#autoSpawn = config.autoSpawn as boolean; }
     }
 
     tick(dt: number, width: number, height: number): void {

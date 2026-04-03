@@ -5,9 +5,9 @@ import type { Ember, FlameLayer } from './types';
 
 export class FirepitLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #flameWidth: number;
-    readonly #flameHeight: number;
-    readonly #intensity: number;
+    #flameWidth: number;
+    #flameHeight: number;
+    #intensity: number;
     #maxEmbers: number;
     #time: number = 0;
     #embers: Ember[] = [];
@@ -36,6 +36,12 @@ export class FirepitLayer extends SimulationLayer {
                 height: this.#flameHeight * (0.7 + MULBERRY.next() * 0.3)
             });
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.intensity !== undefined) { this.#intensity = config.intensity as number; }
+        if (config.flameWidth !== undefined) { this.#flameWidth = config.flameWidth as number; }
+        if (config.flameHeight !== undefined) { this.#flameHeight = config.flameHeight as number; }
     }
 
     tick(dt: number, _width: number, _height: number): void {

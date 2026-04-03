@@ -6,11 +6,10 @@ import type { Wave } from './types';
 const DEFAULT_COLORS = ['#0a3d6b', '#0e5a8a', '#1a7ab5', '#3399cc', '#66c2e0'];
 
 export class WaveLayer extends SimulationLayer {
-    readonly #speed: number;
+    #speed: number;
     readonly #foamColor: string;
-    readonly #foamAmount: number;
-    readonly #scale: number;
-    #time: number = 0;
+    #foamAmount: number;
+    #scale: number;
     #waves: Wave[] = [];
     #foamParticles: {x: number; y: number; alpha: number; size: number}[] = [];
     #maxFoamParticles: number;
@@ -37,7 +36,7 @@ export class WaveLayer extends SimulationLayer {
             this.#waves.push({
                 amplitude: (20 + MULBERRY.next() * 30) * (1 - depth * 0.4),
                 frequency: 0.005 + MULBERRY.next() * 0.008 + depth * 0.002,
-                speed: (0.4 + MULBERRY.next() * 0.6 + depth * 0.3) * this.#speed,
+                speed: 0.4 + MULBERRY.next() * 0.6 + depth * 0.3,
                 phase: MULBERRY.next() * Math.PI * 2,
                 baseY: 0.35 + depth * 0.13,
                 color,
@@ -46,11 +45,15 @@ export class WaveLayer extends SimulationLayer {
         }
     }
 
-    tick(dt: number, width: number, height: number): void {
-        this.#time += 0.02 * dt * this.#speed;
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.foamAmount !== undefined) { this.#foamAmount = config.foamAmount as number; }
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+    }
 
+    tick(dt: number, width: number, height: number): void {
         for (const wave of this.#waves) {
-            wave.phase += 0.015 * wave.speed * dt;
+            wave.phase += 0.015 * wave.speed * this.#speed * dt;
         }
 
         let aliveFoam = 0;

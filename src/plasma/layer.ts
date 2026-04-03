@@ -11,8 +11,8 @@ const DEFAULT_PALETTE: PlasmaColor[] = [
 ];
 
 export class PlasmaLayer extends SimulationLayer {
-    readonly #speed: number;
-    readonly #scale: number;
+    #speed: number;
+    #scale: number;
     readonly #resolution: number;
     readonly #palette: PlasmaColor[];
     #time: number = 0;
@@ -27,6 +27,11 @@ export class PlasmaLayer extends SimulationLayer {
         this.#scale = config.scale ?? 1;
         this.#resolution = config.resolution ?? 4;
         this.#palette = config.palette ?? DEFAULT_PALETTE;
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
     }
 
     tick(dt: number, _width: number, _height: number): void {

@@ -8,11 +8,10 @@ const DEFAULT_COLORS = ['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff'];
 const TOP_HUE = 265;
 
 export class AuroraLayer extends SimulationLayer {
-    readonly #speed: number;
-    readonly #intensity: number;
-    readonly #waveAmplitude: number;
-    readonly #verticalPosition: number;
-    #time: number = 0;
+    #speed: number;
+    #intensity: number;
+    #waveAmplitude: number;
+    #verticalPosition: number;
     #bands: AuroraBand[] = [];
 
     constructor(config: AuroraSimulationConfig = {}) {
@@ -36,26 +35,31 @@ export class AuroraLayer extends SimulationLayer {
 
             this.#bands.push({
                 x: cluster + (MULBERRY.next() - 0.5) * 0.22,
-                baseY: this.#verticalPosition + (MULBERRY.next() - 0.5) * 0.08,
+                baseY: (MULBERRY.next() - 0.5) * 0.08,
                 height: 0.5 + MULBERRY.next() * 0.3,
                 sigma: 160 + MULBERRY.next() * 110,
                 phase1: MULBERRY.next() * Math.PI * 2,
                 phase2: MULBERRY.next() * Math.PI * 2,
                 amplitude1: 0.015 + MULBERRY.next() * 0.025,
                 frequency1: 0.003 + MULBERRY.next() * 0.004,
-                speed: (0.4 + MULBERRY.next() * 0.6) * this.#speed,
+                speed: 0.4 + MULBERRY.next() * 0.6,
                 hue,
-                opacity: (0.5 + MULBERRY.next() * 0.3) * this.#intensity
+                opacity: 0.5 + MULBERRY.next() * 0.3
             });
         }
     }
 
-    tick(dt: number, width: number, height: number): void {
-        this.#time += 0.016 * dt * this.#speed;
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.intensity !== undefined) { this.#intensity = config.intensity as number; }
+        if (config.waveAmplitude !== undefined) { this.#waveAmplitude = config.waveAmplitude as number; }
+        if (config.verticalPosition !== undefined) { this.#verticalPosition = config.verticalPosition as number; }
+    }
 
+    tick(dt: number, _width: number, _height: number): void {
         for (const band of this.#bands) {
-            band.phase1 += 0.005 * band.speed * dt;
-            band.phase2 += 0.008 * band.speed * dt;
+            band.phase1 += 0.005 * band.speed * this.#speed * dt;
+            band.phase2 += 0.008 * band.speed * this.#speed * dt;
         }
     }
 
@@ -77,7 +81,7 @@ export class AuroraLayer extends SimulationLayer {
         for (const band of this.#bands) {
             const swayX = band.amplitude1 * width * Math.sin(band.phase1);
             const cx = band.x * width + swayX;
-            const baseY = band.baseY * height;
+            const baseY = (this.#verticalPosition + band.baseY) * height;
             const rayHeight = band.height * height * (height / 800);
             const sigma = band.sigma * scale;
             const cutoff = sigma * 3.5;
@@ -100,7 +104,7 @@ export class AuroraLayer extends SimulationLayer {
                 const colBase = baseY + waveOffset;
                 const colTop = colBase - rayHeight;
                 const fadeBottom = colBase + rayHeight * 0.1;
-                const eff = alpha * band.opacity;
+                const eff = alpha * band.opacity * this.#intensity;
 
                 const gradient = ctx.createLinearGradient(0, fadeBottom, 0, colTop);
                 gradient.addColorStop(0, `hsla(${band.hue}, 100%, 90%, 0)`);

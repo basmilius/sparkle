@@ -105,6 +105,10 @@ export class LayeredSimulation extends LimitedFrameRateCanvas {
         canvas.style.width = '100%';
     }
 
+    configureLayer(index: number, config: Record<string, unknown>): void {
+        this.#layers[index]?.configure(config);
+    }
+
     add(layer: SimulationLayer): this {
         this.#layers.push(layer);
 

@@ -7,9 +7,9 @@ import type { Star, StarMode } from './types';
 
 export class StarLayer extends SimulationLayer {
     readonly #mode: StarMode;
-    readonly #twinkleSpeed: number;
+    #twinkleSpeed: number;
     readonly #colorRGB: [number, number, number];
-    readonly #scale: number;
+    #scale: number;
     readonly #verticalFade: [number, number] | null;
     readonly #shootingStarSystem: ShootingStarSystem | null;
     #starCount: number;
@@ -54,6 +54,11 @@ export class StarLayer extends SimulationLayer {
                 this.#stars.push(this.#createStar());
             }
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.twinkleSpeed !== undefined) { this.#twinkleSpeed = config.twinkleSpeed as number; }
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

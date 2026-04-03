@@ -11,7 +11,7 @@ const SPRITE_RADIUS = SPRITE_SIZE / 2;
 export class SnowLayer extends SimulationLayer {
     readonly #scale: number;
     readonly #size: number;
-    readonly #speed: number;
+    #speed: number;
     readonly #baseOpacity: number;
     #maxParticles: number;
     #time: number = 0;
@@ -40,6 +40,10 @@ export class SnowLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxParticles; ++i) {
             this.#snowflakes.push(this.#createSnowflake(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
     }
 
     onResize(_width: number, height: number): void {

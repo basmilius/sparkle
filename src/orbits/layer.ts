@@ -7,11 +7,11 @@ import type { OrbitalCenter, Orbiter } from './types';
 export class OrbitLayer extends SimulationLayer {
     readonly #centerCount: number;
     readonly #orbitersPerCenter: number;
-    readonly #speed: number;
+    #speed: number;
     readonly #colors: string[];
-    readonly #trailLength: number;
-    readonly #showCenters: boolean;
-    readonly #scale: number;
+    #trailLength: number;
+    #showCenters: boolean;
+    #scale: number;
     #centers: OrbitalCenter[] = [];
     #orbiters: Orbiter[] = [];
     #time: number = 0;
@@ -52,6 +52,13 @@ export class OrbitLayer extends SimulationLayer {
                 }
             }
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
+        if (config.showCenters !== undefined) { this.#showCenters = config.showCenters as boolean; }
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

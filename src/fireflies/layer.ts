@@ -10,8 +10,8 @@ const SPRITE_RADIUS = SPRITE_SIZE / 2;
 export class FireflyLayer extends SimulationLayer {
     readonly #scale: number;
     readonly #size: number;
-    readonly #speed: number;
-    readonly #glowSpeed: number;
+    #speed: number;
+    #glowSpeed: number;
     #maxCount: number;
     #time: number = 0;
     #fireflies: Firefly[] = [];
@@ -37,6 +37,11 @@ export class FireflyLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#fireflies.push(this.#createFirefly());
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.glowSpeed !== undefined) { this.#glowSpeed = config.glowSpeed as number; }
     }
 
     tick(dt: number, _width: number, _height: number): void {

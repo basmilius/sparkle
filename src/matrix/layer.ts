@@ -6,9 +6,9 @@ import type { MatrixColumn } from './types';
 
 export class MatrixLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #speed: number;
+    #speed: number;
     readonly #fontSize: number;
-    readonly #trailLength: number;
+    #trailLength: number;
     readonly #colorRGB: [number, number, number];
     #maxColumns: number;
     #columns: MatrixColumn[] = [];
@@ -51,6 +51,11 @@ export class MatrixLayer extends SimulationLayer {
                 this.#respawnTimers.push(0);
             }
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

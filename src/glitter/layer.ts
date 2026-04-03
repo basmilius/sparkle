@@ -7,8 +7,8 @@ import type { FallingGlitter, SettledGlitter } from './types';
 export class GlitterLayer extends SimulationLayer {
     readonly #scale: number;
     readonly #size: number;
-    readonly #speed: number;
-    readonly #groundLevel: number;
+    #speed: number;
+    #groundLevel: number;
     readonly #maxSettled: number;
     readonly #colorRGBs: [number, number, number][];
     #maxCount: number;
@@ -36,6 +36,11 @@ export class GlitterLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#falling.push(this.#createFallingPiece(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.groundLevel !== undefined) { this.#groundLevel = config.groundLevel as number; }
     }
 
     tick(dt: number, _width: number, _height: number): void {

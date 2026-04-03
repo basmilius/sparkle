@@ -10,7 +10,13 @@
       "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; head -20 \"{}\"')",
       "Bash(bun add:*)",
       "Bash(npx vitepress:*)",
-      "Bash(bunx tsc:*)"
+      "Bash(bunx tsc:*)",
+      "Bash(curl -s \"http://localhost:5177/@fs/Users/bas/Development/Projects/@basmilius/visual-effects/dev/src/config/registry.ts\")",
+      "Bash(bun x:*)",
+      "Bash(curl -s \"http://localhost:5177/src/views/SimulatorView.vue\")",
+      "Bash(curl -s \"http://localhost:5177/\")",
+      "Bash(pkill -f \"vite\")",
+      "Bash(node:*)"
     ]
   }
 }

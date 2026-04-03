@@ -6,8 +6,8 @@ import type { Leaf } from './types';
 export class LeafLayer extends SimulationLayer {
     readonly #scale: number;
     readonly #size: number;
-    readonly #speed: number;
-    readonly #wind: number;
+    #speed: number;
+    #wind: number;
     readonly #colors: string[];
     #maxCount: number;
     #time: number = 0;
@@ -38,6 +38,11 @@ export class LeafLayer extends SimulationLayer {
 
     onResize(_width: number, height: number): void {
         this.#height = height;
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.wind !== undefined) { this.#wind = config.wind as number; }
     }
 
     tick(dt: number, _width: number, height: number): void {

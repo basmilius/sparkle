@@ -7,9 +7,9 @@ const DEFAULT_COLORS = ['#88ccff', '#aaddff', '#ccbbff'];
 
 export class BubbleLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #speed: number;
+    #speed: number;
     readonly #sizeRange: [number, number];
-    readonly #wobbleAmount: number;
+    #wobbleAmount: number;
     readonly #popOnClick: boolean;
     readonly #popRadius: number;
     readonly #baseHues: number[];
@@ -56,6 +56,11 @@ export class BubbleLayer extends SimulationLayer {
     onUnmount(canvas: HTMLCanvasElement): void {
         canvas.removeEventListener('click', this.#onClickBound);
         this.#canvas = null;
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.wobbleAmount !== undefined) { this.#wobbleAmount = config.wobbleAmount as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

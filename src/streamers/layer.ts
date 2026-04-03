@@ -6,7 +6,7 @@ import type { Streamer } from './types';
 export class StreamerLayer extends SimulationLayer {
     readonly #colors: string[];
     readonly #scale: number;
-    readonly #speed: number;
+    #speed: number;
     #count: number;
     #streamers: Streamer[] = [];
     #width: number = 960;
@@ -38,6 +38,10 @@ export class StreamerLayer extends SimulationLayer {
                 this.#streamers.push(this.#createStreamer(true));
             }
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

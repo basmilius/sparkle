@@ -5,14 +5,14 @@ import type { ParticleSimulationConfig } from './simulation';
 import type { NetworkParticle, ParticleMouseMode } from './types';
 
 export class ParticleLayer extends SimulationLayer {
-    readonly #scale: number;
-    readonly #connectionDistance: number;
-    readonly #lineWidth: number;
-    readonly #mouseMode: ParticleMouseMode;
-    readonly #mouseRadius: number;
-    readonly #mouseStrength: number;
-    readonly #particleForces: boolean;
-    readonly #glow: boolean;
+    #scale: number;
+    #connectionDistance: number;
+    #lineWidth: number;
+    #mouseMode: ParticleMouseMode;
+    #mouseRadius: number;
+    #mouseStrength: number;
+    #particleForces: boolean;
+    #glow: boolean;
     readonly #background: string | null;
     readonly #colorRGB: [number, number, number];
     readonly #lineColorRGB: [number, number, number];
@@ -58,6 +58,17 @@ export class ParticleLayer extends SimulationLayer {
 
         this.#onMouseMoveBound = this.#onMouseMove.bind(this);
         this.#onMouseLeaveBound = this.#onMouseLeave.bind(this);
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.connectionDistance !== undefined) { this.#connectionDistance = (config.connectionDistance as number) * this.#scale; }
+        if (config.lineWidth !== undefined) { this.#lineWidth = config.lineWidth as number; }
+        if (config.mouseMode !== undefined) { this.#mouseMode = config.mouseMode as ParticleMouseMode; }
+        if (config.mouseRadius !== undefined) { this.#mouseRadius = (config.mouseRadius as number) * this.#scale; }
+        if (config.mouseStrength !== undefined) { this.#mouseStrength = config.mouseStrength as number; }
+        if (config.particleForces !== undefined) { this.#particleForces = config.particleForces as boolean; }
+        if (config.glow !== undefined) { this.#glow = config.glow as boolean; }
     }
 
     onResize(width: number, height: number): void {

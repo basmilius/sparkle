@@ -7,16 +7,16 @@ import type { SparklerSpark } from './types';
 const DEFAULT_COLORS = ['#ffcc33', '#ff9900', '#ffffff', '#ffee88'];
 
 export class SparklerLayer extends SimulationLayer {
-    readonly #scale: number;
-    readonly #emitRate: number;
+    #scale: number;
+    #emitRate: number;
     readonly #maxSparks: number;
     readonly #colorRGBs: [number, number, number][];
     readonly #speedRange: [number, number];
-    readonly #friction: number;
-    readonly #gravity: number;
+    #friction: number;
+    #gravity: number;
     readonly #decayRange: [number, number];
-    readonly #trailLength: number;
-    readonly #hoverMode: boolean;
+    #trailLength: number;
+    #hoverMode: boolean;
     readonly #onMouseMoveBound: (evt: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
     #emitX: number = 0.5;
@@ -59,6 +59,15 @@ export class SparklerLayer extends SimulationLayer {
     onUnmount(canvas: HTMLCanvasElement): void {
         canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
         canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
+        if (config.emitRate !== undefined) { this.#emitRate = config.emitRate as number; }
+        if (config.friction !== undefined) { this.#friction = config.friction as number; }
+        if (config.gravity !== undefined) { this.#gravity = config.gravity as number; }
+        if (config.trailLength !== undefined) { this.#trailLength = config.trailLength as number; }
+        if (config.hoverMode !== undefined) { this.#hoverMode = config.hoverMode as boolean; }
     }
 
     tick(dt: number, width: number, height: number): void {

@@ -12,10 +12,10 @@ const VARIANT_PRESETS: Record<RainVariant, {drops: number; speed: number; wind: 
 
 export class RainLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #speed: number;
-    readonly #wind: number;
+    #speed: number;
+    #wind: number;
     readonly #groundLevel: number;
-    readonly #enableSplashes: boolean;
+    #enableSplashes: boolean;
     readonly #colorR: number;
     readonly #colorG: number;
     readonly #colorB: number;
@@ -48,6 +48,12 @@ export class RainLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxDrops; ++i) {
             this.#drops.push(this.#createDrop(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.wind !== undefined) { this.#wind = config.wind as number; }
+        if (config.splashes !== undefined) { this.#enableSplashes = config.splashes as boolean; }
     }
 
     tick(dt: number, width: number, height: number): void {

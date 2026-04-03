@@ -5,10 +5,10 @@ import type { WormholeSimulationConfig } from './simulation';
 import type { WormholeDirection, WormholeParticle } from './types';
 
 export class WormholeLayer extends SimulationLayer {
-    readonly #speed: number;
+    #speed: number;
     readonly #colorRGB: [number, number, number];
     readonly #direction: WormholeDirection;
-    readonly #scale: number;
+    #scale: number;
     #count: number;
     #particles: WormholeParticle[] = [];
     #width: number = 960;
@@ -44,6 +44,11 @@ export class WormholeLayer extends SimulationLayer {
                 this.#particles.push(this.#createParticle(true));
             }
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.scale !== undefined) { this.#scale = config.scale as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

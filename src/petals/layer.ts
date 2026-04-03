@@ -6,8 +6,8 @@ import type { Petal } from './types';
 export class PetalLayer extends SimulationLayer {
     readonly #scale: number;
     readonly #size: number;
-    readonly #speed: number;
-    readonly #wind: number;
+    #speed: number;
+    #wind: number;
     readonly #colors: string[];
     #maxCount: number;
     #time: number = 0;
@@ -33,6 +33,11 @@ export class PetalLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#petals.push(this.#createPetal(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
+        if (config.wind !== undefined) { this.#wind = config.wind as number; }
     }
 
     tick(dt: number, _width: number, height: number): void {

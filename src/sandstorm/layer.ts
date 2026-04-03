@@ -5,8 +5,8 @@ import type { SandGrain } from './types';
 
 export class SandstormLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #wind: number;
-    readonly #turbulence: number;
+    #wind: number;
+    #turbulence: number;
     readonly #colorR: number;
     readonly #colorG: number;
     readonly #colorB: number;
@@ -36,6 +36,11 @@ export class SandstormLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#grains.push(this.#createGrain(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.wind !== undefined) { this.#wind = config.wind as number; }
+        if (config.turbulence !== undefined) { this.#turbulence = config.turbulence as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

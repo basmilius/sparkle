@@ -6,7 +6,7 @@ import type { Lantern } from './types';
 
 export class LanternLayer extends SimulationLayer {
     readonly #scale: number;
-    readonly #speed: number;
+    #speed: number;
     readonly #size: number;
     readonly #colorRGBs: [number, number, number][];
     #maxCount: number;
@@ -31,6 +31,10 @@ export class LanternLayer extends SimulationLayer {
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#lanterns.push(this.#createLantern(true));
         }
+    }
+
+    configure(config: Record<string, unknown>): void {
+        if (config.speed !== undefined) { this.#speed = config.speed as number; }
     }
 
     tick(dt: number, width: number, height: number): void {

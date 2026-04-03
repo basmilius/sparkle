@@ -40,6 +40,10 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
         this.#simulation.tick(dt, this.width, this.height);
     }
 
+    configure(config: Record<string, unknown>): void {
+        this.#simulation.configure(config);
+    }
+
     onResize(): void {
         super.onResize();
         this.#simulation.onResize(this.width, this.height);
