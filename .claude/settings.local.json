@@ -17,7 +17,8 @@
       "Bash(curl -s \"http://localhost:5177/\")",
       "Bash(pkill -f \"vite\")",
       "Bash(node:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(gtimeout 8 bun run dev)"
     ]
   }
 }

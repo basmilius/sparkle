@@ -48,7 +48,8 @@ export default defineConfig({
                         {text: 'Streamers', link: '/guide/streamers'},
                         {text: 'Glitter', link: '/guide/glitter'},
                         {text: 'Lanterns', link: '/guide/lanterns'},
-                        {text: 'Sparklers', link: '/guide/sparklers'}
+                        {text: 'Sparklers', link: '/guide/sparklers'},
+                        {text: 'Popcorn', link: '/guide/popcorn'}
                     ]
                 },
                 {
@@ -66,7 +67,12 @@ export default defineConfig({
                         {text: 'Sandstorm', link: '/guide/sandstorm'},
                         {text: 'Smoke', link: '/guide/smoke'},
                         {text: 'Butterflies', link: '/guide/butterflies'},
-                        {text: 'Clouds', link: '/guide/clouds'}
+                        {text: 'Clouds', link: '/guide/clouds'},
+                        {text: 'Tornado', link: '/guide/tornado'},
+                        {text: 'Volcano', link: '/guide/volcano'},
+                        {text: 'Coral Reef', link: '/guide/coral-reef'},
+                        {text: 'Pollen', link: '/guide/pollen'},
+                        {text: 'Crystallization', link: '/guide/crystallization'}
                     ]
                 },
                 {
@@ -74,7 +80,9 @@ export default defineConfig({
                     items: [
                         {text: 'Nebula', link: '/guide/nebula'},
                         {text: 'Black Hole', link: '/guide/black-hole'},
-                        {text: 'HyperSpace', link: '/guide/hyper-space'}
+                        {text: 'HyperSpace', link: '/guide/hyper-space'},
+                        {text: 'Portal', link: '/guide/portal'},
+                        {text: 'Constellation', link: '/guide/constellation'}
                     ]
                 },
                 {
@@ -86,14 +94,21 @@ export default defineConfig({
                         {text: 'Plasma', link: '/guide/plasma'},
                         {text: 'Orbits', link: '/guide/orbits'},
                         {text: 'Lava', link: '/guide/lava'},
-                        {text: 'Neon', link: '/guide/neon'}
+                        {text: 'Neon', link: '/guide/neon'},
+                        {text: 'Pulse Grid', link: '/guide/pulse-grid'},
+                        {text: 'Caustics', link: '/guide/caustics'},
+                        {text: 'Gradient Flow', link: '/guide/gradient-flow'},
+                        {text: 'Interference', link: '/guide/interference'},
+                        {text: 'Topography', link: '/guide/topography'},
+                        {text: 'Voronoi', link: '/guide/voronoi'}
                     ]
                 },
                 {
                     text: 'Organic',
                     items: [
                         {text: 'Boids', link: '/guide/boids'},
-                        {text: 'Roots', link: '/guide/roots'}
+                        {text: 'Roots', link: '/guide/roots'},
+                        {text: 'Murmuration', link: '/guide/murmuration'}
                     ]
                 },
                 {
@@ -101,7 +116,11 @@ export default defineConfig({
                     items: [
                         {text: 'Matrix', link: '/guide/matrix'},
                         {text: 'Wormhole', link: '/guide/wormhole'},
-                        {text: 'Donuts', link: '/guide/donuts'}
+                        {text: 'Donuts', link: '/guide/donuts'},
+                        {text: 'Glitch', link: '/guide/glitch'},
+                        {text: 'Hologram', link: '/guide/hologram'},
+                        {text: 'Digital Rain', link: '/guide/digital-rain'},
+                        {text: 'Kaleidoscope', link: '/guide/kaleidoscope'}
                     ]
                 },
             ],
@@ -139,7 +158,8 @@ export default defineConfig({
                         {text: 'Streamers', link: '/api/streamers'},
                         {text: 'Glitter', link: '/api/glitter'},
                         {text: 'Lanterns', link: '/api/lanterns'},
-                        {text: 'Sparklers', link: '/api/sparklers'}
+                        {text: 'Sparklers', link: '/api/sparklers'},
+                        {text: 'Popcorn', link: '/api/popcorn'}
                     ]
                 },
                 {
@@ -157,7 +177,12 @@ export default defineConfig({
                         {text: 'Sandstorm', link: '/api/sandstorm'},
                         {text: 'Smoke', link: '/api/smoke'},
                         {text: 'Butterflies', link: '/api/butterflies'},
-                        {text: 'Clouds', link: '/api/clouds'}
+                        {text: 'Clouds', link: '/api/clouds'},
+                        {text: 'Tornado', link: '/api/tornado'},
+                        {text: 'Volcano', link: '/api/volcano'},
+                        {text: 'Coral Reef', link: '/api/coral-reef'},
+                        {text: 'Pollen', link: '/api/pollen'},
+                        {text: 'Crystallization', link: '/api/crystallization'}
                     ]
                 },
                 {
@@ -165,7 +190,9 @@ export default defineConfig({
                     items: [
                         {text: 'Nebula', link: '/api/nebula'},
                         {text: 'Black Hole', link: '/api/black-hole'},
-                        {text: 'HyperSpace', link: '/api/hyper-space'}
+                        {text: 'HyperSpace', link: '/api/hyper-space'},
+                        {text: 'Portal', link: '/api/portal'},
+                        {text: 'Constellation', link: '/api/constellation'}
                     ]
                 },
                 {
@@ -177,14 +204,21 @@ export default defineConfig({
                         {text: 'Plasma', link: '/api/plasma'},
                         {text: 'Orbits', link: '/api/orbits'},
                         {text: 'Lava', link: '/api/lava'},
-                        {text: 'Neon', link: '/api/neon'}
+                        {text: 'Neon', link: '/api/neon'},
+                        {text: 'Pulse Grid', link: '/api/pulse-grid'},
+                        {text: 'Caustics', link: '/api/caustics'},
+                        {text: 'Gradient Flow', link: '/api/gradient-flow'},
+                        {text: 'Interference', link: '/api/interference'},
+                        {text: 'Topography', link: '/api/topography'},
+                        {text: 'Voronoi', link: '/api/voronoi'}
                     ]
                 },
                 {
                     text: 'Organic',
                     items: [
                         {text: 'Boids', link: '/api/boids'},
-                        {text: 'Roots', link: '/api/roots'}
+                        {text: 'Roots', link: '/api/roots'},
+                        {text: 'Murmuration', link: '/api/murmuration'}
                     ]
                 },
                 {
@@ -192,7 +226,11 @@ export default defineConfig({
                     items: [
                         {text: 'Matrix', link: '/api/matrix'},
                         {text: 'Wormhole', link: '/api/wormhole'},
-                        {text: 'Donuts', link: '/api/donuts'}
+                        {text: 'Donuts', link: '/api/donuts'},
+                        {text: 'Glitch', link: '/api/glitch'},
+                        {text: 'Hologram', link: '/api/hologram'},
+                        {text: 'Digital Rain', link: '/api/digital-rain'},
+                        {text: 'Kaleidoscope', link: '/api/kaleidoscope'}
                     ]
                 }
             ]

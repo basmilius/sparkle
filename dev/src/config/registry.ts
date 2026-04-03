@@ -1,4 +1,4 @@
-import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createClouds, createConfetti, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitter, createHyperSpace, createLanterns, createLava, createLeaves, createLightning, createMatrix, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSparklers, createStars, createStreamers, createWaves, createWormhole } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSparklers, createStars, createStreamers, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -1055,6 +1055,568 @@ export const SIMULATORS: SimulatorDef[] = [
             return sim;
         },
         createLayer: (config) => createWormhole(config)
+    },
+    {
+        id: 'tornado',
+        name: 'Tornado',
+        description: 'Spinning funnel vortex with flying debris particles.',
+        defaultConfig: {
+            speed: 1,
+            debris: 150,
+            width: 0.3,
+            intensity: 1,
+            color: '#8B7355',
+            scale: 1
+        },
+        liveKeys: ['speed', 'intensity'],
+        schema: [
+            {type: 'slider', key: 'debris', label: 'Debris', min: 30, max: 400, step: 10, default: 150},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'intensity', label: 'Intensity', min: 0.1, max: 3, step: 0.1, default: 1},
+            {type: 'slider', key: 'width', label: 'Funnel Width', min: 0.1, max: 0.6, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#8B7355'}
+        ],
+        create: (canvas, config) => {
+            const sim = createTornado(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createTornado(config)
+    },
+    {
+        id: 'volcano',
+        name: 'Volcano',
+        description: 'Erupting volcano with lava projectiles, embers, and smoke.',
+        defaultConfig: {
+            speed: 1,
+            projectiles: 30,
+            embers: 60,
+            intensity: 1,
+            color: '#ff4400',
+            smokeColor: '#444444',
+            scale: 1
+        },
+        liveKeys: ['speed', 'intensity'],
+        schema: [
+            {type: 'slider', key: 'projectiles', label: 'Projectiles', min: 5, max: 80, step: 5, default: 30},
+            {type: 'slider', key: 'embers', label: 'Embers', min: 10, max: 200, step: 10, default: 60},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'intensity', label: 'Intensity', min: 0.1, max: 3, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Lava Color', default: '#ff4400'},
+            {type: 'color', key: 'smokeColor', label: 'Smoke Color', default: '#444444'}
+        ],
+        create: (canvas, config) => {
+            const sim = createVolcano(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createVolcano(config)
+    },
+    {
+        id: 'coral-reef',
+        name: 'Coral Reef',
+        description: 'Underwater scene with swaying anemones, jellyfish, and bubbles.',
+        defaultConfig: {
+            anemones: 8,
+            jellyfish: 5,
+            bubbles: 20,
+            speed: 1,
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'anemones', label: 'Anemones', min: 2, max: 20, step: 1, default: 8},
+            {type: 'slider', key: 'jellyfish', label: 'Jellyfish', min: 1, max: 15, step: 1, default: 5},
+            {type: 'slider', key: 'bubbles', label: 'Bubbles', min: 5, max: 60, step: 5, default: 20},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b9d', '#c44dff', '#00d4aa', '#ff8c42', '#4dc9f6']}
+        ],
+        create: (canvas, config) => {
+            const sim = createCoralReef(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createCoralReef(config)
+    },
+    {
+        id: 'murmuration',
+        name: 'Murmuration',
+        description: 'Starling-like swarm forming organic flowing shapes.',
+        defaultConfig: {
+            count: 300,
+            speed: 1,
+            cohesion: 0.5,
+            alignment: 0.8,
+            separation: 0.4,
+            turnRadius: 0.7,
+            color: '#1a1a2e',
+            scale: 1
+        },
+        liveKeys: ['speed', 'cohesion', 'alignment', 'separation'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'cohesion', label: 'Cohesion', min: 0, max: 2, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'alignment', label: 'Alignment', min: 0, max: 2, step: 0.1, default: 0.8},
+            {type: 'slider', key: 'separation', label: 'Separation', min: 0, max: 2, step: 0.1, default: 0.4},
+            {type: 'slider', key: 'turnRadius', label: 'Turn Radius', min: 0.1, max: 2, step: 0.1, default: 0.7},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#1a1a2e'}
+        ],
+        create: (canvas, config) => {
+            const sim = createMurmuration(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createMurmuration(config)
+    },
+    {
+        id: 'crystallization',
+        name: 'Crystallization',
+        description: 'Ice crystals growing from seed points in fractal branching patterns.',
+        defaultConfig: {
+            seeds: 5,
+            speed: 1,
+            branchAngle: 60,
+            maxDepth: 5,
+            color: '#88ccff',
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'seeds', label: 'Seeds', min: 1, max: 12, step: 1, default: 5},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'branchAngle', label: 'Branch Angle', min: 20, max: 90, step: 5, default: 60},
+            {type: 'slider', key: 'maxDepth', label: 'Max Depth', min: 2, max: 8, step: 1, default: 5},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#88ccff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createCrystallization(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createCrystallization(config)
+    },
+    {
+        id: 'pollen',
+        name: 'Pollen',
+        description: 'Subtle floating pollen particles with warm sunlight glow.',
+        defaultConfig: {
+            count: 40,
+            speed: 0.5,
+            size: 3,
+            color: '#fff8e1',
+            glowSize: 2,
+            wind: 0.3,
+            scale: 1
+        },
+        liveKeys: ['speed', 'wind'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 10, max: 100, step: 5, default: 40},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'size', label: 'Size', min: 1, max: 8, step: 0.5, default: 3},
+            {type: 'slider', key: 'glowSize', label: 'Glow Size', min: 1, max: 5, step: 0.5, default: 2},
+            {type: 'slider', key: 'wind', label: 'Wind', min: -1, max: 1, step: 0.1, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#fff8e1'}
+        ],
+        create: (canvas, config) => {
+            const sim = createPollen(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createPollen(config)
+    },
+    {
+        id: 'glitch',
+        name: 'Glitch',
+        description: 'Digital glitch artifacts with RGB splits, scanlines, and noise blocks.',
+        defaultConfig: {
+            intensity: 0.5,
+            speed: 1,
+            rgbSplit: 3,
+            scanlines: true,
+            noiseBlocks: true,
+            sliceDisplacement: true,
+            color: '#00ff00',
+            scale: 1
+        },
+        liveKeys: ['intensity', 'speed', 'rgbSplit'],
+        schema: [
+            {type: 'slider', key: 'intensity', label: 'Intensity', min: 0.1, max: 1, step: 0.05, default: 0.5},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'rgbSplit', label: 'RGB Split', min: 0, max: 20, step: 1, default: 3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'toggle', key: 'scanlines', label: 'Scanlines', default: true},
+            {type: 'toggle', key: 'noiseBlocks', label: 'Noise Blocks', default: true},
+            {type: 'toggle', key: 'sliceDisplacement', label: 'Slice Displacement', default: true},
+            {type: 'color', key: 'color', label: 'Color', default: '#00ff00'}
+        ],
+        create: (canvas, config) => {
+            const sim = createGlitch(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createGlitch(config)
+    },
+    {
+        id: 'hologram',
+        name: 'Hologram',
+        description: 'Holographic projection with scanlines, flicker, and data fragments.',
+        defaultConfig: {
+            speed: 1,
+            scanlineSpacing: 3,
+            flickerIntensity: 0.3,
+            dataFragments: 15,
+            color: '#00ccff',
+            scale: 1
+        },
+        liveKeys: ['speed', 'flickerIntensity'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scanlineSpacing', label: 'Scanline Spacing', min: 1, max: 10, step: 1, default: 3},
+            {type: 'slider', key: 'flickerIntensity', label: 'Flicker', min: 0, max: 1, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'dataFragments', label: 'Data Fragments', min: 0, max: 40, step: 1, default: 15},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#00ccff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createHologram(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createHologram(config)
+    },
+    {
+        id: 'portal',
+        name: 'Portal',
+        description: 'Spinning energy portal with spiraling particles.',
+        defaultConfig: {
+            speed: 1,
+            particles: 100,
+            size: 0.3,
+            color: '#8844ff',
+            secondaryColor: '#44aaff',
+            direction: 'inward',
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'particles', label: 'Particles', min: 20, max: 300, step: 10, default: 100},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'size', label: 'Portal Size', min: 0.1, max: 0.6, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {
+                type: 'select',
+                key: 'direction',
+                label: 'Direction',
+                options: [
+                    {value: 'inward', label: 'Inward'},
+                    {value: 'outward', label: 'Outward'}
+                ],
+                default: 'inward'
+            },
+            {type: 'color', key: 'color', label: 'Color', default: '#8844ff'},
+            {type: 'color', key: 'secondaryColor', label: 'Secondary Color', default: '#44aaff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createPortal(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createPortal(config)
+    },
+    {
+        id: 'digital-rain',
+        name: 'Digital Rain',
+        description: 'Falling binary/hex characters in columns.',
+        defaultConfig: {
+            speed: 1,
+            fontSize: 14,
+            columns: 0,
+            mode: 'hex',
+            color: '#00ffaa',
+            trailLength: 20,
+            scale: 1
+        },
+        liveKeys: ['speed', 'trailLength'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'fontSize', label: 'Font Size', min: 8, max: 32, step: 1, default: 14},
+            {type: 'slider', key: 'columns', label: 'Columns (0=auto)', min: 0, max: 120, step: 5, default: 0},
+            {type: 'slider', key: 'trailLength', label: 'Trail Length', min: 5, max: 40, step: 1, default: 20},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {
+                type: 'select',
+                key: 'mode',
+                label: 'Mode',
+                options: [
+                    {value: 'binary', label: 'Binary'},
+                    {value: 'hex', label: 'Hex'},
+                    {value: 'mixed', label: 'Mixed'}
+                ],
+                default: 'hex'
+            },
+            {type: 'color', key: 'color', label: 'Color', default: '#00ffaa'}
+        ],
+        create: (canvas, config) => {
+            const sim = createDigitalRain(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createDigitalRain(config)
+    },
+    {
+        id: 'pulse-grid',
+        name: 'Pulse Grid',
+        description: 'Grid of dots lighting up in expanding wave patterns.',
+        defaultConfig: {
+            spacing: 30,
+            speed: 1,
+            color: '#4488ff',
+            dotSize: 2,
+            waveCount: 3,
+            waveSpeed: 100,
+            scale: 1
+        },
+        liveKeys: ['speed', 'waveSpeed'],
+        schema: [
+            {type: 'slider', key: 'spacing', label: 'Spacing', min: 15, max: 60, step: 5, default: 30},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'dotSize', label: 'Dot Size', min: 1, max: 6, step: 0.5, default: 2},
+            {type: 'slider', key: 'waveCount', label: 'Wave Count', min: 1, max: 8, step: 1, default: 3},
+            {type: 'slider', key: 'waveSpeed', label: 'Wave Speed', min: 30, max: 300, step: 10, default: 100},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#4488ff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createPulseGrid(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createPulseGrid(config)
+    },
+    {
+        id: 'constellation',
+        name: 'Constellation',
+        description: 'Twinkling stars connected by constellation lines.',
+        defaultConfig: {
+            stars: 50,
+            speed: 1,
+            connectionDistance: 120,
+            color: '#ffffff',
+            lineWidth: 0.5,
+            twinkleSpeed: 1,
+            scale: 1
+        },
+        liveKeys: ['speed', 'twinkleSpeed', 'connectionDistance'],
+        schema: [
+            {type: 'slider', key: 'stars', label: 'Stars', min: 10, max: 150, step: 5, default: 50},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'connectionDistance', label: 'Connection Distance', min: 50, max: 250, step: 10, default: 120},
+            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'twinkleSpeed', label: 'Twinkle Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#ffffff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createConstellation(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createConstellation(config)
+    },
+    {
+        id: 'interference',
+        name: 'Interference',
+        description: 'Moiré interference patterns from overlapping wave sources.',
+        defaultConfig: {
+            speed: 1,
+            scale: 1,
+            resolution: 3,
+            layers: 3
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 3},
+            {type: 'slider', key: 'layers', label: 'Layers', min: 2, max: 6, step: 1, default: 3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff0066', '#0066ff', '#00ff66']}
+        ],
+        create: (canvas, config) => {
+            const sim = createInterference(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createInterference(config)
+    },
+    {
+        id: 'popcorn',
+        name: 'Popcorn',
+        description: 'Popping kernels with bouncing physics.',
+        defaultConfig: {
+            count: 25,
+            speed: 1,
+            gravity: 1,
+            bounciness: 0.6,
+            color: '#fff8dc',
+            popRate: 2,
+            scale: 1
+        },
+        liveKeys: ['speed', 'gravity', 'popRate'],
+        schema: [
+            {type: 'slider', key: 'count', label: 'Count', min: 5, max: 60, step: 5, default: 25},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'gravity', label: 'Gravity', min: 0.1, max: 3, step: 0.1, default: 1},
+            {type: 'slider', key: 'bounciness', label: 'Bounciness', min: 0.1, max: 0.95, step: 0.05, default: 0.6},
+            {type: 'slider', key: 'popRate', label: 'Pop Rate', min: 0.5, max: 8, step: 0.5, default: 2},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#fff8dc'}
+        ],
+        create: (canvas, config) => {
+            const sim = createPopcorn(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createPopcorn(config)
+    },
+    {
+        id: 'kaleidoscope',
+        name: 'Kaleidoscope',
+        description: 'Symmetrically mirrored rotating patterns.',
+        defaultConfig: {
+            segments: 8,
+            speed: 1,
+            shapes: 15,
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'segments', label: 'Segments', min: 4, max: 16, step: 2, default: 8},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'shapes', label: 'Shapes', min: 3, max: 30, step: 1, default: 15},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff3366', '#33ccff', '#ffcc00', '#66ff66', '#cc66ff', '#ff9933']}
+        ],
+        create: (canvas, config) => {
+            const sim = createKaleidoscope(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createKaleidoscope(config)
+    },
+    {
+        id: 'caustics',
+        name: 'Caustics',
+        description: 'Swimming pool light refraction patterns.',
+        defaultConfig: {
+            speed: 1,
+            scale: 1,
+            resolution: 4,
+            intensity: 0.7,
+            color: '#4488cc'
+        },
+        liveKeys: ['speed', 'intensity'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 4},
+            {type: 'slider', key: 'intensity', label: 'Intensity', min: 0.1, max: 1, step: 0.05, default: 0.7},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#4488cc'}
+        ],
+        create: (canvas, config) => {
+            const sim = createCaustics(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createCaustics(config)
+    },
+    {
+        id: 'gradient-flow',
+        name: 'Gradient Flow',
+        description: 'Smooth morphing color gradients with metaball blending.',
+        defaultConfig: {
+            speed: 0.5,
+            scale: 1,
+            blobs: 5,
+            resolution: 6
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'blobs', label: 'Blobs', min: 2, max: 12, step: 1, default: 5},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 2, max: 10, step: 1, default: 6},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7']}
+        ],
+        create: (canvas, config) => {
+            const sim = createGradientFlow(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createGradientFlow(config)
+    },
+    {
+        id: 'topography',
+        name: 'Topography',
+        description: 'Animated contour lines like a topographic map.',
+        defaultConfig: {
+            speed: 0.5,
+            scale: 1,
+            resolution: 4,
+            contourSpacing: 0.1,
+            lineWidth: 1.5,
+            color: '#2d5016'
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 4},
+            {type: 'slider', key: 'contourSpacing', label: 'Contour Spacing', min: 0.03, max: 0.3, step: 0.01, default: 0.1},
+            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.5, max: 4, step: 0.5, default: 1.5},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#2d5016'}
+        ],
+        create: (canvas, config) => {
+            const sim = createTopography(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createTopography(config)
+    },
+    {
+        id: 'voronoi',
+        name: 'Voronoi',
+        description: 'Animated Voronoi diagram with colorful cells and edges.',
+        defaultConfig: {
+            cells: 20,
+            speed: 0.5,
+            edgeColor: '#ffffff',
+            edgeWidth: 2,
+            resolution: 3,
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'cells', label: 'Cells', min: 5, max: 50, step: 1, default: 20},
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'edgeWidth', label: 'Edge Width', min: 0, max: 6, step: 0.5, default: 2},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 6, step: 1, default: 3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'edgeColor', label: 'Edge Color', default: '#ffffff'},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8', '#00b894', '#e17055']}
+        ],
+        create: (canvas, config) => {
+            const sim = createVoronoi(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createVoronoi(config)
     }
 ];
 

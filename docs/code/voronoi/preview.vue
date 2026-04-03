@@ -1,0 +1,27 @@
+<template>
+    <EffectDemo>
+        <canvas ref="canvasRef"></canvas>
+    </EffectDemo>
+</template>
+
+<script
+    setup
+    lang="ts">
+    import { onMounted, onUnmounted, ref } from 'vue';
+    import { createVoronoi } from '@basmilius/sparkle';
+
+    const canvasRef = ref<HTMLCanvasElement>();
+    let sim: ReturnType<typeof createVoronoi> | null = null;
+
+    onMounted(() => {
+        if (canvasRef.value) {
+            sim = createVoronoi({ cells: 20, speed: 0.5, scale: 1 });
+            sim.mount(canvasRef.value).start();
+        }
+    });
+
+    onUnmounted(() => {
+        sim?.destroy();
+        sim = null;
+    });
+</script>

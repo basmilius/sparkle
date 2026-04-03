@@ -3,7 +3,7 @@ layout: home
 hero:
     name: Sparkle
     text: Visual effects for the web.
-    tagline: 25 canvas-based effects. TypeScript-first. Zero configuration needed.
+    tagline: 44 canvas-based effects. TypeScript-first. Zero configuration needed.
     image:
         src: /logo.svg
         alt: Sparkle
@@ -164,5 +164,119 @@ features:
         title: Donuts
         details: Floating rings with collision avoidance, boundary bouncing, and mouse repulsion.
         link: /guide/donuts
+        linkText: View effect
+
+    -   icon: 🌪️
+        title: Tornado
+        details: Spinning funnel vortex with swaying motion, layered particle cloud, and flying debris.
+        link: /guide/tornado
+        linkText: View effect
+
+    -   icon: 🌋
+        title: Volcano
+        details: Erupting volcano with arcing lava projectiles, glowing embers, and rising smoke.
+        link: /guide/volcano
+        linkText: View effect
+
+    -   icon: 🪸
+        title: Coral Reef
+        details: Underwater scene with swaying sea anemones, pulsing jellyfish, and rising bubbles.
+        link: /guide/coral-reef
+        linkText: View effect
+
+    -   icon: 🐦
+        title: Murmuration
+        details: Starling-like swarm forming organic flowing shapes with boid rules and ripple waves.
+        link: /guide/murmuration
+        linkText: View effect
+
+    -   icon: ❄️
+        title: Crystallization
+        details: Ice crystals growing from seed points in hexagonal fractal branching patterns.
+        link: /guide/crystallization
+        linkText: View effect
+
+    -   icon: 🌾
+        title: Pollen
+        details: Subtle floating particles with warm sunlight glow, drifting gently with the wind.
+        link: /guide/pollen
+        linkText: View effect
+
+    -   icon: 📺
+        title: Glitch
+        details: Digital glitch artifacts with RGB splits, scanlines, noise blocks, and slice displacement.
+        link: /guide/glitch
+        linkText: View effect
+
+    -   icon: 🔮
+        title: Hologram
+        details: Holographic projection with scrolling scanlines, flicker, and floating data fragments.
+        link: /guide/hologram
+        linkText: View effect
+
+    -   icon: 🌀
+        title: Portal
+        details: Spinning energy portal with swirling rings and particles spiraling inward or outward.
+        link: /guide/portal
+        linkText: View effect
+
+    -   icon: 💾
+        title: Digital Rain
+        details: Falling binary or hex characters in columns with fading trails and randomized characters.
+        link: /guide/digital-rain
+        linkText: View effect
+
+    -   icon: 💡
+        title: Pulse Grid
+        details: Grid of dots lighting up in expanding wave patterns creating ripple effects.
+        link: /guide/pulse-grid
+        linkText: View effect
+
+    -   icon: ✨
+        title: Constellation
+        details: Twinkling stars that slowly drift and connect into constellation patterns with lines.
+        link: /guide/constellation
+        linkText: View effect
+
+    -   icon: 〰️
+        title: Interference
+        details: Moiré interference patterns from overlapping concentric wave sources in Lissajous paths.
+        link: /guide/interference
+        linkText: View effect
+
+    -   icon: 🍿
+        title: Popcorn
+        details: Popping kernels with bouncing physics, growing into fluffy shapes mid-air.
+        link: /guide/popcorn
+        linkText: View effect
+
+    -   icon: 🔄
+        title: Kaleidoscope
+        details: Symmetrically mirrored rotating patterns with glowing shapes and color gradients.
+        link: /guide/kaleidoscope
+        linkText: View effect
+
+    -   icon: 🏊
+        title: Caustics
+        details: Swimming pool light refraction patterns — bright caustic lines that shimmer and shift.
+        link: /guide/caustics
+        linkText: View effect
+
+    -   icon: 🌈
+        title: Gradient Flow
+        details: Smooth morphing color gradients using metaball-style blending for a lava-lamp effect.
+        link: /guide/gradient-flow
+        linkText: View effect
+
+    -   icon: 🗺️
+        title: Topography
+        details: Animated contour lines that shift and flow like a living topographic map.
+        link: /guide/topography
+        linkText: View effect
+
+    -   icon: 🔷
+        title: Voronoi
+        details: Animated Voronoi diagram with colorful drifting cells and crisp polygon edges.
+        link: /guide/voronoi
         linkText: View effect
 ---
