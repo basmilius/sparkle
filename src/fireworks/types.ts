@@ -24,6 +24,7 @@ export interface ExplosionConfig {
 export interface FireworkSimulationConfig {
     readonly scale?: number;
     readonly autoSpawn?: boolean;
+    readonly variants?: FireworkVariant[];
     readonly canvasOptions?: CanvasRenderingContext2DSettings;
 }
 

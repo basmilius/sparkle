@@ -14,6 +14,7 @@ export class FireworkLayer extends SimulationLayer {
     #spawnTimer: number = 0;
     #positionRandom = MULBERRY.fork();
     #autoSpawn: boolean;
+    #variants: FireworkVariant[];
     readonly #baseSize: number;
     #scale: number;
     readonly #tailWidth: number;
@@ -25,6 +26,7 @@ export class FireworkLayer extends SimulationLayer {
 
         const scale = config.scale ?? 1;
         this.#autoSpawn = config.autoSpawn ?? true;
+        this.#variants = config.variants?.length ? [...config.variants] : [...FIREWORK_VARIANTS];
         this.#baseSize = 5 * scale;
         this.#scale = scale;
         this.#tailWidth = 2 * scale;
@@ -44,6 +46,9 @@ export class FireworkLayer extends SimulationLayer {
     configure(config: Record<string, unknown>): void {
         if (config.scale !== undefined) { this.#scale = config.scale as number; }
         if (config.autoSpawn !== undefined) { this.#autoSpawn = config.autoSpawn as boolean; }
+        if (Array.isArray(config.variants) && config.variants.length > 0) {
+            this.#variants = [...config.variants as FireworkVariant[]];
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -439,24 +444,7 @@ export class FireworkLayer extends SimulationLayer {
     }
 
     #pickVariant(): FireworkVariant {
-        const roll = MULBERRY.nextBetween(0, 100);
-
-        if (roll < 12) { return 'peony'; }
-        if (roll < 22) { return 'chrysanthemum'; }
-        if (roll < 29) { return 'willow'; }
-        if (roll < 34) { return 'ring'; }
-        if (roll < 39) { return 'palm'; }
-        if (roll < 44) { return 'crackle'; }
-        if (roll < 48) { return 'crossette'; }
-        if (roll < 55) { return 'saturn'; }
-        if (roll < 62) { return 'dahlia'; }
-        if (roll < 67) { return 'brocade'; }
-        if (roll < 71) { return 'horsetail'; }
-        if (roll < 75) { return 'strobe'; }
-        if (roll < 82) { return 'heart'; }
-        if (roll < 89) { return 'spiral'; }
-        if (roll < 94) { return 'flower'; }
-
-        return 'concentric';
+        const index = Math.floor(MULBERRY.nextBetween(0, this.#variants.length));
+        return this.#variants[index];
     }
 }

@@ -297,12 +297,20 @@ export const SIMULATORS: SimulatorDef[] = [
         interactive: 'fireworks',
         defaultConfig: {
             scale: 1,
-            autoSpawn: true
+            autoSpawn: true,
+            variants: [...FIREWORK_VARIANTS]
         },
-        liveKeys: ["scale","autoSpawn"],
+        liveKeys: ["scale","autoSpawn","variants"],
         schema: [
             { type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1 },
-            { type: 'toggle', key: 'autoSpawn', label: 'Auto Spawn', default: true }
+            { type: 'toggle', key: 'autoSpawn', label: 'Auto Spawn', default: true },
+            {
+                type: 'multiselect',
+                key: 'variants',
+                label: 'Auto Spawn Variants',
+                options: FIREWORK_VARIANTS.map(v => ({ value: v, label: v })),
+                default: [...FIREWORK_VARIANTS]
+            }
         ],
         create: (canvas, config) => {
             const sim = new FireworkSimulation(canvas, config);
