@@ -1,4 +1,5 @@
 export * from './aurora';
+export * from './color';
 export * from './balloons';
 export * from './bubbles';
 export * from './canvas';

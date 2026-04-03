@@ -1,8 +1,8 @@
-import { mulberry32 } from '@basmilius/utils';
+import { type Mulberry32, mulberry32 } from '@basmilius/utils';
 
-export const MULBERRY = mulberry32(13);
+export const MULBERRY: Mulberry32 = mulberry32(13);
 
-export const GLITTER_COLORS = [
+export const GLITTER_COLORS: string[] = [
     '#ffd700', // gold
     '#c0c0c0', // silver
     '#ff69b4', // pink

@@ -9,7 +9,8 @@
       "Bash(brctl download:*)",
       "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; head -20 \"{}\"')",
       "Bash(bun add:*)",
-      "Bash(npx vitepress:*)"
+      "Bash(npx vitepress:*)",
+      "Bash(bunx tsc:*)"
     ]
   }
 }

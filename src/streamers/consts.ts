@@ -1,8 +1,8 @@
-import { mulberry32 } from '@basmilius/utils';
+import { type Mulberry32, mulberry32 } from '@basmilius/utils';
 
-export const MULBERRY = mulberry32(13);
+export const MULBERRY: Mulberry32 = mulberry32(13);
 
-export const STREAMER_COLORS = [
+export const STREAMER_COLORS: string[] = [
     '#ff6b6b', // red
     '#ffd93d', // yellow
     '#6bcb77', // green

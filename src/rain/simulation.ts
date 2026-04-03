@@ -17,11 +17,5 @@ export interface RainSimulationConfig {
 export class RainSimulation extends SimulationCanvas {
     constructor(canvas: HTMLCanvasElement, config: RainSimulationConfig = {}) {
         super(canvas, new RainLayer(config), 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
     }
 }

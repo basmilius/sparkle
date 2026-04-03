@@ -14,11 +14,5 @@ export interface PetalSimulationConfig {
 export class PetalSimulation extends SimulationCanvas {
     constructor(canvas: HTMLCanvasElement, config: PetalSimulationConfig = {}) {
         super(canvas, new PetalLayer(config), 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
     }
 }

@@ -14,11 +14,5 @@ export interface MatrixSimulationConfig {
 export class MatrixSimulation extends SimulationCanvas {
     constructor(canvas: HTMLCanvasElement, config: MatrixSimulationConfig = {}) {
         super(canvas, new MatrixLayer(config), 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
     }
 }

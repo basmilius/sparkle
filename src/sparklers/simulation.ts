@@ -22,12 +22,6 @@ export class SparklerSimulation extends SimulationCanvas {
         const layer = new SparklerLayer(config);
         super(canvas, layer, 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
         this.#layer = layer;
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
     }
 
     setPosition(x: number, y: number): void {

@@ -7,6 +7,12 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
     constructor(canvas: HTMLCanvasElement, simulation: SimulationLayer, frameRate: number = 60, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
         super(canvas, frameRate, options);
         this.#simulation = simulation;
+
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.height = '100%';
+        canvas.style.width = '100%';
     }
 
     start(): void {

@@ -15,11 +15,5 @@ export interface AuroraSimulationConfig {
 export class AuroraSimulation extends SimulationCanvas {
     constructor(canvas: HTMLCanvasElement, config: AuroraSimulationConfig = {}) {
         super(canvas, new AuroraLayer(config), 60, config.canvasOptions ?? {colorSpace: 'display-p3'});
-
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
     }
 }

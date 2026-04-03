@@ -8,6 +8,7 @@
         ],
         "skipLibCheck": true,
         "strict": false,
+        "ignoreDeprecations": "6.0",
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,
         "module": "esnext",

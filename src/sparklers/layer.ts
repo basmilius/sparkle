@@ -2,7 +2,7 @@ import { hexToRGB } from '@basmilius/utils';
 import { SimulationLayer } from '../layer';
 import { MULBERRY } from './consts';
 import type { SparklerSimulationConfig } from './simulation';
-import type { Spark } from './types';
+import type { SparklerSpark } from './types';
 
 const DEFAULT_COLORS = ['#ffcc33', '#ff9900', '#ffffff', '#ffee88'];
 
@@ -22,7 +22,7 @@ export class SparklerLayer extends SimulationLayer {
     #emitX: number = 0.5;
     #emitY: number = 0.5;
     #mouseOnCanvas: boolean = false;
-    #sparks: Spark[] = [];
+    #sparks: SparklerSpark[] = [];
 
     constructor(config: SparklerSimulationConfig = {}) {
         super();
@@ -154,7 +154,7 @@ export class SparklerLayer extends SimulationLayer {
         this.#mouseOnCanvas = false;
     }
 
-    #createSpark(width: number, height: number): Spark {
+    #createSpark(width: number, height: number): SparklerSpark {
         const angle = MULBERRY.next() * Math.PI * 2;
         const speed = this.#speedRange[0] + MULBERRY.next() * (this.#speedRange[1] - this.#speedRange[0]);
         const colorIndex = Math.floor(MULBERRY.next() * this.#colorRGBs.length);

@@ -1,8 +1,8 @@
-import { mulberry32 } from '@basmilius/utils';
+import { type Mulberry32, mulberry32 } from '@basmilius/utils';
 
-export const MULBERRY = mulberry32(13);
+export const MULBERRY: Mulberry32 = mulberry32(13);
 
-export const PETAL_COLORS = [
+export const PETAL_COLORS: string[] = [
     '#ffb7c5', // sakura pink
     '#ffc0cb', // pink
     '#ffd1dc', // pastel pink

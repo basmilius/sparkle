@@ -1,8 +1,8 @@
-import { mulberry32 } from '@basmilius/utils';
+import { type Mulberry32, mulberry32 } from '@basmilius/utils';
 
-export const MULBERRY = mulberry32(13);
+export const MULBERRY: Mulberry32 = mulberry32(13);
 
-export const LEAF_COLORS = [
+export const LEAF_COLORS: string[] = [
     '#c0392b', // deep red
     '#e74c3c', // bright red
     '#d35400', // burnt orange

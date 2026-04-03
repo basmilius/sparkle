@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { SimulationLayer } from '../layer';
 import { MULBERRY } from './consts';
 import type { SnowSimulationConfig } from './simulation';
@@ -27,7 +28,7 @@ export class SnowLayer extends SimulationLayer {
         this.#size = (config.size ?? 9) * this.#scale;
         this.#speed = config.speed ?? 2;
 
-        const {r, g, b, a} = this.#parseColor(config.fillStyle ?? 'rgb(255 255 255 / .75)');
+        const {r, g, b, a} = parseColor(config.fillStyle ?? 'rgb(255 255 255 / .75)');
         this.#baseOpacity = a;
 
         if (innerWidth < 991) {
@@ -126,17 +127,6 @@ export class SnowLayer extends SimulationLayer {
         }
 
         ctx.globalAlpha = 1;
-    }
-
-    #parseColor(fillStyle: string): {r: number; g: number; b: number; a: number} {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = fillStyle;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2], a: data[3] / 255};
     }
 
     #createSprites(r: number, g: number, b: number): HTMLCanvasElement[] {

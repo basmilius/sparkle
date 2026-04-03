@@ -97,6 +97,12 @@ export class LayeredSimulation extends LimitedFrameRateCanvas {
     constructor(canvas: HTMLCanvasElement, frameRate: number = 60, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
         super(canvas, frameRate, options);
         this.#contextOptions = options;
+
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.height = '100%';
+        canvas.style.width = '100%';
     }
 
     add(layer: SimulationLayer): this {

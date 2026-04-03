@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { SimulationLayer } from '../layer';
 import { MULBERRY } from './consts';
 import type { RainSimulationConfig } from './simulation';
@@ -35,7 +36,7 @@ export class RainLayer extends SimulationLayer {
         this.#groundLevel = config.groundLevel ?? 1.0;
         this.#enableSplashes = config.splashes ?? preset.splashes;
 
-        const {r, g, b} = this.#parseColor(config.color ?? 'rgba(174, 194, 224, 0.6)');
+        const {r, g, b} = parseColor(config.color ?? 'rgba(174, 194, 224, 0.6)');
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;
@@ -128,17 +129,6 @@ export class RainLayer extends SimulationLayer {
             ctx.fillStyle = `rgba(${this.#colorR}, ${this.#colorG}, ${this.#colorB}, ${splash.alpha})`;
             ctx.fill();
         }
-    }
-
-    #parseColor(color: string): {r: number; g: number; b: number} {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2]};
     }
 
     #createDrop(initialSpread: boolean): Raindrop {

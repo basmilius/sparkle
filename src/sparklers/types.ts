@@ -1,6 +1,6 @@
 import type { Point } from '../point';
 
-export type Spark = {
+export type SparklerSpark = {
     x: number;
     y: number;
     vx: number;

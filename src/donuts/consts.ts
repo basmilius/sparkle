@@ -1,7 +1,7 @@
-import { mulberry32 } from '@basmilius/utils';
+import { type Mulberry32, mulberry32 } from '@basmilius/utils';
 import type { DonutSimulationConfig } from './simulation';
 
-export const MULBERRY = mulberry32(13);
+export const MULBERRY: Mulberry32 = mulberry32(13);
 
 export const DEFAULT_CONFIG: DonutSimulationConfig = {
     background: '#a51955',
