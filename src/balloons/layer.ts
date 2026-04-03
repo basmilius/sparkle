@@ -50,13 +50,13 @@ export class Balloons extends Effect<BalloonsConfig> {
 
     configure(config: Partial<BalloonsConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.driftAmount !== undefined) {
-            this.#driftAmount = config.driftAmount as number;
+            this.#driftAmount = config.driftAmount;
         }
         if (config.stringLength !== undefined) {
-            this.#stringLengthMul = config.stringLength as number;
+            this.#stringLengthMul = config.stringLength;
         }
     }
 
@@ -87,10 +87,10 @@ export class Balloons extends Effect<BalloonsConfig> {
             const rx = balloon.radiusX * this.#scale;
             const ry = balloon.radiusY * this.#scale;
             const [r, g, b] = balloon.color;
+            const cos = Math.cos(balloon.rotation);
+            const sin = Math.sin(balloon.rotation);
 
-            ctx.save();
-            ctx.translate(px, py);
-            ctx.rotate(balloon.rotation);
+            ctx.setTransform(cos, sin, -sin, cos, px, py);
 
             const gradient = ctx.createRadialGradient(
                 -rx * 0.3, -ry * 0.3, rx * 0.1,
@@ -142,9 +142,9 @@ export class Balloons extends Effect<BalloonsConfig> {
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             ctx.lineWidth = 1;
             ctx.stroke();
-
-            ctx.restore();
         }
+
+        ctx.resetTransform();
     }
 
     #createBalloon(initialSpread: boolean): Balloon {

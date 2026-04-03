@@ -117,9 +117,9 @@ export class Snow extends Effect<SnowConfig> {
             ctx.globalAlpha = this.#baseOpacity * (0.15 + snowflake.depth * 0.85);
 
             if (snowflake.spriteIndex === 3) {
-                ctx.save();
-                ctx.translate(px, py);
-                ctx.rotate(snowflake.rotation);
+                const cos = Math.cos(snowflake.rotation);
+                const sin = Math.sin(snowflake.rotation);
+                ctx.setTransform(cos, sin, -sin, cos, px, py);
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],
                     -displayRadius,
@@ -127,7 +127,7 @@ export class Snow extends Effect<SnowConfig> {
                     displaySize,
                     displaySize
                 );
-                ctx.restore();
+                ctx.resetTransform();
             } else {
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],

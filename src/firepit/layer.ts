@@ -47,13 +47,13 @@ export class Firepit extends Effect<FirepitConfig> {
 
     configure(config: Partial<FirepitConfig>): void {
         if (config.intensity !== undefined) {
-            this.#intensity = config.intensity as number;
+            this.#intensity = config.intensity;
         }
         if (config.flameWidth !== undefined) {
-            this.#flameWidth = config.flameWidth as number;
+            this.#flameWidth = config.flameWidth;
         }
         if (config.flameHeight !== undefined) {
-            this.#flameHeight = config.flameHeight as number;
+            this.#flameHeight = config.flameHeight;
         }
     }
 

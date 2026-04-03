@@ -80,8 +80,7 @@ export class Lanterns extends Effect<LanternsConfig> {
             ctx.arc(px, py, glowRadius, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.save();
-            ctx.translate(px, py);
+            ctx.setTransform(1, 0, 0, 1, px, py);
 
             const bodyW = size * 0.8;
             const bodyH = size;
@@ -145,7 +144,7 @@ export class Lanterns extends Effect<LanternsConfig> {
             ctx.lineWidth = size * 0.04;
             ctx.stroke();
 
-            ctx.restore();
+            ctx.resetTransform();
         }
     }
 

@@ -66,10 +66,10 @@ export class Stars extends Effect<StarsConfig> {
 
     configure(config: Partial<StarsConfig>): void {
         if (config.twinkleSpeed !== undefined) {
-            this.#twinkleSpeed = config.twinkleSpeed as number;
+            this.#twinkleSpeed = config.twinkleSpeed;
         }
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
     }
 

@@ -60,16 +60,16 @@ export class Aurora extends Effect<AuroraConfig> {
 
     configure(config: Partial<AuroraConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.intensity !== undefined) {
-            this.#intensity = config.intensity as number;
+            this.#intensity = config.intensity;
         }
         if (config.waveAmplitude !== undefined) {
-            this.#waveAmplitude = config.waveAmplitude as number;
+            this.#waveAmplitude = config.waveAmplitude;
         }
         if (config.verticalPosition !== undefined) {
-            this.#verticalPosition = config.verticalPosition as number;
+            this.#verticalPosition = config.verticalPosition;
         }
     }
 

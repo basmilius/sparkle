@@ -49,10 +49,10 @@ export class Fireflies extends Effect<FirefliesConfig> {
 
     configure(config: Partial<FirefliesConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.glowSpeed !== undefined) {
-            this.#glowSpeed = config.glowSpeed as number;
+            this.#glowSpeed = config.glowSpeed;
         }
     }
 

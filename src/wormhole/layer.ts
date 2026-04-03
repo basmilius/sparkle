@@ -55,10 +55,10 @@ export class Wormhole extends Effect<WormholeConfig> {
 
     configure(config: Partial<WormholeConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
     }
 

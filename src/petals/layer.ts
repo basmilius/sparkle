@@ -95,11 +95,10 @@ export class Petals extends Effect<PetalsConfig> {
             const py = petal.y * height;
             const displaySize = petal.size * petal.depth;
             const scaleX = Math.cos(petal.flipAngle);
+            const cos = Math.cos(petal.rotation);
+            const sin = Math.sin(petal.rotation);
 
-            ctx.save();
-            ctx.translate(px, py);
-            ctx.rotate(petal.rotation);
-            ctx.scale(scaleX, 1);
+            ctx.setTransform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
             ctx.globalAlpha = 0.4 + petal.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[petal.colorIndex % this.#sprites.length],
@@ -108,9 +107,9 @@ export class Petals extends Effect<PetalsConfig> {
                 displaySize,
                 displaySize
             );
-            ctx.restore();
         }
 
+        ctx.resetTransform();
         ctx.globalAlpha = 1;
     }
 

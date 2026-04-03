@@ -76,7 +76,10 @@ export class Fireworks extends Effect<FireworksConfig> {
 
         for (const firework of this.#fireworks) {
             firework.tick(dt);
-            this.#sparks.push(...firework.collectSparks());
+            const collected = firework.collectSparks();
+            for (let i = 0; i < collected.length; i++) {
+                this.#sparks.push(collected[i]);
+            }
         }
 
         for (const explosion of this.#explosions) {
@@ -125,8 +128,21 @@ export class Fireworks extends Effect<FireworksConfig> {
         this.#explosions.push(...newExplosions);
         this.#sparks.push(...newSparks);
 
-        this.#explosions = this.#explosions.filter(e => !e.isDead);
-        this.#sparks = this.#sparks.filter(s => !s.isDead);
+        let aliveExplosions = 0;
+        for (let i = 0; i < this.#explosions.length; i++) {
+            if (!this.#explosions[i].isDead) {
+                this.#explosions[aliveExplosions++] = this.#explosions[i];
+            }
+        }
+        this.#explosions.length = aliveExplosions;
+
+        let aliveSparks = 0;
+        for (let i = 0; i < this.#sparks.length; i++) {
+            if (!this.#sparks[i].isDead) {
+                this.#sparks[aliveSparks++] = this.#sparks[i];
+            }
+        }
+        this.#sparks.length = aliveSparks;
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

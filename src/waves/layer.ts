@@ -55,13 +55,13 @@ export class Waves extends Effect<WavesConfig> {
 
     configure(config: Partial<WavesConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.foamAmount !== undefined) {
-            this.#foamAmount = config.foamAmount as number;
+            this.#foamAmount = config.foamAmount;
         }
         if (config.scale !== undefined) {
-            this.#scale = config.scale as number;
+            this.#scale = config.scale;
         }
     }
 

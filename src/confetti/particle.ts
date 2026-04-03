@@ -1,4 +1,5 @@
 import type { Point } from '../point';
+import { MULBERRY } from './consts';
 import { SHAPE_PATHS } from './shapes';
 import type { Shape } from './types';
 
@@ -47,29 +48,29 @@ export class ConfettiParticle {
         const startVelocity = (config.startVelocity ?? 45) * scale;
         const launchAngle = -(direction * Math.PI / 180)
             + (0.5 * spread * Math.PI / 180)
-            - (Math.random() * spread * Math.PI / 180);
-        const speed = startVelocity * (0.5 + Math.random());
-        const rotAngle = Math.random() * Math.PI * 2;
+            - (MULBERRY.next() * spread * Math.PI / 180);
+        const speed = startVelocity * (0.5 + MULBERRY.next());
+        const rotAngle = MULBERRY.next() * Math.PI * 2;
 
         this.#colorStr = color;
         this.#gravity = (config.gravity ?? 1) * scale;
         this.#shape = shape;
-        this.#size = (5 + Math.random() * 5) * scale;
+        this.#size = (5 + MULBERRY.next() * 5) * scale;
         this.#totalTicks = config.ticks ?? 200;
         this.#x = position.x;
         this.#y = position.y;
         this.#vx = Math.cos(launchAngle) * speed;
         this.#vy = Math.sin(launchAngle) * speed;
-        this.#decay = (config.decay ?? 0.9) - 0.05 + Math.random() * 0.1;
-        this.#flipAngle = Math.random() * Math.PI * 2;
-        this.#flipSpeed = 0.03 + Math.random() * 0.05;
+        this.#decay = (config.decay ?? 0.9) - 0.05 + MULBERRY.next() * 0.1;
+        this.#flipAngle = MULBERRY.next() * Math.PI * 2;
+        this.#flipSpeed = 0.03 + MULBERRY.next() * 0.05;
         this.#rotAngle = rotAngle;
         this.#rotCos = Math.cos(rotAngle);
         this.#rotSin = Math.sin(rotAngle);
-        this.#rotSpeed = (Math.random() - 0.5) * 0.06;
-        this.#swing = Math.random() * Math.PI * 2;
-        this.#swingAmp = 0.5 + Math.random() * 1.5;
-        this.#swingSpeed = 0.025 + Math.random() * 0.035;
+        this.#rotSpeed = (MULBERRY.next() - 0.5) * 0.06;
+        this.#swing = MULBERRY.next() * Math.PI * 2;
+        this.#swingAmp = 0.5 + MULBERRY.next() * 1.5;
+        this.#swingSpeed = 0.025 + MULBERRY.next() * 0.035;
     }
 
     draw(ctx: CanvasRenderingContext2D): void {

@@ -70,10 +70,10 @@ export class Bubbles extends Effect<BubblesConfig> {
 
     configure(config: Partial<BubblesConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
         if (config.wobbleAmount !== undefined) {
-            this.#wobbleAmount = config.wobbleAmount as number;
+            this.#wobbleAmount = config.wobbleAmount;
         }
     }
 

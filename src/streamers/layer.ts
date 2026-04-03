@@ -48,7 +48,7 @@ export class Streamers extends Effect<StreamersConfig> {
 
     configure(config: Partial<StreamersConfig>): void {
         if (config.speed !== undefined) {
-            this.#speed = config.speed as number;
+            this.#speed = config.speed;
         }
     }
 

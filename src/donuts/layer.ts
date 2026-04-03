@@ -99,16 +99,16 @@ export class Donuts extends Effect<DonutsConfig> {
 
     configure(config: Partial<DonutsConfig>): void {
         if (config.mouseAvoidance !== undefined) {
-            this.#mouseAvoidance = config.mouseAvoidance as boolean;
+            this.#mouseAvoidance = config.mouseAvoidance;
         }
         if (config.mouseAvoidanceRadius !== undefined) {
-            this.#mouseAvoidanceRadius = config.mouseAvoidanceRadius as number;
+            this.#mouseAvoidanceRadius = config.mouseAvoidanceRadius;
         }
         if (config.mouseAvoidanceStrength !== undefined) {
-            this.#mouseAvoidanceStrength = config.mouseAvoidanceStrength as number;
+            this.#mouseAvoidanceStrength = config.mouseAvoidanceStrength;
         }
         if (config.repulsionStrength !== undefined) {
-            this.#repulsionStrength = config.repulsionStrength as number;
+            this.#repulsionStrength = config.repulsionStrength;
         }
     }
 
@@ -133,9 +133,9 @@ export class Donuts extends Effect<DonutsConfig> {
         ctx.fillRect(0, 0, width, height);
 
         for (const donut of this.#donuts) {
-            ctx.save();
-            ctx.translate(donut.x, donut.y);
-            ctx.rotate(donut.angle);
+            const cos = Math.cos(donut.angle);
+            const sin = Math.sin(donut.angle);
+            ctx.setTransform(cos, sin, -sin, cos, donut.x, donut.y);
 
             ctx.beginPath();
             ctx.arc(0, 0, donut.outerRadius, 0, Math.PI * 2);
@@ -144,8 +144,9 @@ export class Donuts extends Effect<DonutsConfig> {
 
             ctx.fillStyle = donut.color;
             ctx.fill();
-            ctx.restore();
         }
+
+        ctx.resetTransform();
     }
 
     #updateDonut(donut: Donut, dt: number): void {
