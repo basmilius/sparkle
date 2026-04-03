@@ -11,23 +11,3 @@ export type AuroraBand = {
     hue: number;
     opacity: number;
 };
-
-export type AuroraStar = {
-    x: number;
-    y: number;
-    size: number;
-    opacity: number;
-    twinkleSpeed: number;
-    twinklePhase: number;
-};
-
-export type AuroraShootingStar = {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    alpha: number;
-    size: number;
-    decay: number;
-    trail: {x: number; y: number}[];
-};

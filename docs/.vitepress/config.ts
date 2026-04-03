@@ -31,7 +31,8 @@ export default defineConfig({
             {
                 text: 'Guide',
                 items: [
-                    {text: 'Getting Started', link: '/guide/getting-started'}
+                    {text: 'Getting Started', link: '/guide/getting-started'},
+                    {text: 'Layering Effects', link: '/guide/layered'}
                 ]
             },
             {
@@ -88,6 +89,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                     {text: 'General', link: '/api/general'},
+                    {text: 'Layered', link: '/api/layered'},
                     {text: 'Aurora', link: '/api/aurora'},
                     {text: 'Balloons', link: '/api/balloons'},
                     {text: 'Bubbles', link: '/api/bubbles'},

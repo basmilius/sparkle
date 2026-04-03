@@ -20,10 +20,3 @@ export type Splash = {
     size: number;
     gravity: number;
 };
-
-export type Lightning = {
-    segments: {x: number; y: number}[];
-    alpha: number;
-    lifetime: number;
-    ticksAlive: number;
-};

@@ -1,9 +1,9 @@
 import './style.css';
 
-import { AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FirepitSimulation, FireworkSimulation, GlitterSimulation, LanternSimulation, LeafSimulation, LightningSimulation, MatrixSimulation, OrbitSimulation, ParticleSimulation, PetalSimulation, PlasmaSimulation, RainSimulation, SandstormSimulation, SnowSimulation, SparklerSimulation, StarSimulation, StreamerSimulation, WaveSimulation, WormholeSimulation } from '@basmilius/sparkle';
+import { AuroraLayer, AuroraSimulation, BalloonSimulation, BubbleSimulation, ConfettiSimulation, DonutSimulation, FIREWORK_VARIANTS, FireflySimulation, FirepitSimulation, FireworkSimulation, GlitterSimulation, LanternSimulation, LayeredSimulation, LeafSimulation, LightningLayer, LightningSimulation, MatrixSimulation, OrbitSimulation, ParticleSimulation, PetalSimulation, PlasmaSimulation, RainLayer, RainSimulation, SandstormSimulation, SnowSimulation, SparklerSimulation, StarLayer, StarSimulation, StreamerSimulation, WaveSimulation, WormholeSimulation } from '@basmilius/sparkle';
 import type { FireworkVariant } from '@basmilius/sparkle';
 
-type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'firepit' | 'fireworks' | 'fireworks-lab' | 'glitter' | 'lanterns' | 'leaves' | 'lightning' | 'matrix' | 'orbits' | 'particles' | 'petals' | 'plasma' | 'rain' | 'sandstorm' | 'snow' | 'sparklers' | 'stars' | 'streamers' | 'waves' | 'wormhole';
+type Effect = 'aurora' | 'balloons' | 'bubbles' | 'confetti' | 'donuts' | 'fireflies' | 'firepit' | 'fireworks' | 'fireworks-lab' | 'glitter' | 'lanterns' | 'layered' | 'leaves' | 'lightning' | 'matrix' | 'orbits' | 'particles' | 'petals' | 'plasma' | 'rain' | 'sandstorm' | 'snow' | 'sparklers' | 'stars' | 'streamers' | 'waves' | 'wormhole';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const variantGrid = document.getElementById('variant-grid') as HTMLDivElement;
@@ -216,6 +216,16 @@ function start(effect: Effect): void {
         }
         case 'orbits': {
             const sim = new OrbitSimulation(canvas);
+            sim.start();
+            active = sim;
+            break;
+        }
+        case 'layered': {
+            const sim = new LayeredSimulation(canvas);
+            sim.add(new AuroraLayer());
+            sim.add(new StarLayer({mode: 'shooting'}));
+            sim.add(new RainLayer({variant: 'drizzle'}));
+            sim.add(new LightningLayer({branches: true, flash: true, frequency: 0.3}));
             sim.start();
             active = sim;
             break;

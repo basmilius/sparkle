@@ -1,3 +1,5 @@
+export type { ShootingStar } from '../shooting-stars/types';
+
 export type StarMode = 'sky' | 'shooting' | 'both';
 
 export type Star = {
@@ -7,15 +9,4 @@ export type Star = {
     twinklePhase: number;
     twinkleSpeed: number;
     brightness: number;
-};
-
-export type ShootingStar = {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    alpha: number;
-    size: number;
-    decay: number;
-    trail: {x: number; y: number}[];
 };

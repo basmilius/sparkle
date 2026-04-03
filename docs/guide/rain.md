@@ -1,6 +1,6 @@
 # Rain
 
-The rain simulation creates falling raindrops with optional splash effects on impact and dramatic lightning strikes. Choose from three variants: a gentle drizzle, a heavy downpour, or a full thunderstorm.
+The rain simulation creates falling raindrops with optional splash effects on impact. Choose from three variants: a gentle drizzle, a heavy downpour, or a driving thunderstorm. Combine with `LightningLayer` via `LayeredSimulation` for lightning effects.
 
 ::: render
 render=../code/rain/preview.vue
@@ -12,7 +12,7 @@ render=../code/rain/preview.vue
 example=../code/rain/preview.vue
 :::
 
-::: example Thunderstorm || Heavy rain with lightning strikes and screen flashes.
+::: example Thunderstorm || Very heavy rain with strong wind and splashes.
 example=../code/rain/thunderstorm.vue
 :::
 
@@ -48,7 +48,7 @@ new RainSimulation(canvas, { variant: 'drizzle' });
 // Heavy rain with splashes
 new RainSimulation(canvas, { variant: 'downpour' });
 
-// Heavy rain with lightning
+// Very heavy rain with strong wind
 new RainSimulation(canvas, { variant: 'thunderstorm' });
 ```
 
