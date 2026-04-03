@@ -217,7 +217,7 @@ export class RainSimulation extends LimitedFrameRateCanvas {
             }
 
             if (this.#flashAlpha > 0) {
-                this.#flashAlpha -= 0.05 * dt;
+                this.#flashAlpha -= 0.015 * dt;
 
                 if (this.#flashAlpha < 0) {
                     this.#flashAlpha = 0;
@@ -290,7 +290,7 @@ export class RainSimulation extends LimitedFrameRateCanvas {
         return {
             segments,
             alpha: 1,
-            lifetime: 8,
+            lifetime: 30 + MULBERRY.next() * 30,
             ticksAlive: 0
         };
     }

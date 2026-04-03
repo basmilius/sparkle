@@ -5,7 +5,7 @@
     border-radius: 12px;
     overflow: hidden;
     margin: 1.5rem 0;
-    background: linear-gradient(to bottom, #0a0a1a, #1a1a2e);
+    background: #161618;
 }
 
 .effect-demo canvas {

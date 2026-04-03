@@ -115,7 +115,7 @@ export class LightningSimulation extends LimitedFrameRateCanvas {
 
         // Update flash
         if (this.#flashAlpha > 0) {
-            this.#flashAlpha -= 0.04 * dt;
+            this.#flashAlpha -= 0.012 * dt;
 
             if (this.#flashAlpha < 0) {
                 this.#flashAlpha = 0;
@@ -182,7 +182,7 @@ export class LightningSimulation extends LimitedFrameRateCanvas {
             segments,
             branches,
             alpha: 1,
-            lifetime: 10 + MULBERRY.next() * 5,
+            lifetime: 40 + MULBERRY.next() * 40,
             ticksAlive: 0
         };
     }

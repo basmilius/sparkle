@@ -40,13 +40,15 @@ interface AuroraSimulationConfig {
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `bands` | `number` | `4` | Number of aurora bands. |
-| `colors` | `string[]` | `['#00ff88', '#00aaff', '#8844ff', '#ff44aa']` | Base hex colors for each band. Colors cycle if fewer than bands. |
+| `bands` | `number` | `5` | Number of aurora curtain rays. |
+| `colors` | `string[]` | `['#9922ff', '#4455ff', '#0077ee', '#00aabb', '#22ddff']` | Base hex colors for each ray. Colors cycle if fewer than bands. |
 | `speed` | `number` | `1` | Animation speed multiplier. |
-| `intensity` | `number` | `0.6` | Overall brightness/opacity (0-1). |
-| `waveAmplitude` | `number` | `1` | Undulation amplitude multiplier. |
-| `verticalPosition` | `number` | `0.3` | Normalized Y center for the aurora (0=top, 1=bottom). |
-| `scale` | `number` | `1` | Global scale factor. |
+| `intensity` | `number` | `0.8` | Overall brightness/opacity (0-1). |
+| `waveAmplitude` | `number` | `1` | Base wave undulation amplitude multiplier. |
+| `verticalPosition` | `number` | `0.68` | Normalized Y base for the aurora rays (0=top, 1=bottom). |
+| `scale` | `number` | `1` | Global scale factor for ray height. |
+| `shootingStars` | `boolean` | `true` | Enable occasional shooting stars. |
+| `shootingInterval` | `[number, number]` | `[300, 600]` | Min/max frames between shooting stars. |
 | `canvasOptions` | `CanvasRenderingContext2DSettings` | `{colorSpace: 'display-p3'}` | Options passed to `canvas.getContext('2d')`. |
 
 ---
@@ -57,16 +59,16 @@ Internal representation of a single aurora band.
 
 ```typescript
 type AuroraBand = {
-    baseY: number;      // Normalized base Y position
-    hue: number;        // HSL hue value (0-360)
-    amplitude1: number; // Primary wave amplitude in pixels
-    frequency1: number; // Primary wave frequency
-    phase1: number;     // Primary wave phase
-    amplitude2: number; // Secondary wave amplitude in pixels
-    frequency2: number; // Secondary wave frequency
-    phase2: number;     // Secondary wave phase
-    speed: number;      // Individual animation speed
-    width: number;      // Band width in pixels
-    opacity: number;    // Band opacity
+    x: number;          // Normalized X position of the ray center (0-1)
+    baseY: number;      // Normalized Y base of the ray (0-1)
+    height: number;     // Normalized ray height (0-1, relative to canvas height)
+    sigma: number;      // Horizontal Gaussian spread in pixels (at 1920px width)
+    phase1: number;     // Sway oscillation phase
+    phase2: number;     // Base wave oscillation phase
+    amplitude1: number; // Sway amplitude (fraction of canvas width)
+    frequency1: number; // Base wave spatial frequency (rad/px)
+    speed: number;      // Individual animation speed multiplier
+    hue: number;        // Primary (bottom) hue in HSL (0-360)
+    opacity: number;    // Maximum opacity for this ray
 };
 ```
