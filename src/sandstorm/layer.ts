@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { SandGrain } from './types';
@@ -32,7 +33,7 @@ export class Sandstorm extends Effect<SandstormConfig> {
         this.#turbulence = config.turbulence ?? 1;
         this.#hazeOpacity = config.hazeOpacity ?? 0.15;
 
-        const {r, g, b} = this.#parseColor(config.color ?? '#c2956b');
+        const {r, g, b} = parseColor(config.color ?? '#c2956b');
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;
@@ -122,17 +123,6 @@ export class Sandstorm extends Effect<SandstormConfig> {
             ctx.lineCap = 'round';
             ctx.stroke();
         }
-    }
-
-    #parseColor(color: string): { r: number; g: number; b: number } {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2]};
     }
 
     #createGrain(initialSpread: boolean): SandGrain {

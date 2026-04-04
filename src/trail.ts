@@ -18,6 +18,7 @@ export class Trail {
     readonly #angle: number;
     readonly #totalDistance: number;
     readonly #trail: Point[];
+    #trailHead: number = 0;
     readonly #acceleration: number;
     readonly #brightness: number;
     readonly #glow: number;
@@ -71,14 +72,19 @@ export class Trail {
         ctx.save();
         ctx.lineCap = 'round';
 
-        for (let i = this.#trail.length - 1; i > 0; i--) {
-            const progress = i / this.#trail.length;
+        const len = this.#trail.length;
+
+        for (let i = len - 1; i > 0; i--) {
+            const progress = i / len;
             const alpha = (1 - progress) * 0.8;
             const width = this.#width * (1 - progress * 0.5);
 
+            const ti = (this.#trailHead + i) % len;
+            const ti1 = (this.#trailHead + i - 1) % len;
+
             ctx.beginPath();
-            ctx.moveTo(this.#trail[i].x, this.#trail[i].y);
-            ctx.lineTo(this.#trail[i - 1].x, this.#trail[i - 1].y);
+            ctx.moveTo(this.#trail[ti].x, this.#trail[ti].y);
+            ctx.lineTo(this.#trail[ti1].x, this.#trail[ti1].y);
             ctx.lineWidth = width;
             ctx.strokeStyle = `hsla(${this.#hue}, 100%, ${this.#brightness}%, ${alpha})`;
             ctx.stroke();
@@ -88,7 +94,7 @@ export class Trail {
         ctx.shadowColor = `hsl(${this.#hue}, 100%, 60%)`;
 
         ctx.beginPath();
-        ctx.moveTo(this.#trail[0].x, this.#trail[0].y);
+        ctx.moveTo(this.#trail[this.#trailHead].x, this.#trail[this.#trailHead].y);
         ctx.lineTo(this.#position.x, this.#position.y);
         ctx.lineWidth = this.#width;
         ctx.strokeStyle = `hsl(${this.#hue}, 100%, ${this.#brightness}%)`;
@@ -109,8 +115,9 @@ export class Trail {
             return;
         }
 
-        this.#trail.pop();
-        this.#trail.unshift({...this.#position});
+        this.#trailHead = (this.#trailHead - 1 + this.#trail.length) % this.#trail.length;
+        this.#trail[this.#trailHead].x = this.#position.x;
+        this.#trail[this.#trailHead].y = this.#position.y;
 
         this.#speed *= Math.pow(this.#acceleration, dt);
 

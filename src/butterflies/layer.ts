@@ -121,7 +121,6 @@ export class Butterflies extends Effect<ButterfliesConfig> {
         }
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #drawButterfly(

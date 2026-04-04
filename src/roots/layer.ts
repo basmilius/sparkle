@@ -91,7 +91,6 @@ export class Roots extends Effect<RootsConfig> {
         }
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #growSystem(system: RootSystem): void {

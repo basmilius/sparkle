@@ -136,7 +136,6 @@ export class HyperSpace extends Effect<HyperSpaceConfig> {
         }
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
         ctx.globalCompositeOperation = 'source-over';
     }
 

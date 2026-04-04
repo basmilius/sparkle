@@ -128,7 +128,6 @@ export class Clouds extends Effect<CloudsConfig> {
         }
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #computeEdgeFade(x: number): number {

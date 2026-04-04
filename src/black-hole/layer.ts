@@ -158,7 +158,6 @@ export class BlackHole extends Effect<BlackHoleConfig> {
         ctx.fill();
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
         ctx.globalCompositeOperation = 'source-over';
     }
 

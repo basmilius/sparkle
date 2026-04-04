@@ -120,7 +120,6 @@ export class Smoke extends Effect<SmokeConfig> {
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #createSprites(r: number, g: number, b: number): HTMLCanvasElement[] {

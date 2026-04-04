@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { TornadoDebris, TornadoParticle } from './types';
@@ -44,7 +45,7 @@ export class Tornado extends Effect<TornadoConfig> {
         this.#particleCount = particleCount;
         this.#debrisCount = debrisCount;
 
-        const {r, g, b} = this.#parseColor(config.color ?? '#8B7355');
+        const {r, g, b} = parseColor(config.color ?? '#8B7355');
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;
@@ -258,14 +259,4 @@ export class Tornado extends Effect<TornadoConfig> {
         };
     }
 
-    #parseColor(color: string): { r: number; g: number; b: number } {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const colorCtx = canvas.getContext('2d')!;
-        colorCtx.fillStyle = color;
-        colorCtx.fillRect(0, 0, 1, 1);
-        const data = colorCtx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2]};
-    }
 }

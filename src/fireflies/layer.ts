@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Firefly } from './types';
@@ -34,7 +35,7 @@ export class Fireflies extends Effect<FirefliesConfig> {
         this.#speed = config.speed ?? 1;
         this.#glowSpeed = config.glowSpeed ?? 1;
 
-        const {r, g, b} = this.#parseColor(config.color ?? '#b4ff6a');
+        const {r, g, b} = parseColor(config.color ?? '#b4ff6a');
 
         if (innerWidth < 991) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
@@ -109,17 +110,6 @@ export class Fireflies extends Effect<FirefliesConfig> {
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-    }
-
-    #parseColor(color: string): { r: number; g: number; b: number } {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2]};
     }
 
     #createSprite(r: number, g: number, b: number): HTMLCanvasElement {

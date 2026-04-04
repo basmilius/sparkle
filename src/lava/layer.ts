@@ -96,7 +96,6 @@ export class Lava extends Effect<LavaConfig> {
         ctx.filter = '';
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #createSprites(): HTMLCanvasElement[] {

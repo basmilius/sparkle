@@ -100,7 +100,6 @@ export class Nebula extends Effect<NebulaConfig> {
         }
 
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
         ctx.globalCompositeOperation = 'source-over';
     }
 

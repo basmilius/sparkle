@@ -14,6 +14,7 @@ export class Explosion {
     readonly #lineWidth: number;
     readonly #shape: ParticleShape;
     readonly #trail: Point[] = [];
+    #trailHead: number = 0;
     readonly #type: ExplosionType;
     #alpha: number = 1;
     #depthScale: number = 1;
@@ -104,22 +105,26 @@ export class Explosion {
         }
 
         const ds = this.#depthScale;
-        const trailEnd = this.#trail[this.#trail.length - 1];
+        const len = this.#trail.length;
+        const trailEnd = this.#trail[(this.#trailHead + len - 1) % len];
         const effectiveWidth = this.#shape === 'line' ? this.#lineWidth * ds : this.#lineWidth * 0.4 * ds;
         const effectiveAlpha = this.#alpha * Math.min(ds, 1.2);
 
         ctx.save();
         ctx.lineCap = 'round';
 
-        if (this.#trail.length > 2) {
-            for (let i = this.#trail.length - 1; i > 0; i--) {
-                const progress = i / this.#trail.length;
+        if (len > 2) {
+            for (let i = len - 1; i > 0; i--) {
+                const progress = i / len;
                 const alpha = (1 - progress) * effectiveAlpha * 0.5;
                 const width = effectiveWidth * (1 - progress * 0.4);
 
+                const ti = (this.#trailHead + i) % len;
+                const ti1 = (this.#trailHead + i - 1) % len;
+
                 ctx.beginPath();
-                ctx.moveTo(this.#trail[i].x, this.#trail[i].y);
-                ctx.lineTo(this.#trail[i - 1].x, this.#trail[i - 1].y);
+                ctx.moveTo(this.#trail[ti].x, this.#trail[ti].y);
+                ctx.lineTo(this.#trail[ti1].x, this.#trail[ti1].y);
                 ctx.lineWidth = width;
                 ctx.strokeStyle = `hsla(${this.#hue}, 100%, ${this.#brightness * 0.7}%, ${alpha})`;
                 ctx.stroke();
@@ -148,8 +153,9 @@ export class Explosion {
     }
 
     tick(dt: number): void {
-        this.#trail.pop();
-        this.#trail.unshift({...this.#position});
+        this.#trailHead = (this.#trailHead - 1 + this.#trail.length) % this.#trail.length;
+        this.#trail[this.#trailHead].x = this.#position.x;
+        this.#trail[this.#trailHead].y = this.#position.y;
 
         this.#speed *= Math.pow(this.#config.friction, dt);
         this.#vz *= Math.pow(this.#config.friction, dt);

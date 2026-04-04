@@ -126,7 +126,6 @@ export class Neon extends Effect<NeonConfig> {
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-        ctx.resetTransform();
     }
 
     #drawTubeShape(ctx: CanvasRenderingContext2D, tube: NeonTube, size: number, time: number): void {

@@ -26,6 +26,7 @@ export class Boids extends Effect<BoidsConfig> {
     readonly #size: number;
     readonly #count: number;
     #boids: Boid[] = [];
+    #grid: Map<string, Boid[]> = new Map();
     #width: number = 800;
     #height: number = 600;
     #initialized: boolean = false;
@@ -81,16 +82,16 @@ export class Boids extends Effect<BoidsConfig> {
         this.#height = height;
 
         const cellSize = PERCEPTION_RADIUS;
-        const grid = new Map<string, Boid[]>();
+        this.#grid.clear();
 
         for (const boid of this.#boids) {
             const cellX = Math.floor(boid.x / cellSize);
             const cellY = Math.floor(boid.y / cellSize);
             const key = `${cellX},${cellY}`;
-            let cell = grid.get(key);
+            let cell = this.#grid.get(key);
             if (!cell) {
                 cell = [];
-                grid.set(key, cell);
+                this.#grid.set(key, cell);
             }
             cell.push(boid);
         }
@@ -111,7 +112,7 @@ export class Boids extends Effect<BoidsConfig> {
 
             for (let dx = -1; dx <= 1; dx++) {
                 for (let dy = -1; dy <= 1; dy++) {
-                    const neighbors = grid.get(`${cellX + dx},${cellY + dy}`);
+                    const neighbors = this.#grid.get(`${cellX + dx},${cellY + dy}`);
                     if (!neighbors) {
                         continue;
                     }

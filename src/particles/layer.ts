@@ -251,8 +251,6 @@ export class Particles extends Effect<ParticlesConfig> {
 
         ctx.lineWidth = this.#lineWidth;
 
-        const drawn = new Set<string>();
-
         for (let i = 0; i < this.#particles.length; i++) {
             const pa = this.#particles[i];
             const col = Math.floor(pa.x / this.#cellSize);
@@ -271,14 +269,6 @@ export class Particles extends Effect<ParticlesConfig> {
                         if (j <= i) {
                             continue;
                         }
-
-                        const pairKey = `${i},${j}`;
-
-                        if (drawn.has(pairKey)) {
-                            continue;
-                        }
-
-                        drawn.add(pairKey);
 
                         const pb2 = this.#particles[j];
                         const dx = pa.x - pb2.x;

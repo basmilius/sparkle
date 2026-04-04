@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { PollenParticle } from './types';
@@ -44,7 +45,7 @@ export class Pollen extends Effect<PollenConfig> {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 
-        const {r, g, b} = this.#parseColor(config.color ?? '#fff8e1');
+        const {r, g, b} = parseColor(config.color ?? '#fff8e1');
         this.#sprite = this.#createSprite(r, g, b);
     }
 
@@ -128,17 +129,6 @@ export class Pollen extends Effect<PollenConfig> {
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-    }
-
-    #parseColor(color: string): { r: number; g: number; b: number } {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d')!;
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, 1, 1);
-        const data = ctx.getImageData(0, 0, 1, 1).data;
-        return {r: data[0], g: data[1], b: data[2]};
     }
 
     #createSprite(r: number, g: number, b: number): HTMLCanvasElement {
