@@ -3,7 +3,8 @@
     lang="ts">
     import { ref } from 'vue';
     import { useRoute } from 'vue-router';
-    import { SIMULATORS } from './config/registry';
+    import { SIMULATOR_MAP } from './config/registry';
+    import { CATEGORIES } from './config/categories';
 
     const route = useRoute();
     const navOpen = ref(true);
@@ -46,15 +47,19 @@
         <nav
             class="nav"
             :class="{ 'is-hidden': !navOpen }">
-            <div class="nav-section-label">Effects</div>
-            <router-link
-                v-for="sim in SIMULATORS"
-                :key="sim.id"
-                class="nav-item"
-                :class="{ 'is-active': route.params.id === sim.id }"
-                :to="`/${sim.id}`"
-            >{{ sim.name }}
-            </router-link>
+            <template
+                v-for="category in CATEGORIES"
+                :key="category.label">
+                <div class="nav-section-label">{{ category.label }}</div>
+                <router-link
+                    v-for="id in category.ids"
+                    :key="id"
+                    class="nav-item"
+                    :class="{ 'is-active': route.params.id === id }"
+                    :to="`/${id}`"
+                >{{ SIMULATOR_MAP.get(id)?.name ?? id }}
+                </router-link>
+            </template>
 
             <div class="nav-sep"/>
             <div class="nav-section-label">Combine</div>

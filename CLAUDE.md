@@ -1,6 +1,6 @@
 # Sparkle (@basmilius/sparkle)
 
-Canvas-based visual effects library for the web. Includes 25 visual effects: aurora, balloons, bubbles, confetti, donuts, fireflies, firepit, fireworks, glitter, lanterns, leaves, lightning, matrix, orbits, particles, petals, plasma, rain, sandstorm, snow, sparklers, stars, streamers, waves, and wormhole.
+Canvas-based visual effects library for the web. Includes 54 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, kaleidoscope) and playful animations (popcorn, balloons, confetti).
 
 - **Docs:** https://sparkle.graphics
 - **Repo:** https://github.com/basmilius/sparkle
@@ -45,28 +45,57 @@ src/
   distance.ts           # Euclidean distance utility
   aurora/               # Aurora — flowing northern lights bands
   balloons/             # Balloons — rising balloons with strings
+  black-hole/           # BlackHole — gravitational vortex pulling particles inward
+  boids/                # Boids — flocking simulation with separation/alignment/cohesion
   bubbles/              # Bubbles — rising soap bubbles with click-to-pop
+  butterflies/          # Butterflies — fluttering butterflies with organic movement
+  caustics/             # Caustics — underwater light refraction patterns
+  clouds/               # Clouds — drifting cloud formations
   confetti/             # Confetti — on-demand particle bursts with .burst()
+  constellation/        # Constellation — connected star network with twinkling
+  coral-reef/           # CoralReef — underwater scene with anemones, jellyfish, bubbles
+  crystallization/      # Crystallization — growing crystal branches from seed points
+  digital-rain/         # DigitalRain — falling digital characters (Matrix-style variant)
   donuts/               # Donuts — floating rings with collision and mouse avoidance
   fireflies/            # Fireflies — glowing pulsing dots with organic drift
   firepit/              # Firepit — fire simulation with embers and flames
   fireworks/            # Fireworks — auto/manual firework launches (16+ variants)
+  glitch/               # Glitch — digital glitch effect with RGB split and scanlines
   glitter/              # Glitter — sparkling particles that settle on a ground level
+  gradient-flow/        # GradientFlow — flowing color gradient blobs
+  hologram/             # Hologram — holographic display with scanlines and flicker
+  hyper-space/          # HyperSpace — star streaks rushing past (hyperspace jump)
+  interference/         # Interference — wave interference patterns
+  kaleidoscope/         # Kaleidoscope — mirrored symmetrical rotating patterns
   lanterns/             # Lanterns — floating sky lanterns
+  lava/                 # Lava — flowing lava blobs
   leaves/               # Leaves — falling autumn leaves with wind
   lightning/            # Lightning — lightning bolts with flash effect
   matrix/               # Matrix — falling code columns (Matrix-style)
+  murmuration/          # Murmuration — starling flock murmuration with fluid motion
+  nebula/               # Nebula — cosmic nebula with stars
+  neon/                 # Neon — glowing neon light elements with flicker
   orbits/               # Orbits — particles orbiting center points with trails
   particles/            # Particles — network/plexus effect with mouse interaction
   petals/               # Petals — falling flower petals with wind
   plasma/               # Plasma — animated color plasma effect
+  pollen/               # Pollen — drifting pollen particles with Brownian motion
+  popcorn/              # Popcorn — popping and bouncing kernels
+  portal/               # Portal — swirling portal vortex with particles
+  pulse-grid/           # PulseGrid — dot grid with radiating pulse waves
   rain/                 # Rain — raindrops with splashes (drizzle/downpour/thunderstorm)
+  roots/                # Roots — growing root/branch systems
   sandstorm/            # Sandstorm — blowing sand particles with haze
   shooting-stars/       # ShootingStarSystem — standalone shooting star utility (not Effect)
+  smoke/                # Smoke — rising smoke plumes
   snow/                 # Snow — continuous snowfall
   sparklers/            # Sparklers — spark emitter with trails and hover mode
   stars/                # Stars — twinkling sky with optional shooting stars
   streamers/            # Streamers — party streamers floating down
+  topography/           # Topography — animated contour map lines
+  tornado/              # Tornado — spinning funnel with debris
+  volcano/              # Volcano — erupting volcano with projectiles, embers, and smoke
+  voronoi/              # Voronoi — animated Voronoi diagram with moving cells
   waves/                # Waves — layered animated ocean waves
   wormhole/             # Wormhole — particles rushing inward or outward from center
 dev/                    # Vite playground with interactive demo
@@ -213,27 +242,56 @@ effect.withFade({ top: 0.2, bottom: 0.3 }); // fade 20% from top, 30% from botto
 |---|---|---|
 | `Aurora` | `AuroraConfig` | `bands`, `speed`, `scale` |
 | `Balloons` | `BalloonsConfig` | `count`, `colors`, `sizeRange`, `speed`, `driftAmount`, `stringLength`, `scale` |
+| `BlackHole` | `BlackHoleConfig` | `count`, `speed`, `color`, `size`, `scale` |
+| `Boids` | `BoidsConfig` | `count`, `speed`, `separation`, `alignment`, `cohesion`, `color`, `size`, `scale` |
 | `Bubbles` | `BubblesConfig` | `count`, `sizeRange`, `speed`, `popOnClick`, `popRadius`, `colors`, `wobbleAmount`, `scale` |
+| `Butterflies` | `ButterfliesConfig` | `colors`, `count`, `scale`, `size`, `speed` |
+| `Caustics` | `CausticsConfig` | `speed`, `scale`, `resolution`, `intensity`, `color` |
+| `Clouds` | `CloudsConfig` | `color`, `count`, `opacity`, `scale`, `speed` |
 | `Confetti` | `ConfettiConfig` | `scale` |
+| `Constellation` | `ConstellationConfig` | `stars`, `speed`, `connectionDistance`, `color`, `lineWidth`, `twinkleSpeed`, `scale` |
+| `CoralReef` | `CoralReefConfig` | `anemones`, `jellyfish`, `bubbles`, `speed`, `colors`, `scale` |
+| `Crystallization` | `CrystallizationConfig` | `seeds`, `speed`, `branchAngle`, `maxDepth`, `color`, `scale` |
+| `DigitalRain` | `DigitalRainConfig` | `speed`, `fontSize`, `columns`, `mode`, `color`, `trailLength`, `scale` |
 | `Donuts` | `DonutsConfig` | `count`, `colors`, `radiusRange`, `thickness`, `speedRange`, `rotationSpeedRange`, `repulsionStrength`, `mouseAvoidance`, `mouseAvoidanceRadius`, `mouseAvoidanceStrength`, `background`, `scale` |
 | `Fireflies` | `FirefliesConfig` | `count`, `color`, `size`, `speed`, `glowSpeed`, `scale` |
 | `Firepit` | `FirepitConfig` | `embers`, `flameWidth`, `flameHeight`, `intensity`, `scale` |
 | `Fireworks` | `FireworksConfig` | `autoSpawn`, `variants`, `scale` |
+| `Glitch` | `GlitchConfig` | `intensity`, `speed`, `rgbSplit`, `scanlines`, `noiseBlocks`, `sliceDisplacement`, `color`, `scale` |
 | `Glitter` | `GlitterConfig` | `count`, `size`, `speed`, `groundLevel`, `maxSettled`, `colors`, `scale` |
+| `GradientFlow` | `GradientFlowConfig` | `speed`, `scale`, `colors`, `blobs`, `resolution` |
+| `Hologram` | `HologramConfig` | `speed`, `scanlineSpacing`, `flickerIntensity`, `dataFragments`, `color`, `scale` |
+| `HyperSpace` | `HyperSpaceConfig` | `count`, `speed`, `color`, `scale` |
+| `Interference` | `InterferenceConfig` | `speed`, `scale`, `resolution`, `layers`, `colors` |
+| `Kaleidoscope` | `KaleidoscopeConfig` | `segments`, `speed`, `shapes`, `colors`, `scale` |
 | `Lanterns` | `LanternsConfig` | `count`, `size`, `speed`, `colors`, `scale` |
+| `Lava` | `LavaConfig` | `count`, `speed`, `colors`, `scale` |
 | `Leaves` | `LeavesConfig` | `count`, `size`, `speed`, `wind`, `colors`, `scale` |
 | `Lightning` | `LightningConfig` | `flash`, `color`, `frequency`, `branches`, `scale` |
 | `Matrix` | `MatrixConfig` | `columns`, `speed`, `fontSize`, `trailLength`, `color`, `scale` |
+| `Murmuration` | `MurmurationConfig` | `count`, `speed`, `cohesion`, `alignment`, `separation`, `turnRadius`, `color`, `scale` |
+| `Nebula` | `NebulaConfig` | `starCount`, `speed`, `colors`, `scale` |
+| `Neon` | `NeonConfig` | `count`, `speed`, `colors`, `flicker`, `scale` |
 | `Orbits` | `OrbitsConfig` | `centers`, `orbitersPerCenter`, `speed`, `colors`, `trailLength`, `showCenters`, `scale` |
 | `Particles` | `ParticlesConfig` | `count`, `color`, `lineColor`, `size`, `speed`, `connectionDistance`, `lineWidth`, `mouseMode` (`none`/`connect`/`attract`/`repel`), `mouseRadius`, `mouseStrength`, `particleForces`, `glow`, `background`, `scale` |
 | `Petals` | `PetalsConfig` | `count`, `colors`, `size`, `speed`, `wind`, `scale` |
 | `Plasma` | `PlasmaConfig` | `speed`, `resolution`, `palette`, `scale` |
+| `Pollen` | `PollenConfig` | `count`, `speed`, `size`, `color`, `glowSize`, `wind`, `scale` |
+| `Popcorn` | `PopcornConfig` | `count`, `speed`, `gravity`, `bounciness`, `color`, `popRate`, `scale` |
+| `Portal` | `PortalConfig` | `speed`, `particles`, `size`, `color`, `secondaryColor`, `direction`, `scale` |
+| `PulseGrid` | `PulseGridConfig` | `spacing`, `speed`, `color`, `dotSize`, `waveCount`, `waveSpeed`, `scale` |
 | `Rain` | `RainConfig` | `variant` (`drizzle`/`downpour`/`thunderstorm`), `drops`, `wind`, `speed`, `splashes`, `color`, `groundLevel`, `scale` |
+| `Roots` | `RootsConfig` | `count`, `speed`, `color`, `branchProbability`, `maxSegments`, `scale` |
 | `Sandstorm` | `SandstormConfig` | `count`, `wind`, `turbulence`, `color`, `hazeOpacity`, `scale` |
+| `Smoke` | `SmokeConfig` | `color`, `count`, `scale`, `speed`, `spread` |
 | `Snow` | `SnowConfig` | `particles`, `size`, `speed`, `fillStyle`, `scale` |
 | `Sparklers` | `SparklersConfig` | `emitRate`, `maxSparks`, `colors`, `speed`, `friction`, `gravity`, `decay`, `trailLength`, `hoverMode`, `scale` |
 | `Stars` | `StarsConfig` | `mode` (`sky`/`shooting`/`both`), `starCount`, `shootingInterval`, `shootingSpeed`, `twinkleSpeed`, `color`, `shootingColor`, `trailLength`, `scale` |
 | `Streamers` | `StreamersConfig` | `count`, `colors`, `speed`, `scale` |
+| `Topography` | `TopographyConfig` | `speed`, `scale`, `resolution`, `contourSpacing`, `lineWidth`, `color` |
+| `Tornado` | `TornadoConfig` | `speed`, `debris`, `width`, `intensity`, `color`, `scale` |
+| `Volcano` | `VolcanoConfig` | `speed`, `projectiles`, `embers`, `intensity`, `color`, `smokeColor`, `scale` |
+| `Voronoi` | `VoronoiConfig` | `cells`, `speed`, `colors`, `edgeColor`, `edgeWidth`, `scale` |
 | `Waves` | `WavesConfig` | `layers`, `speed`, `colors`, `foamColor`, `foamAmount`, `scale` |
 | `Wormhole` | `WormholeConfig` | `count`, `speed`, `color`, `direction` (`inward`/`outward`), `scale` |
 

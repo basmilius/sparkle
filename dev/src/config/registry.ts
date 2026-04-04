@@ -1,4 +1,4 @@
-import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSparklers, createStars, createStreamers, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createFluid, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSoundWaves, createSparklers, createSpirograph, createStars, createStreamers, createTessellation, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -1617,6 +1617,124 @@ export const SIMULATORS: SimulatorDef[] = [
             return sim;
         },
         createLayer: (config) => createVoronoi(config)
+    },
+    {
+        id: 'tessellation',
+        name: 'Tessellation',
+        description: 'Morphing geometric tile patterns that breathe and rearrange.',
+        defaultConfig: {
+            speed: 1,
+            tileSize: 60,
+            morphSpeed: 0.5,
+            lineWidth: 1.5,
+            lineColor: '#ffffff',
+            scale: 1
+        },
+        liveKeys: ['speed', 'morphSpeed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'tileSize', label: 'Tile Size', min: 20, max: 120, step: 5, default: 60},
+            {type: 'slider', key: 'morphSpeed', label: 'Morph Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
+            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.5, max: 5, step: 0.5, default: 1.5},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'lineColor', label: 'Line Color', default: '#ffffff'},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#6366f1', '#8b5cf6', '#a78bfa', '#c084fc', '#e879f9', '#38bdf8']}
+        ],
+        create: (canvas, config) => {
+            const sim = createTessellation(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createTessellation(config)
+    },
+    {
+        id: 'fluid',
+        name: 'Fluid',
+        description: 'Flowing color fluid simulation with mouse interaction.',
+        defaultConfig: {
+            speed: 1,
+            resolution: 128,
+            viscosity: 0.5,
+            diffusion: 0.5,
+            mouseForce: 1,
+            scale: 1
+        },
+        liveKeys: ['speed', 'viscosity', 'diffusion', 'mouseForce'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 64, max: 256, step: 16, default: 128},
+            {type: 'slider', key: 'viscosity', label: 'Viscosity', min: 0, max: 1, step: 0.05, default: 0.5},
+            {type: 'slider', key: 'diffusion', label: 'Diffusion', min: 0, max: 1, step: 0.05, default: 0.5},
+            {type: 'slider', key: 'mouseForce', label: 'Mouse Force', min: 0, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff3366', '#33ccff', '#66ff33', '#ff9933', '#cc33ff']}
+        ],
+        create: (canvas, config) => {
+            const sim = createFluid(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createFluid(config)
+    },
+    {
+        id: 'spirograph',
+        name: 'Spirograph',
+        description: 'Continuously drawing hypotrochoid patterns with fading trails.',
+        defaultConfig: {
+            speed: 1,
+            curves: 3,
+            lineWidth: 1.5,
+            fadeSpeed: 0.003,
+            complexity: 5,
+            scale: 1
+        },
+        liveKeys: ['speed', 'fadeSpeed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'curves', label: 'Curves', min: 1, max: 8, step: 1, default: 3},
+            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.5, max: 5, step: 0.5, default: 1.5},
+            {type: 'slider', key: 'fadeSpeed', label: 'Fade Speed', min: 0.001, max: 0.02, step: 0.001, default: 0.003},
+            {type: 'slider', key: 'complexity', label: 'Complexity', min: 2, max: 15, step: 1, default: 5},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#ff3366', '#ff9933', '#ffcc00', '#33ff66', '#3399ff', '#9933ff']}
+        ],
+        create: (canvas, config) => {
+            const sim = createSpirograph(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createSpirograph(config)
+    },
+    {
+        id: 'sound-waves',
+        name: 'Sound Waves',
+        description: 'Wave interference patterns from multiple sources.',
+        defaultConfig: {
+            speed: 1,
+            sources: 3,
+            frequency: 1,
+            amplitude: 1,
+            resolution: 4,
+            damping: 0.98,
+            scale: 1
+        },
+        liveKeys: ['speed', 'frequency', 'amplitude', 'damping'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'sources', label: 'Sources', min: 1, max: 8, step: 1, default: 3},
+            {type: 'slider', key: 'frequency', label: 'Frequency', min: 0.2, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'amplitude', label: 'Amplitude', min: 0.1, max: 3, step: 0.1, default: 1},
+            {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 4},
+            {type: 'slider', key: 'damping', label: 'Damping', min: 0.9, max: 1, step: 0.005, default: 0.98},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#1e40af', '#0891b2', '#0d9488', '#2563eb', '#06b6d4']}
+        ],
+        create: (canvas, config) => {
+            const sim = createSoundWaves(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createSoundWaves(config)
     }
 ];
 

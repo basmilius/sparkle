@@ -18,7 +18,14 @@
       "Bash(pkill -f \"vite\")",
       "Bash(node:*)",
       "Bash(python3:*)",
-      "Bash(gtimeout 8 bun run dev)"
+      "Bash(gtimeout 8 bun run dev)",
+      "Bash(cp -r /Users/bas/Development/Projects/@basmilius/visual-effects/.claude/worktrees/agent-afe12414/src/moire /Users/bas/Development/Projects/@basmilius/visual-effects/src/moire)",
+      "Bash(cp -r /Users/bas/Development/Projects/@basmilius/visual-effects/.claude/worktrees/agent-a56b2ed7/src/fluid /Users/bas/Development/Projects/@basmilius/visual-effects/src/fluid)",
+      "Bash(cp -r /Users/bas/Development/Projects/@basmilius/visual-effects/.claude/worktrees/agent-a310ae52/src/spirograph /Users/bas/Development/Projects/@basmilius/visual-effects/src/spirograph)",
+      "Bash(cp -r /Users/bas/Development/Projects/@basmilius/visual-effects/.claude/worktrees/agent-a38019ad/src/sound-waves /Users/bas/Development/Projects/@basmilius/visual-effects/src/sound-waves)",
+      "Bash(cp -r /Users/bas/Development/Projects/@basmilius/visual-effects/.claude/worktrees/agent-a58ce38b/src/origami /Users/bas/Development/Projects/@basmilius/visual-effects/src/origami)",
+      "Bash(npx vite:*)",
+      "Bash(npx vue-tsc:*)"
     ]
   }
 }
