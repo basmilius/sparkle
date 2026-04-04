@@ -54,7 +54,6 @@ export * from './sparklers';
 export * from './spirograph';
 export * from './stars';
 export * from './streamers';
-export * from './tessellation';
 export * from './topography';
 export * from './tornado';
 export * from './trail';

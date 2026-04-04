@@ -1,4 +1,4 @@
-import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createFluid, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSoundWaves, createSparklers, createSpirograph, createStars, createStreamers, createTessellation, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createFluid, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSoundWaves, createSparklers, createSpirograph, createStars, createStreamers, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -1617,35 +1617,6 @@ export const SIMULATORS: SimulatorDef[] = [
             return sim;
         },
         createLayer: (config) => createVoronoi(config)
-    },
-    {
-        id: 'tessellation',
-        name: 'Tessellation',
-        description: 'Morphing geometric tile patterns that breathe and rearrange.',
-        defaultConfig: {
-            speed: 1,
-            tileSize: 60,
-            morphSpeed: 0.5,
-            lineWidth: 1.5,
-            lineColor: '#ffffff',
-            scale: 1
-        },
-        liveKeys: ['speed', 'morphSpeed'],
-        schema: [
-            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
-            {type: 'slider', key: 'tileSize', label: 'Tile Size', min: 20, max: 120, step: 5, default: 60},
-            {type: 'slider', key: 'morphSpeed', label: 'Morph Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
-            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.5, max: 5, step: 0.5, default: 1.5},
-            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
-            {type: 'color', key: 'lineColor', label: 'Line Color', default: '#ffffff'},
-            {type: 'colors', key: 'colors', label: 'Colors', default: ['#6366f1', '#8b5cf6', '#a78bfa', '#c084fc', '#e879f9', '#38bdf8']}
-        ],
-        create: (canvas, config) => {
-            const sim = createTessellation(config);
-            sim.mount(canvas).start();
-            return sim;
-        },
-        createLayer: (config) => createTessellation(config)
     },
     {
         id: 'fluid',

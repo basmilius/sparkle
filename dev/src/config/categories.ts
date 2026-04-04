@@ -30,7 +30,7 @@ export const CATEGORIES: Category[] = [
     },
     {
         label: 'Abstract',
-        ids: ['tessellation', 'fluid', 'spirograph', 'sound-waves']
+        ids: ['fluid', 'spirograph', 'sound-waves']
     },
     {
         label: 'Playful',
