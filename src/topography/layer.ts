@@ -14,11 +14,11 @@ export class Topography extends Effect<TopographyConfig> {
     #speed: number;
     #scale: number;
     readonly #resolution: number;
-    readonly #contourSpacing: number;
-    readonly #lineWidth: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
+    #contourSpacing: number;
+    #lineWidth: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
     #time: number = 0;
     #offscreen: HTMLCanvasElement | null = null;
     #offscreenCtx: CanvasRenderingContext2D | null = null;
@@ -45,6 +45,18 @@ export class Topography extends Effect<TopographyConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.color !== undefined) {
+            const [cr, cg, cb] = hexToRGB(config.color);
+            this.#colorR = cr;
+            this.#colorG = cg;
+            this.#colorB = cb;
+        }
+        if (config.lineWidth !== undefined) {
+            this.#lineWidth = config.lineWidth;
+        }
+        if (config.contourSpacing !== undefined) {
+            this.#contourSpacing = config.contourSpacing;
         }
     }
 

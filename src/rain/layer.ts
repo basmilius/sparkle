@@ -22,14 +22,14 @@ const VARIANT_PRESETS: Record<RainVariant, { drops: number; speed: number; wind:
 };
 
 export class Rain extends Effect<RainConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #wind: number;
-    readonly #groundLevel: number;
+    #groundLevel: number;
     #enableSplashes: boolean;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
     #maxDrops: number;
     #drops: Raindrop[] = [];
     #splashes: Splash[] = [];
@@ -70,6 +70,18 @@ export class Rain extends Effect<RainConfig> {
         }
         if (config.splashes !== undefined) {
             this.#enableSplashes = config.splashes;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#colorR = r;
+            this.#colorG = g;
+            this.#colorB = b;
+        }
+        if (config.groundLevel !== undefined) {
+            this.#groundLevel = config.groundLevel;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

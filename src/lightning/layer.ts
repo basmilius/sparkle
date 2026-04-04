@@ -26,6 +26,15 @@ export class Lightning extends Effect<LightningConfig> {
         );
     }
 
+    configure(config: Partial<LightningConfig>): void {
+        const frequency = config.frequency;
+        const color = config.color !== undefined ? hexToRGB(config.color) as [number, number, number] : undefined;
+        const branches = config.branches;
+        const flash = config.flash;
+
+        this.#system.update({ frequency, color, branches, flash });
+    }
+
     tick(dt: number, _width: number, _height: number): void {
         this.#system.tick(dt);
     }

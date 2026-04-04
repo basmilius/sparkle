@@ -24,7 +24,7 @@ export class SoundWaves extends Effect<SoundWavesConfig> {
     #resolution: number;
     #damping: number;
     #scale: number;
-    readonly #colorsRGB: [number, number, number][];
+    #colorsRGB: [number, number, number][];
     readonly #onClickBound: (evt: MouseEvent) => void;
     #sources: WaveSource[] = [];
     #time: number = 0;
@@ -67,6 +67,9 @@ export class SoundWaves extends Effect<SoundWavesConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.colors !== undefined) {
+            this.#colorsRGB = config.colors.map(color => hexToRGB(color));
         }
     }
 

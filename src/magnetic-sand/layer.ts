@@ -15,8 +15,8 @@ export interface MagneticSandConfig {
 }
 
 export class MagneticSand extends Effect<MagneticSandConfig> {
-    readonly #scale: number;
-    readonly #colorRGB: [number, number, number];
+    #scale: number;
+    #colorRGB: [number, number, number];
     readonly #onMouseMoveBound: (evt: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
     #speed: number;
@@ -53,6 +53,12 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         }
         if (config.magnetStrength !== undefined) {
             this.#magnetStrength = config.magnetStrength;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

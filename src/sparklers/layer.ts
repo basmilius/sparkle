@@ -21,8 +21,8 @@ const DEFAULT_COLORS = ['#ffcc33', '#ff9900', '#ffffff', '#ffee88'];
 export class Sparklers extends Effect<SparklersConfig> {
     #scale: number;
     #emitRate: number;
-    readonly #maxSparks: number;
-    readonly #colorRGBs: [number, number, number][];
+    #maxSparks: number;
+    #colorRGBs: [number, number, number][];
     readonly #speedRange: [number, number];
     #friction: number;
     #gravity: number;
@@ -104,6 +104,12 @@ export class Sparklers extends Effect<SparklersConfig> {
         }
         if (config.hoverMode !== undefined) {
             this.#hoverMode = config.hoverMode;
+        }
+        if (config.colors !== undefined) {
+            this.#colorRGBs = config.colors.map(c => hexToRGB(c));
+        }
+        if (config.maxSparks !== undefined) {
+            this.#maxSparks = config.maxSparks;
         }
     }
 

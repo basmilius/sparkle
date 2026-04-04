@@ -10,12 +10,12 @@ export interface LightningSystemConfig {
 }
 
 export class LightningSystem {
-    readonly #frequency: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
-    readonly #enableBranches: boolean;
-    readonly #enableFlash: boolean;
+    #frequency: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
+    #enableBranches: boolean;
+    #enableFlash: boolean;
     readonly #scale: number;
     readonly #groundLevel: number;
     readonly #rng: () => number;
@@ -41,6 +41,23 @@ export class LightningSystem {
         this.#colorB = color[2];
 
         this.#cooldown = this.#nextCooldown();
+    }
+
+    update(config: { frequency?: number; color?: [number, number, number]; branches?: boolean; flash?: boolean }): void {
+        if (config.frequency !== undefined) {
+            this.#frequency = config.frequency;
+        }
+        if (config.color !== undefined) {
+            this.#colorR = config.color[0];
+            this.#colorG = config.color[1];
+            this.#colorB = config.color[2];
+        }
+        if (config.branches !== undefined) {
+            this.#enableBranches = config.branches;
+        }
+        if (config.flash !== undefined) {
+            this.#enableFlash = config.flash;
+        }
     }
 
     tick(dt: number): void {

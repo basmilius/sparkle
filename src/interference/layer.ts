@@ -15,7 +15,7 @@ export class Interference extends Effect<InterferenceConfig> {
     #scale: number;
     readonly #resolution: number;
     readonly #layerCount: number;
-    readonly #colorRGBs: [number, number, number][];
+    #colorRGBs: [number, number, number][];
     #time: number = 0;
     #offscreen: HTMLCanvasElement | null = null;
     #offscreenCtx: CanvasRenderingContext2D | null = null;
@@ -54,6 +54,9 @@ export class Interference extends Effect<InterferenceConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.colors !== undefined) {
+            this.#colorRGBs = config.colors.map(color => hexToRGB(color));
         }
     }
 

@@ -20,11 +20,11 @@ const DEFAULT_WAVE_SPEED = 100;
 const TWO_PI = Math.PI * 2;
 
 export class PulseGrid extends Effect<PulseGridConfig> {
-    readonly #scale: number;
-    readonly #dotSize: number;
-    readonly #r: number;
-    readonly #g: number;
-    readonly #b: number;
+    #scale: number;
+    #dotSize: number;
+    #r: number;
+    #g: number;
+    #b: number;
     #speed: number;
     #waveSpeed: number;
     #spacing: number;
@@ -59,6 +59,21 @@ export class PulseGrid extends Effect<PulseGridConfig> {
         }
         if (config.waveSpeed !== undefined) {
             this.#waveSpeed = (config.waveSpeed) * this.#scale;
+        }
+        if (config.color !== undefined) {
+            const [r, g, b] = hexToRGB(config.color);
+            this.#r = r;
+            this.#g = g;
+            this.#b = b;
+        }
+        if (config.dotSize !== undefined) {
+            this.#dotSize = config.dotSize * this.#scale;
+        }
+        if (config.waveCount !== undefined) {
+            this.#waveCount = config.waveCount;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

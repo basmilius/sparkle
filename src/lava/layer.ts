@@ -18,7 +18,7 @@ const SPRITE_CENTER = SPRITE_SIZE / 2;
 const SPRITE_RADIUS = SPRITE_SIZE / 2;
 
 export class Lava extends Effect<LavaConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #count: number;
     #colors: string[];
@@ -52,6 +52,14 @@ export class Lava extends Effect<LavaConfig> {
 
         if (config.count !== undefined) {
             this.#count = config.count;
+        }
+
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+            this.#sprites = this.#createSprites();
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

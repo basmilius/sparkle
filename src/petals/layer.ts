@@ -13,11 +13,11 @@ export interface PetalsConfig {
 }
 
 export class Petals extends Effect<PetalsConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #size: number;
     #speed: number;
     #wind: number;
-    readonly #colors: string[];
+    #colors: string[];
     #maxCount: number;
     #time: number = 0;
     #petals: Petal[] = [];
@@ -50,6 +50,13 @@ export class Petals extends Effect<PetalsConfig> {
         }
         if (config.wind !== undefined) {
             this.#wind = config.wind;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+            this.#sprites = this.#createSprites();
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

@@ -14,13 +14,13 @@ export interface SandstormConfig {
 }
 
 export class Sandstorm extends Effect<SandstormConfig> {
-    readonly #scale: number;
+    #scale: number;
     #wind: number;
     #turbulence: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
-    readonly #hazeOpacity: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
+    #hazeOpacity: number;
     #maxCount: number;
     #time: number = 0;
     #grains: SandGrain[] = [];
@@ -54,6 +54,18 @@ export class Sandstorm extends Effect<SandstormConfig> {
         }
         if (config.turbulence !== undefined) {
             this.#turbulence = config.turbulence;
+        }
+        if (config.hazeOpacity !== undefined) {
+            this.#hazeOpacity = config.hazeOpacity;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#colorR = r;
+            this.#colorG = g;
+            this.#colorB = b;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

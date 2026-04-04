@@ -24,10 +24,11 @@ const DEFAULT_COLORS = [
 ];
 
 export class Butterflies extends Effect<ButterfliesConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #count: number;
     #size: number;
+    #colors: string[];
     #time: number = 0;
     #butterflies: Butterfly[] = [];
 
@@ -38,21 +39,27 @@ export class Butterflies extends Effect<ButterfliesConfig> {
         this.#speed = config.speed ?? 1;
         this.#count = config.count ?? 12;
         this.#size = (config.size ?? 20) * this.#scale;
-
-        const colors = config.colors ?? DEFAULT_COLORS;
+        this.#colors = config.colors ?? DEFAULT_COLORS;
 
         if (isSmallScreen()) {
             this.#count = Math.floor(this.#count / 2);
         }
 
         for (let i = 0; i < this.#count; ++i) {
-            this.#butterflies.push(this.#createButterfly(colors));
+            this.#butterflies.push(this.#createButterfly(this.#colors));
         }
     }
 
     configure(config: Partial<ButterfliesConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+            this.#butterflies = this.#butterflies.map(() => this.#createButterfly(this.#colors));
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

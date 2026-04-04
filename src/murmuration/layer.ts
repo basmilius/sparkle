@@ -20,8 +20,8 @@ export interface MurmurationConfig {
 }
 
 export class Murmuration extends Effect<MurmurationConfig> {
-    readonly #scale: number;
-    readonly #color: string;
+    #scale: number;
+    #color: string;
     #speed: number;
     #cohesion: number;
     #alignment: number;
@@ -63,6 +63,15 @@ export class Murmuration extends Effect<MurmurationConfig> {
         }
         if (config.separation !== undefined) {
             this.#separation = config.separation;
+        }
+        if (config.turnRadius !== undefined) {
+            this.#turnRadius = config.turnRadius;
+        }
+        if (config.color !== undefined) {
+            this.#color = config.color;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

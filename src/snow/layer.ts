@@ -18,7 +18,7 @@ const SPRITE_CENTER = SPRITE_SIZE / 2;
 const SPRITE_RADIUS = SPRITE_SIZE / 2;
 
 export class Snow extends Effect<SnowConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #size: number;
     #speed: number;
     readonly #baseOpacity: number;
@@ -52,6 +52,13 @@ export class Snow extends Effect<SnowConfig> {
     configure(config: Partial<SnowConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.fillStyle !== undefined) {
+            const {r, g, b} = parseColor(config.fillStyle);
+            this.#sprites = this.#createSprites(r, g, b);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

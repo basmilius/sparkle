@@ -14,8 +14,8 @@ export interface WormholeConfig {
 
 export class Wormhole extends Effect<WormholeConfig> {
     #speed: number;
-    readonly #colorRGB: [number, number, number];
-    readonly #direction: WormholeDirection;
+    #colorRGB: [number, number, number];
+    #direction: WormholeDirection;
     #scale: number;
     #count: number;
     #particles: WormholeParticle[] = [];
@@ -60,6 +60,12 @@ export class Wormhole extends Effect<WormholeConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.direction !== undefined) {
+            this.#direction = config.direction;
         }
     }
 

@@ -8,21 +8,23 @@ export interface NeuralNetworkConfig {
     readonly neurons?: number;
     readonly color?: string;
     readonly pulseColor?: string;
+    readonly connectionDistance?: number;
     readonly scale?: number;
 }
 
 const TWO_PI = Math.PI * 2;
 
 export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
-    readonly #vscale: number;
-    readonly #lr: number;
-    readonly #lg: number;
-    readonly #lb: number;
-    readonly #pr: number;
-    readonly #pg: number;
-    readonly #pb: number;
+    #vscale: number;
+    #lr: number;
+    #lg: number;
+    #lb: number;
+    #pr: number;
+    #pg: number;
+    #pb: number;
     readonly #cellCount: number;
     #speed: number;
+    #connectionDistance: number;
     #width: number = 0;
     #height: number = 0;
     #cells: NeuronCell[] = [];
@@ -34,6 +36,7 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
         this.#vscale = config.scale ?? 1;
         this.#cellCount = config.neurons ?? 16;
         this.#speed = config.speed ?? 1;
+        this.#connectionDistance = config.connectionDistance ?? 0;
 
         const [lr, lg, lb] = hexToRGB(config.color ?? '#4488ff');
         this.#lr = lr;
@@ -49,6 +52,25 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
     configure(config: Partial<NeuralNetworkConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.color !== undefined) {
+            const [lr, lg, lb] = hexToRGB(config.color);
+            this.#lr = lr;
+            this.#lg = lg;
+            this.#lb = lb;
+        }
+        if (config.pulseColor !== undefined) {
+            const [pr, pg, pb] = hexToRGB(config.pulseColor);
+            this.#pr = pr;
+            this.#pg = pg;
+            this.#pb = pb;
+        }
+        if (config.connectionDistance !== undefined) {
+            this.#connectionDistance = config.connectionDistance;
+            this.#buildCells();
+        }
+        if (config.scale !== undefined) {
+            this.#vscale = config.scale;
         }
     }
 
@@ -99,7 +121,7 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
         }
 
         // Connect nearby cells.
-        const maxDist = Math.max(w, h) * 0.45;
+        const maxDist = this.#connectionDistance > 0 ? this.#connectionDistance : Math.max(w, h) * 0.45;
 
         for (let i = 0; i < this.#cells.length; i++) {
             const ca = this.#cells[i];

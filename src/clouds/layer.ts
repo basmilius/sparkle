@@ -12,7 +12,7 @@ export interface CloudsConfig {
 }
 
 export class Clouds extends Effect<CloudsConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #colorStr: string;
     #speed: number;
     #count: number;
@@ -53,6 +53,9 @@ export class Clouds extends Effect<CloudsConfig> {
             this.#colorG = g;
             this.#colorB = b;
             this.#sprites = this.#createSprites(r, g, b);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

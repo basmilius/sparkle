@@ -13,7 +13,7 @@ export interface NebulaConfig {
 const DEFAULT_COLORS = ['#ff6b9d', '#c44dff', '#4d79ff', '#00d4ff'];
 
 export class Nebula extends Effect<NebulaConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #time: number = 0;
     #colors: string[];
@@ -44,6 +44,9 @@ export class Nebula extends Effect<NebulaConfig> {
 
         if (config.colors !== undefined) {
             this.#colors = config.colors;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

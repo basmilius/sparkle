@@ -30,6 +30,12 @@ export class Kaleidoscope extends Effect<KaleidoscopeConfig> {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
         }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
+        }
     }
 
     onResize(width: number, height: number): void {

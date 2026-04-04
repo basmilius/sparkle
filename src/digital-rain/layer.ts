@@ -18,8 +18,8 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
     #speed: number;
     #trailLength: number;
     readonly #fontSize: number;
-    readonly #mode: DigitalRainMode;
-    readonly #colorRGB: [number, number, number];
+    #mode: DigitalRainMode;
+    #colorRGB: [number, number, number];
     readonly #scale: number;
     #maxColumns: number;
     #columns: DigitalRainColumn[] = [];
@@ -81,6 +81,12 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
         }
         if (config.trailLength !== undefined) {
             this.#trailLength = config.trailLength;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.mode !== undefined) {
+            this.#mode = config.mode;
         }
     }
 

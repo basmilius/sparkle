@@ -4,11 +4,11 @@ import { LEAF_COLORS, MULBERRY } from './consts';
 import type { Leaf, LeavesConfig } from './types';
 
 export class Leaves extends Effect<LeavesConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #size: number;
     #speed: number;
     #wind: number;
-    readonly #colors: string[];
+    #colors: string[];
     #maxCount: number;
     #time: number = 0;
     #leaves: Leaf[] = [];
@@ -46,6 +46,13 @@ export class Leaves extends Effect<LeavesConfig> {
         }
         if (config.wind !== undefined) {
             this.#wind = config.wind;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+            this.#sprites = this.#createSprites();
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

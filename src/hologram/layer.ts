@@ -4,12 +4,12 @@ import { MULBERRY } from './consts';
 import type { HologramConfig, HologramFragment } from './types';
 
 export class Hologram extends Effect<HologramConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
-    readonly #scanlineSpacing: number;
+    #scanlineSpacing: number;
     #flickerIntensity: number;
-    readonly #maxFragments: number;
-    readonly #colorRGB: [number, number, number];
+    #maxFragments: number;
+    #colorRGB: [number, number, number];
 
     #fragments: HologramFragment[] = [];
     #time: number = 0;
@@ -42,6 +42,18 @@ export class Hologram extends Effect<HologramConfig> {
         }
         if (config.flickerIntensity !== undefined) {
             this.#flickerIntensity = config.flickerIntensity;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.scanlineSpacing !== undefined) {
+            this.#scanlineSpacing = config.scanlineSpacing * this.#scale;
+        }
+        if (config.dataFragments !== undefined) {
+            this.#maxFragments = config.dataFragments;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

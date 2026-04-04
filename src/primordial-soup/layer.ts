@@ -21,8 +21,8 @@ export interface PrimordialSoupConfig {
 }
 
 export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
-    readonly #scale: number;
-    readonly #colorsRGB: [number, number, number][];
+    #scale: number;
+    #colorsRGB: [number, number, number][];
     #speed: number;
     #maxCells: number;
     #foodRate: number;
@@ -56,6 +56,15 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
         }
         if (config.foodRate !== undefined) {
             this.#foodRate = config.foodRate;
+        }
+        if (config.colors !== undefined) {
+            this.#colorsRGB = config.colors.map((color) => hexToRGB(color));
+        }
+        if (config.maxCells !== undefined) {
+            this.#maxCells = config.maxCells;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

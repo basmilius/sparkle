@@ -11,12 +11,12 @@ export interface CausticsConfig {
 
 export class Caustics extends Effect<CausticsConfig> {
     #speed: number;
-    readonly #scale: number;
+    #scale: number;
     readonly #resolution: number;
     #intensity: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
     #time: number = 0;
     #offscreen: HTMLCanvasElement | null = null;
     #offscreenCtx: CanvasRenderingContext2D | null = null;
@@ -42,6 +42,15 @@ export class Caustics extends Effect<CausticsConfig> {
         }
         if (config.intensity !== undefined) {
             this.#intensity = config.intensity;
+        }
+        if (config.color !== undefined) {
+            const [r, g, b] = hexToRGB(config.color);
+            this.#colorR = r;
+            this.#colorG = g;
+            this.#colorB = b;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

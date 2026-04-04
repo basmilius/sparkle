@@ -23,7 +23,7 @@ const enum SeedPhase {
 }
 
 export class Crystallization extends Effect<CrystallizationConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #seedCount: number;
     readonly #branchAngle: number;
     readonly #maxDepth: number;
@@ -54,6 +54,15 @@ export class Crystallization extends Effect<CrystallizationConfig> {
     configure(config: Partial<CrystallizationConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#colorR = r;
+            this.#colorG = g;
+            this.#colorB = b;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

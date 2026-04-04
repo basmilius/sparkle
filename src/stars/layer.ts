@@ -19,7 +19,7 @@ export interface StarsConfig {
 export class Stars extends Effect<StarsConfig> {
     readonly #mode: StarMode;
     #twinkleSpeed: number;
-    readonly #colorRGB: [number, number, number];
+    #colorRGB: [number, number, number];
     #scale: number;
     readonly #shootingStarSystem: ShootingStarSystem | null;
     #starCount: number;
@@ -70,6 +70,9 @@ export class Stars extends Effect<StarsConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
         }
     }
 

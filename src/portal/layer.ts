@@ -17,10 +17,10 @@ export interface PortalConfig {
 export class Portal extends Effect<PortalConfig> {
     #speed: number;
     #scale: number;
-    readonly #size: number;
-    readonly #colorRGB: [number, number, number];
-    readonly #secondaryRGB: [number, number, number];
-    readonly #direction: PortalDirection;
+    #size: number;
+    #colorRGB: [number, number, number];
+    #secondaryRGB: [number, number, number];
+    #direction: PortalDirection;
     #count: number;
     #particles: PortalParticle[] = [];
     #width: number = 960;
@@ -67,6 +67,18 @@ export class Portal extends Effect<PortalConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.secondaryColor !== undefined) {
+            this.#secondaryRGB = hexToRGB(config.secondaryColor);
+        }
+        if (config.direction !== undefined) {
+            this.#direction = config.direction;
+        }
+        if (config.size !== undefined) {
+            this.#size = config.size;
         }
     }
 

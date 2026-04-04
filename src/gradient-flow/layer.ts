@@ -14,9 +14,10 @@ export interface GradientFlowConfig {
 const DEFAULT_COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7'];
 
 export class GradientFlow extends Effect<GradientFlowConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     readonly #resolution: number;
+    #colors: string[];
     #blobs: GradientBlob[] = [];
     #offscreen: HTMLCanvasElement | null = null;
     #offscreenCtx: CanvasRenderingContext2D | null = null;
@@ -28,8 +29,9 @@ export class GradientFlow extends Effect<GradientFlowConfig> {
         this.#scale = config.scale ?? 1;
         this.#speed = config.speed ?? 0.5;
         this.#resolution = config.resolution ?? 6;
+        this.#colors = config.colors ?? [...DEFAULT_COLORS];
 
-        const colors = config.colors ?? [...DEFAULT_COLORS];
+        const colors = this.#colors;
         const blobCount = config.blobs ?? 5;
 
         for (let index = 0; index < blobCount; index++) {
@@ -50,6 +52,17 @@ export class GradientFlow extends Effect<GradientFlowConfig> {
     configure(config: Partial<GradientFlowConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let index = 0; index < this.#blobs.length; index++) {
+                const colorHex = this.#colors[index % this.#colors.length];
+                this.#blobs[index].color = hexToRGB(colorHex);
+            }
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

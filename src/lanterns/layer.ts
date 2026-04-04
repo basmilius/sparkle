@@ -5,10 +5,10 @@ import { LANTERN_COLORS, MULBERRY } from './consts';
 import type { Lantern, LanternsConfig } from './types';
 
 export class Lanterns extends Effect<LanternsConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     readonly #size: number;
-    readonly #colorRGBs: [number, number, number][];
+    #colorRGBs: [number, number, number][];
     #maxCount: number;
     #time: number = 0;
     #lanterns: Lantern[] = [];
@@ -38,6 +38,12 @@ export class Lanterns extends Effect<LanternsConfig> {
     configure(config: Partial<LanternsConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.colors !== undefined) {
+            this.#colorRGBs = config.colors.map(c => hexToRGB(c));
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

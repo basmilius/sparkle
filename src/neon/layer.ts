@@ -12,10 +12,10 @@ export interface NeonConfig {
 }
 
 export class Neon extends Effect<NeonConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #flicker: boolean;
-    readonly #colors: string[];
+    #colors: string[];
     #tubes: NeonTube[] = [];
     #time: number = 0;
     #initialized: boolean = false;
@@ -37,6 +37,16 @@ export class Neon extends Effect<NeonConfig> {
         }
         if (config.flicker !== undefined) {
             this.#flicker = config.flicker;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let i = 0; i < this.#tubes.length; i++) {
+                this.#tubes[i].color = this.#colors[i % this.#colors.length];
+            }
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

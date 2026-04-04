@@ -17,15 +17,15 @@ export interface BoidsConfig {
 }
 
 export class Boids extends Effect<BoidsConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #separation: number;
     #alignment: number;
     #cohesion: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
-    readonly #size: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
+    #size: number;
     readonly #count: number;
     #boids: Boid[] = [];
     #grid: SpatialGrid<Boid> = new SpatialGrid(PERCEPTION_RADIUS);
@@ -62,6 +62,18 @@ export class Boids extends Effect<BoidsConfig> {
         }
         if (config.cohesion !== undefined) {
             this.#cohesion = config.cohesion;
+        }
+        if (config.color !== undefined) {
+            const parsed = parseColor(config.color);
+            this.#colorR = parsed.r;
+            this.#colorG = parsed.g;
+            this.#colorB = parsed.b;
+        }
+        if (config.size !== undefined) {
+            this.#size = config.size * this.#scale;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

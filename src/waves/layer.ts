@@ -19,7 +19,7 @@ export class Waves extends Effect<WavesConfig> {
     #speed: number;
     #foamAmount: number;
     #scale: number;
-    readonly #foamRGB: [number, number, number];
+    #foamRGB: [number, number, number];
     #waves: Wave[] = [];
     #foamParticles: { x: number; y: number; alpha: number; size: number }[] = [];
     #maxFoamParticles: number;
@@ -65,6 +65,17 @@ export class Waves extends Effect<WavesConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.foamColor !== undefined) {
+            this.#foamRGB = hexToRGB(config.foamColor);
+        }
+        if (config.colors !== undefined) {
+            const colors = config.colors;
+            for (let i = 0; i < this.#waves.length; i++) {
+                const color = colors[i % colors.length];
+                this.#waves[i].color = color;
+                this.#waves[i].rgb = hexToRGB(color);
+            }
         }
     }
 

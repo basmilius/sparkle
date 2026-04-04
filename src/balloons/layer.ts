@@ -17,12 +17,12 @@ export interface BalloonsConfig {
 }
 
 export class Balloons extends Effect<BalloonsConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #driftAmount: number;
     #stringLengthMul: number;
     readonly #sizeRange: [number, number];
-    readonly #colorRGBs: [number, number, number][];
+    #colorRGBs: [number, number, number][];
     #maxCount: number;
     #time: number = 0;
     #balloons: Balloon[] = [];
@@ -58,6 +58,16 @@ export class Balloons extends Effect<BalloonsConfig> {
         }
         if (config.stringLength !== undefined) {
             this.#stringLengthMul = config.stringLength;
+        }
+        if (config.colors !== undefined) {
+            this.#colorRGBs = config.colors.map(c => hexToRGB(c));
+
+            for (let i = 0; i < this.#balloons.length; i++) {
+                this.#balloons[i].color = this.#colorRGBs[i % this.#colorRGBs.length];
+            }
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

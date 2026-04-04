@@ -14,7 +14,7 @@ export const SIMULATORS: SimulatorDef[] = [
             waveAmplitude: 1,
             verticalPosition: 0.68
         },
-        liveKeys: ['speed', 'intensity', 'waveAmplitude', 'verticalPosition'],
+        liveKeys: ['speed', 'intensity', 'waveAmplitude', 'verticalPosition', 'colors'],
         schema: [
             {type: 'slider', key: 'bands', label: 'Bands', min: 2, max: 12, step: 1, default: 5},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -42,7 +42,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             sizeRange: [25, 45] as [number, number]
         },
-        liveKeys: ['speed', 'driftAmount', 'stringLength'],
+        liveKeys: ['speed', 'driftAmount', 'stringLength', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 3, max: 50, step: 1, default: 15},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -72,7 +72,7 @@ export const SIMULATORS: SimulatorDef[] = [
             sizeRange: [10, 40] as [number, number],
             popRadius: 50
         },
-        liveKeys: ['speed', 'wobbleAmount'],
+        liveKeys: ['speed', 'wobbleAmount', 'popOnClick', 'popRadius', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 5, max: 150, step: 5, default: 30},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -168,7 +168,7 @@ export const SIMULATORS: SimulatorDef[] = [
             radiusRange: [60, 90] as [number, number],
             speedRange: [0.15, 0.6] as [number, number]
         },
-        liveKeys: ['mouseAvoidance', 'mouseAvoidanceRadius', 'mouseAvoidanceStrength', 'repulsionStrength'],
+        liveKeys: ['mouseAvoidance', 'mouseAvoidanceRadius', 'mouseAvoidanceStrength', 'repulsionStrength', 'colors', 'thickness', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 3, max: 60, step: 1, default: 20},
             {type: 'slider', key: 'thickness', label: 'Thickness', min: 0.05, max: 0.45, step: 0.01, default: 0.18},
@@ -200,7 +200,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             size: 6
         },
-        liveKeys: ['speed', 'glowSpeed'],
+        liveKeys: ['speed', 'glowSpeed', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 5, max: 200, step: 5, default: 60},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -283,7 +283,7 @@ export const SIMULATORS: SimulatorDef[] = [
             size: 4,
             maxSettled: 200
         },
-        liveKeys: ['speed', 'groundLevel'],
+        liveKeys: ['speed', 'groundLevel', 'colors', 'maxSettled', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 20, max: 500, step: 10, default: 150},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.5, max: 8, step: 0.5, default: 2},
@@ -310,7 +310,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             size: 20
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 3, max: 80, step: 1, default: 20},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -336,7 +336,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             size: 30
         },
-        liveKeys: ['speed', 'wind'],
+        liveKeys: ['speed', 'wind', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 200, step: 5, default: 60},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.2, max: 6, step: 0.1, default: 1},
@@ -363,7 +363,7 @@ export const SIMULATORS: SimulatorDef[] = [
             flash: true,
             scale: 1
         },
-        liveKeys: [],
+        liveKeys: ['frequency', 'color', 'branches', 'flash', 'scale'],
         schema: [
             {type: 'slider', key: 'frequency', label: 'Frequency', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
@@ -390,7 +390,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             columns: 40
         },
-        liveKeys: ['speed', 'trailLength'],
+        liveKeys: ['speed', 'trailLength', 'color'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.3, max: 8, step: 0.1, default: 1.5},
             {type: 'slider', key: 'fontSize', label: 'Font Size', min: 8, max: 32, step: 1, default: 14},
@@ -418,7 +418,7 @@ export const SIMULATORS: SimulatorDef[] = [
             showCenters: true,
             scale: 1
         },
-        liveKeys: ['speed', 'trailLength', 'showCenters', 'scale'],
+        liveKeys: ['speed', 'trailLength', 'showCenters', 'scale', 'colors'],
         schema: [
             {type: 'slider', key: 'centers', label: 'Centers', min: 1, max: 8, step: 1, default: 3},
             {type: 'slider', key: 'orbitersPerCenter', label: 'Orbiters per Center', min: 1, max: 12, step: 1, default: 4},
@@ -454,7 +454,7 @@ export const SIMULATORS: SimulatorDef[] = [
             mouseRadius: 150,
             mouseStrength: 0.03
         },
-        liveKeys: ['connectionDistance', 'lineWidth', 'mouseMode', 'mouseRadius', 'mouseStrength', 'particleForces', 'glow'],
+        liveKeys: ['connectionDistance', 'lineWidth', 'mouseMode', 'mouseRadius', 'mouseStrength', 'particleForces', 'glow', 'color', 'lineColor'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 300, step: 10, default: 100},
             {type: 'slider', key: 'connectionDistance', label: 'Connection Distance', min: 50, max: 300, step: 10, default: 120},
@@ -499,7 +499,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             size: 30
         },
-        liveKeys: ['speed', 'wind'],
+        liveKeys: ['speed', 'wind', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 200, step: 5, default: 80},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.2, max: 6, step: 0.1, default: 1},
@@ -551,7 +551,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#aec2e0',
             scale: 1
         },
-        liveKeys: ['speed', 'wind', 'splashes'],
+        liveKeys: ['speed', 'wind', 'splashes', 'color', 'groundLevel', 'scale'],
         schema: [
             {
                 type: 'select',
@@ -591,7 +591,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#c2a060',
             scale: 1
         },
-        liveKeys: ['wind', 'turbulence'],
+        liveKeys: ['wind', 'turbulence', 'hazeOpacity', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
             {type: 'slider', key: 'wind', label: 'Wind', min: 0.5, max: 8, step: 0.5, default: 2},
@@ -617,7 +617,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             size: 9
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'fillStyle', 'scale'],
         schema: [
             {type: 'slider', key: 'particles', label: 'Particles', min: 20, max: 600, step: 20, default: 200},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.3, max: 8, step: 0.1, default: 2},
@@ -646,7 +646,7 @@ export const SIMULATORS: SimulatorDef[] = [
             speed: [2, 8] as [number, number],
             scale: 1
         },
-        liveKeys: ['emitRate', 'friction', 'gravity', 'trailLength', 'hoverMode', 'scale'],
+        liveKeys: ['emitRate', 'friction', 'gravity', 'trailLength', 'hoverMode', 'scale', 'colors', 'maxSparks'],
         schema: [
             {type: 'slider', key: 'emitRate', label: 'Emit Rate', min: 1, max: 40, step: 1, default: 10},
             {type: 'slider', key: 'maxSparks', label: 'Max Sparks', min: 50, max: 1000, step: 50, default: 300},
@@ -680,7 +680,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             shootingInterval: [120, 360] as [number, number]
         },
-        liveKeys: ['twinkleSpeed', 'scale'],
+        liveKeys: ['twinkleSpeed', 'scale', 'color'],
         schema: [
             {
                 type: 'select',
@@ -718,7 +718,7 @@ export const SIMULATORS: SimulatorDef[] = [
             speed: 1,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 5, max: 100, step: 5, default: 30},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.2, max: 5, step: 0.1, default: 1},
@@ -743,7 +743,7 @@ export const SIMULATORS: SimulatorDef[] = [
             foamAmount: 0.4,
             foamColor: '#ffffff'
         },
-        liveKeys: ['speed', 'foamAmount', 'scale'],
+        liveKeys: ['speed', 'foamAmount', 'scale', 'colors', 'foamColor'],
         schema: [
             {type: 'slider', key: 'layers', label: 'Layers', min: 1, max: 10, step: 1, default: 4},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 8, step: 0.1, default: 1},
@@ -773,7 +773,7 @@ export const SIMULATORS: SimulatorDef[] = [
             size: 6,
             scale: 1
         },
-        liveKeys: ['speed', 'separation', 'alignment', 'cohesion'],
+        liveKeys: ['speed', 'separation', 'alignment', 'cohesion', 'color', 'size', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 300, step: 10, default: 80},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -802,7 +802,7 @@ export const SIMULATORS: SimulatorDef[] = [
             scale: 1,
             colors: ['#f4a261', '#e76f51', '#e9c46a', '#2a9d8f', '#8ecae6', '#ffb7c5', '#c77dff', '#f8edeb']
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 1, max: 40, step: 1, default: 12},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -828,7 +828,7 @@ export const SIMULATORS: SimulatorDef[] = [
             size: 2,
             scale: 1
         },
-        liveKeys: ['speed', 'color'],
+        liveKeys: ['speed', 'color', 'size', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -854,7 +854,7 @@ export const SIMULATORS: SimulatorDef[] = [
             opacity: 0.8,
             scale: 1
         },
-        liveKeys: ['speed', 'opacity'],
+        liveKeys: ['speed', 'opacity', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 2, max: 20, step: 1, default: 8},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.05, max: 2, step: 0.05, default: 0.3},
@@ -879,7 +879,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#ffffff',
             scale: 1
         },
-        liveKeys: ['speed', 'color'],
+        liveKeys: ['speed', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 50, max: 600, step: 25, default: 250},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -903,7 +903,7 @@ export const SIMULATORS: SimulatorDef[] = [
             colors: ['#ff4400', '#ff8800', '#ffcc00', '#ff0066'],
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 1, max: 40, step: 1, default: 12},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -927,7 +927,7 @@ export const SIMULATORS: SimulatorDef[] = [
             colors: ['#ff6b9d', '#c44dff', '#4d79ff', '#00d4ff'],
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'starCount', label: 'Star Count', min: 10, max: 500, step: 10, default: 150},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.3},
@@ -952,7 +952,7 @@ export const SIMULATORS: SimulatorDef[] = [
             flicker: true,
             scale: 1
         },
-        liveKeys: ['speed', 'flicker'],
+        liveKeys: ['speed', 'flicker', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 1, max: 32, step: 1, default: 8},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -979,7 +979,7 @@ export const SIMULATORS: SimulatorDef[] = [
             maxSegments: 200,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'color', 'branchProbability', 'maxSegments', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 1, max: 20, step: 1, default: 5},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1006,7 +1006,7 @@ export const SIMULATORS: SimulatorDef[] = [
             spread: 0.3,
             scale: 1
         },
-        liveKeys: ['speed', 'spread'],
+        liveKeys: ['speed', 'spread', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 5, max: 120, step: 5, default: 40},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1032,7 +1032,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#a78bfa',
             scale: 1
         },
-        liveKeys: ['speed', 'scale'],
+        liveKeys: ['speed', 'scale', 'color', 'direction'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 8, step: 0.1, default: 1},
@@ -1068,7 +1068,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#8B7355',
             scale: 1
         },
-        liveKeys: ['speed', 'intensity'],
+        liveKeys: ['speed', 'intensity', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'debris', label: 'Debris', min: 30, max: 400, step: 10, default: 150},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1097,7 +1097,7 @@ export const SIMULATORS: SimulatorDef[] = [
             smokeColor: '#444444',
             scale: 1
         },
-        liveKeys: ['speed', 'intensity'],
+        liveKeys: ['speed', 'intensity', 'color', 'smokeColor', 'scale'],
         schema: [
             {type: 'slider', key: 'projectiles', label: 'Projectiles', min: 5, max: 80, step: 5, default: 30},
             {type: 'slider', key: 'embers', label: 'Embers', min: 10, max: 200, step: 10, default: 60},
@@ -1125,7 +1125,7 @@ export const SIMULATORS: SimulatorDef[] = [
             speed: 1,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'anemones', label: 'Anemones', min: 2, max: 20, step: 1, default: 8},
             {type: 'slider', key: 'jellyfish', label: 'Jellyfish', min: 1, max: 15, step: 1, default: 5},
@@ -1155,7 +1155,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#1a1a2e',
             scale: 1
         },
-        liveKeys: ['speed', 'cohesion', 'alignment', 'separation'],
+        liveKeys: ['speed', 'cohesion', 'alignment', 'separation', 'turnRadius', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 50, max: 800, step: 25, default: 300},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1185,7 +1185,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#88ccff',
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'seeds', label: 'Seeds', min: 1, max: 12, step: 1, default: 5},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1214,7 +1214,7 @@ export const SIMULATORS: SimulatorDef[] = [
             wind: 0.3,
             scale: 1
         },
-        liveKeys: ['speed', 'wind'],
+        liveKeys: ['speed', 'wind', 'color', 'size', 'glowSize', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 100, step: 5, default: 40},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
@@ -1245,7 +1245,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#00ff00',
             scale: 1
         },
-        liveKeys: ['intensity', 'speed', 'rgbSplit'],
+        liveKeys: ['intensity', 'speed', 'rgbSplit', 'scanlines', 'noiseBlocks', 'sliceDisplacement', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'intensity', label: 'Intensity', min: 0.1, max: 1, step: 0.05, default: 0.5},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1275,7 +1275,7 @@ export const SIMULATORS: SimulatorDef[] = [
             color: '#00ccff',
             scale: 1
         },
-        liveKeys: ['speed', 'flickerIntensity'],
+        liveKeys: ['speed', 'flickerIntensity', 'color', 'scanlineSpacing', 'dataFragments', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'scanlineSpacing', label: 'Scanline Spacing', min: 1, max: 10, step: 1, default: 3},
@@ -1304,7 +1304,7 @@ export const SIMULATORS: SimulatorDef[] = [
             direction: 'inward',
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'color', 'secondaryColor', 'direction', 'size', 'scale'],
         schema: [
             {type: 'slider', key: 'particles', label: 'Particles', min: 20, max: 300, step: 10, default: 100},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1343,7 +1343,7 @@ export const SIMULATORS: SimulatorDef[] = [
             trailLength: 20,
             scale: 1
         },
-        liveKeys: ['speed', 'trailLength'],
+        liveKeys: ['speed', 'trailLength', 'color', 'mode'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'fontSize', label: 'Font Size', min: 8, max: 32, step: 1, default: 14},
@@ -1383,7 +1383,7 @@ export const SIMULATORS: SimulatorDef[] = [
             waveSpeed: 100,
             scale: 1
         },
-        liveKeys: ['speed', 'waveSpeed'],
+        liveKeys: ['speed', 'waveSpeed', 'color', 'dotSize', 'waveCount', 'scale'],
         schema: [
             {type: 'slider', key: 'spacing', label: 'Spacing', min: 15, max: 60, step: 5, default: 30},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1410,7 +1410,7 @@ export const SIMULATORS: SimulatorDef[] = [
             resolution: 3,
             layers: 3
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 3},
@@ -1438,7 +1438,7 @@ export const SIMULATORS: SimulatorDef[] = [
             popRate: 2,
             scale: 1
         },
-        liveKeys: ['speed', 'gravity', 'popRate'],
+        liveKeys: ['speed', 'gravity', 'popRate', 'color', 'bounciness', 'scale'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 5, max: 60, step: 5, default: 25},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1465,7 +1465,7 @@ export const SIMULATORS: SimulatorDef[] = [
             shapes: 15,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'segments', label: 'Segments', min: 4, max: 16, step: 2, default: 8},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
@@ -1491,7 +1491,7 @@ export const SIMULATORS: SimulatorDef[] = [
             intensity: 0.7,
             color: '#4488cc'
         },
-        liveKeys: ['speed', 'intensity'],
+        liveKeys: ['speed', 'intensity', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 4},
@@ -1516,7 +1516,7 @@ export const SIMULATORS: SimulatorDef[] = [
             blobs: 5,
             resolution: 6
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
             {type: 'slider', key: 'blobs', label: 'Blobs', min: 2, max: 12, step: 1, default: 5},
@@ -1543,7 +1543,7 @@ export const SIMULATORS: SimulatorDef[] = [
             lineWidth: 1.5,
             color: '#2d5016'
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'color', 'lineWidth', 'contourSpacing', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
             {type: 'slider', key: 'resolution', label: 'Resolution', min: 1, max: 8, step: 1, default: 4},
@@ -1571,7 +1571,7 @@ export const SIMULATORS: SimulatorDef[] = [
             resolution: 3,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'edgeWidth', 'edgeColor', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'cells', label: 'Cells', min: 5, max: 50, step: 1, default: 20},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 3, step: 0.1, default: 0.5},
@@ -1600,7 +1600,7 @@ export const SIMULATORS: SimulatorDef[] = [
             mouseForce: 1,
             scale: 1
         },
-        liveKeys: ['speed', 'viscosity', 'diffusion', 'mouseForce'],
+        liveKeys: ['speed', 'viscosity', 'diffusion', 'mouseForce', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'resolution', label: 'Resolution', min: 64, max: 256, step: 16, default: 128},
@@ -1629,7 +1629,7 @@ export const SIMULATORS: SimulatorDef[] = [
             complexity: 5,
             scale: 1
         },
-        liveKeys: ['speed', 'fadeSpeed'],
+        liveKeys: ['speed', 'fadeSpeed', 'colors', 'lineWidth', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'curves', label: 'Curves', min: 1, max: 8, step: 1, default: 3},
@@ -1659,7 +1659,7 @@ export const SIMULATORS: SimulatorDef[] = [
             damping: 0.98,
             scale: 1
         },
-        liveKeys: ['speed', 'frequency', 'amplitude', 'damping'],
+        liveKeys: ['speed', 'frequency', 'amplitude', 'damping', 'colors', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'sources', label: 'Sources', min: 1, max: 8, step: 1, default: 3},
@@ -1688,7 +1688,7 @@ export const SIMULATORS: SimulatorDef[] = [
             magnetStrength: 0.5,
             scale: 1
         },
-        liveKeys: ['speed', 'magnetStrength'],
+        liveKeys: ['speed', 'magnetStrength', 'color', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'count', label: 'Count', min: 100, max: 1500, step: 50, default: 600},
@@ -1713,7 +1713,7 @@ export const SIMULATORS: SimulatorDef[] = [
             foodRate: 3,
             scale: 1
         },
-        liveKeys: ['speed', 'foodRate'],
+        liveKeys: ['speed', 'foodRate', 'colors', 'maxCells', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'maxCells', label: 'Max Cells', min: 10, max: 100, step: 5, default: 40},
@@ -1741,7 +1741,7 @@ export const SIMULATORS: SimulatorDef[] = [
             fireRate: 0.3,
             scale: 1
         },
-        liveKeys: ['speed', 'fireRate'],
+        liveKeys: ['speed', 'fireRate', 'color', 'pulseColor', 'connectionDistance', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'neurons', label: 'Neurons', min: 10, max: 150, step: 5, default: 60},
@@ -1770,7 +1770,7 @@ export const SIMULATORS: SimulatorDef[] = [
             complexity: 5,
             scale: 1
         },
-        liveKeys: ['speed'],
+        liveKeys: ['speed', 'lineColor', 'backgroundColor', 'scale'],
         schema: [
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
             {type: 'slider', key: 'gridSize', label: 'Grid Size', min: 10, max: 60, step: 5, default: 30},

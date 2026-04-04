@@ -18,7 +18,7 @@ const SPRITE_RADIUS = SPRITE_SIZE / 2;
 const SPRITE_VARIANTS = 4;
 
 export class Smoke extends Effect<SmokeConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #count: number;
     #spread: number;
@@ -68,6 +68,9 @@ export class Smoke extends Effect<SmokeConfig> {
             this.#colorG = g;
             this.#colorB = b;
             this.#sprites = this.#createSprites(r, g, b);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

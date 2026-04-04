@@ -20,15 +20,15 @@ const MAX_DRAWINGS = 5;
 const MIN_SEPARATION = 0.55;  // Minimum distance between centers as fraction of combined sizes.
 
 export class Blueprint extends Effect<BlueprintConfig> {
-    readonly #vscale: number;
+    #vscale: number;
     readonly #gridSize: number;
     readonly #complexity: number;
-    readonly #lr: number;
-    readonly #lg: number;
-    readonly #lb: number;
-    readonly #bgR: number;
-    readonly #bgG: number;
-    readonly #bgB: number;
+    #lr: number;
+    #lg: number;
+    #lb: number;
+    #bgR: number;
+    #bgG: number;
+    #bgB: number;
     #speed: number;
     #width: number = 0;
     #height: number = 0;
@@ -56,6 +56,21 @@ export class Blueprint extends Effect<BlueprintConfig> {
     configure(config: Partial<BlueprintConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.lineColor !== undefined) {
+            const [lr, lg, lb] = hexToRGB(config.lineColor);
+            this.#lr = lr;
+            this.#lg = lg;
+            this.#lb = lb;
+        }
+        if (config.backgroundColor !== undefined) {
+            const [bgR, bgG, bgB] = hexToRGB(config.backgroundColor);
+            this.#bgR = bgR;
+            this.#bgG = bgG;
+            this.#bgB = bgB;
+        }
+        if (config.scale !== undefined) {
+            this.#vscale = config.scale;
         }
     }
 

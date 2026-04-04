@@ -18,9 +18,9 @@ export class Voronoi extends Effect<VoronoiConfig> {
     #speed: number;
     #scale: number;
     readonly #cellCount: number;
-    readonly #edgeWidth: number;
-    readonly #colorStrings: string[];
-    readonly #edgeColor: string;
+    #edgeWidth: number;
+    #colorStrings: string[];
+    #edgeColor: string;
     #cells: VoronoiCell[] = [];
 
     constructor(config: VoronoiConfig = {}) {
@@ -45,6 +45,21 @@ export class Voronoi extends Effect<VoronoiConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.edgeWidth !== undefined) {
+            this.#edgeWidth = config.edgeWidth;
+        }
+        if (config.edgeColor !== undefined) {
+            const [er, eg, eb] = hexToRGB(config.edgeColor);
+            this.#edgeColor = `rgb(${er}, ${eg}, ${eb})`;
+        }
+        if (config.colors !== undefined) {
+            const colorRGBs = config.colors.map(color => hexToRGB(color));
+            this.#colorStrings = colorRGBs.map(([r, g, b]) => `rgb(${r}, ${g}, ${b})`);
+
+            for (let idx = 0; idx < this.#cells.length; idx++) {
+                this.#cells[idx].color = idx % this.#colorStrings.length;
+            }
         }
     }
 

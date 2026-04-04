@@ -13,13 +13,13 @@ export interface RootsConfig {
 }
 
 export class Roots extends Effect<RootsConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
-    readonly #colorR: number;
-    readonly #colorG: number;
-    readonly #colorB: number;
-    readonly #branchProbability: number;
-    readonly #maxSegments: number;
+    #colorR: number;
+    #colorG: number;
+    #colorB: number;
+    #branchProbability: number;
+    #maxSegments: number;
     readonly #count: number;
     #systems: RootSystem[] = [];
     #initialized: boolean = false;
@@ -44,6 +44,21 @@ export class Roots extends Effect<RootsConfig> {
     configure(config: Partial<RootsConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.color !== undefined) {
+            const parsed = parseColor(config.color);
+            this.#colorR = parsed.r;
+            this.#colorG = parsed.g;
+            this.#colorB = parsed.b;
+        }
+        if (config.branchProbability !== undefined) {
+            this.#branchProbability = config.branchProbability;
+        }
+        if (config.maxSegments !== undefined) {
+            this.#maxSegments = config.maxSegments;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

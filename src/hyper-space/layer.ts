@@ -11,7 +11,7 @@ export interface HyperSpaceConfig {
 }
 
 export class HyperSpace extends Effect<HyperSpaceConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #colorR: number;
     #colorG: number;
@@ -49,6 +49,10 @@ export class HyperSpace extends Effect<HyperSpaceConfig> {
             this.#colorR = parsed[0];
             this.#colorG = parsed[1];
             this.#colorB = parsed[2];
+        }
+
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

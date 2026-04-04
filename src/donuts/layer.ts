@@ -20,18 +20,18 @@ export interface DonutsConfig {
 
 export class Donuts extends Effect<DonutsConfig> {
     readonly #background: string;
-    readonly #collisionPadding: number;
-    readonly #colors: string[];
+    #collisionPadding: number;
+    #colors: string[];
     readonly #count: number;
     #mouseAvoidance: boolean;
     #mouseAvoidanceRadius: number;
     #mouseAvoidanceStrength: number;
-    readonly #radiusRange: [number, number];
+    #radiusRange: [number, number];
     #repulsionStrength: number;
     readonly #rotationSpeedRange: [number, number];
-    readonly #scale: number;
+    #scale: number;
     readonly #speedRange: [number, number];
-    readonly #thickness: number;
+    #thickness: number;
     readonly #onMouseMoveBound: (event: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
     #donuts: Donut[] = [];
@@ -110,6 +110,34 @@ export class Donuts extends Effect<DonutsConfig> {
         if (config.repulsionStrength !== undefined) {
             this.#repulsionStrength = config.repulsionStrength;
         }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let i = 0; i < this.#donuts.length; i++) {
+                this.#donuts[i].color = this.#colors[i % this.#colors.length];
+            }
+        }
+        if (config.thickness !== undefined) {
+            this.#thickness = config.thickness;
+
+            for (const donut of this.#donuts) {
+                donut.innerRadius = donut.outerRadius * (1 - this.#thickness);
+            }
+        }
+        if (config.scale !== undefined && config.scale !== this.#scale) {
+            const ratio = config.scale / this.#scale;
+            this.#scale = config.scale;
+            this.#collisionPadding *= ratio;
+            this.#mouseAvoidanceRadius *= ratio;
+            this.#radiusRange = [this.#radiusRange[0] * ratio, this.#radiusRange[1] * ratio];
+
+            for (const donut of this.#donuts) {
+                donut.outerRadius *= ratio;
+                donut.innerRadius *= ratio;
+                donut.x *= ratio;
+                donut.y *= ratio;
+            }
+        }
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -152,12 +180,21 @@ export class Donuts extends Effect<DonutsConfig> {
     }
 
     #updateDonut(donut: Donut, dt: number): void {
-        const currentSpeed = Math.sqrt(donut.vx * donut.vx + donut.vy * donut.vy);
+        let currentSpeed = Math.sqrt(donut.vx * donut.vx + donut.vy * donut.vy);
 
         if (currentSpeed > donut.speed) {
-            const damping = Math.pow(0.995, dt);
+            const damping = Math.pow(0.99, dt);
             donut.vx *= damping;
             donut.vy *= damping;
+            currentSpeed *= damping;
+        }
+
+        const maxSpeed = donut.speed * 5;
+
+        if (currentSpeed > maxSpeed) {
+            const scale = maxSpeed / currentSpeed;
+            donut.vx *= scale;
+            donut.vy *= scale;
         }
 
         donut.x += donut.vx * dt;

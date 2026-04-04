@@ -12,12 +12,12 @@ export interface BlackHoleConfig {
 }
 
 export class BlackHole extends Effect<BlackHoleConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #colorR: number;
     #colorG: number;
     #colorB: number;
-    readonly #baseSize: number;
+    #baseSize: number;
     #particles: BlackHoleParticle[] = [];
     #maxCount: number;
     #width: number = 960;
@@ -52,6 +52,13 @@ export class BlackHole extends Effect<BlackHoleConfig> {
             this.#colorR = parsed[0];
             this.#colorG = parsed[1];
             this.#colorB = parsed[2];
+        }
+
+        if (config.size !== undefined) {
+            this.#baseSize = config.size * this.#scale;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

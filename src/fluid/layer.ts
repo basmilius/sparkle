@@ -21,7 +21,7 @@ export class Fluid extends Effect<FluidConfig> {
     #diffusion: number;
     #mouseForce: number;
     #scale: number;
-    readonly #colorsRGB: [number, number, number][];
+    #colorsRGB: [number, number, number][];
     readonly #onMouseMoveBound: (evt: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
     #time: number = 0;
@@ -78,6 +78,9 @@ export class Fluid extends Effect<FluidConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.colors !== undefined) {
+            this.#colorsRGB = config.colors.map((color) => hexToRGB(color));
         }
     }
 

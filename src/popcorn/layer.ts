@@ -16,8 +16,8 @@ export interface PopcornConfig {
 export class Popcorn extends Effect<PopcornConfig> {
     readonly #scale: number;
     readonly #maxCount: number;
-    readonly #bounciness: number;
-    readonly #colorRGB: [number, number, number];
+    #bounciness: number;
+    #colorRGB: [number, number, number];
     #speed: number;
     #gravity: number;
     #popRate: number;
@@ -45,6 +45,12 @@ export class Popcorn extends Effect<PopcornConfig> {
         }
         if (config.popRate !== undefined) {
             this.#popRate = config.popRate;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.bounciness !== undefined) {
+            this.#bounciness = config.bounciness;
         }
     }
 

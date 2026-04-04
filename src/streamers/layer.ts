@@ -11,8 +11,8 @@ export interface StreamersConfig {
 }
 
 export class Streamers extends Effect<StreamersConfig> {
-    readonly #colors: string[];
-    readonly #scale: number;
+    #colors: string[];
+    #scale: number;
     #speed: number;
     #count: number;
     #streamers: Streamer[] = [];
@@ -50,6 +50,16 @@ export class Streamers extends Effect<StreamersConfig> {
     configure(config: Partial<StreamersConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let i = 0; i < this.#streamers.length; i++) {
+                this.#streamers[i].color = this.#colors[i % this.#colors.length];
+            }
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

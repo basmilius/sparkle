@@ -14,14 +14,14 @@ const BURST_COLORS = [
 ];
 
 export class Glitch extends Effect<GlitchConfig> {
-    readonly #scale: number;
+    #scale: number;
     #intensity: number;
     #speed: number;
     #rgbSplit: number;
-    readonly #scanlines: boolean;
-    readonly #noiseBlocks: boolean;
-    readonly #sliceDisplacement: boolean;
-    readonly #colorRGB: [number, number, number];
+    #scanlines: boolean;
+    #noiseBlocks: boolean;
+    #sliceDisplacement: boolean;
+    #colorRGB: [number, number, number];
 
     #slices: GlitchSlice[] = [];
     #blocks: GlitchBlock[] = [];
@@ -56,6 +56,21 @@ export class Glitch extends Effect<GlitchConfig> {
         }
         if (config.rgbSplit !== undefined) {
             this.#rgbSplit = config.rgbSplit * this.#scale;
+        }
+        if (config.scanlines !== undefined) {
+            this.#scanlines = config.scanlines;
+        }
+        if (config.noiseBlocks !== undefined) {
+            this.#noiseBlocks = config.noiseBlocks;
+        }
+        if (config.sliceDisplacement !== undefined) {
+            this.#sliceDisplacement = config.sliceDisplacement;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

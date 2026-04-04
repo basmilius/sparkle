@@ -31,8 +31,8 @@ export class Particles extends Effect<ParticlesConfig> {
     #particleForces: boolean;
     #glow: boolean;
     readonly #background: string | null;
-    readonly #colorRGB: [number, number, number];
-    readonly #lineColorRGB: [number, number, number];
+    #colorRGB: [number, number, number];
+    #lineColorRGB: [number, number, number];
     readonly #sizeRange: [number, number];
     readonly #speedRange: [number, number];
     readonly #onMouseMoveBound: (evt: MouseEvent) => void;
@@ -101,6 +101,12 @@ export class Particles extends Effect<ParticlesConfig> {
         }
         if (config.glow !== undefined) {
             this.#glow = config.glow;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+        }
+        if (config.lineColor !== undefined) {
+            this.#lineColorRGB = hexToRGB(config.lineColor);
         }
     }
 

@@ -18,13 +18,13 @@ export interface BubblesConfig {
 }
 
 export class Bubbles extends Effect<BubblesConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     readonly #sizeRange: [number, number];
     #wobbleAmount: number;
-    readonly #popOnClick: boolean;
-    readonly #popRadius: number;
-    readonly #baseHues: number[];
+    #popOnClick: boolean;
+    #popRadius: number;
+    #baseHues: number[];
     readonly #onClickBound: (evt: MouseEvent) => void;
     #maxCount: number;
     #time: number = 0;
@@ -79,6 +79,29 @@ export class Bubbles extends Effect<BubblesConfig> {
         }
         if (config.wobbleAmount !== undefined) {
             this.#wobbleAmount = config.wobbleAmount;
+        }
+        if (config.popOnClick !== undefined && config.popOnClick !== this.#popOnClick) {
+            this.#popOnClick = config.popOnClick;
+
+            if (this.#canvas) {
+                if (this.#popOnClick) {
+                    this.#canvas.addEventListener('click', this.#onClickBound, {passive: true});
+                } else {
+                    this.#canvas.removeEventListener('click', this.#onClickBound);
+                }
+            }
+        }
+        if (config.popRadius !== undefined) {
+            this.#popRadius = config.popRadius;
+        }
+        if (config.colors !== undefined) {
+            this.#baseHues = config.colors.map(c => {
+                const {r, g, b} = parseColor(c);
+                return rgbToHue(r, g, b);
+            });
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

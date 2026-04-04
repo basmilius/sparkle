@@ -9,7 +9,7 @@ export class Matrix extends Effect<MatrixConfig> {
     #speed: number;
     readonly #fontSize: number;
     #trailLength: number;
-    readonly #colorRGB: [number, number, number];
+    #colorRGB: [number, number, number];
     #maxColumns: number;
     #columns: MatrixColumn[] = [];
     #respawnTimers: number[] = [];
@@ -59,6 +59,9 @@ export class Matrix extends Effect<MatrixConfig> {
         }
         if (config.trailLength !== undefined) {
             this.#trailLength = config.trailLength;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
         }
     }
 

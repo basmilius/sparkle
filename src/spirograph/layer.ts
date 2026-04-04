@@ -18,7 +18,7 @@ export interface SpirographConfig {
 export class Spirograph extends Effect<SpirographConfig> {
     #speed: number;
     readonly #curveCount: number;
-    readonly #colors: string[];
+    #colors: string[];
     #lineWidth: number;
     #fadeSpeed: number;
     readonly #complexity: number;
@@ -61,6 +61,9 @@ export class Spirograph extends Effect<SpirographConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
         }
     }
 

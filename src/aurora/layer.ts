@@ -72,6 +72,13 @@ export class Aurora extends Effect<AuroraConfig> {
         if (config.verticalPosition !== undefined) {
             this.#verticalPosition = config.verticalPosition;
         }
+        if (config.colors !== undefined) {
+            for (let i = 0; i < this.#bands.length; i++) {
+                const color = config.colors[i % config.colors.length];
+                const [r, g, b] = hexToRGB(color);
+                this.#bands[i].hue = rgbToHue(r, g, b);
+            }
+        }
     }
 
     tick(dt: number, _width: number, _height: number): void {

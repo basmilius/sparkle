@@ -14,9 +14,9 @@ export interface VolcanoConfig {
 }
 
 export class Volcano extends Effect<VolcanoConfig> {
-    readonly #scale: number;
-    readonly #color: string;
-    readonly #smokeColor: string;
+    #scale: number;
+    #color: string;
+    #smokeColor: string;
     #speed: number;
     #intensity: number;
     #maxProjectiles: number;
@@ -49,6 +49,15 @@ export class Volcano extends Effect<VolcanoConfig> {
         }
         if (config.intensity !== undefined) {
             this.#intensity = config.intensity;
+        }
+        if (config.color !== undefined) {
+            this.#color = config.color;
+        }
+        if (config.smokeColor !== undefined) {
+            this.#smokeColor = config.smokeColor;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

@@ -14,7 +14,7 @@ export interface TornadoConfig {
 }
 
 export class Tornado extends Effect<TornadoConfig> {
-    readonly #scale: number;
+    #scale: number;
     #speed: number;
     #intensity: number;
     readonly #funnelWidth: number;
@@ -66,6 +66,15 @@ export class Tornado extends Effect<TornadoConfig> {
         }
         if (config.intensity !== undefined) {
             this.#intensity = config.intensity;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#colorR = r;
+            this.#colorG = g;
+            this.#colorB = b;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

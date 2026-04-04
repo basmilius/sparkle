@@ -15,8 +15,8 @@ export interface CoralReefConfig {
 }
 
 export class CoralReef extends Effect<CoralReefConfig> {
-    readonly #scale: number;
-    readonly #colors: string[];
+    #scale: number;
+    #colors: string[];
     #speed: number;
     #maxAnemones: number;
     #maxJellyfish: number;
@@ -48,6 +48,20 @@ export class CoralReef extends Effect<CoralReefConfig> {
     configure(config: Partial<CoralReefConfig>): void {
         if (config.speed !== undefined) {
             this.#speed = config.speed;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let i = 0; i < this.#anemones.length; i++) {
+                this.#anemones[i].color = this.#colors[i % this.#colors.length];
+            }
+
+            for (let i = 0; i < this.#jellyfish.length; i++) {
+                this.#jellyfish[i].color = this.#colors[i % this.#colors.length];
+            }
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

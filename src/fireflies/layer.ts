@@ -17,7 +17,7 @@ export interface FirefliesConfig {
 }
 
 export class Fireflies extends Effect<FirefliesConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #size: number;
     #speed: number;
     #glowSpeed: number;
@@ -54,6 +54,13 @@ export class Fireflies extends Effect<FirefliesConfig> {
         }
         if (config.glowSpeed !== undefined) {
             this.#glowSpeed = config.glowSpeed;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#sprite = this.#createSprite(r, g, b);
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

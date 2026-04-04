@@ -5,12 +5,12 @@ import { GLITTER_COLORS, MULBERRY } from './consts';
 import type { FallingGlitter, GlitterConfig, SettledGlitter } from './types';
 
 export class Glitter extends Effect<GlitterConfig> {
-    readonly #scale: number;
+    #scale: number;
     readonly #size: number;
     #speed: number;
     #groundLevel: number;
-    readonly #maxSettled: number;
-    readonly #colorRGBs: [number, number, number][];
+    #maxSettled: number;
+    #colorRGBs: [number, number, number][];
     #maxCount: number;
     #time: number = 0;
     #falling: FallingGlitter[] = [];
@@ -44,6 +44,15 @@ export class Glitter extends Effect<GlitterConfig> {
         }
         if (config.groundLevel !== undefined) {
             this.#groundLevel = config.groundLevel;
+        }
+        if (config.colors !== undefined) {
+            this.#colorRGBs = config.colors.map(c => hexToRGB(c));
+        }
+        if (config.maxSettled !== undefined) {
+            this.#maxSettled = config.maxSettled;
+        }
+        if (config.scale !== undefined) {
+            this.#scale = config.scale;
         }
     }
 

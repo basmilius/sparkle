@@ -21,9 +21,9 @@ export interface PollenConfig {
 }
 
 export class Pollen extends Effect<PollenConfig> {
-    readonly #scale: number;
-    readonly #size: number;
-    readonly #glowSize: number;
+    #scale: number;
+    #size: number;
+    #glowSize: number;
     #speed: number;
     #wind: number;
     #maxCount: number;
@@ -57,6 +57,16 @@ export class Pollen extends Effect<PollenConfig> {
         }
         if (config.wind !== undefined) {
             this.#wind = config.wind;
+        }
+        if (config.color !== undefined) {
+            const {r, g, b} = parseColor(config.color);
+            this.#sprite = this.#createSprite(r, g, b);
+        }
+        if (config.size !== undefined) {
+            this.#size = config.size * this.#scale;
+        }
+        if (config.glowSize !== undefined) {
+            this.#glowSize = config.glowSize;
         }
     }
 

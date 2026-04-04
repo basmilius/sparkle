@@ -8,7 +8,7 @@ export class Orbits extends Effect<OrbitsConfig> {
     readonly #centerCount: number;
     readonly #orbitersPerCenter: number;
     #speed: number;
-    readonly #colors: string[];
+    #colors: string[];
     #trailLength: number;
     #showCenters: boolean;
     #scale: number;
@@ -66,6 +66,13 @@ export class Orbits extends Effect<OrbitsConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.colors !== undefined) {
+            this.#colors = config.colors;
+
+            for (let i = 0; i < this.#orbiters.length; i++) {
+                this.#orbiters[i].color = this.#colors[i % this.#colors.length];
+            }
         }
     }
 
