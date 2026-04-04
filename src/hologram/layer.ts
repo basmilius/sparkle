@@ -1,6 +1,6 @@
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
-import { HEX_CHARS, MULBERRY } from './consts';
+import { MULBERRY } from './consts';
 import type { HologramConfig, HologramFragment } from './types';
 
 export class Hologram extends Effect<HologramConfig> {
@@ -182,14 +182,6 @@ export class Hologram extends Effect<HologramConfig> {
         const fragmentWidth = (20 + MULBERRY.next() * 80) * this.#scale;
         const fragmentHeight = (12 + MULBERRY.next() * 40) * this.#scale;
 
-        // Generate random hex string.
-        let text = '';
-        const textLength = 4 + Math.floor(MULBERRY.next() * 8);
-
-        for (let index = 0; index < textLength; ++index) {
-            text += HEX_CHARS[Math.floor(MULBERRY.next() * HEX_CHARS.length)];
-        }
-
         return {
             x: MULBERRY.next() * (width - fragmentWidth),
             y: MULBERRY.next() * height + height * 0.1,
@@ -197,7 +189,6 @@ export class Hologram extends Effect<HologramConfig> {
             height: fragmentHeight,
             opacity: 0.3 + MULBERRY.next() * 0.7,
             speed: 0.1 + MULBERRY.next() * 0.5,
-            text,
             life: maxLife,
             maxLife
         };

@@ -6,8 +6,6 @@ import { MULBERRY } from './consts';
 import type { Firefly } from './types';
 
 const SPRITE_SIZE = 64;
-const SPRITE_CENTER = SPRITE_SIZE / 2;
-const SPRITE_RADIUS = SPRITE_SIZE / 2;
 
 export interface FirefliesConfig {
     readonly count?: number;

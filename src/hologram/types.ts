@@ -14,7 +14,6 @@ export type HologramFragment = {
     height: number;
     opacity: number;
     speed: number;
-    text: string;
     life: number;
     maxLife: number;
 };

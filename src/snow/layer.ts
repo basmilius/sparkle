@@ -24,10 +24,8 @@ export class Snow extends Effect<SnowConfig> {
     readonly #baseOpacity: number;
     #maxParticles: number;
     #time: number = 0;
-    #ratio: number = 1;
     #snowflakes: Snowflake[] = [];
     #sprites: HTMLCanvasElement[] = [];
-    #height: number = 540;
 
     constructor(config: SnowConfig = {}) {
         super();
@@ -57,14 +55,8 @@ export class Snow extends Effect<SnowConfig> {
         }
     }
 
-    onResize(_width: number, height: number): void {
-        this.#height = height;
-    }
-
     tick(dt: number, _width: number, height: number): void {
-        this.#height = height;
-
-        const speedFactor = height / (420 * this.#ratio) / this.#speed;
+        const speedFactor = height / 420 / this.#speed;
 
         this.#time += 0.015 * speedFactor * dt;
 
@@ -109,7 +101,7 @@ export class Snow extends Effect<SnowConfig> {
         for (const snowflake of this.#snowflakes) {
             const px = snowflake.x * width;
             const py = snowflake.y * height;
-            const displayRadius = snowflake.radius * snowflake.depth * this.#ratio;
+            const displayRadius = snowflake.radius * snowflake.depth;
             const displaySize = displayRadius * 2;
 
             if (displaySize < 0.5) {

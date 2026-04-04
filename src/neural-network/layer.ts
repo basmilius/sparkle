@@ -342,7 +342,6 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
             const curve = (MULBERRY.next() - 0.5) * len * 0.3;
 
             this.#pulses.push({
-                fromCell: index,
                 toCell: connIdx,
                 fromX: cell.x,
                 fromY: cell.y,

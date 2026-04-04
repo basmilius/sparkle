@@ -105,8 +105,6 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
             const column = this.#columns[i];
 
             column.y += column.speed * this.#speed * dt;
-            column.life += dt;
-
             // Randomly change characters as they fall
             for (let ci = 0; ci < column.chars.length; ++ci) {
                 if (MULBERRY.next() < 0.04) {
@@ -189,8 +187,7 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
             y: -(MULBERRY.next() * height),
             speed: 1.5 + MULBERRY.next() * 3,
             chars,
-            length,
-            life: 0
+            length
         };
     }
 }

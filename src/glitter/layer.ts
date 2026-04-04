@@ -175,8 +175,7 @@ export class Glitter extends Effect<GlitterConfig> {
             flipAngle: MULBERRY.next() * Math.PI * 2,
             flipSpeed: 0.03 + MULBERRY.next() * 0.07,
             sparkle: MULBERRY.next(),
-            colorIndex: Math.floor(MULBERRY.next() * this.#colorRGBs.length),
-            settled: false
+            colorIndex: Math.floor(MULBERRY.next() * this.#colorRGBs.length)
         };
     }
 }

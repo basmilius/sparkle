@@ -7,7 +7,6 @@ export type LavaBlob = {
     phase: number;
     amplitude: number;
     baseY: number;
-    directionY: number;
     driftX: number;
     driftPhase: number;
 };

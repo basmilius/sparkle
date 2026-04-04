@@ -120,7 +120,6 @@ export class Lava extends Effect<LavaConfig> {
             speed: 0.5 + MULBERRY.next() * 1.5,
             phase: MULBERRY.next() * Math.PI * 2,
             amplitude: 0.05 + MULBERRY.next() * 0.2,
-            directionY: MULBERRY.next() > 0.5 ? 1 : -1,
             driftX: (MULBERRY.next() - 0.5) * 2,
             driftPhase: MULBERRY.next() * Math.PI * 2
         };

@@ -6,5 +6,4 @@ export type DigitalRainColumn = {
     speed: number;
     chars: string[];
     length: number;
-    life: number;
 };

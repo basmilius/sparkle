@@ -187,7 +187,6 @@ export class Clouds extends Effect<CloudsConfig> {
         return {
             x: initialSpread ? MULBERRY.next() * 1.8 - 0.4 : -0.4,
             y: 0.08 + MULBERRY.next() * 0.50,
-            speed: 0.5 + MULBERRY.next() * 0.5,
             layer,
             scale: 0.7 + MULBERRY.next() * 0.8 + layer * 0.25,
             opacity: 0.65 + MULBERRY.next() * 0.35,

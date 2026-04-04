@@ -12,7 +12,6 @@ export type Ember = {
 };
 
 export type FlameLayer = {
-    x: number;
     phase: number;
     speed: number;
     amplitude: number;

@@ -20,7 +20,6 @@ export type NeuronCell = {
 };
 
 export type SynapticPulse = {
-    fromCell: number;
     toCell: number;
     fromX: number;
     fromY: number;

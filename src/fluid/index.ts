@@ -7,4 +7,3 @@ export function createFluid(config?: FluidConfig): Effect<FluidConfig> {
 }
 
 export type { FluidConfig };
-export type { FluidCell } from './types';

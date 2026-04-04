@@ -1,7 +1,6 @@
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
-import type { FluidCell } from './types';
 
 export interface FluidConfig {
     readonly speed?: number;

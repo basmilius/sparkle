@@ -36,7 +36,6 @@ export class Firepit extends Effect<FirepitConfig> {
 
         for (let i = 0; i < 5; i++) {
             this.#flameLayers.push({
-                x: 0.5 + (MULBERRY.next() - 0.5) * 0.1,
                 phase: MULBERRY.next() * Math.PI * 2,
                 speed: 1.5 + MULBERRY.next() * 2,
                 amplitude: 0.02 + MULBERRY.next() * 0.03,
