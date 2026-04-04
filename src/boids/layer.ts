@@ -1,6 +1,7 @@
 import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
+import { SpatialGrid } from '../grid';
 import { MAX_FORCE, MAX_SPEED, MULBERRY, PERCEPTION_RADIUS, SEPARATION_RADIUS } from './consts';
 import type { Boid } from './types';
 
@@ -27,7 +28,7 @@ export class Boids extends Effect<BoidsConfig> {
     readonly #size: number;
     readonly #count: number;
     #boids: Boid[] = [];
-    #grid: Map<string, Boid[]> = new Map();
+    #grid: SpatialGrid<Boid> = new SpatialGrid(PERCEPTION_RADIUS);
     #width: number = 800;
     #height: number = 600;
     #initialized: boolean = false;
@@ -82,19 +83,11 @@ export class Boids extends Effect<BoidsConfig> {
         this.#width = width;
         this.#height = height;
 
-        const cellSize = PERCEPTION_RADIUS;
+        this.#grid.setWidth(width);
         this.#grid.clear();
 
         for (const boid of this.#boids) {
-            const cellX = Math.floor(boid.x / cellSize);
-            const cellY = Math.floor(boid.y / cellSize);
-            const key = `${cellX},${cellY}`;
-            let cell = this.#grid.get(key);
-            if (!cell) {
-                cell = [];
-                this.#grid.set(key, cell);
-            }
-            cell.push(boid);
+            this.#grid.insert(boid.x, boid.y, boid);
         }
 
         const speedFactor = this.#speed * dt / 16;
@@ -104,48 +97,36 @@ export class Boids extends Effect<BoidsConfig> {
         const separationR2 = SEPARATION_RADIUS * SEPARATION_RADIUS;
 
         for (const boid of this.#boids) {
-            const cellX = Math.floor(boid.x / cellSize);
-            const cellY = Math.floor(boid.y / cellSize);
-
             let sepX = 0, sepY = 0, sepCount = 0;
             let alignVX = 0, alignVY = 0, alignCount = 0;
             let cohX = 0, cohY = 0, cohCount = 0;
 
-            for (let dx = -1; dx <= 1; dx++) {
-                for (let dy = -1; dy <= 1; dy++) {
-                    const neighbors = this.#grid.get(`${cellX + dx},${cellY + dy}`);
-                    if (!neighbors) {
-                        continue;
-                    }
-
-                    for (const other of neighbors) {
-                        if (other === boid) {
-                            continue;
-                        }
-
-                        const diffX = boid.x - other.x;
-                        const diffY = boid.y - other.y;
-                        const dist2 = diffX * diffX + diffY * diffY;
-
-                        if (dist2 < perceptionR2) {
-                            alignVX += other.vx;
-                            alignVY += other.vy;
-                            alignCount++;
-
-                            cohX += other.x;
-                            cohY += other.y;
-                            cohCount++;
-                        }
-
-                        if (dist2 < separationR2 && dist2 > 0) {
-                            const dist = Math.sqrt(dist2);
-                            sepX += diffX / dist;
-                            sepY += diffY / dist;
-                            sepCount++;
-                        }
-                    }
+            this.#grid.query(boid.x, boid.y, (other) => {
+                if (other === boid) {
+                    return;
                 }
-            }
+
+                const diffX = boid.x - other.x;
+                const diffY = boid.y - other.y;
+                const dist2 = diffX * diffX + diffY * diffY;
+
+                if (dist2 < perceptionR2) {
+                    alignVX += other.vx;
+                    alignVY += other.vy;
+                    alignCount++;
+
+                    cohX += other.x;
+                    cohY += other.y;
+                    cohCount++;
+                }
+
+                if (dist2 < separationR2 && dist2 > 0) {
+                    const dist = Math.sqrt(dist2);
+                    sepX += diffX / dist;
+                    sepY += diffY / dist;
+                    sepCount++;
+                }
+            });
 
             let forceX = 0;
             let forceY = 0;

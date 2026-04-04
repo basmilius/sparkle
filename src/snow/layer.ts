@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Snowflake } from './snowflake';
@@ -145,37 +146,13 @@ export class Snow extends Effect<SnowConfig> {
     }
 
     #createSprites(r: number, g: number, b: number): HTMLCanvasElement[] {
-        const sprites: HTMLCanvasElement[] = [];
-
-        const gradientProfiles: [number, number][][] = [
+        const profiles: [number, number][][] = [
             [[0, 0.8], [0.3, 0.4], [0.7, 0.1], [1, 0]],
             [[0, 1], [0.15, 0.7], [0.5, 0.2], [1, 0]],
             [[0, 0.9], [0.25, 0.5], [0.5, 0.1], [1, 0]]
         ];
 
-        for (const profile of gradientProfiles) {
-            const canvas = document.createElement('canvas');
-            canvas.width = SPRITE_SIZE;
-            canvas.height = SPRITE_SIZE;
-            const ctx = canvas.getContext('2d')!;
-
-            const gradient = ctx.createRadialGradient(
-                SPRITE_CENTER, SPRITE_CENTER, 0,
-                SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS
-            );
-
-            for (const [stop, alpha] of profile) {
-                gradient.addColorStop(stop, `rgba(${r}, ${g}, ${b}, ${alpha})`);
-            }
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS, 0, Math.PI * 2);
-            ctx.fill();
-
-            sprites.push(canvas);
-        }
-
+        const sprites = profiles.map(stops => createGlowSprite(r, g, b, SPRITE_SIZE, stops));
         sprites.push(this.#createCrystalSprite(r, g, b));
 
         return sprites;

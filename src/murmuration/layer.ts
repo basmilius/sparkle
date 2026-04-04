@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
+import { SpatialGrid } from '../grid';
 import { MULBERRY } from './consts';
 import type { MurmurationBird } from './types';
 
@@ -29,10 +30,9 @@ export class Murmuration extends Effect<MurmurationConfig> {
     #maxCount: number;
     #time: number = 0;
     #birds: MurmurationBird[] = [];
-    #grid: Map<number, MurmurationBird[]> = new Map();
+    #grid: SpatialGrid<MurmurationBird> = new SpatialGrid(CELL_SIZE);
     #width: number = 960;
     #height: number = 540;
-    #gridCols: number = 0;
 
     constructor(config: MurmurationConfig = {}) {
         super();
@@ -69,7 +69,7 @@ export class Murmuration extends Effect<MurmurationConfig> {
     onResize(width: number, height: number): void {
         this.#width = width;
         this.#height = height;
-        this.#gridCols = Math.ceil(width / CELL_SIZE);
+        this.#grid.setWidth(width);
 
         this.#birds = [];
 
@@ -81,13 +81,16 @@ export class Murmuration extends Effect<MurmurationConfig> {
     tick(dt: number, width: number, height: number): void {
         this.#width = width;
         this.#height = height;
-        this.#gridCols = Math.ceil(width / CELL_SIZE);
+        this.#grid.setWidth(width);
         this.#time += 0.001 * this.#speed * dt;
 
         const dtFactor = dt / 16;
         const speedFactor = this.#speed * dtFactor;
 
-        this.#buildGrid();
+        this.#grid.clear();
+        for (const bird of this.#birds) {
+            this.#grid.insert(bird.x, bird.y, bird);
+        }
 
         const waveX = Math.sin(this.#time * 1.7) * width * 0.3 + width * 0.5;
         const waveForce = Math.sin(this.#time * 2.3) * 0.3 * this.#turnRadius;
@@ -102,49 +105,35 @@ export class Murmuration extends Effect<MurmurationConfig> {
             let sepX = 0;
             let sepY = 0;
 
-            const cellX = Math.floor(bird.x / CELL_SIZE);
-            const cellY = Math.floor(bird.y / CELL_SIZE);
-
-            for (let ox = -1; ox <= 1; ox++) {
-                for (let oy = -1; oy <= 1; oy++) {
-                    const key = (cellX + ox) + (cellY + oy) * this.#gridCols;
-                    const cell = this.#grid.get(key);
-
-                    if (!cell) {
-                        continue;
-                    }
-
-                    for (const other of cell) {
-                        if (other === bird) {
-                            continue;
-                        }
-
-                        const dx = other.x - bird.x;
-                        const dy = other.y - bird.y;
-                        const distSq = dx * dx + dy * dy;
-
-                        if (distSq > CELL_SIZE * CELL_SIZE) {
-                            continue;
-                        }
-
-                        const dist = Math.sqrt(distSq);
-
-                        cohX += other.x;
-                        cohY += other.y;
-                        cohCount++;
-
-                        aliVx += other.vx;
-                        aliVy += other.vy;
-                        aliCount++;
-
-                        if (dist < 15) {
-                            const repel = 1 / (dist + 0.1);
-                            sepX -= dx * repel;
-                            sepY -= dy * repel;
-                        }
-                    }
+            this.#grid.query(bird.x, bird.y, (other) => {
+                if (other === bird) {
+                    return;
                 }
-            }
+
+                const dx = other.x - bird.x;
+                const dy = other.y - bird.y;
+                const distSq = dx * dx + dy * dy;
+
+                if (distSq > CELL_SIZE * CELL_SIZE) {
+                    return;
+                }
+
+                const dist = Math.sqrt(distSq);
+
+                cohX += other.x;
+                cohY += other.y;
+                cohCount++;
+
+                aliVx += other.vx;
+                aliVy += other.vy;
+                aliCount++;
+
+                if (dist < 15) {
+                    const repel = 1 / (dist + 0.1);
+                    sepX -= dx * repel;
+                    sepY -= dy * repel;
+                }
+            });
 
             let ax = 0;
             let ay = 0;
@@ -243,25 +232,6 @@ export class Murmuration extends Effect<MurmurationConfig> {
             ctx.lineTo(rightX, rightY);
             ctx.closePath();
             ctx.fill();
-        }
-    }
-
-    #buildGrid(): void {
-        this.#grid.clear();
-
-        for (const bird of this.#birds) {
-            const cellX = Math.floor(bird.x / CELL_SIZE);
-            const cellY = Math.floor(bird.y / CELL_SIZE);
-            const key = cellX + cellY * this.#gridCols;
-
-            let cell = this.#grid.get(key);
-
-            if (!cell) {
-                cell = [];
-                this.#grid.set(key, cell);
-            }
-
-            cell.push(bird);
         }
     }
 

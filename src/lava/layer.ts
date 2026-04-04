@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { LavaBlob } from './types';
@@ -100,35 +101,10 @@ export class Lava extends Effect<LavaConfig> {
     }
 
     #createSprites(): HTMLCanvasElement[] {
-        const sprites: HTMLCanvasElement[] = [];
-
-        for (const color of this.#colors) {
+        return this.#colors.map(color => {
             const {r, g, b} = parseColor(color);
-            const canvas = document.createElement('canvas');
-            canvas.width = SPRITE_SIZE;
-            canvas.height = SPRITE_SIZE;
-            const spriteCtx = canvas.getContext('2d')!;
-
-            const gradient = spriteCtx.createRadialGradient(
-                SPRITE_CENTER, SPRITE_CENTER, 0,
-                SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS
-            );
-
-            gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 1)`);
-            gradient.addColorStop(0.3, `rgba(${r}, ${g}, ${b}, 0.8)`);
-            gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, 0.4)`);
-            gradient.addColorStop(0.85, `rgba(${r}, ${g}, ${b}, 0.1)`);
-            gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
-
-            spriteCtx.fillStyle = gradient;
-            spriteCtx.beginPath();
-            spriteCtx.arc(SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS, 0, Math.PI * 2);
-            spriteCtx.fill();
-
-            sprites.push(canvas);
-        }
-
-        return sprites;
+            return createGlowSprite(r, g, b, SPRITE_SIZE, [[0, 1], [0.3, 0.8], [0.6, 0.4], [0.85, 0.1], [1, 0]]);
+        });
     }
 
     #createBlob(): LavaBlob {

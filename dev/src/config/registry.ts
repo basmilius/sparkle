@@ -613,7 +613,7 @@ export const SIMULATORS: SimulatorDef[] = [
         description: 'Continuous snowfall with wind gusts.',
         defaultConfig: {
             particles: 200,
-            speed: 2,
+            speed: 1,
             scale: 1,
             size: 9
         },

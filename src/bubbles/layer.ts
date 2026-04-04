@@ -1,5 +1,5 @@
 import { isSmallScreen } from '../mobile';
-import { parseColor } from '../color';
+import { parseColor, rgbToHue } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Bubble, PopParticle } from './types';
@@ -44,7 +44,10 @@ export class Bubbles extends Effect<BubblesConfig> {
         this.#popRadius = config.popRadius ?? 50;
 
         const colors = config.colors ?? DEFAULT_COLORS;
-        this.#baseHues = colors.map(c => this.#colorToHue(c));
+        this.#baseHues = colors.map(c => {
+            const {r, g, b} = parseColor(c);
+            return rgbToHue(r, g, b);
+        });
 
         if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
@@ -213,35 +216,4 @@ export class Bubbles extends Effect<BubblesConfig> {
         }
     }
 
-    #colorToHue(color: string): number {
-        const {r: r255, g: g255, b: b255} = parseColor(color);
-        let r = r255 / 255;
-        let g = g255 / 255;
-        let b = b255 / 255;
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const delta = max - min;
-
-        if (delta === 0) {
-            return 0;
-        }
-
-        let hue: number;
-
-        if (max === r) {
-            hue = ((g - b) / delta) % 6;
-        } else if (max === g) {
-            hue = (b - r) / delta + 2;
-        } else {
-            hue = (r - g) / delta + 4;
-        }
-
-        hue = Math.round(hue * 60);
-
-        if (hue < 0) {
-            hue += 360;
-        }
-
-        return hue;
-    }
 }

@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { PollenParticle } from './types';
@@ -133,28 +134,7 @@ export class Pollen extends Effect<PollenConfig> {
     }
 
     #createSprite(r: number, g: number, b: number): HTMLCanvasElement {
-        const canvas = document.createElement('canvas');
-        canvas.width = SPRITE_SIZE;
-        canvas.height = SPRITE_SIZE;
-        const ctx = canvas.getContext('2d')!;
-
-        const gradient = ctx.createRadialGradient(
-            SPRITE_CENTER, SPRITE_CENTER, 0,
-            SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS
-        );
-
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 1)`);
-        gradient.addColorStop(0.15, `rgba(${r}, ${g}, ${b}, 0.6)`);
-        gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, 0.2)`);
-        gradient.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, 0.05)`);
-        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
-
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(SPRITE_CENTER, SPRITE_CENTER, SPRITE_RADIUS, 0, TAU);
-        ctx.fill();
-
-        return canvas;
+        return createGlowSprite(r, g, b, SPRITE_SIZE, [[0, 1], [0.15, 0.6], [0.4, 0.2], [0.7, 0.05], [1, 0]]);
     }
 
     #createParticle(px: number, py: number): PollenParticle {

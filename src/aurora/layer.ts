@@ -1,4 +1,5 @@
 import { hexToRGB } from '@basmilius/utils';
+import { rgbToHue } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { AuroraBand } from './types';
@@ -39,7 +40,7 @@ export class Aurora extends Effect<AuroraConfig> {
         for (let i = 0; i < bandCount; i++) {
             const color = colors[i % colors.length];
             const [r, g, b] = hexToRGB(color);
-            const hue = this.#rgbToHue(r, g, b);
+            const hue = rgbToHue(r, g, b);
             const cluster = clusterCenters[i % clusterCenters.length];
 
             this.#bands.push({
@@ -139,34 +140,4 @@ export class Aurora extends Effect<AuroraConfig> {
         ctx.globalCompositeOperation = 'source-over';
     }
 
-    #rgbToHue(r: number, g: number, b: number): number {
-        r /= 255;
-        g /= 255;
-        b /= 255;
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const delta = max - min;
-
-        if (delta === 0) {
-            return 0;
-        }
-
-        let hue: number;
-
-        if (max === r) {
-            hue = ((g - b) / delta) % 6;
-        } else if (max === g) {
-            hue = (b - r) / delta + 2;
-        } else {
-            hue = (r - g) / delta + 4;
-        }
-
-        hue = Math.round(hue * 60);
-
-        if (hue < 0) {
-            hue += 360;
-        }
-
-        return hue;
-    }
 }
