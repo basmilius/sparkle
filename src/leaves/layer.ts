@@ -20,9 +20,9 @@ export class Leaves extends Effect<LeavesConfig> {
 
         this.#scale = config.scale ?? 1;
         this.#maxCount = config.count ?? 80;
-        this.#size = (config.size ?? 22) * this.#scale;
+        this.#size = (config.size ?? 30) * this.#scale;
         this.#speed = config.speed ?? 1;
-        this.#wind = config.wind ?? 0.3;
+        this.#wind = config.wind ?? 0.15;
         this.#colors = config.colors ?? LEAF_COLORS;
 
         if (isSmallScreen()) {
@@ -53,19 +53,19 @@ export class Leaves extends Effect<LeavesConfig> {
         this.#height = height;
         const speedFactor = (height / 540) / this.#speed;
 
-        this.#time += 0.015 * dt;
+        this.#time += 0.012 * dt;
 
-        const globalWind = Math.sin(this.#time * 0.5) * 0.4
-            + Math.sin(this.#time * 1.3 + 2) * 0.2
-            + Math.sin(this.#time * 3.1) * 0.1;
+        const globalWind = Math.sin(this.#time * 0.4) * 0.3
+            + Math.sin(this.#time * 1.1 + 1.5) * 0.15
+            + Math.sin(this.#time * 2.7) * 0.08;
 
         for (let index = 0; index < this.#leaves.length; index++) {
             const leaf = this.#leaves[index];
 
             const swing = Math.sin(this.#time * leaf.swingFrequency + leaf.swingOffset) * leaf.swingAmplitude;
 
-            leaf.x += (swing + (this.#wind + globalWind * 0.5) * leaf.depth) * dt / (2500 * speedFactor);
-            leaf.y += (leaf.fallSpeed * 2 + leaf.depth + leaf.size * 0.05) * dt / (500 * speedFactor);
+            leaf.x += (swing + (this.#wind + globalWind * 0.4) * leaf.depth) * dt / (3000 * speedFactor);
+            leaf.y += (leaf.fallSpeed * 1.5 + leaf.depth * 0.5) * dt / (600 * speedFactor);
 
             leaf.rotation += leaf.rotationSpeed * dt;
             leaf.flipAngle += leaf.flipSpeed * dt;
@@ -110,7 +110,7 @@ export class Leaves extends Effect<LeavesConfig> {
                 base.a * px + base.c * py + base.e,
                 base.b * px + base.d * py + base.f
             );
-            ctx.globalAlpha = 0.3 + leaf.depth * 0.7;
+            ctx.globalAlpha = 0.4 + leaf.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[leaf.colorIndex % this.#sprites.length],
                 -displaySize / 2,
@@ -247,21 +247,21 @@ export class Leaves extends Effect<LeavesConfig> {
     }
 
     #createLeaf(initialSpread: boolean): Leaf {
-        const depth = 0.3 + MULBERRY.next() * 0.7;
+        const depth = 0.5 + MULBERRY.next() * 0.5;
 
         return {
             x: MULBERRY.next(),
             y: initialSpread ? MULBERRY.next() * 2 - 1 : -0.05 - MULBERRY.next() * 0.15,
-            size: (MULBERRY.next() * 0.6 + 0.5) * this.#size,
+            size: (MULBERRY.next() * 0.4 + 0.6) * this.#size,
             depth,
             rotation: MULBERRY.next() * Math.PI * 2,
-            rotationSpeed: (MULBERRY.next() - 0.5) * 0.04,
+            rotationSpeed: (MULBERRY.next() - 0.5) * 0.03,
             flipAngle: MULBERRY.next() * Math.PI * 2,
-            flipSpeed: 0.02 + MULBERRY.next() * 0.04,
-            swingAmplitude: 0.4 + MULBERRY.next() * 0.8,
-            swingFrequency: 0.5 + MULBERRY.next() * 1.5,
+            flipSpeed: 0.015 + MULBERRY.next() * 0.03,
+            swingAmplitude: 0.5 + MULBERRY.next() * 1.0,
+            swingFrequency: 0.4 + MULBERRY.next() * 1.2,
             swingOffset: MULBERRY.next() * Math.PI * 2,
-            fallSpeed: 0.3 + MULBERRY.next() * 0.7,
+            fallSpeed: 0.2 + MULBERRY.next() * 0.5,
             shape: Math.floor(MULBERRY.next() * 3),
             colorIndex: Math.floor(MULBERRY.next() * this.#colors.length * 3)
         };

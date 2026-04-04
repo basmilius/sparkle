@@ -332,16 +332,16 @@ export const SIMULATORS: SimulatorDef[] = [
         defaultConfig: {
             count: 60,
             speed: 1,
-            wind: 0.5,
+            wind: 0.15,
             scale: 1,
-            size: 22
+            size: 30
         },
         liveKeys: ['speed', 'wind'],
         schema: [
             {type: 'slider', key: 'count', label: 'Count', min: 10, max: 200, step: 5, default: 60},
             {type: 'slider', key: 'speed', label: 'Speed', min: 0.2, max: 6, step: 0.1, default: 1},
-            {type: 'slider', key: 'wind', label: 'Wind', min: -3, max: 3, step: 0.1, default: 0.5},
-            {type: 'slider', key: 'size', label: 'Size', min: 8, max: 60, step: 2, default: 22},
+            {type: 'slider', key: 'wind', label: 'Wind', min: -3, max: 3, step: 0.1, default: 0.15},
+            {type: 'slider', key: 'size', label: 'Size', min: 8, max: 60, step: 2, default: 30},
             {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
             {type: 'colors', key: 'colors', label: 'Colors', default: ['#8b4513', '#d2691e', '#cd853f', '#daa520', '#b8860b']}
         ],
