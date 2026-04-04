@@ -1,6 +1,6 @@
 import { parseColor } from '../color';
 import { Effect } from '../effect';
-import { MULBERRY } from './consts';
+import { BLOB_LAYOUTS, DEFAULT_CONFIG, FADE_MARGIN, MULBERRY, SPRITE_COUNT, SPRITE_H, SPRITE_W } from './consts';
 import type { Cloud } from './types';
 
 export interface CloudsConfig {
@@ -11,11 +11,9 @@ export interface CloudsConfig {
     readonly speed?: number;
 }
 
-const SPRITE_COUNT = 6;
-const SPRITE_SIZE = 256;
-
 export class Clouds extends Effect<CloudsConfig> {
     readonly #scale: number;
+    readonly #colorStr: string;
     #speed: number;
     #count: number;
     #opacity: number;
@@ -28,25 +26,12 @@ export class Clouds extends Effect<CloudsConfig> {
     constructor(config: CloudsConfig = {}) {
         super();
 
-        this.#scale = config.scale ?? 1;
-        this.#speed = config.speed ?? 0.3;
-        this.#count = config.count ?? 8;
-        this.#opacity = config.opacity ?? 0.8;
-
-        const {r, g, b} = parseColor(config.color ?? '#ffffff');
-        this.#colorR = r;
-        this.#colorG = g;
-        this.#colorB = b;
-
-        if (innerWidth < 991) {
-            this.#count = Math.max(3, Math.floor(this.#count / 2));
-        }
-
-        this.#sprites = this.#createSprites(r, g, b);
-
-        for (let i = 0; i < this.#count; ++i) {
-            this.#clouds.push(this.#createCloud(true));
-        }
+        const merged = { ...DEFAULT_CONFIG, ...config };
+        this.#scale = merged.scale;
+        this.#speed = merged.speed;
+        this.#count = merged.count;
+        this.#opacity = merged.opacity;
+        this.#colorStr = merged.color;
     }
 
     configure(config: Partial<CloudsConfig>): void {
@@ -58,12 +43,46 @@ export class Clouds extends Effect<CloudsConfig> {
             this.#opacity = config.opacity;
         }
 
+        if (config.count !== undefined) {
+            this.#count = config.count;
+        }
+
         if (config.color !== undefined) {
-            const {r, g, b} = parseColor(config.color);
+            const { r, g, b } = parseColor(config.color);
             this.#colorR = r;
             this.#colorG = g;
             this.#colorB = b;
             this.#sprites = this.#createSprites(r, g, b);
+        }
+    }
+
+    onMount(_canvas: HTMLCanvasElement): void {
+        const { r, g, b } = parseColor(this.#colorStr);
+        this.#colorR = r;
+        this.#colorG = g;
+        this.#colorB = b;
+        this.#sprites = this.#createSprites(r, g, b);
+    }
+
+    onResize(width: number, _height: number): void {
+        if (!this.#sprites.length) {
+            return;
+        }
+
+        const effectiveCount = width < 991
+            ? Math.max(3, Math.floor(this.#count / 2))
+            : this.#count;
+
+        if (this.#clouds.length === 0) {
+            for (let i = 0; i < effectiveCount; ++i) {
+                this.#clouds.push(this.#createCloud(true));
+            }
+        } else if (this.#clouds.length !== effectiveCount) {
+            this.#clouds = this.#clouds.slice(0, effectiveCount);
+
+            while (this.#clouds.length < effectiveCount) {
+                this.#clouds.push(this.#createCloud(true));
+            }
         }
     }
 
@@ -79,17 +98,26 @@ export class Clouds extends Effect<CloudsConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        if (!this.#sprites.length || !this.#clouds.length) {
+            return;
+        }
+
         const sortedClouds = [...this.#clouds].sort((a, b) => a.layer - b.layer);
 
         for (const cloud of sortedClouds) {
+            const edgeFade = this.#computeEdgeFade(cloud.x);
+
+            if (edgeFade <= 0) {
+                continue;
+            }
+
             const px = cloud.x * width;
             const py = cloud.y * height;
-            const cloudWidth = SPRITE_SIZE * cloud.scale * this.#scale * (width / 800);
-            const cloudHeight = (SPRITE_SIZE * 0.45) * cloud.scale * this.#scale * (width / 800);
-
+            const cloudWidth = SPRITE_W * cloud.scale * this.#scale * (width / 800);
+            const cloudHeight = SPRITE_H * cloud.scale * this.#scale * (width / 800);
             const depthAlpha = 0.4 + cloud.layer * 0.3;
-            ctx.globalAlpha = this.#opacity * depthAlpha * cloud.opacity;
 
+            ctx.globalAlpha = this.#opacity * depthAlpha * cloud.opacity * edgeFade;
             ctx.drawImage(
                 this.#sprites[cloud.spriteIndex],
                 px - cloudWidth * 0.5,
@@ -103,45 +131,48 @@ export class Clouds extends Effect<CloudsConfig> {
         ctx.resetTransform();
     }
 
+    #computeEdgeFade(x: number): number {
+        const span = 0.4 + FADE_MARGIN;
+
+        if (x < FADE_MARGIN) {
+            return Math.max(0, (x + 0.4) / span);
+        }
+
+        if (x > 1 - FADE_MARGIN) {
+            return Math.max(0, (1.4 - x) / span);
+        }
+
+        return 1;
+    }
+
     #createSprites(r: number, g: number, b: number): HTMLCanvasElement[] {
         const sprites: HTMLCanvasElement[] = [];
 
         for (let variant = 0; variant < SPRITE_COUNT; variant++) {
             const canvas = document.createElement('canvas');
-            canvas.width = SPRITE_SIZE;
-            canvas.height = Math.floor(SPRITE_SIZE * 0.5);
+            canvas.width = SPRITE_W;
+            canvas.height = SPRITE_H;
+
             const spriteCtx = canvas.getContext('2d')!;
+            const cx = SPRITE_W * 0.5;
+            const cy = SPRITE_H * 0.5;
+            const layout = BLOB_LAYOUTS[variant];
 
-            const blobCount = 3 + Math.floor(MULBERRY.next() * 3);
-            const cx = SPRITE_SIZE * 0.5;
-            const cy = SPRITE_SIZE * 0.2;
+            for (const [dx, dy, radiusFactor] of layout) {
+                const bx = cx + dx * SPRITE_W;
+                const by = cy + dy * SPRITE_W;
+                const br = radiusFactor * SPRITE_W;
 
-            const blobs: Array<{bx: number; by: number; br: number}> = [];
-
-            blobs.push({bx: cx, by: cy, br: SPRITE_SIZE * (0.18 + MULBERRY.next() * 0.08)});
-
-            for (let i = 1; i < blobCount; i++) {
-                const spread = SPRITE_SIZE * 0.28;
-                blobs.push({
-                    bx: cx + (MULBERRY.next() - 0.5) * spread * 2,
-                    by: cy + (MULBERRY.next() - 0.3) * spread * 0.5,
-                    br: SPRITE_SIZE * (0.1 + MULBERRY.next() * 0.12)
-                });
-            }
-
-            for (const blob of blobs) {
-                const gradient = spriteCtx.createRadialGradient(
-                    blob.bx, blob.by, 0,
-                    blob.bx, blob.by, blob.br
-                );
-                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.9)`);
-                gradient.addColorStop(0.35, `rgba(${r}, ${g}, ${b}, 0.7)`);
-                gradient.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, 0.25)`);
-                gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+                const gradient = spriteCtx.createRadialGradient(bx, by, 0, bx, by, br);
+                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.92)`);
+                gradient.addColorStop(0.25, `rgba(${r}, ${g}, ${b}, 0.75)`);
+                gradient.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, 0.30)`);
+                gradient.addColorStop(0.80, `rgba(${r}, ${g}, ${b}, 0.07)`);
+                gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.00)`);
 
                 spriteCtx.fillStyle = gradient;
                 spriteCtx.beginPath();
-                spriteCtx.arc(blob.bx, blob.by, blob.br, 0, Math.PI * 2);
+                spriteCtx.arc(bx, by, br, 0, Math.PI * 2);
                 spriteCtx.fill();
             }
 
@@ -156,11 +187,11 @@ export class Clouds extends Effect<CloudsConfig> {
 
         return {
             x: initialSpread ? MULBERRY.next() * 1.8 - 0.4 : -0.4,
-            y: 0.05 + MULBERRY.next() * 0.55,
+            y: 0.08 + MULBERRY.next() * 0.50,
             speed: 0.5 + MULBERRY.next() * 0.5,
             layer,
-            scale: 0.6 + MULBERRY.next() * 0.8 + layer * 0.3,
-            opacity: 0.6 + MULBERRY.next() * 0.4,
+            scale: 0.7 + MULBERRY.next() * 0.8 + layer * 0.25,
+            opacity: 0.65 + MULBERRY.next() * 0.35,
             spriteIndex: Math.floor(MULBERRY.next() * SPRITE_COUNT)
         };
     }
