@@ -26,7 +26,7 @@ export class Clouds extends Effect<CloudsConfig> {
     constructor(config: CloudsConfig = {}) {
         super();
 
-        const merged = { ...DEFAULT_CONFIG, ...config };
+        const merged = {...DEFAULT_CONFIG, ...config};
         this.#scale = merged.scale;
         this.#speed = merged.speed;
         this.#count = merged.count;
@@ -48,7 +48,7 @@ export class Clouds extends Effect<CloudsConfig> {
         }
 
         if (config.color !== undefined) {
-            const { r, g, b } = parseColor(config.color);
+            const {r, g, b} = parseColor(config.color);
             this.#colorR = r;
             this.#colorG = g;
             this.#colorB = b;
@@ -60,7 +60,7 @@ export class Clouds extends Effect<CloudsConfig> {
     }
 
     onMount(_canvas: HTMLCanvasElement): void {
-        const { r, g, b } = parseColor(this.#colorStr);
+        const {r, g, b} = parseColor(this.#colorStr);
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;

@@ -48,7 +48,7 @@ export class Tornado extends Effect<TornadoConfig> {
         this.#particleCount = particleCount;
         this.#debrisCount = debrisCount;
 
-        const {r, g, b} = parseColor(config.color ?? '#8B7355');
+        const {r, g, b} = parseColor(config.color ?? '#8b7355');
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;

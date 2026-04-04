@@ -1,5 +1,5 @@
-import { Wormhole } from './layer';
 import type { WormholeConfig } from './layer';
+import { Wormhole } from './layer';
 import type { Effect } from '../effect';
 
 export function createWormhole(config?: WormholeConfig): Effect<WormholeConfig> {

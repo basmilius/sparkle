@@ -1,5 +1,5 @@
-import { CoralReef } from './layer';
 import type { CoralReefConfig } from './layer';
+import { CoralReef } from './layer';
 import type { Effect } from '../effect';
 
 export function createCoralReef(config?: CoralReefConfig): Effect<CoralReefConfig> {

@@ -1,5 +1,5 @@
-import { Pollen } from './layer';
 import type { PollenConfig } from './layer';
+import { Pollen } from './layer';
 import type { Effect } from '../effect';
 
 export function createPollen(config?: PollenConfig): Effect<PollenConfig> {

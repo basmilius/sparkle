@@ -132,7 +132,7 @@ export class Roots extends Effect<RootsConfig> {
             const newX = tip.x + Math.cos(tip.angle) * stepSize;
             const newY = tip.y + Math.sin(tip.angle) * stepSize;
 
-            tip.points.push({ x: newX, y: newY });
+            tip.points.push({x: newX, y: newY});
             tip.x = newX;
             tip.y = newY;
             system.segmentCount++;
@@ -145,7 +145,7 @@ export class Roots extends Effect<RootsConfig> {
                     y: tip.y,
                     angle: branchAngle,
                     depth: tip.depth + 1,
-                    points: [{ x: tip.x, y: tip.y }],
+                    points: [{x: tip.x, y: tip.y}],
                     alive: true,
                     lineWidth: Math.max(0.5, tip.lineWidth * 0.7),
                     colorVariant: MULBERRY.next() * 0.3
@@ -206,7 +206,7 @@ export class Roots extends Effect<RootsConfig> {
             y: startY,
             angle: -Math.PI / 2 + (MULBERRY.next() - 0.5) * 0.3,
             depth: 0,
-            points: [{ x: startX, y: startY }],
+            points: [{x: startX, y: startY}],
             alive: true,
             lineWidth: baseWidth,
             colorVariant: MULBERRY.next() * 0.2

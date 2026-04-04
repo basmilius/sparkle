@@ -1,5 +1,5 @@
-import { NeuralNetwork } from './layer';
 import type { NeuralNetworkConfig } from './layer';
+import { NeuralNetwork } from './layer';
 import type { Effect } from '../effect';
 
 export function createNeuralNetwork(config?: NeuralNetworkConfig): Effect<NeuralNetworkConfig> {

@@ -1,5 +1,5 @@
-import { Plasma } from './layer';
 import type { PlasmaConfig } from './layer';
+import { Plasma } from './layer';
 import type { Effect } from '../effect';
 
 export function createPlasma(config?: PlasmaConfig): Effect<PlasmaConfig> {

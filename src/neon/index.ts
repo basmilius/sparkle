@@ -1,5 +1,5 @@
-import { Neon } from './layer';
 import type { NeonConfig } from './layer';
+import { Neon } from './layer';
 import type { Effect } from '../effect';
 
 export function createNeon(config?: NeonConfig): Effect<NeonConfig> {

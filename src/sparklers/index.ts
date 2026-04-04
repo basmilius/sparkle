@@ -1,5 +1,5 @@
-import { Sparklers } from './layer';
 import type { SparklersConfig } from './layer';
+import { Sparklers } from './layer';
 import type { Effect } from '../effect';
 
 export interface SparklersInstance extends Effect<SparklersConfig> {

@@ -1,5 +1,5 @@
-import { Particles } from './layer';
 import type { ParticlesConfig } from './layer';
+import { Particles } from './layer';
 import type { Effect } from '../effect';
 
 export function createParticles(config?: ParticlesConfig): Effect<ParticlesConfig> {

@@ -1,5 +1,5 @@
-import { Aurora } from './layer';
 import type { AuroraConfig } from './layer';
+import { Aurora } from './layer';
 import type { Effect } from '../effect';
 
 export function createAurora(config?: AuroraConfig): Effect<AuroraConfig> {

@@ -1,5 +1,5 @@
-import { Murmuration } from './layer';
 import type { MurmurationConfig } from './layer';
+import { Murmuration } from './layer';
 import type { Effect } from '../effect';
 
 export function createMurmuration(config?: MurmurationConfig): Effect<MurmurationConfig> {

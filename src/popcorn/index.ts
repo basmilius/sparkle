@@ -1,5 +1,5 @@
-import { Popcorn } from './layer';
 import type { PopcornConfig } from './layer';
+import { Popcorn } from './layer';
 import type { Effect } from '../effect';
 
 export function createPopcorn(config?: PopcornConfig): Effect<PopcornConfig> {

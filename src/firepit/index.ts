@@ -1,5 +1,5 @@
-import { Firepit } from './layer';
 import type { FirepitConfig } from './layer';
+import { Firepit } from './layer';
 import type { Effect } from '../effect';
 
 export function createFirepit(config?: FirepitConfig): Effect<FirepitConfig> {

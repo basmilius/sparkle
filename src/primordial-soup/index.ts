@@ -1,5 +1,5 @@
-import { PrimordialSoup } from './layer';
 import type { PrimordialSoupConfig } from './layer';
+import { PrimordialSoup } from './layer';
 import type { Effect } from '../effect';
 
 export function createPrimordialSoup(config?: PrimordialSoupConfig): Effect<PrimordialSoupConfig> {

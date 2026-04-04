@@ -1,5 +1,5 @@
-import { Confetti } from './layer';
 import type { ConfettiConfig } from './layer';
+import { Confetti } from './layer';
 import type { Config as ConfettiBurstConfig } from './types';
 import type { Effect } from '../effect';
 

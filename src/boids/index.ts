@@ -1,5 +1,5 @@
-import { Boids } from './layer';
 import type { BoidsConfig } from './layer';
+import { Boids } from './layer';
 import type { Effect } from '../effect';
 
 export function createBoids(config?: BoidsConfig): Effect<BoidsConfig> {

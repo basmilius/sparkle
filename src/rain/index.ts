@@ -1,5 +1,5 @@
-import { Rain } from './layer';
 import type { RainConfig } from './layer';
+import { Rain } from './layer';
 import type { Effect } from '../effect';
 
 export function createRain(config?: RainConfig): Effect<RainConfig> {

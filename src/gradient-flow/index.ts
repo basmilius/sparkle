@@ -1,5 +1,5 @@
-import { GradientFlow } from './layer';
 import type { GradientFlowConfig } from './layer';
+import { GradientFlow } from './layer';
 import type { Effect } from '../effect';
 
 export function createGradientFlow(config?: GradientFlowConfig): Effect<GradientFlowConfig> {

@@ -243,10 +243,23 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 ctx.beginPath();
                 ctx.moveTo(rx, ry);
                 let rem = drawn;
-                const top = Math.min(rem, rw); ctx.lineTo(rx + top, ry); rem -= top;
-                if (rem > 0) { const r = Math.min(rem, rh); ctx.lineTo(rx + rw, ry + r); rem -= r; }
-                if (rem > 0) { const b = Math.min(rem, rw); ctx.lineTo(rx + rw - b, ry + rh); rem -= b; }
-                if (rem > 0) { const l = Math.min(rem, rh); ctx.lineTo(rx, ry + rh - l); }
+                const top = Math.min(rem, rw);
+                ctx.lineTo(rx + top, ry);
+                rem -= top;
+                if (rem > 0) {
+                    const r = Math.min(rem, rh);
+                    ctx.lineTo(rx + rw, ry + r);
+                    rem -= r;
+                }
+                if (rem > 0) {
+                    const b = Math.min(rem, rw);
+                    ctx.lineTo(rx + rw - b, ry + rh);
+                    rem -= b;
+                }
+                if (rem > 0) {
+                    const l = Math.min(rem, rh);
+                    ctx.lineTo(rx, ry + rh - l);
+                }
                 ctx.stroke();
                 break;
             }
@@ -264,8 +277,10 @@ export class Blueprint extends Effect<BlueprintConfig> {
                     ctx.lineWidth = 0.7 * s;
                     ctx.setLineDash([3 * s, 3 * s]);
                     ctx.beginPath();
-                    ctx.moveTo(cx - markSize * 1.6, cy); ctx.lineTo(cx + markSize * 1.6, cy);
-                    ctx.moveTo(cx, cy - markSize * 1.6); ctx.lineTo(cx, cy + markSize * 1.6);
+                    ctx.moveTo(cx - markSize * 1.6, cy);
+                    ctx.lineTo(cx + markSize * 1.6, cy);
+                    ctx.moveTo(cx, cy - markSize * 1.6);
+                    ctx.lineTo(cx, cy + markSize * 1.6);
                     ctx.stroke();
                     ctx.setLineDash([]);
                 }
@@ -370,7 +385,10 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 const dy = cy - existing.cy;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 const minDist = (size + existing.size) * MIN_SEPARATION;
-                if (dist < minDist) { tooClose = true; break; }
+                if (dist < minDist) {
+                    tooClose = true;
+                    break;
+                }
             }
 
             if (!tooClose) {
@@ -382,7 +400,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                     opacity: 0,
                     cx,
                     cy,
-                    size,
+                    size
                 };
                 this.#generateContent(drawing);
                 return drawing;
@@ -394,23 +412,39 @@ export class Blueprint extends Effect<BlueprintConfig> {
 
     #generateContent(drawing: BlueprintDrawing): void {
         const s = this.#vscale;
-        const { cx, cy, size } = drawing;
+        const {cx, cy, size} = drawing;
         const type = Math.floor(MULBERRY.next() * 8);
 
         switch (type) {
-            case 0: this.#generateConcentricRings(drawing, cx, cy, size, s); break;
-            case 1: this.#generatePolygon(drawing, cx, cy, size, s); break;
-            case 2: this.#generateFrameWithCutouts(drawing, cx, cy, size, s); break;
-            case 3: this.#generateRadialArray(drawing, cx, cy, size, s); break;
-            case 4: this.#generateProfile(drawing, cx, cy, size, s); break;
-            case 5: this.#generateConstruction(drawing, cx, cy, size, s); break;
-            case 6: this.#generateOrthographicViews(drawing, cx, cy, size, s); break;
-            case 7: this.#generateNestedShapes(drawing, cx, cy, size, s); break;
+            case 0:
+                this.#generateConcentricRings(drawing, cx, cy, size, s);
+                break;
+            case 1:
+                this.#generatePolygon(drawing, cx, cy, size, s);
+                break;
+            case 2:
+                this.#generateFrameWithCutouts(drawing, cx, cy, size, s);
+                break;
+            case 3:
+                this.#generateRadialArray(drawing, cx, cy, size, s);
+                break;
+            case 4:
+                this.#generateProfile(drawing, cx, cy, size, s);
+                break;
+            case 5:
+                this.#generateConstruction(drawing, cx, cy, size, s);
+                break;
+            case 6:
+                this.#generateOrthographicViews(drawing, cx, cy, size, s);
+                break;
+            case 7:
+                this.#generateNestedShapes(drawing, cx, cy, size, s);
+                break;
         }
     }
 
     #add(drawing: BlueprintDrawing, type: BlueprintElement['type'], points: number[]): void {
-        drawing.elements.push({ type, points, progress: 0 });
+        drawing.elements.push({type, points, progress: 0});
     }
 
 
@@ -443,7 +477,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 const angle = rotation + (index / spokeCount) * TWO_PI;
                 this.#add(drawing, 'line', [
                     cx + Math.cos(angle) * innerR, cy + Math.sin(angle) * innerR,
-                    cx + Math.cos(angle) * maxR, cy + Math.sin(angle) * maxR,
+                    cx + Math.cos(angle) * maxR, cy + Math.sin(angle) * maxR
                 ]);
             }
         }
@@ -623,7 +657,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                     cx + Math.cos(angle) * centerR,
                     cy + Math.sin(angle) * centerR,
                     ex,
-                    ey,
+                    ey
                 ]);
             }
         }
@@ -658,7 +692,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 ox + t, oy + t,
                 ox + t, oy + h,
                 ox, oy + h,
-                ox, oy,
+                ox, oy
             ];
         } else if (profileType === 1) {
             // T-shape (flange on top).
@@ -674,7 +708,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 webX, oy + h,
                 webX, oy + flangeH,
                 ox, oy + flangeH,
-                ox, oy,
+                ox, oy
             ];
             this.#add(drawing, 'dashed', [cx, oy - 10 * s, cx, oy + h + 10 * s]);
         } else if (profileType === 2) {
@@ -688,7 +722,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 ox + w, oy,
                 ox + w, oy + h,
                 ox, oy + h,
-                ox, oy,
+                ox, oy
             ];
             this.#add(drawing, 'dashed', [cx, oy - 10 * s, cx, oy + h + 10 * s]);
         } else {
@@ -703,7 +737,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                 ox + w * 0.35, oy + h,
                 ox + w * 0.35, midY,
                 ox, midY,
-                ox, oy,
+                ox, oy
             ];
         }
 
@@ -723,7 +757,8 @@ export class Blueprint extends Effect<BlueprintConfig> {
             if (clipX2 > clipX1) {
                 this.#add(drawing, 'line', [clipX1, hy1 + (clipX1 - hx1), clipX2, hy1 + (clipX2 - hx1)]);
             }
-            void hx2; void hy2;
+            void hx2;
+            void hy2;
         }
 
         // Dimensions.
@@ -874,7 +909,7 @@ export class Blueprint extends Effect<BlueprintConfig> {
                     const angle2 = nextRot + (conn / sides) * TWO_PI;
                     this.#add(drawing, 'dashed', [
                         cx + Math.cos(angle1) * r, cy + Math.sin(angle1) * r,
-                        cx + Math.cos(angle2) * nextR, cy + Math.sin(angle2) * nextR,
+                        cx + Math.cos(angle2) * nextR, cy + Math.sin(angle2) * nextR
                     ]);
                 }
             }

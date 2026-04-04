@@ -1,5 +1,5 @@
-import { BlackHole } from './layer';
 import type { BlackHoleConfig } from './layer';
+import { BlackHole } from './layer';
 import type { Effect } from '../effect';
 
 export function createBlackHole(config?: BlackHoleConfig): Effect<BlackHoleConfig> {

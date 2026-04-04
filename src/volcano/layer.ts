@@ -80,9 +80,13 @@ export class Volcano extends Effect<VolcanoConfig> {
 
         for (let i = 0; i < this.#particles.length; i++) {
             const t = this.#particles[i].type;
-            if (t === 'lava') { lavaCount++; }
-            else if (t === 'ember') { emberCount++; }
-            else { smokeCount++; }
+            if (t === 'lava') {
+                lavaCount++;
+            } else if (t === 'ember') {
+                emberCount++;
+            } else {
+                smokeCount++;
+            }
         }
 
         if (lavaCount < this.#maxProjectiles && MULBERRY.next() < 0.15 * this.#intensity * dt) {

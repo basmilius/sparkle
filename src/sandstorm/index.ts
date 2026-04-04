@@ -1,5 +1,5 @@
-import { Sandstorm } from './layer';
 import type { SandstormConfig } from './layer';
+import { Sandstorm } from './layer';
 import type { Effect } from '../effect';
 
 export function createSandstorm(config?: SandstormConfig): Effect<SandstormConfig> {

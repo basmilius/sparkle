@@ -1,5 +1,5 @@
-import { Tornado } from './layer';
 import type { TornadoConfig } from './layer';
+import { Tornado } from './layer';
 import type { Effect } from '../effect';
 
 export function createTornado(config?: TornadoConfig): Effect<TornadoConfig> {

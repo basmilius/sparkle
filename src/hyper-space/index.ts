@@ -1,5 +1,5 @@
-import { HyperSpace } from './layer';
 import type { HyperSpaceConfig } from './layer';
+import { HyperSpace } from './layer';
 import type { Effect } from '../effect';
 
 export function createHyperSpace(config?: HyperSpaceConfig): Effect<HyperSpaceConfig> {

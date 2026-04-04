@@ -1,5 +1,5 @@
-import { Streamers } from './layer';
 import type { StreamersConfig } from './layer';
+import { Streamers } from './layer';
 import type { Effect } from '../effect';
 
 export function createStreamers(config?: StreamersConfig): Effect<StreamersConfig> {

@@ -186,10 +186,18 @@ export class Boids extends Effect<BoidsConfig> {
 
             boid.angle = Math.atan2(boid.vy, boid.vx);
 
-            if (boid.x < -10) { boid.x += width + 10; }
-            if (boid.x > width + 10) { boid.x -= width + 10; }
-            if (boid.y < -10) { boid.y += height + 10; }
-            if (boid.y > height + 10) { boid.y -= height + 10; }
+            if (boid.x < -10) {
+                boid.x += width + 10;
+            }
+            if (boid.x > width + 10) {
+                boid.x -= width + 10;
+            }
+            if (boid.y < -10) {
+                boid.y += height + 10;
+            }
+            if (boid.y > height + 10) {
+                boid.y -= height + 10;
+            }
         }
     }
 

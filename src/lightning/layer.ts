@@ -32,7 +32,7 @@ export class Lightning extends Effect<LightningConfig> {
         const branches = config.branches;
         const flash = config.flash;
 
-        this.#system.update({ frequency, color, branches, flash });
+        this.#system.update({frequency, color, branches, flash});
     }
 
     tick(dt: number, _width: number, _height: number): void {

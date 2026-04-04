@@ -1,5 +1,5 @@
-import { Petals } from './layer';
 import type { PetalsConfig } from './layer';
+import { Petals } from './layer';
 import type { Effect } from '../effect';
 
 export function createPetals(config?: PetalsConfig): Effect<PetalsConfig> {

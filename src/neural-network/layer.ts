@@ -116,7 +116,7 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
                 fireTimer: MULBERRY.next() * 4,
                 fireInterval: 2.0 + MULBERRY.next() * 3.0,
                 arms,
-                connections: [],
+                connections: []
             });
         }
 
@@ -177,7 +177,7 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
             }
         }
 
-        return { toX, toY, cpX, cpY, thickness, children };
+        return {toX, toY, cpX, cpY, thickness, children};
     }
 
     tick(dt: number): void {
@@ -371,7 +371,7 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
                 toY: target.y,
                 cpX: (cell.x + target.x) / 2 + (-dy / len) * curve,
                 cpY: (cell.y + target.y) / 2 + (dx / len) * curve,
-                t: 0,
+                t: 0
             });
         }
     }

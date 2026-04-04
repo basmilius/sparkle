@@ -1,5 +1,5 @@
-import { Fireflies } from './layer';
 import type { FirefliesConfig } from './layer';
+import { Fireflies } from './layer';
 import type { Effect } from '../effect';
 
 export function createFireflies(config?: FirefliesConfig): Effect<FirefliesConfig> {

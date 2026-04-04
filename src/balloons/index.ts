@@ -1,5 +1,5 @@
-import { Balloons } from './layer';
 import type { BalloonsConfig } from './layer';
+import { Balloons } from './layer';
 import type { Effect } from '../effect';
 
 export function createBalloons(config?: BalloonsConfig): Effect<BalloonsConfig> {

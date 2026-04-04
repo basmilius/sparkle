@@ -1,5 +1,5 @@
-import { Stars } from './layer';
 import type { StarsConfig } from './layer';
+import { Stars } from './layer';
 import type { Effect } from '../effect';
 
 export function createStars(config?: StarsConfig): Effect<StarsConfig> {

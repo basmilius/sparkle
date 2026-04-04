@@ -1,5 +1,5 @@
-import { SoundWaves } from './layer';
 import type { SoundWavesConfig } from './layer';
+import { SoundWaves } from './layer';
 import type { Effect } from '../effect';
 
 export function createSoundWaves(config?: SoundWavesConfig): Effect<SoundWavesConfig> {
