@@ -6,30 +6,34 @@ export interface Category {
 export const CATEGORIES: Category[] = [
     {
         label: 'Celebration',
-        ids: ['fireworks', 'confetti', 'balloons', 'streamers', 'glitter', 'lanterns', 'sparklers', 'popcorn']
+        ids: ['balloons', 'confetti', 'fireworks', 'glitter', 'lanterns', 'popcorn', 'sparklers', 'streamers']
+    },
+    {
+        label: 'Weather',
+        ids: ['aurora', 'clouds', 'lightning', 'rain', 'sandstorm', 'smoke', 'snow', 'tornado', 'volcano']
     },
     {
         label: 'Nature',
-        ids: ['snow', 'rain', 'aurora', 'leaves', 'petals', 'fireflies', 'bubbles', 'waves', 'lightning', 'sandstorm', 'smoke', 'butterflies', 'clouds', 'tornado', 'volcano', 'coral-reef', 'pollen', 'crystallization']
+        ids: ['boids', 'butterflies', 'coral-reef', 'crystallization', 'fireflies', 'leaves', 'murmuration', 'petals', 'pollen', 'roots']
     },
     {
         label: 'Space',
-        ids: ['nebula', 'black-hole', 'hyper-space', 'portal']
+        ids: ['black-hole', 'hyper-space', 'nebula', 'orbits', 'portal', 'stars', 'wormhole']
     },
     {
-        label: 'Ambient',
-        ids: ['stars', 'particles', 'firepit', 'plasma', 'orbits', 'lava', 'neon', 'pulse-grid', 'caustics', 'gradient-flow', 'interference', 'topography', 'voronoi', 'neural-network']
+        label: 'Fluid & Fire',
+        ids: ['bubbles', 'caustics', 'firepit', 'fluid', 'lava', 'waves']
     },
     {
-        label: 'Organic',
-        ids: ['boids', 'roots', 'murmuration', 'primordial-soup']
+        label: 'Digital',
+        ids: ['blueprint', 'digital-rain', 'glitch', 'hologram', 'matrix', 'neural-network', 'neon']
     },
     {
-        label: 'Stylized',
-        ids: ['matrix', 'wormhole', 'donuts', 'glitch', 'hologram', 'digital-rain', 'kaleidoscope', 'blueprint']
+        label: 'Simulation',
+        ids: ['interference', 'magnetic-sand', 'particles', 'primordial-soup', 'pulse-grid', 'sound-waves']
     },
     {
         label: 'Abstract',
-        ids: ['fluid', 'spirograph', 'sound-waves', 'magnetic-sand']
+        ids: ['donuts', 'gradient-flow', 'kaleidoscope', 'plasma', 'spirograph', 'topography', 'voronoi']
     }
 ];

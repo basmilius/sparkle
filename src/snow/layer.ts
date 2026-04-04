@@ -33,7 +33,7 @@ export class Snow extends Effect<SnowConfig> {
         this.#scale = config.scale ?? 1;
         this.#maxParticles = config.particles ?? 200;
         this.#size = (config.size ?? 9) * this.#scale;
-        this.#speed = config.speed ?? 2;
+        this.#speed = config.speed ?? 1;
 
         const {r, g, b, a} = parseColor(config.fillStyle ?? 'rgb(255 255 255 / .75)');
         this.#baseOpacity = a;

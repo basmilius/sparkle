@@ -199,14 +199,14 @@ export class LimitedFrameRateCanvas {
         const boxWidth = textWidth + paddingX * 2;
         const boxHeight = 11 + paddingY * 2;
 
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        ctx.fillStyle = '#080808';
         ctx.beginPath();
         ctx.roundRect(x, y, boxWidth, boxHeight, 3);
         ctx.fill();
 
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillStyle = '#fff';
         ctx.textBaseline = 'middle';
-        ctx.fillText(text, x + paddingX, y + boxHeight / 1.9);
+        ctx.fillText(text, x + paddingX, y + boxHeight / 1.85);
         ctx.restore();
     }
 
