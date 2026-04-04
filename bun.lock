@@ -9,15 +9,24 @@
       },
       "devDependencies": {
         "@types/node": "^25.5.0",
-        "@vitejs/plugin-vue": "^5.2.1",
         "tsdown": "^0.21.4",
         "typescript": "^6.0.2",
-        "vite": "^8.0.3",
         "vitepress": "^1.6.3",
         "vitepress-plugin-example": "^1.4.0",
         "vitepress-plugin-render": "^1.4.0",
+      },
+    },
+    "dev": {
+      "name": "@basmilius/sparkle-dev",
+      "version": "0.0.0",
+      "dependencies": {
         "vue": "^3.5.13",
         "vue-router": "^4.5.0",
+      },
+      "devDependencies": {
+        "@vitejs/plugin-vue": "^5.2.1",
+        "typescript": "^6.0.2",
+        "vite": "^8.0.3",
       },
     },
   },
@@ -67,6 +76,8 @@
     "@babel/parser": ["@babel/parser@8.0.0-rc.3", "", { "dependencies": { "@babel/types": "^8.0.0-rc.3" }, "bin": "./bin/babel-parser.js" }, "sha512-B20dvP3MfNc/XS5KKCHy/oyWl5IA6Cn9YjXRdDlCjNmUFrjvLXMNUfQq/QUy9fnG2gYkKKcrto2YaF9B32ToOQ=="],
 
     "@babel/types": ["@babel/types@8.0.0-rc.3", "", { "dependencies": { "@babel/helper-string-parser": "^8.0.0-rc.3", "@babel/helper-validator-identifier": "^8.0.0-rc.3" } }, "sha512-mOm5ZrYmphGfqVWoH5YYMTITb3cDXsFgmvFlvkvWDMsR9X8RFnt7a0Wb6yNIdoFsiMO9WjYLq+U/FMtqIYAF8Q=="],
+
+    "@basmilius/sparkle-dev": ["@basmilius/sparkle-dev@workspace:dev"],
 
     "@basmilius/utils": ["@basmilius/utils@3.15.0", "", { "dependencies": { "luxon": "^3.7.2" } }, "sha512-ADFzJXrCA4extvfaK3Tq0SI2TQPPAT7WGZxctSBAgEecY4ZEVyNd1tHhT8LdjYzLieXEH4eBPAsMHP/WkDYnVQ=="],
 

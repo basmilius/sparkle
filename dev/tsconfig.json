@@ -3,7 +3,7 @@
         "target": "esnext",
         "useDefineForClassFields": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "strict": true,
         "jsx": "preserve",
         "resolveJsonModule": true,
@@ -14,25 +14,17 @@
             "dom"
         ],
         "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true,
         "paths": {
-            "$flux/*": [
-                "../node_modules/@flux-ui/components/src/*"
-            ],
-            "$fluxDashboard/*": [
-                "../node_modules/@flux-ui/dashboard/src/*"
-            ],
-            "$fluxStatistics/*": [
-                "/Users/bas/Development/Projects/flux/docs/node_modules/@flux-ui/statistics/src/*"
+            "@basmilius/sparkle": [
+                "../src/index.ts"
             ]
         }
     },
     "include": [
-        "./**/*.ts",
-        "./**/*.vue"
+        "src/**/*.ts",
+        "src/**/*.vue"
     ],
     "exclude": [
-        "dist",
         "node_modules"
     ],
     "references": [

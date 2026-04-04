@@ -12,9 +12,12 @@
         "type": "git",
         "url": "https://github.com/basmilius/sparkle.git"
     },
+    "workspaces": [
+        "dev"
+    ],
     "scripts": {
         "build": "tsdown",
-        "dev": "vite",
+        "dev": "cd dev && bun run dev",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs"
     },
@@ -45,14 +48,10 @@
     },
     "devDependencies": {
         "@types/node": "^25.5.0",
-        "@vitejs/plugin-vue": "^5.2.1",
         "tsdown": "^0.21.4",
         "typescript": "^6.0.2",
-        "vite": "^8.0.3",
         "vitepress": "^1.6.3",
         "vitepress-plugin-example": "^1.4.0",
-        "vitepress-plugin-render": "^1.4.0",
-        "vue": "^3.5.13",
-        "vue-router": "^4.5.0"
+        "vitepress-plugin-render": "^1.4.0"
     }
 }
