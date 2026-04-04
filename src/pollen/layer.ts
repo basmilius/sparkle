@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -41,7 +42,7 @@ export class Pollen extends Effect<PollenConfig> {
         this.#wind = config.wind ?? 0.3;
         this.#glowSize = config.glowSize ?? 2;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

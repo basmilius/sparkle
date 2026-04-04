@@ -1,3 +1,5 @@
+import { isSmallScreen } from './mobile';
+
 export class LimitedFrameRateCanvas {
     static #globalSpeed: number = 1;
     static #globalFrameRate: number | null = null;
@@ -84,7 +86,7 @@ export class LimitedFrameRateCanvas {
     }
 
     get isSmall(): boolean {
-        return innerWidth < 991; // dirty little fix :-)
+        return isSmallScreen(); // dirty little fix :-)
     }
 
     get isTicking(): boolean {

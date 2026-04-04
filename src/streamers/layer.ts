@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY, STREAMER_COLORS } from './consts';
 import type { Streamer } from './types';
@@ -27,7 +28,7 @@ export class Streamers extends Effect<StreamersConfig> {
         this.#speed = config.speed ?? 1;
         this.#count = config.count ?? 20;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#count = Math.floor(this.#count / 2);
         }
     }

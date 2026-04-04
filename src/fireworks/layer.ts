@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import type { Point } from '../point';
 import { MULBERRY } from './consts';
@@ -61,7 +62,7 @@ export class Fireworks extends Effect<FireworksConfig> {
         this.#height = height;
         this.#spawnTimer += dt;
 
-        const isSmall = innerWidth < 991;
+        const isSmall = isSmallScreen();
         const spawnInterval = isSmall ? 60 : 30;
 
         if (this.#autoSpawn && this.#fireworks.length < 6 && this.#spawnTimer >= spawnInterval) {

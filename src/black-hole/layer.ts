@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { BlackHoleParticle } from './types';
@@ -36,7 +37,7 @@ export class BlackHole extends Effect<BlackHoleConfig> {
         this.#colorG = parsed[1];
         this.#colorB = parsed[2];
 
-        if (typeof globalThis.innerWidth !== 'undefined' && globalThis.innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
     }

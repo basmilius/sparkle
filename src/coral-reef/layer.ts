@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { CoralAnemone, CoralBubble, CoralJellyfish } from './types';
@@ -37,7 +38,7 @@ export class CoralReef extends Effect<CoralReefConfig> {
         this.#maxJellyfish = config.jellyfish ?? 5;
         this.#maxBubbles = config.bubbles ?? 20;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxAnemones = Math.floor(this.#maxAnemones / 2);
             this.#maxJellyfish = Math.floor(this.#maxJellyfish / 2);
             this.#maxBubbles = Math.floor(this.#maxBubbles / 2);

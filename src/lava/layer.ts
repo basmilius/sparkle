@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -32,7 +33,7 @@ export class Lava extends Effect<LavaConfig> {
         this.#count = config.count ?? 12;
         this.#colors = config.colors ?? [...DEFAULT_COLORS];
 
-        if (typeof innerWidth !== 'undefined' && innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#count = Math.floor(this.#count * 0.7);
         }
 

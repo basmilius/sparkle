@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -37,7 +38,7 @@ export class Tornado extends Effect<TornadoConfig> {
         let particleCount = 400;
         let debrisCount = config.debris ?? 40;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             particleCount = Math.floor(particleCount / 2);
             debrisCount = Math.floor(debrisCount / 2);
         }

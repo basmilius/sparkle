@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { LEAF_COLORS, MULBERRY } from './consts';
 import type { Leaf, LeavesConfig } from './types';
@@ -24,7 +25,7 @@ export class Leaves extends Effect<LeavesConfig> {
         this.#wind = config.wind ?? 0.3;
         this.#colors = config.colors ?? LEAF_COLORS;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 
@@ -89,6 +90,7 @@ export class Leaves extends Effect<LeavesConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        const base = ctx.getTransform();
 
         for (const leaf of this.#leaves) {
             const px = leaf.x * width;
@@ -97,9 +99,17 @@ export class Leaves extends Effect<LeavesConfig> {
             const scaleX = Math.cos(leaf.flipAngle);
             const cos = Math.cos(leaf.rotation);
             const sin = Math.sin(leaf.rotation);
+            const a = cos * scaleX;
+            const b = sin * scaleX;
 
-            ctx.save();
-            ctx.transform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
+            ctx.setTransform(
+                base.a * a + base.c * b,
+                base.b * a + base.d * b,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * px + base.c * py + base.e,
+                base.b * px + base.d * py + base.f
+            );
             ctx.globalAlpha = 0.3 + leaf.depth * 0.7;
             ctx.drawImage(
                 this.#sprites[leaf.colorIndex % this.#sprites.length],
@@ -108,9 +118,9 @@ export class Leaves extends Effect<LeavesConfig> {
                 displaySize,
                 displaySize
             );
-            ctx.restore();
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 

@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { NebulaBlob, NebulaStar } from './types';
@@ -28,7 +29,7 @@ export class Nebula extends Effect<NebulaConfig> {
         this.#colors = config.colors ?? DEFAULT_COLORS;
         this.#maxStars = config.starCount ?? 150;
 
-        if (typeof globalThis.innerWidth !== 'undefined' && globalThis.innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxStars = Math.floor(this.#maxStars / 2);
         }
 

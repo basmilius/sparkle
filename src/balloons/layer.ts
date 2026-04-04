@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -39,7 +40,7 @@ export class Balloons extends Effect<BalloonsConfig> {
         const colors = config.colors ?? DEFAULT_COLORS;
         this.#colorRGBs = colors.map(c => hexToRGB(c));
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

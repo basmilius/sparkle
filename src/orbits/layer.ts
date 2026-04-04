@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY, ORBIT_COLORS } from './consts';
@@ -41,7 +42,7 @@ export class Orbits extends Effect<OrbitsConfig> {
                 });
             }
 
-            const count = innerWidth < 991
+            const count = isSmallScreen()
                 ? Math.floor(this.#orbitersPerCenter / 2)
                 : this.#orbitersPerCenter;
 

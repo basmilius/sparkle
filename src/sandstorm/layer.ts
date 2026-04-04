@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -38,7 +39,7 @@ export class Sandstorm extends Effect<SandstormConfig> {
         this.#colorG = g;
         this.#colorB = b;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

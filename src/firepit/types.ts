@@ -8,6 +8,7 @@ export type Ember = {
     maxLife: number;
     brightness: number;
     flicker: number;
+    sprite: HTMLCanvasElement;
 };
 
 export type FlameLayer = {

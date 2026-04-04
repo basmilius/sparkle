@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -32,7 +33,7 @@ export class Wormhole extends Effect<WormholeConfig> {
         this.#direction = config.direction ?? 'inward';
         this.#scale = config.scale ?? 1;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             count = Math.floor(count / 2);
         }
 

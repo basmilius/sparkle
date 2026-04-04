@@ -497,7 +497,7 @@ export const SIMULATORS: SimulatorDef[] = [
             speed: 1,
             wind: 0.5,
             scale: 1,
-            size: 24
+            size: 30
         },
         liveKeys: ['speed', 'wind'],
         schema: [

@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -37,7 +38,7 @@ export class Fireflies extends Effect<FirefliesConfig> {
 
         const {r, g, b} = parseColor(config.color ?? '#b4ff6a');
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

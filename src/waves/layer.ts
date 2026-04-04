@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -34,7 +35,7 @@ export class Waves extends Effect<WavesConfig> {
         this.#maxFoamParticles = 120;
         this.#foamRGB = hexToRGB(config.foamColor ?? '#ffffff');
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxFoamParticles = Math.floor(this.#maxFoamParticles / 2);
         }
 

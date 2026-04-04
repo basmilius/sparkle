@@ -83,27 +83,31 @@ export class Confetti extends Effect<ConfettiConfig> {
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
 
         const particles = this.#particles;
+        const base = ctx.getTransform();
 
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const flipCos = Math.cos(p.flipAngle);
             const size = p.size;
+            const a = p.rotCos * flipCos * size;
+            const b = p.rotSin * flipCos * size;
+            const c = -p.rotSin * size;
+            const d = p.rotCos * size;
 
-            ctx.save();
-            ctx.transform(
-                p.rotCos * flipCos * size,
-                p.rotSin * flipCos * size,
-                -p.rotSin * size,
-                p.rotCos * size,
-                p.x,
-                p.y
+            ctx.setTransform(
+                base.a * a + base.c * b,
+                base.b * a + base.d * b,
+                base.a * c + base.c * d,
+                base.b * c + base.d * d,
+                base.a * p.x + base.c * p.y + base.e,
+                base.b * p.x + base.d * p.y + base.f
             );
             ctx.globalAlpha = 1 - p.tick / p.totalTicks;
             ctx.fillStyle = p.colorStr;
             ctx.fill(SHAPE_PATHS[p.shape]);
-            ctx.restore();
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 

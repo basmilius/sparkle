@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MAX_FORCE, MAX_SPEED, MULBERRY, PERCEPTION_RADIUS, SEPARATION_RADIUS } from './consts';
@@ -70,7 +71,7 @@ export class Boids extends Effect<BoidsConfig> {
         if (!this.#initialized && width > 0 && height > 0) {
             this.#initialized = true;
             this.#boids = [];
-            const count = innerWidth < 991 ? Math.floor(this.#count / 2) : this.#count;
+            const count = isSmallScreen() ? Math.floor(this.#count / 2) : this.#count;
             for (let i = 0; i < count; i++) {
                 this.#boids.push(this.#createBoid());
             }
@@ -209,12 +210,20 @@ export class Boids extends Effect<BoidsConfig> {
         ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
         ctx.lineWidth = 0.5;
 
+        const base = ctx.getTransform();
+
         for (const boid of this.#boids) {
             const cos = Math.cos(boid.angle);
             const sin = Math.sin(boid.angle);
 
-            ctx.save();
-            ctx.transform(cos, sin, -sin, cos, boid.x, boid.y);
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * boid.x + base.c * boid.y + base.e,
+                base.b * boid.x + base.d * boid.y + base.f
+            );
 
             ctx.beginPath();
             ctx.moveTo(size, 0);
@@ -224,10 +233,9 @@ export class Boids extends Effect<BoidsConfig> {
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
-
-            ctx.restore();
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 

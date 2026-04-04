@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -44,7 +45,7 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
         const colors = config.colors ?? DEFAULT_COLORS;
         this.#colorsRGB = colors.map((color) => hexToRGB(color));
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCells = Math.floor(this.#maxCells / 2);
         }
     }

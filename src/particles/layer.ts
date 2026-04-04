@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -68,7 +69,7 @@ export class Particles extends Effect<ParticlesConfig> {
         this.#sizeRange = config.size ?? [1, 3];
         this.#speedRange = config.speed ?? [0.2, 0.8];
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

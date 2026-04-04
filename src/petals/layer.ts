@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY, PETAL_COLORS } from './consts';
 import type { Petal } from './types';
@@ -27,12 +28,12 @@ export class Petals extends Effect<PetalsConfig> {
 
         this.#scale = config.scale ?? 1;
         this.#maxCount = config.count ?? 100;
-        this.#size = (config.size ?? 24) * this.#scale;
+        this.#size = (config.size ?? 30) * this.#scale;
         this.#speed = config.speed ?? 0.7;
         this.#wind = config.wind ?? 0.15;
         this.#colors = config.colors ?? PETAL_COLORS;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 
@@ -89,6 +90,7 @@ export class Petals extends Effect<PetalsConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        const base = ctx.getTransform();
 
         for (const petal of this.#petals) {
             const px = petal.x * width;
@@ -97,9 +99,17 @@ export class Petals extends Effect<PetalsConfig> {
             const scaleX = Math.cos(petal.flipAngle);
             const cos = Math.cos(petal.rotation);
             const sin = Math.sin(petal.rotation);
+            const a = cos * scaleX;
+            const b = sin * scaleX;
 
-            ctx.save();
-            ctx.transform(cos * scaleX, sin * scaleX, -sin, cos, px, py);
+            ctx.setTransform(
+                base.a * a + base.c * b,
+                base.b * a + base.d * b,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * px + base.c * py + base.e,
+                base.b * px + base.d * py + base.f
+            );
             ctx.globalAlpha = 0.4 + petal.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[petal.colorIndex % this.#sprites.length],
@@ -108,9 +118,9 @@ export class Petals extends Effect<PetalsConfig> {
                 displaySize,
                 displaySize
             );
-            ctx.restore();
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 

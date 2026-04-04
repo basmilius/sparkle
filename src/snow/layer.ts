@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -38,7 +39,7 @@ export class Snow extends Effect<SnowConfig> {
         const {r, g, b, a} = parseColor(config.fillStyle ?? 'rgb(255 255 255 / .75)');
         this.#baseOpacity = a;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxParticles = Math.floor(this.#maxParticles / 2);
         }
 

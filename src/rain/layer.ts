@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -51,7 +52,7 @@ export class Rain extends Effect<RainConfig> {
         this.#colorG = g;
         this.#colorB = b;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxDrops = Math.floor(this.#maxDrops / 2);
         }
 

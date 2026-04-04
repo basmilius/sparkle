@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { MurmurationBird } from './types';
@@ -45,7 +46,7 @@ export class Murmuration extends Effect<MurmurationConfig> {
         this.#color = config.color ?? '#1a1a2e';
         this.#maxCount = config.count ?? 300;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
     }

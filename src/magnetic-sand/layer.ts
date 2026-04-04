@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -38,7 +39,7 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         this.#maxCount = config.count ?? 600;
         this.#colorRGB = hexToRGB(config.color ?? '#888888');
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 

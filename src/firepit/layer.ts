@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Ember, FlameLayer } from './types';
@@ -29,7 +30,7 @@ export class Firepit extends Effect<FirepitConfig> {
         this.#flameHeight = config.flameHeight ?? 0.35;
         this.#intensity = config.intensity ?? 1;
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxEmbers = Math.floor(this.#maxEmbers / 2);
         }
 
@@ -155,28 +156,19 @@ export class Firepit extends Effect<FirepitConfig> {
                 continue;
             }
 
-            const gradient = ctx.createRadialGradient(px, py, 0, px, py, size * 3);
-            gradient.addColorStop(0, `rgba(255, ${180 + ember.brightness * 75}, ${50 + ember.brightness * 100}, ${alpha})`);
-            gradient.addColorStop(0.3, `rgba(255, ${120 + ember.brightness * 50}, 20, ${alpha * 0.5})`);
-            gradient.addColorStop(1, `rgba(255, 80, 0, 0)`);
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(px, py, size * 3, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = `rgba(255, ${200 + ember.brightness * 55}, ${100 + ember.brightness * 100}, ${alpha * 0.8})`;
-            ctx.beginPath();
-            ctx.arc(px, py, size * 0.5, 0, Math.PI * 2);
-            ctx.fill();
+            const spriteSize = size * 6;
+            ctx.globalAlpha = alpha;
+            ctx.drawImage(ember.sprite, px - spriteSize / 2, py - spriteSize / 2, spriteSize, spriteSize);
         }
 
+        ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = 'source-over';
     }
 
     #createEmber(): Ember {
         const baseY = 0.85;
         const maxLife = 60 + MULBERRY.next() * 120;
+        const brightness = MULBERRY.next();
 
         return {
             x: 0.5 + (MULBERRY.next() - 0.5) * this.#flameWidth * 0.6,
@@ -186,8 +178,34 @@ export class Firepit extends Effect<FirepitConfig> {
             size: (1 + MULBERRY.next() * 2.5) * this.#scale,
             life: maxLife,
             maxLife,
-            brightness: MULBERRY.next(),
-            flicker: 1
+            brightness,
+            flicker: 1,
+            sprite: this.#createEmberSprite(brightness)
         };
+    }
+
+    #createEmberSprite(brightness: number): HTMLCanvasElement {
+        const size = 64;
+        const center = size / 2;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d')!;
+
+        const g1 = Math.round(180 + brightness * 75);
+        const b1 = Math.round(50 + brightness * 100);
+        const g2 = Math.round(120 + brightness * 50);
+
+        const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
+        gradient.addColorStop(0, `rgba(255, ${g1}, ${b1}, 1)`);
+        gradient.addColorStop(0.3, `rgba(255, ${g2}, 20, 0.5)`);
+        gradient.addColorStop(1, `rgba(255, 80, 0, 0)`);
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(center, center, center, 0, Math.PI * 2);
+        ctx.fill();
+
+        return canvas;
     }
 }

@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MATRIX_CHARS, MULBERRY } from './consts';
@@ -26,7 +27,7 @@ export class Matrix extends Effect<MatrixConfig> {
         this.#trailLength = config.trailLength ?? 20;
         this.#colorRGB = hexToRGB(config.color ?? '#00ff41');
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxColumns = Math.floor(this.#maxColumns / 2);
         }
     }

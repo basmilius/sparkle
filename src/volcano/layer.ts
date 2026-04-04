@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { VolcanoProjectile } from './types';
@@ -36,7 +37,7 @@ export class Volcano extends Effect<VolcanoConfig> {
         this.#color = config.color ?? '#ff4400';
         this.#smokeColor = config.smokeColor ?? '#444444';
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxProjectiles = Math.floor(this.#maxProjectiles / 2);
             this.#maxEmbers = Math.floor(this.#maxEmbers / 2);
         }
@@ -64,9 +65,16 @@ export class Volcano extends Effect<VolcanoConfig> {
         const eruptX = width * 0.5;
         const eruptY = height * 0.85;
 
-        const lavaCount = this.#countByType('lava');
-        const emberCount = this.#countByType('ember');
-        const smokeCount = this.#countByType('smoke');
+        let lavaCount = 0;
+        let emberCount = 0;
+        let smokeCount = 0;
+
+        for (let i = 0; i < this.#particles.length; i++) {
+            const t = this.#particles[i].type;
+            if (t === 'lava') { lavaCount++; }
+            else if (t === 'ember') { emberCount++; }
+            else { smokeCount++; }
+        }
 
         if (lavaCount < this.#maxProjectiles && MULBERRY.next() < 0.15 * this.#intensity * dt) {
             this.#particles.push(this.#createLava(eruptX, eruptY));
@@ -203,18 +211,6 @@ export class Volcano extends Effect<VolcanoConfig> {
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
-    }
-
-    #countByType(type: VolcanoProjectile['type']): number {
-        let count = 0;
-
-        for (let i = 0; i < this.#particles.length; i++) {
-            if (this.#particles[i].type === type) {
-                count++;
-            }
-        }
-
-        return count;
     }
 
     #createLava(eruptX: number, eruptY: number): VolcanoProjectile {

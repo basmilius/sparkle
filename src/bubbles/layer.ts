@@ -1,3 +1,4 @@
+import { isSmallScreen } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -45,7 +46,7 @@ export class Bubbles extends Effect<BubblesConfig> {
         const colors = config.colors ?? DEFAULT_COLORS;
         this.#baseHues = colors.map(c => this.#colorToHue(c));
 
-        if (innerWidth < 991) {
+        if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
         }
 
