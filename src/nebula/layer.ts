@@ -1,5 +1,5 @@
-import { p3a } from '../color';
-import { isSmallScreen } from '../mobile';
+import { p3a, parseColor } from '../color';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { NebulaBlob, NebulaStar } from './types';
@@ -30,9 +30,7 @@ export class Nebula extends Effect<NebulaConfig> {
         this.#colors = config.colors ?? DEFAULT_COLORS;
         this.#maxStars = config.starCount ?? 150;
 
-        if (isSmallScreen()) {
-            this.#maxStars = Math.floor(this.#maxStars / 2);
-        }
+        this.#maxStars = mobileCount(this.#maxStars);
 
         this.#initBlobs();
         this.#initStars();
@@ -139,16 +137,8 @@ export class Nebula extends Effect<NebulaConfig> {
         }
     }
 
-    #colorWithAlpha(hex: string, alpha: number): string {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-
-        if (!result) {
-            return p3a(255, 255, 255, alpha);
-        }
-
-        const r = parseInt(result[1], 16);
-        const g = parseInt(result[2], 16);
-        const b = parseInt(result[3], 16);
+    #colorWithAlpha(color: string, alpha: number): string {
+        const {r, g, b} = parseColor(color);
         return p3a(r, g, b, alpha);
     }
 }

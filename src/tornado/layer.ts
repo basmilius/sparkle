@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { p3, parseColor } from '../color';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
@@ -40,10 +40,8 @@ export class Tornado extends Effect<TornadoConfig> {
         let particleCount = 400;
         let debrisCount = config.debris ?? 40;
 
-        if (isSmallScreen()) {
-            particleCount = Math.floor(particleCount / 2);
-            debrisCount = Math.floor(debrisCount / 2);
-        }
+        particleCount = mobileCount(particleCount);
+        debrisCount = mobileCount(debrisCount);
 
         this.#particleCount = particleCount;
         this.#debrisCount = debrisCount;

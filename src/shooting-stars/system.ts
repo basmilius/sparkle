@@ -1,3 +1,4 @@
+import { compactArray } from '../compact';
 import type { ShootingStar } from './types';
 
 export interface ShootingStarSystemConfig {
@@ -51,8 +52,6 @@ export class ShootingStarSystem {
             this.#cooldown = this.#interval[0] + this.#rng() * (this.#interval[1] - this.#interval[0]);
         }
 
-        let alive = 0;
-
         for (let i = 0; i < this.#stars.length; i++) {
             const star = this.#stars[i];
 
@@ -72,15 +71,11 @@ export class ShootingStarSystem {
             star.x += star.vx * this.#speed * dt;
             star.y += star.vy * this.#speed * dt;
             star.alpha -= star.decay * dt;
-
-            const inBounds = star.alpha > 0 && star.x > -50 && star.x < width + 50 && star.y < height + 50;
-
-            if (inBounds) {
-                this.#stars[alive++] = star;
-            }
         }
 
-        this.#stars.length = alive;
+        compactArray(this.#stars, star =>
+            star.alpha > 0 && star.x > -50 && star.x < width + 50 && star.y < height + 50
+        );
     }
 
     draw(ctx: CanvasRenderingContext2D): void {

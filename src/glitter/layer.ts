@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { p3a } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
@@ -31,9 +31,7 @@ export class Glitter extends Effect<GlitterConfig> {
         const colors = config.colors ?? GLITTER_COLORS;
         this.#colorRGBs = colors.map(c => hexToRGB(c));
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#falling.push(this.#createFallingPiece(true));

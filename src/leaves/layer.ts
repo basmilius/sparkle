@@ -1,5 +1,6 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { LEAF_COLORS, MULBERRY } from './consts';
 import type { Leaf, LeavesConfig } from './types';
 
@@ -25,9 +26,7 @@ export class Leaves extends Effect<LeavesConfig> {
         this.#wind = config.wind ?? 0.15;
         this.#colors = config.colors ?? LEAF_COLORS;
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         this.#sprites = this.#createSprites();
 
@@ -103,20 +102,8 @@ export class Leaves extends Effect<LeavesConfig> {
             const px = leaf.x * width;
             const py = leaf.y * height;
             const displaySize = leaf.size * leaf.depth;
-            const scaleX = Math.cos(leaf.flipAngle);
-            const cos = Math.cos(leaf.rotation);
-            const sin = Math.sin(leaf.rotation);
-            const a = cos * scaleX;
-            const b = sin * scaleX;
 
-            ctx.setTransform(
-                base.a * a + base.c * b,
-                base.b * a + base.d * b,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * px + base.c * py + base.e,
-                base.b * px + base.d * py + base.f
-            );
+            setRotatedTransform(ctx, base, px, py, leaf.rotation, Math.cos(leaf.flipAngle));
             ctx.globalAlpha = 0.4 + leaf.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[leaf.colorIndex % this.#sprites.length],

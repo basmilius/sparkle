@@ -1,5 +1,6 @@
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { MULBERRY } from './consts';
 import type { PopcornKernel } from './types';
 
@@ -133,18 +134,8 @@ export class Popcorn extends Effect<PopcornConfig> {
                 continue;
             }
 
-            const cos = Math.cos(kernel.rotation);
-            const sin = Math.sin(kernel.rotation);
-
             ctx.globalAlpha = alpha;
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * kernel.x + base.c * kernel.y + base.e,
-                base.b * kernel.x + base.d * kernel.y + base.f
-            );
+            setRotatedTransform(ctx, base, kernel.x, kernel.y, kernel.rotation);
 
             if (!kernel.popped) {
                 this.#drawUnpopped(ctx, kernel, red, green, blue);

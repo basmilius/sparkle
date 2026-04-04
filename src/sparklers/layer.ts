@@ -1,4 +1,5 @@
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { SparklerSpark } from './types';
@@ -123,7 +124,6 @@ export class Sparklers extends Effect<SparklersConfig> {
         }
 
         const frictionFactor = Math.pow(this.#friction, dt);
-        let alive = 0;
 
         for (let i = 0; i < this.#sparks.length; i++) {
             const spark = this.#sparks[i];
@@ -143,13 +143,9 @@ export class Sparklers extends Effect<SparklersConfig> {
             spark.y += spark.vy * dt;
 
             spark.alpha -= spark.decay * dt;
-
-            if (spark.alpha > 0) {
-                this.#sparks[alive++] = spark;
-            }
         }
 
-        this.#sparks.length = alive;
+        compactArray(this.#sparks, spark => spark.alpha > 0);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

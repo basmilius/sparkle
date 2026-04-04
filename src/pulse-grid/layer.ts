@@ -1,5 +1,6 @@
 import { p3 } from '../color';
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { PulseWave } from './types';
@@ -88,8 +89,6 @@ export class PulseGrid extends Effect<PulseGridConfig> {
         const dtSeconds = dt * 0.008 * this.#speed;
 
         // Update existing waves.
-        let writeIndex = 0;
-
         for (let index = 0; index < this.#waves.length; index++) {
             const wave = this.#waves[index];
             // Ease-out: slow down as the wave approaches max radius.
@@ -97,13 +96,9 @@ export class PulseGrid extends Effect<PulseGridConfig> {
             const easeOut = 1 - progress * 0.65;
             wave.radius += wave.speed * easeOut * dtSeconds;
             wave.life -= dtSeconds * 0.5;
-
-            if (wave.life > 0 && wave.radius < wave.maxRadius) {
-                this.#waves[writeIndex++] = wave;
-            }
         }
 
-        this.#waves.length = writeIndex;
+        compactArray(this.#waves, wave => wave.life > 0 && wave.radius < wave.maxRadius);
 
         // Spawn new waves periodically.
         this.#spawnTimer += dtSeconds;

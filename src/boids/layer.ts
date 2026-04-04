@@ -1,7 +1,8 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { p3, p3a, parseColor } from '../color';
 import { Effect } from '../effect';
 import { SpatialGrid } from '../grid';
+import { setRotatedTransform } from '../transform';
 import { MAX_FORCE, MAX_SPEED, MULBERRY, PERCEPTION_RADIUS, SEPARATION_RADIUS } from './consts';
 import type { Boid } from './types';
 
@@ -84,7 +85,7 @@ export class Boids extends Effect<BoidsConfig> {
         if (!this.#initialized && width > 0 && height > 0) {
             this.#initialized = true;
             this.#boids = [];
-            const count = isSmallScreen() ? Math.floor(this.#count / 2) : this.#count;
+            const count = mobileCount(this.#count);
             for (let i = 0; i < count; i++) {
                 this.#boids.push(this.#createBoid());
             }
@@ -213,22 +214,13 @@ export class Boids extends Effect<BoidsConfig> {
         const base = ctx.getTransform();
 
         for (const boid of sorted) {
-            const cos = Math.cos(boid.angle);
-            const sin = Math.sin(boid.angle);
             const scaledSize = this.#size * boid.depth;
 
             ctx.globalAlpha = 0.3 + boid.depth * 0.7;
             ctx.fillStyle = p3(r, g, b);
             ctx.strokeStyle = p3a(r, g, b, 0.4);
 
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * boid.x + base.c * boid.y + base.e,
-                base.b * boid.x + base.d * boid.y + base.f
-            );
+            setRotatedTransform(ctx, base, boid.x, boid.y, boid.angle);
 
             ctx.beginPath();
             ctx.moveTo(scaledSize, 0);

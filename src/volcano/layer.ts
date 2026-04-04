@@ -1,4 +1,5 @@
-import { isSmallScreen } from '../mobile';
+import { compactArray } from '../compact';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { VolcanoProjectile } from './types';
@@ -37,10 +38,8 @@ export class Volcano extends Effect<VolcanoConfig> {
         this.#color = config.color ?? '#ff4400';
         this.#smokeColor = config.smokeColor ?? '#444444';
 
-        if (isSmallScreen()) {
-            this.#maxProjectiles = Math.floor(this.#maxProjectiles / 2);
-            this.#maxEmbers = Math.floor(this.#maxEmbers / 2);
-        }
+        this.#maxProjectiles = mobileCount(this.#maxProjectiles);
+        this.#maxEmbers = mobileCount(this.#maxEmbers);
     }
 
     configure(config: Partial<VolcanoConfig>): void {
@@ -101,8 +100,6 @@ export class Volcano extends Effect<VolcanoConfig> {
             this.#particles.push(this.#createSmoke(eruptX, eruptY));
         }
 
-        let alive = 0;
-
         for (let i = 0; i < this.#particles.length; i++) {
             const particle = this.#particles[i];
 
@@ -121,13 +118,9 @@ export class Volcano extends Effect<VolcanoConfig> {
                 particle.vx += (MULBERRY.next() - 0.5) * 0.01 * dt;
                 particle.size += 0.03 * dt;
             }
-
-            if (particle.life < particle.maxLife) {
-                this.#particles[alive++] = particle;
-            }
         }
 
-        this.#particles.length = alive;
+        compactArray(this.#particles, particle => particle.life < particle.maxLife);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

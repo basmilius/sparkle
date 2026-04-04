@@ -1,5 +1,6 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { MULBERRY, PETAL_COLORS } from './consts';
 import type { Petal } from './types';
 
@@ -33,9 +34,7 @@ export class Petals extends Effect<PetalsConfig> {
         this.#wind = config.wind ?? 0.15;
         this.#colors = config.colors ?? PETAL_COLORS;
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         this.#sprites = this.#createSprites();
 
@@ -103,20 +102,8 @@ export class Petals extends Effect<PetalsConfig> {
             const px = petal.x * width;
             const py = petal.y * height;
             const displaySize = petal.size * petal.depth;
-            const scaleX = Math.cos(petal.flipAngle);
-            const cos = Math.cos(petal.rotation);
-            const sin = Math.sin(petal.rotation);
-            const a = cos * scaleX;
-            const b = sin * scaleX;
 
-            ctx.setTransform(
-                base.a * a + base.c * b,
-                base.b * a + base.d * b,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * px + base.c * py + base.e,
-                base.b * px + base.d * py + base.f
-            );
+            setRotatedTransform(ctx, base, px, py, petal.rotation, Math.cos(petal.flipAngle));
             ctx.globalAlpha = 0.4 + petal.depth * 0.6;
             ctx.drawImage(
                 this.#sprites[petal.colorIndex % this.#sprites.length],

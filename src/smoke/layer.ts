@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -42,9 +42,7 @@ export class Smoke extends Effect<SmokeConfig> {
         this.#colorG = g;
         this.#colorB = b;
 
-        if (isSmallScreen()) {
-            this.#count = Math.floor(this.#count / 2);
-        }
+        this.#count = mobileCount(this.#count);
 
         this.#sprites = this.#createSprites(r, g, b);
 

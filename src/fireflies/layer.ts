@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
@@ -37,9 +37,7 @@ export class Fireflies extends Effect<FirefliesConfig> {
 
         const {r, g, b} = parseColor(config.color ?? '#b4ff6a');
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         this.#sprite = this.#createSprite(r, g, b);
 

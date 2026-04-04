@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
@@ -36,9 +36,7 @@ export class Lava extends Effect<LavaConfig> {
         this.#count = config.count ?? 12;
         this.#colors = config.colors ?? [...DEFAULT_COLORS];
 
-        if (isSmallScreen()) {
-            this.#count = Math.floor(this.#count * 0.7);
-        }
+        this.#count = mobileCount(this.#count, 0.7);
 
         this.#sprites = this.#createSprites();
 

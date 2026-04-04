@@ -1,5 +1,7 @@
 import { parseColor } from '../color';
 import { Effect } from '../effect';
+import { MouseTracker } from '../mouse';
+import { setRotatedTransform } from '../transform';
 import { DEFAULT_CONFIG, MULBERRY } from './consts';
 import type { Donut } from './donut';
 
@@ -35,13 +37,9 @@ export class Donuts extends Effect<DonutsConfig> {
     #scale: number;
     readonly #speedRange: [number, number];
     #thickness: number;
-    readonly #onMouseMoveBound: (event: MouseEvent) => void;
-    readonly #onMouseLeaveBound: () => void;
+    readonly #mouse = new MouseTracker();
     #time: number = 0;
     #donuts: Donut[] = [];
-    #mouseX: number = -1;
-    #mouseY: number = -1;
-    #mouseOnCanvas: boolean = false;
     #width: number = 960;
     #height: number = 540;
     #initialized: boolean = false;
@@ -71,9 +69,6 @@ export class Donuts extends Effect<DonutsConfig> {
             (config.speedRange ?? DEFAULT_CONFIG.speedRange!)[1] * scale
         ];
         this.#thickness = config.thickness ?? DEFAULT_CONFIG.thickness!;
-
-        this.#onMouseMoveBound = (event: MouseEvent) => this.#onMouseMove(event);
-        this.#onMouseLeaveBound = () => this.#onMouseLeave();
     }
 
     onResize(width: number, height: number): void {
@@ -92,14 +87,12 @@ export class Donuts extends Effect<DonutsConfig> {
 
     onMount(canvas: HTMLCanvasElement): void {
         if (this.#mouseAvoidance) {
-            canvas.addEventListener('mousemove', this.#onMouseMoveBound, {passive: true});
-            canvas.addEventListener('mouseleave', this.#onMouseLeaveBound, {passive: true});
+            this.#mouse.attach(canvas);
         }
     }
 
     onUnmount(canvas: HTMLCanvasElement): void {
-        canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
-        canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+        this.#mouse.detach(canvas);
     }
 
     configure(config: Partial<DonutsConfig>): void {
@@ -158,7 +151,7 @@ export class Donuts extends Effect<DonutsConfig> {
 
         this.#resolveCollisions(dt);
 
-        if (this.#mouseAvoidance && this.#mouseOnCanvas) {
+        if (this.#mouseAvoidance && this.#mouse.onCanvas) {
             this.#resolveMouseAvoidance(dt);
         }
 
@@ -175,17 +168,7 @@ export class Donuts extends Effect<DonutsConfig> {
         const base = ctx.getTransform();
 
         for (const donut of this.#donuts) {
-            const cos = Math.cos(donut.angle);
-            const sin = Math.sin(donut.angle);
-
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * donut.x + base.c * donut.y + base.e,
-                base.b * donut.x + base.d * donut.y + base.f
-            );
+            setRotatedTransform(ctx, base, donut.x, donut.y, donut.angle);
 
             ctx.beginPath();
             ctx.arc(0, 0, donut.outerRadius, 0, Math.PI * 2);
@@ -260,23 +243,11 @@ export class Donuts extends Effect<DonutsConfig> {
         }
     }
 
-    #onMouseMove(event: MouseEvent): void {
-        const target = event.currentTarget as HTMLCanvasElement;
-        const rect = target.getBoundingClientRect();
-        this.#mouseX = event.clientX - rect.left;
-        this.#mouseY = event.clientY - rect.top;
-        this.#mouseOnCanvas = true;
-    }
-
-    #onMouseLeave(): void {
-        this.#mouseOnCanvas = false;
-    }
-
     #resolveMouseAvoidance(dt: number): void {
         const radius = this.#mouseAvoidanceRadius;
         const strength = this.#mouseAvoidanceStrength;
-        const mx = this.#mouseX;
-        const my = this.#mouseY;
+        const mx = this.#mouse.x;
+        const my = this.#mouse.y;
 
         for (const donut of this.#donuts) {
             const dx = donut.x - mx;

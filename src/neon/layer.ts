@@ -1,5 +1,6 @@
 import { p3a, parseColor } from '../color';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { DEFAULT_COLORS, MULBERRY } from './consts';
 import type { NeonTube, NeonTubeShape } from './types';
 
@@ -107,17 +108,8 @@ export class Neon extends Effect<NeonConfig> {
             const b = parsed.b;
             const tx = tube.x * width;
             const ty = tube.y * height;
-            const cos = Math.cos(tube.angle);
-            const sin = Math.sin(tube.angle);
 
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * tx + base.c * ty + base.e,
-                base.b * tx + base.d * ty + base.f
-            );
+            setRotatedTransform(ctx, base, tx, ty, tube.angle);
 
             const canvasScale = Math.min(width, height) / 600;
             const size = tube.size * this.#scale * canvasScale;

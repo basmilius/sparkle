@@ -1,3 +1,4 @@
+import { compactArray } from '../compact';
 import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import type { Point } from '../point';
@@ -129,21 +130,8 @@ export class Fireworks extends Effect<FireworksConfig> {
         this.#explosions.push(...newExplosions);
         this.#sparks.push(...newSparks);
 
-        let aliveExplosions = 0;
-        for (let i = 0; i < this.#explosions.length; i++) {
-            if (!this.#explosions[i].isDead) {
-                this.#explosions[aliveExplosions++] = this.#explosions[i];
-            }
-        }
-        this.#explosions.length = aliveExplosions;
-
-        let aliveSparks = 0;
-        for (let i = 0; i < this.#sparks.length; i++) {
-            if (!this.#sparks[i].isDead) {
-                this.#sparks[aliveSparks++] = this.#sparks[i];
-            }
-        }
-        this.#sparks.length = aliveSparks;
+        compactArray(this.#explosions, explosion => !explosion.isDead);
+        compactArray(this.#sparks, spark => !spark.isDead);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

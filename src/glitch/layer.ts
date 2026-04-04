@@ -1,4 +1,5 @@
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { GlitchBlock, GlitchConfig, GlitchSlice } from './types';
@@ -87,28 +88,16 @@ export class Glitch extends Effect<GlitchConfig> {
         this.#time += speedDt;
 
         // Update existing slices.
-        let writeIndex = 0;
         for (let index = 0; index < this.#slices.length; ++index) {
-            const slice = this.#slices[index];
-            slice.life -= speedDt;
-
-            if (slice.life > 0) {
-                this.#slices[writeIndex++] = slice;
-            }
+            this.#slices[index].life -= speedDt;
         }
-        this.#slices.length = writeIndex;
+        compactArray(this.#slices, slice => slice.life > 0);
 
         // Update existing blocks.
-        writeIndex = 0;
         for (let index = 0; index < this.#blocks.length; ++index) {
-            const block = this.#blocks[index];
-            block.life -= speedDt;
-
-            if (block.life > 0) {
-                this.#blocks[writeIndex++] = block;
-            }
+            this.#blocks[index].life -= speedDt;
         }
-        this.#blocks.length = writeIndex;
+        compactArray(this.#blocks, block => block.life > 0);
 
         // Burst logic.
         if (this.#isBursting) {

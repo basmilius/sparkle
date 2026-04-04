@@ -1,7 +1,8 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
+import { MouseTracker } from '../mouse';
 import { MULBERRY } from './consts';
 import type { SandGrain } from './types';
 
@@ -18,16 +19,12 @@ export interface MagneticSandConfig {
 export class MagneticSand extends Effect<MagneticSandConfig> {
     #scale: number;
     #colorRGB: [number, number, number];
-    readonly #onMouseMoveBound: (evt: MouseEvent) => void;
-    readonly #onMouseLeaveBound: () => void;
+    readonly #mouse = new MouseTracker();
     #speed: number;
     #magnetStrength: number;
     #maxCount: number;
     #grains: SandGrain[] = [];
     #sprite: HTMLCanvasElement | null = null;
-    #mouseX: number = -1;
-    #mouseY: number = -1;
-    #mouseOnCanvas: boolean = false;
     #time: number = 0;
     #width: number = 0;
     #height: number = 0;
@@ -42,12 +39,7 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         this.#colorRGB = hexToRGB(config.color ?? '#888888');
         this.#sprite = this.#createSprite();
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
-
-        this.#onMouseMoveBound = this.#onMouseMove.bind(this);
-        this.#onMouseLeaveBound = this.#onMouseLeave.bind(this);
+        this.#maxCount = mobileCount(this.#maxCount);
     }
 
     configure(config: Partial<MagneticSandConfig>): void {
@@ -81,13 +73,11 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
     }
 
     onMount(canvas: HTMLCanvasElement): void {
-        canvas.addEventListener('mousemove', this.#onMouseMoveBound, {passive: true});
-        canvas.addEventListener('mouseleave', this.#onMouseLeaveBound, {passive: true});
+        this.#mouse.attach(canvas);
     }
 
     onUnmount(canvas: HTMLCanvasElement): void {
-        canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
-        canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+        this.#mouse.detach(canvas);
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -98,9 +88,9 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         const friction = Math.pow(0.92, dt);
 
         for (const grain of this.#grains) {
-            if (this.#mouseOnCanvas) {
-                const dx = this.#mouseX - grain.x;
-                const dy = this.#mouseY - grain.y;
+            if (this.#mouse.onCanvas) {
+                const dx = this.#mouse.x - grain.x;
+                const dy = this.#mouse.y - grain.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 const maxRange = 300 * this.#scale;
 
@@ -201,18 +191,6 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
     #createSprite(): HTMLCanvasElement {
         const [r, g, b] = this.#colorRGB;
         return createGlowSprite(r, g, b, 16, [[0, 1], [0.3, 0.6], [0.7, 0.15], [1, 0]]);
-    }
-
-    #onMouseMove(evt: MouseEvent): void {
-        const target = evt.currentTarget as HTMLCanvasElement;
-        const rect = target.getBoundingClientRect();
-        this.#mouseX = evt.clientX - rect.left;
-        this.#mouseY = evt.clientY - rect.top;
-        this.#mouseOnCanvas = true;
-    }
-
-    #onMouseLeave(): void {
-        this.#mouseOnCanvas = false;
     }
 
     #createGrain(width: number, height: number): SandGrain {

@@ -1,6 +1,7 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { p3a, parseColor } from '../color';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { MULBERRY } from './consts';
 import type { Butterfly } from './types';
 
@@ -41,9 +42,7 @@ export class Butterflies extends Effect<ButterfliesConfig> {
         this.#size = (config.size ?? 20) * this.#scale;
         this.#colors = config.colors ?? DEFAULT_COLORS;
 
-        if (isSmallScreen()) {
-            this.#count = Math.floor(this.#count / 2);
-        }
+        this.#count = mobileCount(this.#count);
 
         for (let i = 0; i < this.#count; ++i) {
             this.#butterflies.push(this.#createButterfly(this.#colors));
@@ -121,18 +120,8 @@ export class Butterflies extends Effect<ButterfliesConfig> {
             const flapAngle = Math.sin(globalTime * butterfly.flapSpeed * 0.012 + butterfly.flapOffset);
             const wingScale = Math.abs(flapAngle);
             const size = butterfly.size * this.#size;
-            const cos = Math.cos(butterfly.angle);
-            const sin = Math.sin(butterfly.angle);
-
             ctx.globalAlpha = 0.85;
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * px + base.c * py + base.e,
-                base.b * px + base.d * py + base.f
-            );
+            setRotatedTransform(ctx, base, px, py, butterfly.angle);
 
             this.#drawButterfly(ctx, size, wingScale, butterfly.colorR, butterfly.colorG, butterfly.colorB);
         }

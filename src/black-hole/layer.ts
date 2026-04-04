@@ -1,5 +1,5 @@
 import { p3, p3a } from '../color';
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { BlackHoleParticle } from './types';
@@ -38,9 +38,7 @@ export class BlackHole extends Effect<BlackHoleConfig> {
         this.#colorG = parsed[1];
         this.#colorB = parsed[2];
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
     }
 
     configure(config: Partial<BlackHoleConfig>): void {

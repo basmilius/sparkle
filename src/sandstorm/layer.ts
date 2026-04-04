@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -39,9 +39,7 @@ export class Sandstorm extends Effect<SandstormConfig> {
         this.#colorG = g;
         this.#colorB = b;
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#grains.push(this.#createGrain(true));

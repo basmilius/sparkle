@@ -1,5 +1,7 @@
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { DEFAULT_CONFIG, MULBERRY, PALETTES } from './consts';
 import { SHAPE_PATHS } from './shapes';
 import type { Config, Particle, ParticleConfig } from './types';
@@ -63,21 +65,14 @@ export class Confetti extends Effect<ConfettiConfig> {
 
     tick(dt: number, _width: number, _height: number): void {
         const particles = this.#particles;
-        let alive = 0;
 
         for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-
-            if (p.tick < p.totalTicks) {
-                this.#tickParticle(p, dt);
-
-                if (p.tick < p.totalTicks) {
-                    particles[alive++] = p;
-                }
+            if (particles[i].tick < particles[i].totalTicks) {
+                this.#tickParticle(particles[i], dt);
             }
         }
 
-        particles.length = alive;
+        compactArray(particles, p => p.tick < p.totalTicks);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
@@ -88,20 +83,8 @@ export class Confetti extends Effect<ConfettiConfig> {
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const flipCos = Math.cos(p.flipAngle);
-            const size = p.size;
-            const a = p.rotCos * flipCos * size;
-            const b = p.rotSin * flipCos * size;
-            const c = -p.rotSin * size;
-            const d = p.rotCos * size;
 
-            ctx.setTransform(
-                base.a * a + base.c * b,
-                base.b * a + base.d * b,
-                base.a * c + base.c * d,
-                base.b * c + base.d * d,
-                base.a * p.x + base.c * p.y + base.e,
-                base.b * p.x + base.d * p.y + base.f
-            );
+            setRotatedTransform(ctx, base, p.x, p.y, p.rotAngle, flipCos * p.size, p.size);
             ctx.globalAlpha = 1 - p.tick / p.totalTicks;
             ctx.fillStyle = p.colorStr;
             ctx.fill(SHAPE_PATHS[p.shape]);

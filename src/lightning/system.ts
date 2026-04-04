@@ -1,3 +1,4 @@
+import { compactArray } from '../compact';
 import type { LightningBolt, LightningBranch } from './types';
 
 export interface LightningSystemConfig {
@@ -73,20 +74,14 @@ export class LightningSystem {
             this.#cooldown = this.#nextCooldown();
         }
 
-        let alive = 0;
-
         for (let i = 0; i < this.#bolts.length; i++) {
             const bolt = this.#bolts[i];
 
             bolt.ticksAlive += dt;
             bolt.alpha = Math.max(0, 1 - bolt.ticksAlive / bolt.lifetime);
-
-            if (bolt.alpha > 0) {
-                this.#bolts[alive++] = bolt;
-            }
         }
 
-        this.#bolts.length = alive;
+        compactArray(this.#bolts, bolt => bolt.alpha > 0);
 
         if (this.#flashAlpha > 0) {
             this.#flashAlpha -= 0.012 * dt;

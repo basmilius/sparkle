@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
@@ -43,9 +43,7 @@ export class Pollen extends Effect<PollenConfig> {
         this.#wind = config.wind ?? 0.3;
         this.#glowSize = config.glowSize ?? 2;
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         const {r, g, b} = parseColor(config.color ?? '#fff8e1');
         this.#sprite = this.#createSprite(r, g, b);

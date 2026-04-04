@@ -1,5 +1,6 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Wave } from './types';
@@ -35,9 +36,7 @@ export class Waves extends Effect<WavesConfig> {
         this.#maxFoamParticles = 120;
         this.#foamRGB = hexToRGB(config.foamColor ?? '#ffffff');
 
-        if (isSmallScreen()) {
-            this.#maxFoamParticles = Math.floor(this.#maxFoamParticles / 2);
-        }
+        this.#maxFoamParticles = mobileCount(this.#maxFoamParticles);
 
         for (let i = 0; i < layers; i++) {
             const depth = i / Math.max(layers - 1, 1);
@@ -84,20 +83,14 @@ export class Waves extends Effect<WavesConfig> {
             wave.phase += 0.015 * wave.speed * this.#speed * dt;
         }
 
-        let aliveFoam = 0;
-
         for (let i = 0; i < this.#foamParticles.length; i++) {
             const foam = this.#foamParticles[i];
             foam.alpha -= (0.008 + MULBERRY.next() * 0.006) * dt;
             foam.x += (MULBERRY.next() - 0.5) * 0.5 * dt;
             foam.y += (MULBERRY.next() - 0.5) * 0.3 * dt;
-
-            if (foam.alpha > 0) {
-                this.#foamParticles[aliveFoam++] = foam;
-            }
         }
 
-        this.#foamParticles.length = aliveFoam;
+        compactArray(this.#foamParticles, foam => foam.alpha > 0);
 
         if (this.#foamAmount > 0 && width > 0 && height > 0) {
             const spawnCount = Math.ceil(2 * this.#foamAmount * dt);

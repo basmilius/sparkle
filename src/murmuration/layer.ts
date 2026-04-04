@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
 import { SpatialGrid } from '../grid';
 import { MULBERRY } from './consts';
@@ -46,9 +46,7 @@ export class Murmuration extends Effect<MurmurationConfig> {
         this.#color = config.color ?? '#1a1a2e';
         this.#maxCount = config.count ?? 300;
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
     }
 
     configure(config: Partial<MurmurationConfig>): void {

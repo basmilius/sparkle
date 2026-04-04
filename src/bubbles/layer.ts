@@ -1,4 +1,5 @@
-import { isSmallScreen } from '../mobile';
+import { compactArray } from '../compact';
+import { mobileCount } from '../mobile';
 import { parseColor, rgbToHue } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -49,9 +50,7 @@ export class Bubbles extends Effect<BubblesConfig> {
             return rgbToHue(r, g, b);
         });
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#bubbles.push(this.#createBubble(true));
@@ -122,21 +121,15 @@ export class Bubbles extends Effect<BubblesConfig> {
             }
         }
 
-        let alive = 0;
-
         for (let i = 0; i < this.#popParticles.length; i++) {
             const particle = this.#popParticles[i];
 
             particle.x += (particle.vx * dt) / width;
             particle.y += (particle.vy * dt) / height;
             particle.alpha -= particle.decay * dt;
-
-            if (particle.alpha > 0) {
-                this.#popParticles[alive++] = particle;
-            }
         }
 
-        this.#popParticles.length = alive;
+        compactArray(this.#popParticles, particle => particle.alpha > 0);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

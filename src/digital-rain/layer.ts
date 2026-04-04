@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { BINARY_CHARS, HEX_CHARS, MIXED_CHARS, MULBERRY } from './consts';
@@ -40,8 +40,8 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
         this.#colorRGB = hexToRGB(config.color ?? '#00ffaa');
         this.#trailLength = config.trailLength ?? 20;
 
-        if (isSmallScreen() && this.#maxColumns > 0) {
-            this.#maxColumns = Math.floor(this.#maxColumns / 2);
+        if (this.#maxColumns > 0) {
+            this.#maxColumns = mobileCount(this.#maxColumns);
         }
     }
 
@@ -64,8 +64,8 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
                 columnCount = Math.min(this.#maxColumns, totalSlots);
             }
 
-            if (isSmallScreen() && this.#maxColumns === 0) {
-                columnCount = Math.floor(columnCount / 2);
+            if (this.#maxColumns === 0) {
+                columnCount = mobileCount(columnCount);
             }
 
             for (let i = 0; i < columnCount; ++i) {

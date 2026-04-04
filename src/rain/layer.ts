@@ -1,4 +1,5 @@
-import { isSmallScreen } from '../mobile';
+import { compactArray } from '../compact';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -52,9 +53,7 @@ export class Rain extends Effect<RainConfig> {
         this.#colorG = g;
         this.#colorB = b;
 
-        if (isSmallScreen()) {
-            this.#maxDrops = Math.floor(this.#maxDrops / 2);
-        }
+        this.#maxDrops = mobileCount(this.#maxDrops);
 
         for (let i = 0; i < this.#maxDrops; ++i) {
             this.#drops.push(this.#createDrop(true));
@@ -114,8 +113,6 @@ export class Rain extends Effect<RainConfig> {
         }
 
         // Update splashes
-        let aliveSplashes = 0;
-
         for (let i = 0; i < this.#splashes.length; i++) {
             const splash = this.#splashes[i];
 
@@ -123,13 +120,9 @@ export class Rain extends Effect<RainConfig> {
             splash.y += (splash.vy * dt) / height;
             splash.vy += splash.gravity * dt;
             splash.alpha -= 0.04 * dt;
-
-            if (splash.alpha > 0) {
-                this.#splashes[aliveSplashes++] = splash;
-            }
         }
 
-        this.#splashes.length = aliveSplashes;
+        compactArray(this.#splashes, splash => splash.alpha > 0);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

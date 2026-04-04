@@ -1,4 +1,4 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { LANTERN_COLORS, MULBERRY } from './consts';
@@ -26,9 +26,7 @@ export class Lanterns extends Effect<LanternsConfig> {
         const colors = config.colors ?? LANTERN_COLORS;
         this.#colorRGBs = colors.map(c => hexToRGB(c));
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#lanterns.push(this.#createLantern(true));

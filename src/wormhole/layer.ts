@@ -1,5 +1,5 @@
 import { p3, p3a } from '../color';
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -34,9 +34,7 @@ export class Wormhole extends Effect<WormholeConfig> {
         this.#direction = config.direction ?? 'inward';
         this.#scale = config.scale ?? 1;
 
-        if (isSmallScreen()) {
-            count = Math.floor(count / 2);
-        }
+        count = mobileCount(count);
 
         this.#count = count;
     }

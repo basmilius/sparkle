@@ -1,7 +1,9 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { p3, p3a } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
+import { SpatialGrid } from '../grid';
+import { MouseTracker } from '../mouse';
 import { MULBERRY } from './consts';
 import type { NetworkParticle, ParticleMouseMode } from './types';
 
@@ -36,16 +38,11 @@ export class Particles extends Effect<ParticlesConfig> {
     #lineColorRGB: [number, number, number];
     readonly #sizeRange: [number, number];
     readonly #speedRange: [number, number];
-    readonly #onMouseMoveBound: (evt: MouseEvent) => void;
-    readonly #onMouseLeaveBound: () => void;
+    readonly #mouse = new MouseTracker();
     #maxCount: number;
     #time: number = 0;
-    #mouseX: number = -1;
-    #mouseY: number = -1;
-    #mouseOnCanvas: boolean = false;
     #particles: NetworkParticle[] = [];
-    #grid: Map<string, number[]> = new Map();
-    #cellSize: number;
+    readonly #grid: SpatialGrid<number>;
     #width: number = 960;
     #height: number = 540;
     #initialized: boolean = false;
@@ -63,7 +60,7 @@ export class Particles extends Effect<ParticlesConfig> {
         this.#particleForces = config.particleForces ?? false;
         this.#glow = config.glow ?? false;
         this.#background = config.background ?? null;
-        this.#cellSize = this.#connectionDistance;
+        this.#grid = new SpatialGrid(this.#connectionDistance);
 
         this.#colorRGB = hexToRGB(config.color ?? '#6366f1');
         this.#lineColorRGB = hexToRGB(config.lineColor ?? '#6366f1');
@@ -71,12 +68,7 @@ export class Particles extends Effect<ParticlesConfig> {
         this.#sizeRange = config.size ?? [1, 3];
         this.#speedRange = config.speed ?? [0.2, 0.8];
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
-
-        this.#onMouseMoveBound = this.#onMouseMove.bind(this);
-        this.#onMouseLeaveBound = this.#onMouseLeave.bind(this);
+        this.#maxCount = mobileCount(this.#maxCount);
     }
 
     configure(config: Partial<ParticlesConfig>): void {
@@ -128,14 +120,12 @@ export class Particles extends Effect<ParticlesConfig> {
 
     onMount(canvas: HTMLCanvasElement): void {
         if (this.#mouseMode !== 'none') {
-            canvas.addEventListener('mousemove', this.#onMouseMoveBound, {passive: true});
-            canvas.addEventListener('mouseleave', this.#onMouseLeaveBound, {passive: true});
+            this.#mouse.attach(canvas);
         }
     }
 
     onUnmount(canvas: HTMLCanvasElement): void {
-        canvas.removeEventListener('mousemove', this.#onMouseMoveBound);
-        canvas.removeEventListener('mouseleave', this.#onMouseLeaveBound);
+        this.#mouse.detach(canvas);
     }
 
     tick(dt: number, width: number, height: number): void {
@@ -143,20 +133,12 @@ export class Particles extends Effect<ParticlesConfig> {
         this.#height = height;
         this.#time += dt * 0.01;
 
+        this.#grid.setWidth(width);
         this.#grid.clear();
 
         for (let i = 0; i < this.#particles.length; i++) {
             const particle = this.#particles[i];
-            const col = Math.floor(particle.x / this.#cellSize);
-            const row = Math.floor(particle.y / this.#cellSize);
-            const key = `${col},${row}`;
-            const cell = this.#grid.get(key);
-
-            if (cell) {
-                cell.push(i);
-            } else {
-                this.#grid.set(key, [i]);
-            }
+            this.#grid.insert(particle.x, particle.y, i);
         }
 
         for (const particle of this.#particles) {
@@ -182,12 +164,12 @@ export class Particles extends Effect<ParticlesConfig> {
             }
         }
 
-        if (this.#mouseOnCanvas && (this.#mouseMode === 'attract' || this.#mouseMode === 'repel')) {
+        if (this.#mouse.onCanvas && (this.#mouseMode === 'attract' || this.#mouseMode === 'repel')) {
             const direction = this.#mouseMode === 'attract' ? -1 : 1;
 
             for (const particle of this.#particles) {
-                const dx = particle.x - this.#mouseX;
-                const dy = particle.y - this.#mouseY;
+                const dx = particle.x - this.#mouse.x;
+                const dy = particle.y - this.#mouse.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < this.#mouseRadius && dist > 0) {
@@ -203,40 +185,27 @@ export class Particles extends Effect<ParticlesConfig> {
 
             for (let i = 0; i < this.#particles.length; i++) {
                 const pa = this.#particles[i];
-                const col = Math.floor(pa.x / this.#cellSize);
-                const row = Math.floor(pa.y / this.#cellSize);
 
-                for (let dc = -1; dc <= 1; dc++) {
-                    for (let dr = -1; dr <= 1; dr++) {
-                        const key = `${col + dc},${row + dr}`;
-                        const neighbors = this.#grid.get(key);
-
-                        if (!neighbors) {
-                            continue;
-                        }
-
-                        for (const j of neighbors) {
-                            if (j <= i) {
-                                continue;
-                            }
-
-                            const pb = this.#particles[j];
-                            const dx = pa.x - pb.x;
-                            const dy = pa.y - pb.y;
-                            const dist = Math.sqrt(dx * dx + dy * dy);
-
-                            if (dist < repelDist && dist > 0) {
-                                const force = (1 - dist / repelDist) * 0.5 * dt;
-                                const nx = dx / dist;
-                                const ny = dy / dist;
-                                pa.vx += nx * force;
-                                pa.vy += ny * force;
-                                pb.vx -= nx * force;
-                                pb.vy -= ny * force;
-                            }
-                        }
+                this.#grid.query(pa.x, pa.y, (j) => {
+                    if (j <= i) {
+                        return;
                     }
-                }
+
+                    const pb = this.#particles[j];
+                    const dx = pa.x - pb.x;
+                    const dy = pa.y - pb.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < repelDist && dist > 0) {
+                        const force = (1 - dist / repelDist) * 0.5 * dt;
+                        const nx = dx / dist;
+                        const ny = dy / dist;
+                        pa.vx += nx * force;
+                        pa.vy += ny * force;
+                        pb.vx -= nx * force;
+                        pb.vy -= ny * force;
+                    }
+                });
             }
         }
 
@@ -265,51 +234,38 @@ export class Particles extends Effect<ParticlesConfig> {
 
         for (let i = 0; i < this.#particles.length; i++) {
             const pa = this.#particles[i];
-            const col = Math.floor(pa.x / this.#cellSize);
-            const row = Math.floor(pa.y / this.#cellSize);
 
-            for (let dc = -1; dc <= 1; dc++) {
-                for (let dr = -1; dr <= 1; dr++) {
-                    const key = `${col + dc},${row + dr}`;
-                    const neighbors = this.#grid.get(key);
-
-                    if (!neighbors) {
-                        continue;
-                    }
-
-                    for (const j of neighbors) {
-                        if (j <= i) {
-                            continue;
-                        }
-
-                        const pb2 = this.#particles[j];
-                        const dx = pa.x - pb2.x;
-                        const dy = pa.y - pb2.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < connDist) {
-                            const alpha = 1 - dist / connDist;
-                            ctx.beginPath();
-                            ctx.moveTo(pa.x, pa.y);
-                            ctx.lineTo(pb2.x, pb2.y);
-                            ctx.strokeStyle = p3a(lr, lg, lb, alpha * 0.6);
-                            ctx.stroke();
-                        }
-                    }
+            this.#grid.query(pa.x, pa.y, (j) => {
+                if (j <= i) {
+                    return;
                 }
-            }
+
+                const pb2 = this.#particles[j];
+                const dx = pa.x - pb2.x;
+                const dy = pa.y - pb2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < connDist) {
+                    const alpha = 1 - dist / connDist;
+                    ctx.beginPath();
+                    ctx.moveTo(pa.x, pa.y);
+                    ctx.lineTo(pb2.x, pb2.y);
+                    ctx.strokeStyle = p3a(lr, lg, lb, alpha * 0.6);
+                    ctx.stroke();
+                }
+            });
         }
 
-        if (this.#mouseOnCanvas && this.#mouseMode === 'connect') {
+        if (this.#mouse.onCanvas && this.#mouseMode === 'connect') {
             for (const particle of this.#particles) {
-                const dx = particle.x - this.#mouseX;
-                const dy = particle.y - this.#mouseY;
+                const dx = particle.x - this.#mouse.x;
+                const dy = particle.y - this.#mouse.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < this.#mouseRadius) {
                     const alpha = 1 - dist / this.#mouseRadius;
                     ctx.beginPath();
-                    ctx.moveTo(this.#mouseX, this.#mouseY);
+                    ctx.moveTo(this.#mouse.x, this.#mouse.y);
                     ctx.lineTo(particle.x, particle.y);
                     ctx.strokeStyle = p3a(lr, lg, lb, alpha * 0.8);
                     ctx.stroke();
@@ -332,18 +288,6 @@ export class Particles extends Effect<ParticlesConfig> {
         if (this.#glow) {
             ctx.shadowBlur = 0;
         }
-    }
-
-    #onMouseMove(evt: MouseEvent): void {
-        const target = evt.currentTarget as HTMLCanvasElement;
-        const rect = target.getBoundingClientRect();
-        this.#mouseX = evt.clientX - rect.left;
-        this.#mouseY = evt.clientY - rect.top;
-        this.#mouseOnCanvas = true;
-    }
-
-    #onMouseLeave(): void {
-        this.#mouseOnCanvas = false;
     }
 
     #createParticle(sizeRange: [number, number], speedRange: [number, number]): NetworkParticle {

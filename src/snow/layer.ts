@@ -1,7 +1,8 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { parseColor } from '../color';
 import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { MULBERRY } from './consts';
 import type { Snowflake } from './snowflake';
 
@@ -38,9 +39,7 @@ export class Snow extends Effect<SnowConfig> {
         const {r, g, b, a} = parseColor(config.fillStyle ?? 'rgb(255 255 255 / .75)');
         this.#baseOpacity = a;
 
-        if (isSmallScreen()) {
-            this.#maxParticles = Math.floor(this.#maxParticles / 2);
-        }
+        this.#maxParticles = mobileCount(this.#maxParticles);
 
         this.#sprites = this.#createSprites(r, g, b);
 
@@ -119,16 +118,7 @@ export class Snow extends Effect<SnowConfig> {
             ctx.globalAlpha = this.#baseOpacity * (0.15 + snowflake.depth * 0.85);
 
             if (snowflake.spriteIndex === 3) {
-                const cos = Math.cos(snowflake.rotation);
-                const sin = Math.sin(snowflake.rotation);
-                ctx.setTransform(
-                    base.a * cos + base.c * sin,
-                    base.b * cos + base.d * sin,
-                    base.a * -sin + base.c * cos,
-                    base.b * -sin + base.d * cos,
-                    base.a * px + base.c * py + base.e,
-                    base.b * px + base.d * py + base.f
-                );
+                setRotatedTransform(ctx, base, px, py, snowflake.rotation);
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],
                     -displayRadius,

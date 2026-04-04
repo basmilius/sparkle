@@ -1,4 +1,5 @@
-import { isSmallScreen } from '../mobile';
+import { compactArray } from '../compact';
+import { mobileCount } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Ember, FlameLayer } from './types';
@@ -30,9 +31,7 @@ export class Firepit extends Effect<FirepitConfig> {
         this.#flameHeight = config.flameHeight ?? 0.35;
         this.#intensity = config.intensity ?? 1;
 
-        if (isSmallScreen()) {
-            this.#maxEmbers = Math.floor(this.#maxEmbers / 2);
-        }
+        this.#maxEmbers = mobileCount(this.#maxEmbers);
 
         for (let i = 0; i < 5; i++) {
             this.#flameLayers.push({
@@ -64,8 +63,6 @@ export class Firepit extends Effect<FirepitConfig> {
             this.#embers.push(this.#createEmber());
         }
 
-        let alive = 0;
-
         for (let i = 0; i < this.#embers.length; i++) {
             const ember = this.#embers[i];
 
@@ -75,13 +72,9 @@ export class Firepit extends Effect<FirepitConfig> {
             ember.vy -= 0.00005 * dt;
             ember.life -= dt;
             ember.flicker = 0.6 + Math.sin(this.#time * 8 + ember.brightness * 20) * 0.4;
-
-            if (ember.life > 0) {
-                this.#embers[alive++] = ember;
-            }
         }
 
-        this.#embers.length = alive;
+        compactArray(this.#embers, ember => ember.life > 0);
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {

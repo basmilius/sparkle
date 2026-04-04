@@ -1,5 +1,5 @@
 import { p3, p3a } from '../color';
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -41,9 +41,7 @@ export class Portal extends Effect<PortalConfig> {
         this.#secondaryRGB = hexToRGB(config.secondaryColor ?? '#44aaff');
         this.#direction = config.direction ?? 'inward';
 
-        if (isSmallScreen()) {
-            count = Math.floor(count / 2);
-        }
+        count = mobileCount(count);
 
         this.#count = count;
     }

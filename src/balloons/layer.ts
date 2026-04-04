@@ -1,6 +1,7 @@
-import { isSmallScreen } from '../mobile';
+import { mobileCount } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
+import { setRotatedTransform } from '../transform';
 import { MULBERRY } from './consts';
 import type { Balloon } from './types';
 
@@ -40,9 +41,7 @@ export class Balloons extends Effect<BalloonsConfig> {
         const colors = config.colors ?? DEFAULT_COLORS;
         this.#colorRGBs = colors.map(c => hexToRGB(c));
 
-        if (isSmallScreen()) {
-            this.#maxCount = Math.floor(this.#maxCount / 2);
-        }
+        this.#maxCount = mobileCount(this.#maxCount);
 
         for (let i = 0; i < this.#maxCount; ++i) {
             this.#balloons.push(this.#createBalloon(true));
@@ -99,17 +98,8 @@ export class Balloons extends Effect<BalloonsConfig> {
             const rx = balloon.radiusX * this.#scale;
             const ry = balloon.radiusY * this.#scale;
             const [r, g, b] = balloon.color;
-            const cos = Math.cos(balloon.rotation);
-            const sin = Math.sin(balloon.rotation);
 
-            ctx.setTransform(
-                base.a * cos + base.c * sin,
-                base.b * cos + base.d * sin,
-                base.a * -sin + base.c * cos,
-                base.b * -sin + base.d * cos,
-                base.a * px + base.c * py + base.e,
-                base.b * px + base.d * py + base.f
-            );
+            setRotatedTransform(ctx, base, px, py, balloon.rotation);
 
             const gradient = ctx.createRadialGradient(
                 -rx * 0.3, -ry * 0.3, rx * 0.1,

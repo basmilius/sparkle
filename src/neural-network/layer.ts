@@ -1,4 +1,5 @@
 import { hexToRGB } from '@basmilius/utils';
+import { compactArray } from '../compact';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { ArmSegment, NeuronCell, SynapticPulse } from './types';
@@ -203,22 +204,17 @@ export class NeuralNetwork extends Effect<NeuralNetworkConfig> {
             cell.brightness += (target - cell.brightness) * Math.min(1, dtSec * 4);
         }
 
-        // Advance pulses with in-place compaction.
-        let write = 0;
-
+        // Advance pulses.
         for (let i = 0; i < this.#pulses.length; i++) {
             const pulse = this.#pulses[i];
             pulse.t += dtSec * 0.9;
 
             if (pulse.t >= 1) {
                 this.#fireCell(pulse.toCell);
-                continue;
             }
-
-            this.#pulses[write++] = pulse;
         }
 
-        this.#pulses.length = write;
+        compactArray(this.#pulses, pulse => pulse.t < 1);
     }
 
     draw(ctx: CanvasRenderingContext2D, _width: number, _height: number): void {
