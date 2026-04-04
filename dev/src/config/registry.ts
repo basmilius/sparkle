@@ -1,4 +1,4 @@
-import { createAurora, createBalloons, createBlackHole, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createConstellation, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createFluid, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMatrix, createMurmuration, createNebula, createNeon, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSoundWaves, createSparklers, createSpirograph, createStars, createStreamers, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
+import { createAurora, createBalloons, createBlackHole, createBlueprint, createBoids, createBubbles, createButterflies, createCaustics, createClouds, createConfetti, createCoralReef, createCrystallization, createDigitalRain, createDonuts, createFireflies, createFirepit, FIREWORK_VARIANTS, createFireworks, createFluid, createGlitch, createGlitter, createGradientFlow, createHologram, createHyperSpace, createInterference, createKaleidoscope, createLanterns, createLava, createLeaves, createLightning, createMagneticSand, createMatrix, createMurmuration, createNebula, createNeon, createNeuralNetwork, createOrbits, createParticles, createPetals, createPlasma, createPollen, createPopcorn, createPortal, createPrimordialSoup, createPulseGrid, createRain, createRoots, createSandstorm, createSmoke, createSnow, createSoundWaves, createSparklers, createSpirograph, createStars, createStreamers, createTopography, createTornado, createVoronoi, createVolcano, createWaves, createWormhole } from '@basmilius/sparkle';
 
 import type { SimulatorDef } from './types';
 
@@ -1401,36 +1401,6 @@ export const SIMULATORS: SimulatorDef[] = [
         createLayer: (config) => createPulseGrid(config)
     },
     {
-        id: 'constellation',
-        name: 'Constellation',
-        description: 'Twinkling stars connected by constellation lines.',
-        defaultConfig: {
-            stars: 50,
-            speed: 1,
-            connectionDistance: 120,
-            color: '#ffffff',
-            lineWidth: 0.5,
-            twinkleSpeed: 1,
-            scale: 1
-        },
-        liveKeys: ['speed', 'twinkleSpeed', 'connectionDistance'],
-        schema: [
-            {type: 'slider', key: 'stars', label: 'Stars', min: 10, max: 150, step: 5, default: 50},
-            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
-            {type: 'slider', key: 'connectionDistance', label: 'Connection Distance', min: 50, max: 250, step: 10, default: 120},
-            {type: 'slider', key: 'lineWidth', label: 'Line Width', min: 0.1, max: 3, step: 0.1, default: 0.5},
-            {type: 'slider', key: 'twinkleSpeed', label: 'Twinkle Speed', min: 0.1, max: 5, step: 0.1, default: 1},
-            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
-            {type: 'color', key: 'color', label: 'Color', default: '#ffffff'}
-        ],
-        create: (canvas, config) => {
-            const sim = createConstellation(config);
-            sim.mount(canvas).start();
-            return sim;
-        },
-        createLayer: (config) => createConstellation(config)
-    },
-    {
         id: 'interference',
         name: 'Interference',
         description: 'Moiré interference patterns from overlapping wave sources.',
@@ -1706,6 +1676,115 @@ export const SIMULATORS: SimulatorDef[] = [
             return sim;
         },
         createLayer: (config) => createSoundWaves(config)
+    },
+    {
+        id: 'magnetic-sand',
+        name: 'Magnetic Sand',
+        description: 'Iron sand grains forming spike patterns around a magnetic cursor.',
+        defaultConfig: {
+            speed: 1,
+            count: 600,
+            color: '#888888',
+            magnetStrength: 0.5,
+            scale: 1
+        },
+        liveKeys: ['speed', 'magnetStrength'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'count', label: 'Count', min: 100, max: 1500, step: 50, default: 600},
+            {type: 'slider', key: 'magnetStrength', label: 'Magnet Strength', min: 0.1, max: 3, step: 0.1, default: 1},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#1a1a1a'}
+        ],
+        create: (canvas, config) => {
+            const sim = createMagneticSand(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createMagneticSand(config)
+    },
+    {
+        id: 'primordial-soup',
+        name: 'Primordial Soup',
+        description: 'Living cells consuming food, dividing through mitosis, and dying of starvation.',
+        defaultConfig: {
+            speed: 1,
+            maxCells: 40,
+            foodRate: 3,
+            scale: 1
+        },
+        liveKeys: ['speed', 'foodRate'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'maxCells', label: 'Max Cells', min: 10, max: 100, step: 5, default: 40},
+            {type: 'slider', key: 'foodRate', label: 'Food Rate', min: 0.5, max: 10, step: 0.5, default: 3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'colors', key: 'colors', label: 'Colors', default: ['#66bb6a', '#42a5f5', '#ab47bc', '#ef5350', '#ffa726']}
+        ],
+        create: (canvas, config) => {
+            const sim = createPrimordialSoup(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createPrimordialSoup(config)
+    },
+    {
+        id: 'neural-network',
+        name: 'Neural Network',
+        description: 'Interconnected neurons firing pulses along synapses.',
+        defaultConfig: {
+            speed: 1,
+            neurons: 60,
+            connectionDistance: 150,
+            color: '#4488ff',
+            pulseColor: '#88ccff',
+            fireRate: 0.3,
+            scale: 1
+        },
+        liveKeys: ['speed', 'fireRate'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'neurons', label: 'Neurons', min: 10, max: 150, step: 5, default: 60},
+            {type: 'slider', key: 'connectionDistance', label: 'Connection Distance', min: 50, max: 400, step: 10, default: 150},
+            {type: 'slider', key: 'fireRate', label: 'Fire Rate', min: 0.05, max: 2, step: 0.05, default: 0.3},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'color', label: 'Color', default: '#4488ff'},
+            {type: 'color', key: 'pulseColor', label: 'Pulse Color', default: '#88ccff'}
+        ],
+        create: (canvas, config) => {
+            const sim = createNeuralNetwork(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createNeuralNetwork(config)
+    },
+    {
+        id: 'blueprint',
+        name: 'Blueprint',
+        description: 'Technical blueprint drawings that animate in, hold, and fade out.',
+        defaultConfig: {
+            speed: 1,
+            gridSize: 30,
+            lineColor: '#c8deff',
+            backgroundColor: '#1a2744',
+            complexity: 5,
+            scale: 1
+        },
+        liveKeys: ['speed'],
+        schema: [
+            {type: 'slider', key: 'speed', label: 'Speed', min: 0.1, max: 5, step: 0.1, default: 1},
+            {type: 'slider', key: 'gridSize', label: 'Grid Size', min: 10, max: 60, step: 5, default: 30},
+            {type: 'slider', key: 'complexity', label: 'Complexity', min: 1, max: 10, step: 1, default: 5},
+            {type: 'slider', key: 'scale', label: 'Scale', min: 0.5, max: 3, step: 0.1, default: 1},
+            {type: 'color', key: 'lineColor', label: 'Line Color', default: '#c8deff'},
+            {type: 'color', key: 'backgroundColor', label: 'Background Color', default: '#1a2744'}
+        ],
+        create: (canvas, config) => {
+            const sim = createBlueprint(config);
+            sim.mount(canvas).start();
+            return sim;
+        },
+        createLayer: (config) => createBlueprint(config)
     }
 ];
 

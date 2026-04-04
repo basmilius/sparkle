@@ -46,13 +46,13 @@ src/
   aurora/               # Aurora — flowing northern lights bands
   balloons/             # Balloons — rising balloons with strings
   black-hole/           # BlackHole — gravitational vortex pulling particles inward
+  blueprint/            # Blueprint — animated technical drawings on a grid background
   boids/                # Boids — flocking simulation with separation/alignment/cohesion
   bubbles/              # Bubbles — rising soap bubbles with click-to-pop
   butterflies/          # Butterflies — fluttering butterflies with organic movement
   caustics/             # Caustics — underwater light refraction patterns
   clouds/               # Clouds — drifting cloud formations
   confetti/             # Confetti — on-demand particle bursts with .burst()
-  constellation/        # Constellation — connected star network with twinkling
   coral-reef/           # CoralReef — underwater scene with anemones, jellyfish, bubbles
   crystallization/      # Crystallization — growing crystal branches from seed points
   digital-rain/         # DigitalRain — falling digital characters (Matrix-style variant)
@@ -60,6 +60,7 @@ src/
   fireflies/            # Fireflies — glowing pulsing dots with organic drift
   firepit/              # Firepit — fire simulation with embers and flames
   fireworks/            # Fireworks — auto/manual firework launches (16+ variants)
+  fluid/                # Fluid — interactive dye-in-fluid simulation with mouse stirring
   glitch/               # Glitch — digital glitch effect with RGB split and scanlines
   glitter/              # Glitter — sparkling particles that settle on a ground level
   gradient-flow/        # GradientFlow — flowing color gradient blobs
@@ -71,10 +72,12 @@ src/
   lava/                 # Lava — flowing lava blobs
   leaves/               # Leaves — falling autumn leaves with wind
   lightning/            # Lightning — lightning bolts with flash effect
+  magnetic-sand/        # MagneticSand — iron filings responding to a mouse magnet
   matrix/               # Matrix — falling code columns (Matrix-style)
   murmuration/          # Murmuration — starling flock murmuration with fluid motion
   nebula/               # Nebula — cosmic nebula with stars
   neon/                 # Neon — glowing neon light elements with flicker
+  neural-network/       # NeuralNetwork — neurons with dendrites and synaptic pulses
   orbits/               # Orbits — particles orbiting center points with trails
   particles/            # Particles — network/plexus effect with mouse interaction
   petals/               # Petals — falling flower petals with wind
@@ -82,6 +85,7 @@ src/
   pollen/               # Pollen — drifting pollen particles with Brownian motion
   popcorn/              # Popcorn — popping and bouncing kernels
   portal/               # Portal — swirling portal vortex with particles
+  primordial-soup/      # PrimordialSoup — cells that eat, grow, and divide
   pulse-grid/           # PulseGrid — dot grid with radiating pulse waves
   rain/                 # Rain — raindrops with splashes (drizzle/downpour/thunderstorm)
   roots/                # Roots — growing root/branch systems
@@ -89,7 +93,9 @@ src/
   shooting-stars/       # ShootingStarSystem — standalone shooting star utility (not Effect)
   smoke/                # Smoke — rising smoke plumes
   snow/                 # Snow — continuous snowfall
+  sound-waves/          # SoundWaves — multi-source wave interference visualization
   sparklers/            # Sparklers — spark emitter with trails and hover mode
+  spirograph/           # Spirograph — hypotrochoid curves drawing and fading over time
   stars/                # Stars — twinkling sky with optional shooting stars
   streamers/            # Streamers — party streamers floating down
   topography/           # Topography — animated contour map lines
@@ -243,13 +249,13 @@ effect.withFade({ top: 0.2, bottom: 0.3 }); // fade 20% from top, 30% from botto
 | `Aurora` | `AuroraConfig` | `bands`, `speed`, `scale` |
 | `Balloons` | `BalloonsConfig` | `count`, `colors`, `sizeRange`, `speed`, `driftAmount`, `stringLength`, `scale` |
 | `BlackHole` | `BlackHoleConfig` | `count`, `speed`, `color`, `size`, `scale` |
+| `Blueprint` | `BlueprintConfig` | `speed`, `gridSize`, `lineColor`, `backgroundColor`, `complexity`, `scale` |
 | `Boids` | `BoidsConfig` | `count`, `speed`, `separation`, `alignment`, `cohesion`, `color`, `size`, `scale` |
 | `Bubbles` | `BubblesConfig` | `count`, `sizeRange`, `speed`, `popOnClick`, `popRadius`, `colors`, `wobbleAmount`, `scale` |
 | `Butterflies` | `ButterfliesConfig` | `colors`, `count`, `scale`, `size`, `speed` |
 | `Caustics` | `CausticsConfig` | `speed`, `scale`, `resolution`, `intensity`, `color` |
 | `Clouds` | `CloudsConfig` | `color`, `count`, `opacity`, `scale`, `speed` |
 | `Confetti` | `ConfettiConfig` | `scale` |
-| `Constellation` | `ConstellationConfig` | `stars`, `speed`, `connectionDistance`, `color`, `lineWidth`, `twinkleSpeed`, `scale` |
 | `CoralReef` | `CoralReefConfig` | `anemones`, `jellyfish`, `bubbles`, `speed`, `colors`, `scale` |
 | `Crystallization` | `CrystallizationConfig` | `seeds`, `speed`, `branchAngle`, `maxDepth`, `color`, `scale` |
 | `DigitalRain` | `DigitalRainConfig` | `speed`, `fontSize`, `columns`, `mode`, `color`, `trailLength`, `scale` |
@@ -257,6 +263,7 @@ effect.withFade({ top: 0.2, bottom: 0.3 }); // fade 20% from top, 30% from botto
 | `Fireflies` | `FirefliesConfig` | `count`, `color`, `size`, `speed`, `glowSpeed`, `scale` |
 | `Firepit` | `FirepitConfig` | `embers`, `flameWidth`, `flameHeight`, `intensity`, `scale` |
 | `Fireworks` | `FireworksConfig` | `autoSpawn`, `variants`, `scale` |
+| `Fluid` | `FluidConfig` | `speed`, `resolution`, `colors`, `viscosity`, `diffusion`, `mouseForce`, `scale` |
 | `Glitch` | `GlitchConfig` | `intensity`, `speed`, `rgbSplit`, `scanlines`, `noiseBlocks`, `sliceDisplacement`, `color`, `scale` |
 | `Glitter` | `GlitterConfig` | `count`, `size`, `speed`, `groundLevel`, `maxSettled`, `colors`, `scale` |
 | `GradientFlow` | `GradientFlowConfig` | `speed`, `scale`, `colors`, `blobs`, `resolution` |
@@ -268,10 +275,12 @@ effect.withFade({ top: 0.2, bottom: 0.3 }); // fade 20% from top, 30% from botto
 | `Lava` | `LavaConfig` | `count`, `speed`, `colors`, `scale` |
 | `Leaves` | `LeavesConfig` | `count`, `size`, `speed`, `wind`, `colors`, `scale` |
 | `Lightning` | `LightningConfig` | `flash`, `color`, `frequency`, `branches`, `scale` |
+| `MagneticSand` | `MagneticSandConfig` | `speed`, `count`, `color`, `magnetStrength`, `scale` |
 | `Matrix` | `MatrixConfig` | `columns`, `speed`, `fontSize`, `trailLength`, `color`, `scale` |
 | `Murmuration` | `MurmurationConfig` | `count`, `speed`, `cohesion`, `alignment`, `separation`, `turnRadius`, `color`, `scale` |
 | `Nebula` | `NebulaConfig` | `starCount`, `speed`, `colors`, `scale` |
 | `Neon` | `NeonConfig` | `count`, `speed`, `colors`, `flicker`, `scale` |
+| `NeuralNetwork` | `NeuralNetworkConfig` | `speed`, `neurons`, `color`, `pulseColor`, `scale` |
 | `Orbits` | `OrbitsConfig` | `centers`, `orbitersPerCenter`, `speed`, `colors`, `trailLength`, `showCenters`, `scale` |
 | `Particles` | `ParticlesConfig` | `count`, `color`, `lineColor`, `size`, `speed`, `connectionDistance`, `lineWidth`, `mouseMode` (`none`/`connect`/`attract`/`repel`), `mouseRadius`, `mouseStrength`, `particleForces`, `glow`, `background`, `scale` |
 | `Petals` | `PetalsConfig` | `count`, `colors`, `size`, `speed`, `wind`, `scale` |
@@ -279,13 +288,16 @@ effect.withFade({ top: 0.2, bottom: 0.3 }); // fade 20% from top, 30% from botto
 | `Pollen` | `PollenConfig` | `count`, `speed`, `size`, `color`, `glowSize`, `wind`, `scale` |
 | `Popcorn` | `PopcornConfig` | `count`, `speed`, `gravity`, `bounciness`, `color`, `popRate`, `scale` |
 | `Portal` | `PortalConfig` | `speed`, `particles`, `size`, `color`, `secondaryColor`, `direction`, `scale` |
+| `PrimordialSoup` | `PrimordialSoupConfig` | `speed`, `maxCells`, `foodRate`, `colors`, `scale` |
 | `PulseGrid` | `PulseGridConfig` | `spacing`, `speed`, `color`, `dotSize`, `waveCount`, `waveSpeed`, `scale` |
 | `Rain` | `RainConfig` | `variant` (`drizzle`/`downpour`/`thunderstorm`), `drops`, `wind`, `speed`, `splashes`, `color`, `groundLevel`, `scale` |
 | `Roots` | `RootsConfig` | `count`, `speed`, `color`, `branchProbability`, `maxSegments`, `scale` |
 | `Sandstorm` | `SandstormConfig` | `count`, `wind`, `turbulence`, `color`, `hazeOpacity`, `scale` |
 | `Smoke` | `SmokeConfig` | `color`, `count`, `scale`, `speed`, `spread` |
 | `Snow` | `SnowConfig` | `particles`, `size`, `speed`, `fillStyle`, `scale` |
+| `SoundWaves` | `SoundWavesConfig` | `speed`, `sources`, `frequency`, `amplitude`, `colors`, `resolution`, `damping`, `scale` |
 | `Sparklers` | `SparklersConfig` | `emitRate`, `maxSparks`, `colors`, `speed`, `friction`, `gravity`, `decay`, `trailLength`, `hoverMode`, `scale` |
+| `Spirograph` | `SpirographConfig` | `speed`, `curves`, `colors`, `lineWidth`, `fadeSpeed`, `complexity`, `scale` |
 | `Stars` | `StarsConfig` | `mode` (`sky`/`shooting`/`both`), `starCount`, `shootingInterval`, `shootingSpeed`, `twinkleSpeed`, `color`, `shootingColor`, `trailLength`, `scale` |
 | `Streamers` | `StreamersConfig` | `count`, `colors`, `speed`, `scale` |
 | `Topography` | `TopographyConfig` | `speed`, `scale`, `resolution`, `contourSpacing`, `lineWidth`, `color` |

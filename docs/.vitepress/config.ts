@@ -81,8 +81,7 @@ export default defineConfig({
                         {text: 'Nebula', link: '/guide/nebula'},
                         {text: 'Black Hole', link: '/guide/black-hole'},
                         {text: 'HyperSpace', link: '/guide/hyper-space'},
-                        {text: 'Portal', link: '/guide/portal'},
-                        {text: 'Constellation', link: '/guide/constellation'}
+                        {text: 'Portal', link: '/guide/portal'}
                     ]
                 },
                 {
@@ -100,7 +99,8 @@ export default defineConfig({
                         {text: 'Gradient Flow', link: '/guide/gradient-flow'},
                         {text: 'Interference', link: '/guide/interference'},
                         {text: 'Topography', link: '/guide/topography'},
-                        {text: 'Voronoi', link: '/guide/voronoi'}
+                        {text: 'Voronoi', link: '/guide/voronoi'},
+                        {text: 'Neural Network', link: '/guide/neural-network'}
                     ]
                 },
                 {
@@ -108,7 +108,8 @@ export default defineConfig({
                     items: [
                         {text: 'Boids', link: '/guide/boids'},
                         {text: 'Roots', link: '/guide/roots'},
-                        {text: 'Murmuration', link: '/guide/murmuration'}
+                        {text: 'Murmuration', link: '/guide/murmuration'},
+                        {text: 'Primordial Soup', link: '/guide/primordial-soup'}
                     ]
                 },
                 {
@@ -120,7 +121,17 @@ export default defineConfig({
                         {text: 'Glitch', link: '/guide/glitch'},
                         {text: 'Hologram', link: '/guide/hologram'},
                         {text: 'Digital Rain', link: '/guide/digital-rain'},
-                        {text: 'Kaleidoscope', link: '/guide/kaleidoscope'}
+                        {text: 'Kaleidoscope', link: '/guide/kaleidoscope'},
+                        {text: 'Blueprint', link: '/guide/blueprint'}
+                    ]
+                },
+                {
+                    text: 'Abstract',
+                    items: [
+                        {text: 'Fluid', link: '/guide/fluid'},
+                        {text: 'Spirograph', link: '/guide/spirograph'},
+                        {text: 'Sound Waves', link: '/guide/sound-waves'},
+                        {text: 'Magnetic Sand', link: '/guide/magnetic-sand'}
                     ]
                 },
             ],
@@ -191,8 +202,7 @@ export default defineConfig({
                         {text: 'Nebula', link: '/api/nebula'},
                         {text: 'Black Hole', link: '/api/black-hole'},
                         {text: 'HyperSpace', link: '/api/hyper-space'},
-                        {text: 'Portal', link: '/api/portal'},
-                        {text: 'Constellation', link: '/api/constellation'}
+                        {text: 'Portal', link: '/api/portal'}
                     ]
                 },
                 {
@@ -210,7 +220,8 @@ export default defineConfig({
                         {text: 'Gradient Flow', link: '/api/gradient-flow'},
                         {text: 'Interference', link: '/api/interference'},
                         {text: 'Topography', link: '/api/topography'},
-                        {text: 'Voronoi', link: '/api/voronoi'}
+                        {text: 'Voronoi', link: '/api/voronoi'},
+                        {text: 'Neural Network', link: '/api/neural-network'}
                     ]
                 },
                 {
@@ -218,7 +229,8 @@ export default defineConfig({
                     items: [
                         {text: 'Boids', link: '/api/boids'},
                         {text: 'Roots', link: '/api/roots'},
-                        {text: 'Murmuration', link: '/api/murmuration'}
+                        {text: 'Murmuration', link: '/api/murmuration'},
+                        {text: 'Primordial Soup', link: '/api/primordial-soup'}
                     ]
                 },
                 {
@@ -230,7 +242,17 @@ export default defineConfig({
                         {text: 'Glitch', link: '/api/glitch'},
                         {text: 'Hologram', link: '/api/hologram'},
                         {text: 'Digital Rain', link: '/api/digital-rain'},
-                        {text: 'Kaleidoscope', link: '/api/kaleidoscope'}
+                        {text: 'Kaleidoscope', link: '/api/kaleidoscope'},
+                        {text: 'Blueprint', link: '/api/blueprint'}
+                    ]
+                },
+                {
+                    text: 'Abstract',
+                    items: [
+                        {text: 'Fluid', link: '/api/fluid'},
+                        {text: 'Spirograph', link: '/api/spirograph'},
+                        {text: 'Sound Waves', link: '/api/sound-waves'},
+                        {text: 'Magnetic Sand', link: '/api/magnetic-sand'}
                     ]
                 }
             ]

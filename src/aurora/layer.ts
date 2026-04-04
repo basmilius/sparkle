@@ -81,14 +81,6 @@ export class Aurora extends Effect<AuroraConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-        // Dark sky background gradient
-        const bg = ctx.createLinearGradient(0, 0, 0, height);
-        bg.addColorStop(0, '#000000');
-        bg.addColorStop(0.5, '#050012');
-        bg.addColorStop(1, '#0a0025');
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, width, height);
-
         // Aurora curtain rays — vertical bands with Gaussian horizontal falloff
         ctx.globalCompositeOperation = 'screen';
 

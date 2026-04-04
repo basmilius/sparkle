@@ -14,26 +14,22 @@ export const CATEGORIES: Category[] = [
     },
     {
         label: 'Space',
-        ids: ['nebula', 'black-hole', 'hyper-space', 'portal', 'constellation']
+        ids: ['nebula', 'black-hole', 'hyper-space', 'portal']
     },
     {
         label: 'Ambient',
-        ids: ['stars', 'particles', 'firepit', 'plasma', 'orbits', 'lava', 'neon', 'pulse-grid', 'caustics', 'gradient-flow', 'interference', 'topography', 'voronoi']
+        ids: ['stars', 'particles', 'firepit', 'plasma', 'orbits', 'lava', 'neon', 'pulse-grid', 'caustics', 'gradient-flow', 'interference', 'topography', 'voronoi', 'neural-network']
     },
     {
         label: 'Organic',
-        ids: ['boids', 'roots', 'murmuration']
+        ids: ['boids', 'roots', 'murmuration', 'primordial-soup']
     },
     {
         label: 'Stylized',
-        ids: ['matrix', 'wormhole', 'donuts', 'glitch', 'hologram', 'digital-rain', 'kaleidoscope']
+        ids: ['matrix', 'wormhole', 'donuts', 'glitch', 'hologram', 'digital-rain', 'kaleidoscope', 'blueprint']
     },
     {
         label: 'Abstract',
-        ids: ['fluid', 'spirograph', 'sound-waves']
-    },
-    {
-        label: 'Playful',
-        ids: []
+        ids: ['fluid', 'spirograph', 'sound-waves', 'magnetic-sand']
     }
 ];

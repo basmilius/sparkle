@@ -8,14 +8,14 @@
     setup
     lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { createConstellation } from '@basmilius/sparkle';
+    import { createSpirograph } from '@basmilius/sparkle';
 
     const canvasRef = ref<HTMLCanvasElement>();
-    let sim: ReturnType<typeof createConstellation> | null = null;
+    let sim: ReturnType<typeof createSpirograph> | null = null;
 
     onMounted(() => {
         if (canvasRef.value) {
-            sim = createConstellation();
+            sim = createSpirograph();
             sim.mount(canvasRef.value).start();
         }
     });

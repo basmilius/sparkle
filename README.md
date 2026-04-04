@@ -6,7 +6,7 @@
 
 # Sparkle
 
-Canvas-based visual effects library for the web. Includes fireworks, confetti and snow simulations.
+Canvas-based visual effects library for the web. Includes 61 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, spirograph) and playful animations (popcorn, balloons, confetti).
 
 ### Install
 
@@ -23,21 +23,35 @@ pnpm add @basmilius/sparkle
 ### Quick Start
 
 ```typescript
-import { FireworkSimulation, ConfettiSimulation, SnowSimulation } from '@basmilius/sparkle';
-
-const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-
-// Fireworks
-const fireworks = new FireworkSimulation(canvas);
-fireworks.start();
-
-// Confetti
-const confetti = new ConfettiSimulation(canvas);
-confetti.fire({ angle: 90, spread: 60, particles: 150, startVelocity: 45, x: 0.5, y: 0.5 });
+import { createSnow, createConfetti, createFireworks } from '@basmilius/sparkle';
 
 // Snow
-const snow = new SnowSimulation(canvas);
-snow.start();
+const snow = createSnow({ particles: 200, speed: 1.5 });
+snow.mount('#canvas').start();
+
+// Confetti burst
+const confetti = createConfetti();
+confetti.mount('#canvas').start();
+confetti.burst();
+
+// Fireworks
+const fireworks = createFireworks({ autoSpawn: true });
+fireworks.mount('#canvas').start();
+```
+
+### Scene Composition
+
+Layer multiple effects on a single canvas:
+
+```typescript
+import { createScene, createAurora, createStars, createSnow } from '@basmilius/sparkle';
+
+const scene = createScene()
+    .mount('#canvas')
+    .layer(createAurora({ bands: 4 }))
+    .layer(createStars({ mode: 'sky' }).withFade({ bottom: 0.4 }))
+    .layer(createSnow())
+    .start();
 ```
 
 ### Documentation
