@@ -69,7 +69,6 @@ export class Trail {
             return;
         }
 
-        ctx.save();
         ctx.lineCap = 'round';
 
         const len = this.#trail.length;
@@ -107,7 +106,8 @@ export class Trail {
         ctx.fillStyle = `hsl(${this.#hue}, 20%, 92%)`;
         ctx.fill();
 
-        ctx.restore();
+        ctx.shadowBlur = 0;
+        ctx.lineCap = 'butt';
     }
 
     tick(dt: number = 1): void {

@@ -1,4 +1,4 @@
-import { parseColor } from '../color';
+import { p3a, parseColor } from '../color';
 import { Effect } from '../effect';
 import { DEFAULT_COLORS, MULBERRY } from './consts';
 import type { NeonTube, NeonTubeShape } from './types';
@@ -94,6 +94,10 @@ export class Neon extends Effect<NeonConfig> {
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
         ctx.globalCompositeOperation = 'lighter';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
+        const base = ctx.getTransform();
 
         for (const tube of this.#tubes) {
             const alpha = tube.flickerAlpha;
@@ -101,39 +105,45 @@ export class Neon extends Effect<NeonConfig> {
             const r = parsed.r;
             const g = parsed.g;
             const b = parsed.b;
+            const tx = tube.x * width;
+            const ty = tube.y * height;
+            const cos = Math.cos(tube.angle);
+            const sin = Math.sin(tube.angle);
 
-            ctx.save();
-            ctx.translate(tube.x * width, tube.y * height);
-            ctx.rotate(tube.angle);
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * tx + base.c * ty + base.e,
+                base.b * tx + base.d * ty + base.f
+            );
 
             const canvasScale = Math.min(width, height) / 600;
             const size = tube.size * this.#scale * canvasScale;
 
             // Outer blurry glow
             ctx.lineWidth = size * 0.18;
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.06 * alpha})`;
-            ctx.lineJoin = 'round';
-            ctx.lineCap = 'round';
+            ctx.strokeStyle = p3a(r, g, b, 0.06 * alpha);
             this.#drawTubeShape(ctx, tube, size, this.#time);
 
             // Medium glow
             ctx.lineWidth = size * 0.1;
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.25 * alpha})`;
+            ctx.strokeStyle = p3a(r, g, b, 0.25 * alpha);
             this.#drawTubeShape(ctx, tube, size, this.#time);
 
             // Inner glow
             ctx.lineWidth = size * 0.055;
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.55 * alpha})`;
+            ctx.strokeStyle = p3a(r, g, b, 0.55 * alpha);
             this.#drawTubeShape(ctx, tube, size, this.#time);
 
             // Bright core
             ctx.lineWidth = size * 0.022;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.9 * alpha})`;
+            ctx.strokeStyle = p3a(255, 255, 255, 0.9 * alpha);
             this.#drawTubeShape(ctx, tube, size, this.#time);
-
-            ctx.restore();
         }
 
+        ctx.setTransform(base);
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
     }

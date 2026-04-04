@@ -104,6 +104,7 @@ export class Snow extends Effect<SnowConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        const base = ctx.getTransform();
 
         for (const snowflake of this.#snowflakes) {
             const px = snowflake.x * width;
@@ -120,8 +121,14 @@ export class Snow extends Effect<SnowConfig> {
             if (snowflake.spriteIndex === 3) {
                 const cos = Math.cos(snowflake.rotation);
                 const sin = Math.sin(snowflake.rotation);
-                ctx.save();
-                ctx.transform(cos, sin, -sin, cos, px, py);
+                ctx.setTransform(
+                    base.a * cos + base.c * sin,
+                    base.b * cos + base.d * sin,
+                    base.a * -sin + base.c * cos,
+                    base.b * -sin + base.d * cos,
+                    base.a * px + base.c * py + base.e,
+                    base.b * px + base.d * py + base.f
+                );
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],
                     -displayRadius,
@@ -129,7 +136,7 @@ export class Snow extends Effect<SnowConfig> {
                     displaySize,
                     displaySize
                 );
-                ctx.restore();
+                ctx.setTransform(base);
             } else {
                 ctx.drawImage(
                     this.#sprites[snowflake.spriteIndex],

@@ -1,3 +1,4 @@
+import { p3 } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -91,7 +92,10 @@ export class PulseGrid extends Effect<PulseGridConfig> {
 
         for (let index = 0; index < this.#waves.length; index++) {
             const wave = this.#waves[index];
-            wave.radius += wave.speed * dtSeconds;
+            // Ease-out: slow down as the wave approaches max radius.
+            const progress = wave.radius / wave.maxRadius;
+            const easeOut = 1 - progress * 0.65;
+            wave.radius += wave.speed * easeOut * dtSeconds;
             wave.life -= dtSeconds * 0.5;
 
             if (wave.life > 0 && wave.radius < wave.maxRadius) {
@@ -154,7 +158,7 @@ export class PulseGrid extends Effect<PulseGridConfig> {
             }
 
             ctx.globalAlpha = brightness;
-            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+            ctx.fillStyle = p3(r, g, b);
             ctx.beginPath();
             ctx.arc(px, py, dotSize + dotSize * brightness * 0.5, 0, TWO_PI);
             ctx.fill();

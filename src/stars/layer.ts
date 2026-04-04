@@ -1,6 +1,8 @@
+import { p3 } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { ShootingStarSystem } from '../shooting-stars';
+import { createGlowSprite } from '../sprite';
 import { MULBERRY } from './consts';
 import type { Star, StarMode } from './types';
 
@@ -25,6 +27,7 @@ export class Stars extends Effect<StarsConfig> {
     #starCount: number;
     #time: number = 0;
     #stars: Star[] = [];
+    #glowSprite: HTMLCanvasElement | null = null;
 
     constructor(config: StarsConfig = {}) {
         super();
@@ -62,6 +65,12 @@ export class Stars extends Effect<StarsConfig> {
                 this.#stars.push(this.#createStar());
             }
         }
+
+        this.#glowSprite = createGlowSprite(
+            this.#colorRGB[0], this.#colorRGB[1], this.#colorRGB[2],
+            32,
+            [[0, 0.6], [0.3, 0.2], [1, 0]]
+        );
     }
 
     configure(config: Partial<StarsConfig>): void {
@@ -99,15 +108,21 @@ export class Stars extends Effect<StarsConfig> {
                 // Star dot
                 ctx.beginPath();
                 ctx.arc(px, py, size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgb(${sr}, ${sg}, ${sb})`;
+                ctx.fillStyle = p3(sr, sg, sb);
                 ctx.fill();
 
-                // Cross sparkle for larger stars
+                // Glow + cross sparkle for larger stars
                 if (star.size > 1.5) {
+                    if (this.#glowSprite) {
+                        const glowSize = size * 6;
+                        ctx.globalAlpha = alpha * 0.5;
+                        ctx.drawImage(this.#glowSprite, px - glowSize / 2, py - glowSize / 2, glowSize, glowSize);
+                    }
+
                     const sparkleLength = size * 3;
                     const sparkleAlpha = alpha * 0.4;
                     ctx.globalAlpha = sparkleAlpha;
-                    ctx.strokeStyle = `rgb(${sr}, ${sg}, ${sb})`;
+                    ctx.strokeStyle = p3(sr, sg, sb);
                     ctx.lineWidth = 0.5 * this.#scale;
 
                     ctx.beginPath();

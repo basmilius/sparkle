@@ -17,7 +17,9 @@ export class SparklerParticle {
     readonly #scale: number;
     readonly #size: number;
     readonly #trailLength: number;
-    readonly #trail: Point[] = [];
+    readonly #trail: Point[];
+    #trailHead: number = 0;
+    #trailSize: number = 0;
     #x: number;
     #y: number;
     #vx: number;
@@ -44,22 +46,25 @@ export class SparklerParticle {
         this.#scale = config.scale ?? 1;
         this.#size = config.size ?? (1 + Math.random() * 2);
         this.#trailLength = config.trailLength ?? 3;
+        this.#trail = new Array(this.#trailLength).fill(null).map(() => ({x: position.x, y: position.y}));
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
         const [r, g, b] = this.#color;
+        const trailSize = this.#trailSize;
 
-        for (let t = 0; t < this.#trail.length; t++) {
-            const trailAlpha = this.#alpha * (t / this.#trail.length) * 0.5;
+        for (let t = 0; t < trailSize; t++) {
+            const trailAlpha = this.#alpha * (t / trailSize) * 0.5;
 
             if (trailAlpha < 0.01) {
                 continue;
             }
 
-            const trailSize = this.#size * (t / this.#trail.length) * this.#scale;
+            const dotSize = this.#size * (t / trailSize) * this.#scale;
+            const i = (this.#trailHead + t) % this.#trailLength;
 
             ctx.beginPath();
-            ctx.arc(this.#trail[t].x, this.#trail[t].y, trailSize, 0, Math.PI * 2);
+            ctx.arc(this.#trail[i].x, this.#trail[i].y, dotSize, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${trailAlpha})`;
             ctx.fill();
         }
@@ -71,10 +76,11 @@ export class SparklerParticle {
     }
 
     tick(dt: number = 1): void {
-        this.#trail.push({x: this.#x, y: this.#y});
+        this.#trail[this.#trailHead] = {x: this.#x, y: this.#y};
+        this.#trailHead = (this.#trailHead + 1) % this.#trailLength;
 
-        if (this.#trail.length > this.#trailLength) {
-            this.#trail.shift();
+        if (this.#trailSize < this.#trailLength) {
+            this.#trailSize++;
         }
 
         this.#vx *= Math.pow(this.#friction, dt);

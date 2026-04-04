@@ -1,4 +1,5 @@
 import { LimitedFrameRateCanvas } from './canvas';
+import { defaultContextSettings } from './color';
 import { applyEdgeFade } from './fade';
 import type { SimulationLayer } from './layer';
 
@@ -111,7 +112,7 @@ export class Scene {
     readonly #defaultOptions: CanvasRenderingContext2DSettings;
     #runner: SceneCanvas | null = null;
 
-    constructor(frameRate: number = 60, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
+    constructor(frameRate: number = 60, options: CanvasRenderingContext2DSettings = defaultContextSettings()) {
         this.#frameRate = frameRate;
         this.#defaultOptions = options;
     }

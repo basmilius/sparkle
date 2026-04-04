@@ -1,4 +1,5 @@
 import { LimitedFrameRateCanvas } from './canvas';
+import { defaultContextSettings } from './color';
 import { applyEdgeFade } from './fade';
 import type { EdgeFade, SimulationLayer } from './layer';
 
@@ -8,7 +9,7 @@ export class SimulationCanvas extends LimitedFrameRateCanvas {
     #offscreen: HTMLCanvasElement | null = null;
     #offscreenCtx: CanvasRenderingContext2D | null = null;
 
-    constructor(canvas: HTMLCanvasElement, simulation: SimulationLayer, frameRate: number = 60, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
+    constructor(canvas: HTMLCanvasElement, simulation: SimulationLayer, frameRate: number = 60, options: CanvasRenderingContext2DSettings = defaultContextSettings()) {
         super(canvas, frameRate, options);
         this.#simulation = simulation;
         this.#contextOptions = options;

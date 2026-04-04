@@ -1,3 +1,4 @@
+import { p3a } from '../color';
 import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -142,12 +143,12 @@ export class Nebula extends Effect<NebulaConfig> {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
         if (!result) {
-            return `rgba(255, 255, 255, ${alpha})`;
+            return p3a(255, 255, 255, alpha);
         }
 
         const r = parseInt(result[1], 16);
         const g = parseInt(result[2], 16);
         const b = parseInt(result[3], 16);
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        return p3a(r, g, b, alpha);
     }
 }

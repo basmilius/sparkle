@@ -19,6 +19,7 @@ export type FallingGlitter = {
     flipSpeed: number;
     sparkle: number;
     colorIndex: number;
+    depth: number;
 };
 
 export type SettledGlitter = {

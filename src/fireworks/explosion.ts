@@ -110,7 +110,6 @@ export class Explosion {
         const effectiveWidth = this.#shape === 'line' ? this.#lineWidth * ds : this.#lineWidth * 0.4 * ds;
         const effectiveAlpha = this.#alpha * Math.min(ds, 1.2);
 
-        ctx.save();
         ctx.lineCap = 'round';
 
         if (len > 2) {
@@ -149,7 +148,7 @@ export class Explosion {
             ctx.fill();
         }
 
-        ctx.restore();
+        ctx.lineCap = 'butt';
     }
 
     tick(dt: number): void {

@@ -140,8 +140,10 @@ export class Bubbles extends Effect<BubblesConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        // Sort small (far) to large (near) for natural depth layering.
+        const sorted = this.#bubbles.slice().sort((a, b) => a.radius - b.radius);
 
-        for (const bubble of this.#bubbles) {
+        for (const bubble of sorted) {
             const px = bubble.x * width;
             const py = bubble.y * height;
             const r = bubble.radius * this.#scale;

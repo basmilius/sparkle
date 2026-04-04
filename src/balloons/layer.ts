@@ -91,6 +91,7 @@ export class Balloons extends Effect<BalloonsConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+        const base = ctx.getTransform();
 
         for (const balloon of this.#balloons) {
             const px = balloon.x * width;
@@ -101,8 +102,14 @@ export class Balloons extends Effect<BalloonsConfig> {
             const cos = Math.cos(balloon.rotation);
             const sin = Math.sin(balloon.rotation);
 
-            ctx.save();
-            ctx.transform(cos, sin, -sin, cos, px, py);
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * px + base.c * py + base.e,
+                base.b * px + base.d * py + base.f
+            );
 
             const gradient = ctx.createRadialGradient(
                 -rx * 0.3, -ry * 0.3, rx * 0.1,
@@ -154,9 +161,9 @@ export class Balloons extends Effect<BalloonsConfig> {
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
             ctx.lineWidth = this.#scale;
             ctx.stroke();
-
-            ctx.restore();
         }
+
+        ctx.setTransform(base);
     }
 
     #createBalloon(initialSpread: boolean): Balloon {

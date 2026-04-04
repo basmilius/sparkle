@@ -24,6 +24,8 @@ export class Lava extends Effect<LavaConfig> {
     #colors: string[];
     #blobs: LavaBlob[] = [];
     #sprites: HTMLCanvasElement[] = [];
+    #offscreen: HTMLCanvasElement | null = null;
+    #offscreenCtx: CanvasRenderingContext2D | null = null;
     #time: number = 0;
 
     constructor(config: LavaConfig = {}) {
@@ -82,8 +84,16 @@ export class Lava extends Effect<LavaConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-        ctx.globalCompositeOperation = 'screen';
-        ctx.filter = 'blur(20px)';
+        if (!this.#offscreen || this.#offscreen.width !== width || this.#offscreen.height !== height) {
+            this.#offscreen = document.createElement('canvas');
+            this.#offscreen.width = width;
+            this.#offscreen.height = height;
+            this.#offscreenCtx = this.#offscreen.getContext('2d');
+        }
+
+        const offCtx = this.#offscreenCtx!;
+        offCtx.clearRect(0, 0, width, height);
+        offCtx.globalCompositeOperation = 'screen';
 
         const canvasScale = Math.min(width, height) / 600;
 
@@ -93,8 +103,8 @@ export class Lava extends Effect<LavaConfig> {
             const displayRadius = blob.radius * this.#scale * canvasScale;
             const displaySize = displayRadius * 2;
 
-            ctx.globalAlpha = 0.6 + 0.4 * Math.sin(this.#time * 3 + blob.phase);
-            ctx.drawImage(
+            offCtx.globalAlpha = 0.6 + 0.4 * Math.sin(this.#time * 3 + blob.phase);
+            offCtx.drawImage(
                 this.#sprites[blob.colorIndex],
                 px - displayRadius,
                 py - displayRadius,
@@ -103,6 +113,12 @@ export class Lava extends Effect<LavaConfig> {
             );
         }
 
+        offCtx.globalCompositeOperation = 'source-over';
+        offCtx.globalAlpha = 1;
+
+        ctx.globalCompositeOperation = 'screen';
+        ctx.filter = 'blur(20px)';
+        ctx.drawImage(this.#offscreen, 0, 0);
         ctx.filter = '';
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;

@@ -1,3 +1,4 @@
+import { parseColor } from '../color';
 import { Effect } from '../effect';
 import { DEFAULT_CONFIG, MULBERRY } from './consts';
 import type { Donut } from './donut';
@@ -7,6 +8,7 @@ export interface DonutsConfig {
     readonly collisionPadding?: number;
     readonly colors?: string[];
     readonly count?: number;
+    readonly gradient?: boolean;
     readonly mouseAvoidance?: boolean;
     readonly mouseAvoidanceRadius?: number;
     readonly mouseAvoidanceStrength?: number;
@@ -20,6 +22,7 @@ export interface DonutsConfig {
 
 export class Donuts extends Effect<DonutsConfig> {
     readonly #background: string;
+    #gradient: boolean;
     #collisionPadding: number;
     #colors: string[];
     readonly #count: number;
@@ -34,6 +37,7 @@ export class Donuts extends Effect<DonutsConfig> {
     #thickness: number;
     readonly #onMouseMoveBound: (event: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
+    #time: number = 0;
     #donuts: Donut[] = [];
     #mouseX: number = -1;
     #mouseY: number = -1;
@@ -48,6 +52,7 @@ export class Donuts extends Effect<DonutsConfig> {
         const scale = config.scale ?? 1;
 
         this.#background = config.background ?? DEFAULT_CONFIG.background!;
+        this.#gradient = config.gradient ?? false;
         this.#collisionPadding = (config.collisionPadding ?? DEFAULT_CONFIG.collisionPadding!) * scale;
         this.#colors = config.colors ?? DEFAULT_CONFIG.colors!;
         this.#count = config.count ?? DEFAULT_CONFIG.count!;
@@ -98,6 +103,9 @@ export class Donuts extends Effect<DonutsConfig> {
     }
 
     configure(config: Partial<DonutsConfig>): void {
+        if (config.gradient !== undefined) {
+            this.#gradient = config.gradient;
+        }
         if (config.mouseAvoidance !== undefined) {
             this.#mouseAvoidance = config.mouseAvoidance;
         }
@@ -114,7 +122,10 @@ export class Donuts extends Effect<DonutsConfig> {
             this.#colors = config.colors;
 
             for (let i = 0; i < this.#donuts.length; i++) {
-                this.#donuts[i].color = this.#colors[i % this.#colors.length];
+                const color = this.#colors[i % this.#colors.length];
+                const {r, g, b} = parseColor(color);
+                this.#donuts[i].color = color;
+                this.#donuts[i].highlightColor = `rgb(${Math.min(255, r + (255 - r) * 0.4)}, ${Math.min(255, g + (255 - g) * 0.4)}, ${Math.min(255, b + (255 - b) * 0.4)})`;
             }
         }
         if (config.thickness !== undefined) {
@@ -143,6 +154,7 @@ export class Donuts extends Effect<DonutsConfig> {
     tick(dt: number, width: number, height: number): void {
         this.#width = width;
         this.#height = height;
+        this.#time += dt * 0.008;
 
         this.#resolveCollisions(dt);
 
@@ -160,23 +172,42 @@ export class Donuts extends Effect<DonutsConfig> {
         ctx.fillStyle = this.#background;
         ctx.fillRect(0, 0, width, height);
 
+        const base = ctx.getTransform();
+
         for (const donut of this.#donuts) {
             const cos = Math.cos(donut.angle);
             const sin = Math.sin(donut.angle);
 
-            ctx.save();
-            ctx.transform(cos, sin, -sin, cos, donut.x, donut.y);
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * donut.x + base.c * donut.y + base.e,
+                base.b * donut.x + base.d * donut.y + base.f
+            );
 
             ctx.beginPath();
             ctx.arc(0, 0, donut.outerRadius, 0, Math.PI * 2);
             ctx.arc(0, 0, donut.innerRadius, 0, Math.PI * 2, true);
             ctx.closePath();
 
-            ctx.fillStyle = donut.color;
-            ctx.fill();
+            if (this.#gradient) {
+                const gradient = ctx.createRadialGradient(
+                    -donut.outerRadius * 0.3, -donut.outerRadius * 0.3, donut.innerRadius * 0.5,
+                    0, 0, donut.outerRadius
+                );
+                gradient.addColorStop(0, donut.highlightColor);
+                gradient.addColorStop(1, donut.color);
+                ctx.fillStyle = gradient;
+            } else {
+                ctx.fillStyle = donut.color;
+            }
 
-            ctx.restore();
+            ctx.fill();
         }
+
+        ctx.setTransform(base);
     }
 
     #updateDonut(donut: Donut, dt: number): void {
@@ -197,8 +228,11 @@ export class Donuts extends Effect<DonutsConfig> {
             donut.vy *= scale;
         }
 
-        donut.x += donut.vx * dt;
-        donut.y += donut.vy * dt;
+        const wobble = Math.sin(this.#time * donut.wobbleFreq + donut.wobblePhase) * donut.speed * 0.3;
+        const wobbleCross = Math.cos(this.#time * donut.wobbleFreq * 0.8 + donut.wobblePhase + 2.0) * donut.speed * 0.2;
+
+        donut.x += (donut.vx + wobble) * dt;
+        donut.y += (donut.vy + wobbleCross) * dt;
         donut.angle += donut.rotationSpeed * dt;
 
         const limit = donut.outerRadius * 0.5;
@@ -295,6 +329,11 @@ export class Donuts extends Effect<DonutsConfig> {
         const innerRadius = outerRadius * (1 - this.#thickness);
         const speed = this.#rand(this.#speedRange[0], this.#speedRange[1]);
         const direction = MULBERRY.next() * Math.PI * 2;
+        const color = this.#colors[Math.floor(MULBERRY.next() * this.#colors.length)];
+        const {r, g, b} = parseColor(color);
+        const hr = Math.min(255, r + (255 - r) * 0.4);
+        const hg = Math.min(255, g + (255 - g) * 0.4);
+        const hb = Math.min(255, b + (255 - b) * 0.4);
 
         return {
             outerRadius,
@@ -304,9 +343,12 @@ export class Donuts extends Effect<DonutsConfig> {
             angle: MULBERRY.next() * Math.PI * 2,
             speed,
             rotationSpeed: this.#rand(this.#rotationSpeedRange[0], this.#rotationSpeedRange[1]) * (MULBERRY.next() > 0.5 ? 1 : -1),
-            color: this.#colors[Math.floor(MULBERRY.next() * this.#colors.length)],
+            color,
+            highlightColor: `rgb(${hr}, ${hg}, ${hb})`,
             vx: Math.cos(direction) * speed,
-            vy: Math.sin(direction) * speed
+            vy: Math.sin(direction) * speed,
+            wobblePhase: MULBERRY.next() * Math.PI * 2,
+            wobbleFreq: 0.5 + MULBERRY.next() * 1.5
         };
     }
 

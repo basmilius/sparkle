@@ -4,4 +4,5 @@ export type Boid = {
     vx: number;
     vy: number;
     angle: number;
+    depth: number;
 };

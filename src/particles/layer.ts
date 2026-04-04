@@ -1,4 +1,5 @@
 import { isSmallScreen } from '../mobile';
+import { p3, p3a } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -38,6 +39,7 @@ export class Particles extends Effect<ParticlesConfig> {
     readonly #onMouseMoveBound: (evt: MouseEvent) => void;
     readonly #onMouseLeaveBound: () => void;
     #maxCount: number;
+    #time: number = 0;
     #mouseX: number = -1;
     #mouseY: number = -1;
     #mouseOnCanvas: boolean = false;
@@ -139,6 +141,7 @@ export class Particles extends Effect<ParticlesConfig> {
     tick(dt: number, width: number, height: number): void {
         this.#width = width;
         this.#height = height;
+        this.#time += dt * 0.01;
 
         this.#grid.clear();
 
@@ -157,8 +160,10 @@ export class Particles extends Effect<ParticlesConfig> {
         }
 
         for (const particle of this.#particles) {
-            particle.x += particle.vx * dt;
-            particle.y += particle.vy * dt;
+            const drift = Math.sin(this.#time * particle.driftFreq + particle.driftPhase) * particle.baseSpeed * 0.15;
+            const driftPerp = Math.cos(this.#time * particle.driftFreq * 0.7 + particle.driftPhase + 1.3) * particle.baseSpeed * 0.1;
+            particle.x += (particle.vx + drift) * dt;
+            particle.y += (particle.vy + driftPerp) * dt;
 
             if (particle.x < 0) {
                 particle.x = 0;
@@ -287,7 +292,7 @@ export class Particles extends Effect<ParticlesConfig> {
                             ctx.beginPath();
                             ctx.moveTo(pa.x, pa.y);
                             ctx.lineTo(pb2.x, pb2.y);
-                            ctx.strokeStyle = `rgba(${lr}, ${lg}, ${lb}, ${alpha * 0.6})`;
+                            ctx.strokeStyle = p3a(lr, lg, lb, alpha * 0.6);
                             ctx.stroke();
                         }
                     }
@@ -306,21 +311,21 @@ export class Particles extends Effect<ParticlesConfig> {
                     ctx.beginPath();
                     ctx.moveTo(this.#mouseX, this.#mouseY);
                     ctx.lineTo(particle.x, particle.y);
-                    ctx.strokeStyle = `rgba(${lr}, ${lg}, ${lb}, ${alpha * 0.8})`;
+                    ctx.strokeStyle = p3a(lr, lg, lb, alpha * 0.8);
                     ctx.stroke();
                 }
             }
         }
 
         if (this.#glow) {
-            ctx.shadowColor = `rgb(${pr}, ${pg}, ${pb})`;
+            ctx.shadowColor = p3(pr, pg, pb);
             ctx.shadowBlur = 8 * this.#scale;
         }
 
         for (const particle of this.#particles) {
             ctx.beginPath();
             ctx.arc(particle.x, particle.y, particle.radius * this.#scale, 0, Math.PI * 2);
-            ctx.fillStyle = `rgb(${pr}, ${pg}, ${pb})`;
+            ctx.fillStyle = p3(pr, pg, pb);
             ctx.fill();
         }
 
@@ -351,7 +356,9 @@ export class Particles extends Effect<ParticlesConfig> {
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
             radius: sizeRange[0] + MULBERRY.next() * (sizeRange[1] - sizeRange[0]),
-            baseSpeed: speed
+            baseSpeed: speed,
+            driftPhase: MULBERRY.next() * Math.PI * 2,
+            driftFreq: 0.5 + MULBERRY.next() * 1.5
         };
     }
 }

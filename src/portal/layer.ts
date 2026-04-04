@@ -1,3 +1,4 @@
+import { p3, p3a } from '../color';
 import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
@@ -138,9 +139,9 @@ export class Portal extends Effect<PortalConfig> {
 
         // Inner glow
         const innerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, portalRadius * 0.5);
-        innerGlow.addColorStop(0, `rgba(255, 255, 255, 0.15)`);
-        innerGlow.addColorStop(0.3, `rgba(${pr}, ${pg}, ${pb}, 0.1)`);
-        innerGlow.addColorStop(1, `rgba(${pr}, ${pg}, ${pb}, 0)`);
+        innerGlow.addColorStop(0, p3a(255, 255, 255, 0.15));
+        innerGlow.addColorStop(0.3, p3a(pr, pg, pb, 0.1));
+        innerGlow.addColorStop(1, p3a(pr, pg, pb, 0));
 
         ctx.beginPath();
         ctx.arc(cx, cy, portalRadius * 0.5, 0, Math.PI * 2);
@@ -183,15 +184,15 @@ export class Portal extends Effect<PortalConfig> {
             const colorG = Math.round(pg + (sg - pg) * mixFactor);
             const colorB = Math.round(pb + (sb - pb) * mixFactor);
 
-            ctx.strokeStyle = `rgba(${colorR}, ${colorG}, ${colorB}, ${ringAlpha})`;
+            ctx.strokeStyle = p3a(colorR, colorG, colorB, ringAlpha);
             ctx.stroke();
         }
 
         // Ring glow
         const ringGlow = ctx.createRadialGradient(cx, cy, portalRadius * 0.8, cx, cy, portalRadius * 1.3);
-        ringGlow.addColorStop(0, `rgba(${pr}, ${pg}, ${pb}, 0)`);
-        ringGlow.addColorStop(0.5, `rgba(${pr}, ${pg}, ${pb}, 0.08)`);
-        ringGlow.addColorStop(1, `rgba(${pr}, ${pg}, ${pb}, 0)`);
+        ringGlow.addColorStop(0, p3a(pr, pg, pb, 0));
+        ringGlow.addColorStop(0.5, p3a(pr, pg, pb, 0.08));
+        ringGlow.addColorStop(1, p3a(pr, pg, pb, 0));
 
         ctx.beginPath();
         ctx.arc(cx, cy, portalRadius * 1.3, 0, Math.PI * 2);
@@ -212,8 +213,8 @@ export class Portal extends Effect<PortalConfig> {
             const lineWidth = Math.max(0.5, particle.size * this.#scale);
 
             const gradient = ctx.createLinearGradient(px, py, tx, ty);
-            gradient.addColorStop(0, `rgba(${sr}, ${sg}, ${sb}, ${alpha})`);
-            gradient.addColorStop(1, `rgba(${sr}, ${sg}, ${sb}, 0)`);
+            gradient.addColorStop(0, p3a(sr, sg, sb, alpha));
+            gradient.addColorStop(1, p3a(sr, sg, sb, 0));
 
             ctx.globalAlpha = 1;
             ctx.beginPath();
@@ -227,7 +228,7 @@ export class Portal extends Effect<PortalConfig> {
             ctx.globalAlpha = alpha;
             ctx.beginPath();
             ctx.arc(px, py, lineWidth * 0.8, 0, Math.PI * 2);
-            ctx.fillStyle = `rgb(${sr}, ${sg}, ${sb})`;
+            ctx.fillStyle = p3(sr, sg, sb);
             ctx.fill();
         }
 

@@ -1,5 +1,5 @@
 import { isSmallScreen } from '../mobile';
-import { parseColor } from '../color';
+import { p3, p3a, parseColor } from '../color';
 import { Effect } from '../effect';
 import { SpatialGrid } from '../grid';
 import { MAX_FORCE, MAX_SPEED, MULBERRY, PERCEPTION_RADIUS, SEPARATION_RADIUS } from './consts';
@@ -194,20 +194,24 @@ export class Boids extends Effect<BoidsConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, _width: number, _height: number): void {
-        const size = this.#size;
         const r = this.#colorR;
         const g = this.#colorG;
         const b = this.#colorB;
 
-        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
         ctx.lineWidth = 0.5 * this.#scale;
 
+        // Sort back-to-front by depth for correct layering.
+        const sorted = this.#boids.slice().sort((a, b) => a.depth - b.depth);
         const base = ctx.getTransform();
 
-        for (const boid of this.#boids) {
+        for (const boid of sorted) {
             const cos = Math.cos(boid.angle);
             const sin = Math.sin(boid.angle);
+            const scaledSize = this.#size * boid.depth;
+
+            ctx.globalAlpha = 0.3 + boid.depth * 0.7;
+            ctx.fillStyle = p3(r, g, b);
+            ctx.strokeStyle = p3a(r, g, b, 0.4);
 
             ctx.setTransform(
                 base.a * cos + base.c * sin,
@@ -219,13 +223,25 @@ export class Boids extends Effect<BoidsConfig> {
             );
 
             ctx.beginPath();
-            ctx.moveTo(size, 0);
-            ctx.lineTo(-size * 0.6, -size * 0.45);
-            ctx.lineTo(-size * 0.3, 0);
-            ctx.lineTo(-size * 0.6, size * 0.45);
+            ctx.moveTo(scaledSize, 0);
+            ctx.lineTo(-scaledSize * 0.6, -scaledSize * 0.45);
+            ctx.lineTo(-scaledSize * 0.3, 0);
+            ctx.lineTo(-scaledSize * 0.6, scaledSize * 0.45);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
+
+            const hr = Math.min(255, r + 80);
+            const hg = Math.min(255, g + 80);
+            const hb = Math.min(255, b + 80);
+            ctx.globalAlpha = (0.3 + boid.depth * 0.7) * 0.4;
+            ctx.fillStyle = p3(hr, hg, hb);
+            ctx.beginPath();
+            ctx.moveTo(scaledSize, 0);
+            ctx.lineTo(-scaledSize * 0.1, -scaledSize * 0.15);
+            ctx.lineTo(-scaledSize * 0.1, scaledSize * 0.15);
+            ctx.closePath();
+            ctx.fill();
         }
 
         ctx.setTransform(base);
@@ -241,7 +257,8 @@ export class Boids extends Effect<BoidsConfig> {
             y: MULBERRY.next() * this.#height,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
-            angle
+            angle,
+            depth: 0.35 + MULBERRY.next() * 0.65
         };
     }
 }

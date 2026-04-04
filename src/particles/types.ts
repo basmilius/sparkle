@@ -7,4 +7,6 @@ export type NetworkParticle = {
     vy: number;
     radius: number;
     baseSpeed: number;
+    driftPhase: number;
+    driftFreq: number;
 };

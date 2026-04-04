@@ -7,6 +7,9 @@ export type Donut = {
     speed: number;
     rotationSpeed: number;
     color: string;
+    highlightColor: string;
     vx: number;
     vy: number;
+    wobblePhase: number;
+    wobbleFreq: number;
 };

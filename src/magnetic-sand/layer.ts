@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { SandGrain } from './types';
@@ -23,6 +24,7 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
     #magnetStrength: number;
     #maxCount: number;
     #grains: SandGrain[] = [];
+    #sprite: HTMLCanvasElement | null = null;
     #mouseX: number = -1;
     #mouseY: number = -1;
     #mouseOnCanvas: boolean = false;
@@ -38,6 +40,7 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         this.#magnetStrength = config.magnetStrength ?? 0.5;
         this.#maxCount = config.count ?? 600;
         this.#colorRGB = hexToRGB(config.color ?? '#888888');
+        this.#sprite = this.#createSprite();
 
         if (isSmallScreen()) {
             this.#maxCount = Math.floor(this.#maxCount / 2);
@@ -59,6 +62,10 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+        if (config.color !== undefined) {
+            this.#colorRGB = hexToRGB(config.color);
+            this.#sprite = this.#createSprite();
         }
     }
 
@@ -170,19 +177,30 @@ export class MagneticSand extends Effect<MagneticSandConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, _width: number, _height: number): void {
-        const [cr, cg, cb] = this.#colorRGB;
+        const sprite = this.#sprite;
+
+        if (!sprite) {
+            return;
+        }
+
+        ctx.globalCompositeOperation = 'lighter';
 
         for (const grain of this.#grains) {
             const radius = grain.size * this.#scale;
+            const drawSize = radius * 6;
+            const half = drawSize / 2;
 
-            ctx.globalAlpha = grain.opacity;
-            ctx.fillStyle = `rgb(${cr}, ${cg}, ${cb})`;
-            ctx.beginPath();
-            ctx.arc(grain.x, grain.y, radius, 0, TAU);
-            ctx.fill();
+            ctx.globalAlpha = grain.opacity * 0.7;
+            ctx.drawImage(sprite, grain.x - half, grain.y - half, drawSize, drawSize);
         }
 
+        ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
+    }
+
+    #createSprite(): HTMLCanvasElement {
+        const [r, g, b] = this.#colorRGB;
+        return createGlowSprite(r, g, b, 16, [[0, 1], [0.3, 0.6], [0.7, 0.15], [1, 0]]);
     }
 
     #onMouseMove(evt: MouseEvent): void {

@@ -128,10 +128,11 @@ export class Sparklers extends Effect<SparklersConfig> {
         for (let i = 0; i < this.#sparks.length; i++) {
             const spark = this.#sparks[i];
 
-            spark.trail.push({x: spark.x, y: spark.y});
+            spark.trail[spark.trailHead] = {x: spark.x, y: spark.y};
+            spark.trailHead = (spark.trailHead + 1) % this.#trailLength;
 
-            if (spark.trail.length > this.#trailLength) {
-                spark.trail.shift();
+            if (spark.trailSize < this.#trailLength) {
+                spark.trailSize++;
             }
 
             spark.vx *= frictionFactor;
@@ -170,18 +171,20 @@ export class Sparklers extends Effect<SparklersConfig> {
 
         for (const spark of this.#sparks) {
             const [r, g, b] = spark.color;
+            const trailSize = spark.trailSize;
 
-            for (let t = 0; t < spark.trail.length; t++) {
-                const trailAlpha = spark.alpha * (t / spark.trail.length) * 0.5;
+            for (let t = 0; t < trailSize; t++) {
+                const trailAlpha = spark.alpha * (t / trailSize) * 0.5;
 
                 if (trailAlpha < 0.01) {
                     continue;
                 }
 
-                const trailSize = spark.size * (t / spark.trail.length) * this.#scale;
+                const dotSize = spark.size * (t / trailSize) * this.#scale;
+                const i = (spark.trailHead + t) % this.#trailLength;
 
                 ctx.beginPath();
-                ctx.arc(spark.trail[t].x, spark.trail[t].y, trailSize, 0, Math.PI * 2);
+                ctx.arc(spark.trail[i].x, spark.trail[i].y, dotSize, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${trailAlpha})`;
                 ctx.fill();
             }
@@ -220,7 +223,9 @@ export class Sparklers extends Effect<SparklersConfig> {
             color: this.#colorRGBs[colorIndex],
             size: 1 + MULBERRY.next() * 2,
             decay: this.#decayRange[0] + MULBERRY.next() * (this.#decayRange[1] - this.#decayRange[0]),
-            trail: []
+            trail: new Array(this.#trailLength).fill(null).map(() => ({x: 0, y: 0})),
+            trailHead: 0,
+            trailSize: 0
         };
     }
 }

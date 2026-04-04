@@ -105,7 +105,7 @@ export class LimitedFrameRateCanvas {
         return this.#width;
     }
 
-    constructor(canvas: HTMLCanvasElement, frameRate: number, options: CanvasRenderingContext2DSettings = {colorSpace: 'display-p3'}) {
+    constructor(canvas: HTMLCanvasElement, frameRate: number, options: CanvasRenderingContext2DSettings) {
         this.#canvas = canvas;
         this.#context = canvas.getContext('2d', options);
         this.#frameRate = frameRate;

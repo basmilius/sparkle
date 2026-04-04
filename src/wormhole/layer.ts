@@ -1,3 +1,4 @@
+import { p3, p3a } from '../color';
 import { isSmallScreen } from '../mobile';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
@@ -121,9 +122,9 @@ export class Wormhole extends Effect<WormholeConfig> {
 
         const glowRadius = 40 * this.#scale;
         const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowRadius);
-        glow.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, 0.25)`);
-        glow.addColorStop(0.4, `rgba(${cr}, ${cg}, ${cb}, 0.08)`);
-        glow.addColorStop(1, `rgba(${cr}, ${cg}, ${cb}, 0)`);
+        glow.addColorStop(0, p3a(cr, cg, cb, 0.25));
+        glow.addColorStop(0.4, p3a(cr, cg, cb, 0.08));
+        glow.addColorStop(1, p3a(cr, cg, cb, 0));
 
         ctx.globalCompositeOperation = 'lighter';
         ctx.globalAlpha = 1;
@@ -154,8 +155,8 @@ export class Wormhole extends Effect<WormholeConfig> {
             const lineWidth = Math.max(0.5, particle.size * this.#scale * (0.5 + intensity * 0.5));
 
             const gradient = ctx.createLinearGradient(px, py, tx, ty);
-            gradient.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, ${alpha})`);
-            gradient.addColorStop(1, `rgba(${cr}, ${cg}, ${cb}, 0)`);
+            gradient.addColorStop(0, p3a(cr, cg, cb, alpha));
+            gradient.addColorStop(1, p3a(cr, cg, cb, 0));
 
             ctx.globalAlpha = 1;
             ctx.beginPath();
@@ -168,7 +169,7 @@ export class Wormhole extends Effect<WormholeConfig> {
             ctx.globalAlpha = alpha;
             ctx.beginPath();
             ctx.arc(px, py, lineWidth * 0.6, 0, Math.PI * 2);
-            ctx.fillStyle = `rgb(${cr}, ${cg}, ${cb})`;
+            ctx.fillStyle = p3(cr, cg, cb);
             ctx.fill();
         }
 

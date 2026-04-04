@@ -1,4 +1,5 @@
-import { parseColor } from '../color';
+import { p3, parseColor } from '../color';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { CrystalBranch, CrystalSeed } from './types';
@@ -35,6 +36,7 @@ export class Crystallization extends Effect<CrystallizationConfig> {
     #colorR: number;
     #colorG: number;
     #colorB: number;
+    #tipSprite: HTMLCanvasElement | null = null;
 
     constructor(config: CrystallizationConfig = {}) {
         super();
@@ -49,6 +51,7 @@ export class Crystallization extends Effect<CrystallizationConfig> {
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;
+        this.#tipSprite = createGlowSprite(255, 255, 255, 24, [[0, 1], [0.2, 0.8], [0.5, 0.3], [1, 0]]);
     }
 
     configure(config: Partial<CrystallizationConfig>): void {
@@ -177,7 +180,7 @@ export class Crystallization extends Effect<CrystallizationConfig> {
             const depthFade = 1 - branch.depth * 0.12;
 
             ctx.globalAlpha = baseAlpha * 0.12 * depthFade;
-            ctx.strokeStyle = `rgb(${cr}, ${cg}, ${cb})`;
+            ctx.strokeStyle = p3(cr, cg, cb);
             ctx.lineWidth = branch.width + 4 * this.#scale;
             ctx.beginPath();
             ctx.moveTo(branch.x, branch.y);
@@ -198,6 +201,8 @@ export class Crystallization extends Effect<CrystallizationConfig> {
     }
 
     #drawSparkles(ctx: CanvasRenderingContext2D, branches: CrystalBranch[], baseAlpha: number, phase: number): void {
+        const sprite = this.#tipSprite;
+
         for (const branch of branches) {
             if (branch.currentLength <= 0) {
                 continue;
@@ -207,13 +212,19 @@ export class Crystallization extends Effect<CrystallizationConfig> {
                 const tipX = branch.x + Math.cos(branch.angle) * branch.currentLength;
                 const tipY = branch.y + Math.sin(branch.angle) * branch.currentLength;
                 const sparkle = 0.5 + 0.5 * Math.sin(this.#time * 10 + phase + branch.angle * 3);
-                const radius = (1 + sparkle * 1.5) * this.#scale;
+                const radius = (1 + sparkle * 2) * this.#scale;
 
-                ctx.globalAlpha = baseAlpha * sparkle * 0.8;
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(tipX, tipY, radius, 0, TAU);
-                ctx.fill();
+                ctx.globalAlpha = baseAlpha * sparkle * 0.9;
+
+                if (sprite) {
+                    const drawSize = radius * 5;
+                    ctx.drawImage(sprite, tipX - drawSize / 2, tipY - drawSize / 2, drawSize, drawSize);
+                } else {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(tipX, tipY, radius, 0, TAU);
+                    ctx.fill();
+                }
             }
 
             if (branch.children.length > 0) {

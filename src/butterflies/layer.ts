@@ -1,5 +1,5 @@
 import { isSmallScreen } from '../mobile';
-import { parseColor } from '../color';
+import { p3a, parseColor } from '../color';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { Butterfly } from './types';
@@ -113,53 +113,53 @@ export class Butterflies extends Effect<ButterfliesConfig> {
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
         const globalTime = this.#time * 1000;
+        const base = ctx.getTransform();
 
         for (const butterfly of this.#butterflies) {
             const px = butterfly.x * width;
             const py = butterfly.y * height;
             const flapAngle = Math.sin(globalTime * butterfly.flapSpeed * 0.012 + butterfly.flapOffset);
             const wingScale = Math.abs(flapAngle);
-            const isFlipped = flapAngle < 0;
-
             const size = butterfly.size * this.#size;
+            const cos = Math.cos(butterfly.angle);
+            const sin = Math.sin(butterfly.angle);
 
             ctx.globalAlpha = 0.85;
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * px + base.c * py + base.e,
+                base.b * px + base.d * py + base.f
+            );
 
-            this.#drawButterfly(ctx, px, py, butterfly.angle, size, wingScale, isFlipped, butterfly.colorR, butterfly.colorG, butterfly.colorB);
+            this.#drawButterfly(ctx, size, wingScale, butterfly.colorR, butterfly.colorG, butterfly.colorB);
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 
     #drawButterfly(
         ctx: CanvasRenderingContext2D,
-        px: number,
-        py: number,
-        angle: number,
         size: number,
         wingScale: number,
-        isFlipped: boolean,
         r: number,
         g: number,
         b: number
     ): void {
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-
-        ctx.save();
-        ctx.transform(cos, sin, -sin, cos, px, py);
-
         const ws = Math.max(0.05, wingScale);
+        const body = ctx.getTransform();
 
-        const wingColor = `rgba(${r}, ${g}, ${b}, 0.75)`;
-        const wingEdgeColor = `rgba(${r}, ${g}, ${b}, 0.4)`;
-        const bodyColor = `rgba(${Math.floor(r * 0.4)}, ${Math.floor(g * 0.4)}, ${Math.floor(b * 0.4)}, 0.9)`;
+        const wingColor = p3a(r, g, b, 0.75);
+        const wingEdgeColor = p3a(r, g, b, 0.4);
+        const bodyColor = p3a(Math.floor(r * 0.4), Math.floor(g * 0.4), Math.floor(b * 0.4), 0.9);
 
         for (const side of [-1, 1]) {
             const scaleX = side * ws;
 
-            ctx.save();
-            ctx.scale(scaleX, 1);
+            ctx.setTransform(body.a * scaleX, body.b * scaleX, body.c, body.d, body.e, body.f);
 
             ctx.fillStyle = wingColor;
             ctx.beginPath();
@@ -190,9 +190,9 @@ export class Butterflies extends Effect<ButterfliesConfig> {
                 0, 0
             );
             ctx.fill();
-
-            ctx.restore();
         }
+
+        ctx.setTransform(body);
 
         ctx.fillStyle = bodyColor;
         const bodyLength = size * 1.2;
@@ -218,8 +218,6 @@ export class Butterflies extends Effect<ButterfliesConfig> {
             ctx.arc(antSide * size * 0.25, -bodyLength * 0.5 - antennaLength, size * 0.06, 0, Math.PI * 2);
             ctx.fill();
         }
-
-        ctx.restore();
     }
 
     #createButterfly(colors: string[]): Butterfly {

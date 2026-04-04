@@ -22,6 +22,7 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
     #colorRGB: [number, number, number];
     readonly #scale: number;
     #maxColumns: number;
+    #time: number = 0;
     #columns: DigitalRainColumn[] = [];
     #respawnTimers: number[] = [];
     #width: number = 960;
@@ -93,6 +94,7 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
     tick(dt: number, width: number, height: number): void {
         this.#width = width;
         this.#height = height;
+        this.#time += dt * 0.005;
 
         const columnWidth = this.#fontSize;
         const totalSlots = Math.floor(width / columnWidth);
@@ -110,6 +112,7 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
 
             const column = this.#columns[i];
 
+            column.speed = column.baseSpeed * (0.85 + 0.3 * Math.sin(this.#time * 0.7 + column.speedPhase));
             column.y += column.speed * this.#speed * dt;
             // Randomly change characters as they fall
             for (let ci = 0; ci < column.chars.length; ++ci) {
@@ -188,10 +191,14 @@ export class DigitalRain extends Effect<DigitalRainConfig> {
             chars.push(this.#randomChar());
         }
 
+        const speed = 1.5 + MULBERRY.next() * 3;
+
         return {
             x: slot * columnWidth + columnWidth / 2,
             y: -(MULBERRY.next() * height),
-            speed: 1.5 + MULBERRY.next() * 3,
+            speed,
+            baseSpeed: speed,
+            speedPhase: MULBERRY.next() * Math.PI * 2,
             chars,
             length
         };

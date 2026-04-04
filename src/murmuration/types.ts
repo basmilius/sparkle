@@ -4,4 +4,7 @@ export type MurmurationBird = {
     vx: number;
     vy: number;
     size: number;
+    depth: number;
+    wobblePhase: number;
+    wobbleFreq: number;
 };

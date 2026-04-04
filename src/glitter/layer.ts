@@ -1,4 +1,5 @@
 import { isSmallScreen } from '../mobile';
+import { p3a } from '../color';
 import { hexToRGB } from '@basmilius/utils';
 import { Effect } from '../effect';
 import { GLITTER_COLORS, MULBERRY } from './consts';
@@ -15,6 +16,7 @@ export class Glitter extends Effect<GlitterConfig> {
     #time: number = 0;
     #falling: FallingGlitter[] = [];
     #settled: SettledGlitter[] = [];
+    #settledHead: number = 0;
 
     constructor(config: GlitterConfig = {}) {
         super();
@@ -81,10 +83,6 @@ export class Glitter extends Effect<GlitterConfig> {
         }
 
         this.#falling.length = alive;
-
-        while (this.#settled.length > this.#maxSettled) {
-            this.#settled.shift();
-        }
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
@@ -106,9 +104,10 @@ export class Glitter extends Effect<GlitterConfig> {
             const [r, g, b] = this.#colorRGBs[piece.colorIndex % this.#colorRGBs.length];
 
             const flipFactor = Math.abs(Math.cos(piece.flipAngle));
-            const alpha = 0.5 + 0.5 * piece.sparkle;
+            const alpha = (0.4 + 0.6 * piece.sparkle) * piece.depth;
+            const depthSize = piece.size * (0.5 + piece.depth * 0.5);
 
-            this.#drawDiamond(ctx, px, py, piece.size, piece.rotation, r, g, b, alpha, piece.sparkle, flipFactor);
+            this.#drawDiamond(ctx, px, py, depthSize, piece.rotation, r, g, b, alpha, piece.sparkle, flipFactor);
         }
     }
 
@@ -151,18 +150,25 @@ export class Glitter extends Effect<GlitterConfig> {
 
         ctx.closePath();
 
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.8})`;
+        ctx.fillStyle = p3a(r, g, b, alpha * 0.8);
         ctx.fill();
 
         if (sparkle > 0.5) {
             const highlightAlpha = (sparkle - 0.5) * 2 * alpha;
-            ctx.fillStyle = `rgba(255, 255, 255, ${highlightAlpha * 0.6})`;
+            const gradient = ctx.createRadialGradient(
+                cx - halfW * 0.2, cy - halfH * 0.3, 0,
+                cx, cy, size
+            );
+            gradient.addColorStop(0, `rgba(255, 255, 255, ${highlightAlpha * 0.8})`);
+            gradient.addColorStop(0.5, `rgba(255, 255, 255, ${highlightAlpha * 0.2})`);
+            gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+            ctx.fillStyle = gradient;
             ctx.fill();
         }
     }
 
     #settleGlitter(piece: FallingGlitter): void {
-        this.#settled.push({
+        const settled: SettledGlitter = {
             x: piece.x,
             y: this.#groundLevel + MULBERRY.next() * 0.05,
             size: piece.size * 0.8,
@@ -170,21 +176,31 @@ export class Glitter extends Effect<GlitterConfig> {
             sparklePhase: MULBERRY.next() * Math.PI * 2,
             sparkleSpeed: 0.5 + MULBERRY.next() * 2,
             colorIndex: piece.colorIndex
-        });
+        };
+
+        if (this.#settled.length < this.#maxSettled) {
+            this.#settled.push(settled);
+        } else {
+            this.#settled[this.#settledHead] = settled;
+            this.#settledHead = (this.#settledHead + 1) % this.#maxSettled;
+        }
     }
 
     #createFallingPiece(initialSpread: boolean): FallingGlitter {
+        const depth = 0.3 + MULBERRY.next() * 0.7;
+
         return {
             x: MULBERRY.next(),
             y: initialSpread ? MULBERRY.next() * this.#groundLevel : -0.05 - MULBERRY.next() * 0.1,
-            vy: (0.0008 + MULBERRY.next() * 0.0015) * this.#scale,
+            vy: (0.0005 + MULBERRY.next() * 0.001) * this.#scale * (0.5 + depth * 0.5),
             size: (0.5 + MULBERRY.next() * 1) * this.#size,
             rotation: MULBERRY.next() * Math.PI * 2,
             rotationSpeed: (MULBERRY.next() - 0.5) * 0.08,
             flipAngle: MULBERRY.next() * Math.PI * 2,
             flipSpeed: 0.03 + MULBERRY.next() * 0.07,
             sparkle: MULBERRY.next(),
-            colorIndex: Math.floor(MULBERRY.next() * this.#colorRGBs.length)
+            colorIndex: Math.floor(MULBERRY.next() * this.#colorRGBs.length),
+            depth
         };
     }
 }

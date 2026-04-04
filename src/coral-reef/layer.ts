@@ -177,8 +177,16 @@ export class CoralReef extends Effect<CoralReefConfig> {
             const bellWidth = size * pulse;
             const bellHeight = size * 0.6 * (1 / pulse);
 
+            const bellGradient = ctx.createRadialGradient(
+                px - bellWidth * 0.2, py - bellHeight * 0.3, bellHeight * 0.1,
+                px, py, bellWidth
+            );
+            bellGradient.addColorStop(0, `rgba(255, 255, 255, 0.5)`);
+            bellGradient.addColorStop(0.4, jelly.color);
+            bellGradient.addColorStop(1, `rgba(0, 0, 0, 0.1)`);
+
             ctx.globalAlpha = 0.6;
-            ctx.fillStyle = jelly.color;
+            ctx.fillStyle = bellGradient;
             ctx.beginPath();
             ctx.ellipse(px, py, bellWidth, bellHeight, 0, Math.PI, 0);
             ctx.fill();
@@ -212,6 +220,13 @@ export class CoralReef extends Effect<CoralReefConfig> {
 
                 ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
                 ctx.stroke();
+
+                const tipGlow = size * 0.12;
+                ctx.globalAlpha = 0.5;
+                ctx.beginPath();
+                ctx.arc(endX, endY, tipGlow, 0, Math.PI * 2);
+                ctx.fillStyle = jelly.color;
+                ctx.fill();
             }
 
             ctx.globalAlpha = 0.3;

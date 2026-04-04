@@ -1,5 +1,6 @@
 import { isSmallScreen } from '../mobile';
-import { parseColor } from '../color';
+import { p3, parseColor } from '../color';
+import { createGlowSprite } from '../sprite';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
 import type { TornadoDebris, TornadoParticle } from './types';
@@ -26,6 +27,7 @@ export class Tornado extends Effect<TornadoConfig> {
     #colorR: number;
     #colorG: number;
     #colorB: number;
+    #particleSprite: HTMLCanvasElement | null = null;
 
     constructor(config: TornadoConfig = {}) {
         super();
@@ -50,6 +52,7 @@ export class Tornado extends Effect<TornadoConfig> {
         this.#colorR = r;
         this.#colorG = g;
         this.#colorB = b;
+        this.#particleSprite = createGlowSprite(r, g, b, 32, [[0, 1], [0.25, 0.5], [0.6, 0.1], [1, 0]]);
 
         for (let i = 0; i < this.#particleCount; ++i) {
             this.#particles.push(this.#createParticle());
@@ -158,6 +161,8 @@ export class Tornado extends Effect<TornadoConfig> {
 
         this.#drawDustCloud(ctx, baseCX, baseY, width, cr, cg, cb);
 
+        const sprite = this.#particleSprite;
+
         for (const particle of this.#particles) {
             if (particle.height < 0 || particle.height > 1) {
                 continue;
@@ -186,14 +191,20 @@ export class Tornado extends Effect<TornadoConfig> {
             const size = particle.size * this.#scale * (0.6 + t * 0.8);
 
             ctx.globalAlpha = alpha;
-            ctx.fillStyle = `rgb(${cr + (255 - cr) * depthFactor * 0.3 | 0}, ${cg + (255 - cg) * depthFactor * 0.2 | 0}, ${cb + (255 - cb) * depthFactor * 0.15 | 0})`;
-            ctx.beginPath();
-            ctx.arc(px, py, size, 0, Math.PI * 2);
-            ctx.fill();
+
+            if (sprite) {
+                const drawSize = size * 4;
+                ctx.drawImage(sprite, px - drawSize / 2, py - drawSize / 2, drawSize, drawSize);
+            } else {
+                ctx.fillStyle = p3(cr + (255 - cr) * depthFactor * 0.3 | 0, cg + (255 - cg) * depthFactor * 0.2 | 0, cb + (255 - cb) * depthFactor * 0.15 | 0);
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        ctx.fillStyle = `rgb(${cr}, ${cg}, ${cb})`;
-        ctx.strokeStyle = `rgb(${cr * 0.6 | 0}, ${cg * 0.6 | 0}, ${cb * 0.6 | 0})`;
+        ctx.fillStyle = p3(cr, cg, cb);
+        ctx.strokeStyle = p3(cr * 0.6 | 0, cg * 0.6 | 0, cb * 0.6 | 0);
         ctx.lineCap = 'round';
 
         for (const debris of this.#debris) {

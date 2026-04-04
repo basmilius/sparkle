@@ -50,7 +50,6 @@ export class Firework extends EventTarget {
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
-        ctx.save();
         ctx.lineCap = 'round';
 
         for (let i = this.#trail.length - 1; i > 0; i--) {
@@ -84,7 +83,8 @@ export class Firework extends EventTarget {
         ctx.fillStyle = `hsl(${this.#hue}, 20%, 92%)`;
         ctx.fill();
 
-        ctx.restore();
+        ctx.shadowBlur = 0;
+        ctx.lineCap = 'butt';
     }
 
     tick(dt: number): void {

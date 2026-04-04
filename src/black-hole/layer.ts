@@ -1,3 +1,4 @@
+import { p3, p3a } from '../color';
 import { isSmallScreen } from '../mobile';
 import { Effect } from '../effect';
 import { MULBERRY } from './consts';
@@ -112,10 +113,10 @@ export class BlackHole extends Effect<BlackHoleConfig> {
 
         const accretionRadius = eventHorizon * 6;
         const accretionGlow = ctx.createRadialGradient(cx, cy, eventHorizon * 0.5, cx, cy, accretionRadius);
-        accretionGlow.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, 0.0)`);
-        accretionGlow.addColorStop(0.4, `rgba(${cr}, ${cg}, ${cb}, 0.12)`);
-        accretionGlow.addColorStop(0.7, `rgba(255, 200, 100, 0.08)`);
-        accretionGlow.addColorStop(1, `rgba(${cr}, ${cg}, ${cb}, 0)`);
+        accretionGlow.addColorStop(0, p3a(cr, cg, cb, 0.0));
+        accretionGlow.addColorStop(0.4, p3a(cr, cg, cb, 0.12));
+        accretionGlow.addColorStop(0.7, p3a(255, 200, 100, 0.08));
+        accretionGlow.addColorStop(1, p3a(cr, cg, cb, 0));
 
         ctx.globalCompositeOperation = 'lighter';
         ctx.globalAlpha = 1;
@@ -139,7 +140,7 @@ export class BlackHole extends Effect<BlackHoleConfig> {
             const particleSize = Math.max(0.3, this.#baseSize * (0.4 + proximity * 0.6));
 
             ctx.globalAlpha = alpha;
-            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+            ctx.fillStyle = p3(r, g, b);
             ctx.beginPath();
             ctx.arc(px, py, particleSize, 0, Math.PI * 2);
             ctx.fill();
@@ -158,7 +159,7 @@ export class BlackHole extends Effect<BlackHoleConfig> {
         const holeGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, eventHorizon);
         holeGrad.addColorStop(0, 'rgb(0, 0, 0)');
         holeGrad.addColorStop(0.7, 'rgb(0, 0, 0)');
-        holeGrad.addColorStop(1, `rgba(${cr}, ${cg}, ${cb}, 0)`);
+        holeGrad.addColorStop(1, p3a(cr, cg, cb, 0));
 
         ctx.fillStyle = holeGrad;
         ctx.beginPath();

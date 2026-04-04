@@ -299,6 +299,8 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
         }
 
         // Draw dividing cells (mitosis animation).
+        const base = ctx.getTransform();
+
         for (const div of this.#dividing) {
             const [cr, cg, cb] = div.color;
             const progress = div.progress;
@@ -308,11 +310,21 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
             if (progress < 0.5) {
                 const elongation = 1 + progress * 1.2;
                 const pinch = 1 - progress * 0.3;
+                const cos = Math.cos(div.angle);
+                const sin = Math.sin(div.angle);
+                const cosElong = cos * elongation;
+                const sinElong = sin * elongation;
+                const negSinPinch = -sin * pinch;
+                const cosPinch = cos * pinch;
 
-                ctx.save();
-                ctx.translate(div.x, div.y);
-                ctx.rotate(div.angle);
-                ctx.scale(elongation, pinch);
+                ctx.setTransform(
+                    base.a * cosElong + base.c * sinElong,
+                    base.b * cosElong + base.d * sinElong,
+                    base.a * negSinPinch + base.c * cosPinch,
+                    base.b * negSinPinch + base.d * cosPinch,
+                    base.a * div.x + base.c * div.y + base.e,
+                    base.b * div.x + base.d * div.y + base.f
+                );
 
                 // Cell membrane.
                 const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, scaledRadius);
@@ -338,7 +350,7 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
                 ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, 0.6)`;
                 ctx.fill();
 
-                ctx.restore();
+                ctx.setTransform(base);
             } else {
                 // Pinch and split phase (0.5 to 1).
                 const splitProgress = (progress - 0.5) * 2;

@@ -183,6 +183,11 @@ export class Murmuration extends Effect<MurmurationConfig> {
                 ay -= (bird.y - (height - marginY)) * 0.003;
             }
 
+            const wobble = Math.sin(this.#time * bird.wobbleFreq + bird.wobblePhase) * 0.08;
+            const wobbleCross = Math.cos(this.#time * bird.wobbleFreq * 1.3 + bird.wobblePhase) * 0.05;
+            ax += wobble;
+            ay += wobbleCross;
+
             bird.vx += ax * speedFactor;
             bird.vy += ay * speedFactor;
 
@@ -216,11 +221,12 @@ export class Murmuration extends Effect<MurmurationConfig> {
     }
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-        ctx.fillStyle = this.#color;
+        // Sort back-to-front by depth for correct layering.
+        const sorted = this.#birds.slice().sort((a, b) => a.depth - b.depth);
 
-        for (const bird of this.#birds) {
+        for (const bird of sorted) {
             const angle = Math.atan2(bird.vy, bird.vx);
-            const size = bird.size * this.#scale;
+            const size = bird.size * bird.depth * this.#scale;
 
             const cos = Math.cos(angle);
             const sin = Math.sin(angle);
@@ -234,6 +240,9 @@ export class Murmuration extends Effect<MurmurationConfig> {
             const rightX = bird.x + (-cos * size + sin * size);
             const rightY = bird.y + (-sin * size - cos * size);
 
+            const alpha = 0.3 + bird.depth * 0.7;
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = this.#color;
             ctx.beginPath();
             ctx.moveTo(tipX, tipY);
             ctx.lineTo(leftX, leftY);
@@ -241,7 +250,18 @@ export class Murmuration extends Effect<MurmurationConfig> {
             ctx.lineTo(rightX, rightY);
             ctx.closePath();
             ctx.fill();
+
+            ctx.globalAlpha = alpha * 0.3;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(bird.x - cos * size * 0.1 - sin * size * 0.3, bird.y - sin * size * 0.1 + cos * size * 0.3);
+            ctx.lineTo(bird.x - cos * size * 0.1 + sin * size * 0.3, bird.y - sin * size * 0.1 - cos * size * 0.3);
+            ctx.closePath();
+            ctx.fill();
         }
+
+        ctx.globalAlpha = 1;
     }
 
     #createBird(): MurmurationBird {
@@ -253,7 +273,10 @@ export class Murmuration extends Effect<MurmurationConfig> {
             y: MULBERRY.next() * this.#height,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
-            size: 1.5 + MULBERRY.next() * 1.5
+            size: 1.5 + MULBERRY.next() * 1.5,
+            depth: 0.35 + MULBERRY.next() * 0.65,
+            wobblePhase: MULBERRY.next() * Math.PI * 2,
+            wobbleFreq: 3 + MULBERRY.next() * 4
         };
     }
 }

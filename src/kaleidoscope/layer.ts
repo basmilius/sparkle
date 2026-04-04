@@ -109,10 +109,10 @@ export class Kaleidoscope extends Effect<KaleidoscopeConfig> {
             const py = radius + shape.y * this.#scale;
             const size = shape.size * this.#scale;
             const [cr, cg, cb] = hexToRGB(shape.color);
+            const cos = Math.cos(shape.rotation);
+            const sin = Math.sin(shape.rotation);
 
-            sourceCtx.save();
-            sourceCtx.translate(px, py);
-            sourceCtx.rotate(shape.rotation);
+            sourceCtx.setTransform(cos, sin, -sin, cos, px, py);
 
             if (shape.type === 0) {
                 const gradient = sourceCtx.createRadialGradient(0, 0, 0, 0, 0, size);
@@ -176,27 +176,29 @@ export class Kaleidoscope extends Effect<KaleidoscopeConfig> {
                 sourceCtx.arc(0, 0, size, 0, Math.PI * 2);
                 sourceCtx.fill();
             }
-
-            sourceCtx.restore();
         }
 
         sourceCtx.restore();
 
+        const base = ctx.getTransform();
+        const ce = base.a * centerX + base.c * centerY + base.e;
+        const cf = base.b * centerX + base.d * centerY + base.f;
+
         for (let index = 0; index < this.#segments; index++) {
             const angle = segmentAngle * index;
-            const mirrored = index % 2 === 1;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            const a_r = base.a * cos + base.c * sin;
+            const b_r = base.b * cos + base.d * sin;
+            const c_r = base.a * -sin + base.c * cos;
+            const d_r = base.b * -sin + base.d * cos;
+            const mirrorSign = index % 2 === 1 ? -1 : 1;
 
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.rotate(angle);
-
-            if (mirrored) {
-                ctx.scale(1, -1);
-            }
-
+            ctx.setTransform(a_r, b_r, mirrorSign * c_r, mirrorSign * d_r, ce, cf);
             ctx.drawImage(this.#sourceCanvas, -radius, -radius);
-            ctx.restore();
         }
+
+        ctx.setTransform(base);
     }
 
     #createShape(): KaleidoscopeShape {

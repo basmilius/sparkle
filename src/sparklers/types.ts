@@ -10,4 +10,6 @@ export type SparklerSpark = {
     size: number;
     decay: number;
     trail: Point[];
+    trailHead: number;
+    trailSize: number;
 };

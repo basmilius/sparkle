@@ -73,6 +73,7 @@ export class Lanterns extends Effect<LanternsConfig> {
         }
 
         const sorted = this.#sortedLanterns;
+        const base = ctx.getTransform();
 
         for (const lantern of sorted) {
             const px = lantern.x * width;
@@ -95,8 +96,11 @@ export class Lanterns extends Effect<LanternsConfig> {
             ctx.arc(px, py, glowRadius, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.save();
-            ctx.transform(1, 0, 0, 1, px, py);
+            ctx.setTransform(
+                base.a, base.b, base.c, base.d,
+                base.a * px + base.c * py + base.e,
+                base.b * px + base.d * py + base.f
+            );
 
             const bodyW = size * 0.8;
             const bodyH = size;
@@ -159,9 +163,9 @@ export class Lanterns extends Effect<LanternsConfig> {
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.4})`;
             ctx.lineWidth = size * 0.04;
             ctx.stroke();
-
-            ctx.restore();
         }
+
+        ctx.setTransform(base);
     }
 
     #createLantern(initialSpread: boolean): Lantern {

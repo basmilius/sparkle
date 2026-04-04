@@ -123,6 +123,7 @@ export class Popcorn extends Effect<PopcornConfig> {
 
     draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
         const [red, green, blue] = this.#colorRGB;
+        const base = ctx.getTransform();
 
         for (let idx = 0; idx < this.#kernels.length; idx++) {
             const kernel = this.#kernels[idx];
@@ -132,7 +133,18 @@ export class Popcorn extends Effect<PopcornConfig> {
                 continue;
             }
 
+            const cos = Math.cos(kernel.rotation);
+            const sin = Math.sin(kernel.rotation);
+
             ctx.globalAlpha = alpha;
+            ctx.setTransform(
+                base.a * cos + base.c * sin,
+                base.b * cos + base.d * sin,
+                base.a * -sin + base.c * cos,
+                base.b * -sin + base.d * cos,
+                base.a * kernel.x + base.c * kernel.y + base.e,
+                base.b * kernel.x + base.d * kernel.y + base.f
+            );
 
             if (!kernel.popped) {
                 this.#drawUnpopped(ctx, kernel, red, green, blue);
@@ -141,30 +153,20 @@ export class Popcorn extends Effect<PopcornConfig> {
             }
         }
 
+        ctx.setTransform(base);
         ctx.globalAlpha = 1;
     }
 
     #drawUnpopped(ctx: CanvasRenderingContext2D, kernel: PopcornKernel, red: number, green: number, blue: number): void {
         const size = kernel.size;
-        const cos = Math.cos(kernel.rotation);
-        const sin = Math.sin(kernel.rotation);
-
-        ctx.save();
-        ctx.transform(cos, sin, -sin, cos, kernel.x, kernel.y);
         ctx.beginPath();
         ctx.arc(0, 0, size, 0, Math.PI * 2);
         ctx.fillStyle = `rgb(${(red * 0.7) | 0}, ${(green * 0.7) | 0}, ${(blue * 0.5) | 0})`;
         ctx.fill();
-        ctx.restore();
     }
 
     #drawPopped(ctx: CanvasRenderingContext2D, kernel: PopcornKernel, red: number, green: number, blue: number): void {
         const size = kernel.size;
-        const cos = Math.cos(kernel.rotation);
-        const sin = Math.sin(kernel.rotation);
-
-        ctx.save();
-        ctx.transform(cos, sin, -sin, cos, kernel.x, kernel.y);
         ctx.beginPath();
 
         const lobes = 5;
@@ -200,8 +202,6 @@ export class Popcorn extends Effect<PopcornConfig> {
         ctx.arc(-size * 0.2, -size * 0.2, size * 0.3, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, 0.3)`;
         ctx.fill();
-
-        ctx.restore();
     }
 
     #createKernel(width: number, height: number): PopcornKernel {
