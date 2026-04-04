@@ -54,10 +54,6 @@ export class Tornado extends Effect<TornadoConfig> {
         for (let i = 0; i < this.#particleCount; ++i) {
             this.#particles.push(this.#createParticle());
         }
-
-        for (let i = 0; i < this.#debrisCount; ++i) {
-            this.#debris.push(this.#createDebris(true));
-        }
     }
 
     configure(config: Partial<TornadoConfig>): void {
@@ -75,6 +71,17 @@ export class Tornado extends Effect<TornadoConfig> {
         }
         if (config.scale !== undefined) {
             this.#scale = config.scale;
+        }
+    }
+
+    onResize(width: number, height: number): void {
+        const baseY = height * 0.92;
+        const baseCX = width * 0.5;
+
+        this.#debris = [];
+
+        for (let i = 0; i < this.#debrisCount; ++i) {
+            this.#debris.push(this.#createDebris(true, baseCX, baseY));
         }
     }
 
@@ -104,7 +111,7 @@ export class Tornado extends Effect<TornadoConfig> {
             debris.life += dt;
 
             if (debris.life > debris.maxLife) {
-                this.#debris[alive++] = this.#createDebris(false);
+                this.#debris[alive++] = this.#createDebris(false, baseCX, baseY);
                 continue;
             }
 
@@ -132,7 +139,7 @@ export class Tornado extends Effect<TornadoConfig> {
         this.#debris.length = alive;
 
         while (this.#debris.length < this.#debrisCount) {
-            this.#debris.push(this.#createDebris(false));
+            this.#debris.push(this.#createDebris(false, baseCX, baseY));
         }
     }
 
@@ -254,10 +261,10 @@ export class Tornado extends Effect<TornadoConfig> {
         };
     }
 
-    #createDebris(spread: boolean): TornadoDebris {
+    #createDebris(spread: boolean, cx: number, cy: number): TornadoDebris {
         return {
-            x: 0,
-            y: 0,
+            x: cx + (MULBERRY.next() - 0.5) * 40,
+            y: cy + (MULBERRY.next() - 0.5) * 10,
             vx: (MULBERRY.next() - 0.5) * 4 * this.#intensity,
             vy: -MULBERRY.next() * 3 * this.#intensity,
             size: 2 + MULBERRY.next() * 5,
