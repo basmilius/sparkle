@@ -142,7 +142,7 @@ export class Balloons extends Effect<BalloonsConfig> {
                 tipSwing + flutter, knotBaseY + stringLen
             );
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = this.#scale;
             ctx.stroke();
 
             ctx.restore();

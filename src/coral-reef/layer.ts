@@ -220,7 +220,7 @@ export class CoralReef extends Effect<CoralReefConfig> {
             ctx.beginPath();
             ctx.arc(px, py, radius, 0, Math.PI * 2);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.lineWidth = 1;
+            ctx.lineWidth = this.#scale;
             ctx.stroke();
 
             ctx.globalAlpha = bubble.opacity * 0.15;

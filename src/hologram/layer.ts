@@ -138,7 +138,7 @@ export class Hologram extends Effect<HologramConfig> {
 
             // Fragment border.
             ctx.strokeStyle = `rgba(${cr}, ${cg}, ${cb}, ${alpha * 0.3})`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = this.#scale;
             ctx.strokeRect(fragment.x, fragment.y, fragment.width, fragment.height);
 
             // Simulated text rows (small horizontal lines).

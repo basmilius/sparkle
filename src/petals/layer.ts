@@ -154,7 +154,7 @@ export class Petals extends Effect<PetalsConfig> {
         ctx.fill();
 
         ctx.strokeStyle = 'rgba(200, 100, 120, 0.15)';
-        ctx.lineWidth = 0.6;
+        ctx.lineWidth = 0.6 * this.#scale;
         ctx.beginPath();
         ctx.moveTo(cx, cy - hh * 0.6);
         ctx.quadraticCurveTo(cx + 1, cy, cx, cy + hh * 0.7);

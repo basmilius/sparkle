@@ -54,7 +54,7 @@ export class Particles extends Effect<ParticlesConfig> {
         this.#scale = config.scale ?? 1;
         this.#maxCount = config.count ?? 100;
         this.#connectionDistance = (config.connectionDistance ?? 120) * this.#scale;
-        this.#lineWidth = config.lineWidth ?? 0.5;
+        this.#lineWidth = (config.lineWidth ?? 0.5) * this.#scale;
         this.#mouseMode = config.mouseMode ?? 'connect';
         this.#mouseRadius = (config.mouseRadius ?? 150) * this.#scale;
         this.#mouseStrength = config.mouseStrength ?? 0.03;
@@ -85,7 +85,7 @@ export class Particles extends Effect<ParticlesConfig> {
             this.#connectionDistance = config.connectionDistance * this.#scale;
         }
         if (config.lineWidth !== undefined) {
-            this.#lineWidth = config.lineWidth;
+            this.#lineWidth = config.lineWidth * this.#scale;
         }
         if (config.mouseMode !== undefined) {
             this.#mouseMode = config.mouseMode;

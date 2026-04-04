@@ -189,7 +189,7 @@ export class Boids extends Effect<BoidsConfig> {
 
         ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
         ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
-        ctx.lineWidth = 0.5;
+        ctx.lineWidth = 0.5 * this.#scale;
 
         const base = ctx.getTransform();
 

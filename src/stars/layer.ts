@@ -105,7 +105,7 @@ export class Stars extends Effect<StarsConfig> {
                     const sparkleAlpha = alpha * 0.4;
                     ctx.globalAlpha = sparkleAlpha;
                     ctx.strokeStyle = `rgb(${sr}, ${sg}, ${sb})`;
-                    ctx.lineWidth = 0.5;
+                    ctx.lineWidth = 0.5 * this.#scale;
 
                     ctx.beginPath();
                     ctx.moveTo(px - sparkleLength, py);

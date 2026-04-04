@@ -94,7 +94,7 @@ export class BalloonParticle {
             knotY + 5 * this.#scale + this.#stringLength
         );
         ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = this.#scale;
         ctx.stroke();
 
         ctx.restore();

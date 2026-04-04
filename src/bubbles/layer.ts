@@ -141,7 +141,7 @@ export class Bubbles extends Effect<BubblesConfig> {
             ctx.beginPath();
             ctx.arc(px, py, r, 0, Math.PI * 2);
             ctx.strokeStyle = `hsla(${hue}, 60%, 80%, ${bubble.opacity * 0.3})`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = this.#scale;
             ctx.stroke();
 
             ctx.beginPath();

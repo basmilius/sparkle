@@ -402,7 +402,7 @@ export class PrimordialSoup extends Effect<PrimordialSoupConfig> {
             ctx.beginPath();
             ctx.arc(cell.x, cell.y, scaledRadius, 0, TAU);
             ctx.strokeStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.25 * energyAlpha})`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = this.#scale;
             ctx.stroke();
 
             // Nucleus dot.

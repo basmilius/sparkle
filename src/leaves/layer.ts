@@ -174,7 +174,7 @@ export class Leaves extends Effect<LeavesConfig> {
         ctx.fill();
 
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.lineWidth = 0.8;
+        ctx.lineWidth = 0.8 * this.#scale;
         ctx.beginPath();
         ctx.moveTo(cx, cy - hh * 0.8);
         ctx.lineTo(cx, cy + hh * 0.8);
@@ -215,7 +215,7 @@ export class Leaves extends Effect<LeavesConfig> {
         ctx.fill();
 
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.12)';
-        ctx.lineWidth = 0.7;
+        ctx.lineWidth = 0.7 * this.#scale;
         for (let i = 0; i < points; i++) {
             const angle = (i / points) * Math.PI * 2 - Math.PI / 2;
             const outerR = r * 0.7;
@@ -239,7 +239,7 @@ export class Leaves extends Effect<LeavesConfig> {
         ctx.fill();
 
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.lineWidth = 0.8;
+        ctx.lineWidth = 0.8 * this.#scale;
         ctx.beginPath();
         ctx.moveTo(cx, cy - hh * 0.7);
         ctx.lineTo(cx, cy + hh * 0.9);

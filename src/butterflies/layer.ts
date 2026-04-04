@@ -195,7 +195,7 @@ export class Butterflies extends Effect<ButterfliesConfig> {
 
         const antennaLength = size * 0.7;
         ctx.strokeStyle = bodyColor;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = this.#scale;
 
         for (const antSide of [-1, 1]) {
             ctx.beginPath();
