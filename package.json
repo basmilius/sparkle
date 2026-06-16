@@ -44,11 +44,11 @@
         }
     },
     "dependencies": {
-        "@basmilius/utils": "^3.40.0"
+        "@basmilius/utils": "^3.41.0"
     },
     "devDependencies": {
         "@types/node": "^25.9.3",
-        "tsdown": "^0.21.10",
+        "tsdown": "^0.22.2",
         "typescript": "^6.0.3",
         "vitepress": "^1.6.3",
         "vitepress-plugin-example": "^1.5.0",
