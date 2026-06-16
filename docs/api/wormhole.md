@@ -48,20 +48,3 @@ type WormholeDirection = 'inward' | 'outward';
 |-----------|---------------------------------------------------------------------------------|
 | `inward`  | Particles flow from the edges toward the center, accelerating as they approach. |
 | `outward` | Particles flow from the center outward, accelerating as they move away.         |
-
----
-
-## `WormholeParticle`
-
-Internal representation of a wormhole particle in polar coordinates.
-
-```typescript
-type WormholeParticle = {
-    angle: number;      // Angular position in radians
-    distance: number;   // Distance from center in pixels
-    speed: number;      // Base radial speed
-    size: number;       // Particle size
-    brightness: number; // Base brightness (0-1)
-    trail: number;      // Trail length in pixels
-};
-```

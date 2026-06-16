@@ -16,6 +16,10 @@ example=../code/sparklers/preview.vue
 example=../code/sparklers/hover.vue
 :::
 
+::: example Following a path || The emitter is moved programmatically with moveTo() along a looping path.
+example=../code/sparklers/manual.vue
+:::
+
 ## Configuration
 
 All options are passed via a config object:

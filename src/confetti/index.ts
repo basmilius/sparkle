@@ -5,6 +5,8 @@ import type { Effect } from '../effect';
 
 export interface ConfettiInstance extends Effect<ConfettiConfig> {
     burst(config: Partial<ConfettiBurstConfig>): void;
+
+    readonly hasParticles: boolean;
 }
 
 export function createConfetti(config?: ConfettiConfig): ConfettiInstance {

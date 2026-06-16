@@ -54,23 +54,3 @@ interface SparklersConfig {
 | `trailLength`| `number`           | `3`                                            | Number of trail points per spark.             |
 | `hoverMode`  | `boolean`          | `false`                                        | When true, emission follows the mouse cursor. |
 | `scale`      | `number`           | `1`                                            | Global scale factor.                          |
-
----
-
-## `Spark`
-
-Internal representation of a spark particle.
-
-```typescript
-type Spark = {
-    x: number;    // X position in pixels
-    y: number;    // Y position in pixels
-    vx: number;   // Horizontal velocity
-    vy: number;   // Vertical velocity
-    alpha: number; // Current opacity (0-1)
-    color: [number, number, number]; // RGB color
-    size: number;  // Radius in pixels
-    decay: number; // Alpha decay per frame
-    trail: Point[]; // Trail positions
-};
-```

@@ -41,9 +41,3 @@ interface MurmurationConfig {
 | `separation` | `number` | `0.4` | How strongly birds avoid crowding nearby flock mates. |
 | `speed` | `number` | `1` | Overall speed multiplier. |
 | `turnRadius` | `number` | `0.7` | How sharply birds can change direction. |
-
----
-
-## `MurmurationBird`
-
-Represents a single bird in the swarm. Used internally by the effect.

@@ -47,23 +47,3 @@ interface PortalConfig {
 ```typescript
 type PortalDirection = 'inward' | 'outward';
 ```
-
----
-
-## `PortalParticle`
-
-```typescript
-interface PortalParticle {
-    angle: number;
-    radius: number;
-    size: number;
-    speed: number;
-}
-```
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `angle` | `number` | Current angle on the spiral path (radians). |
-| `radius` | `number` | Distance from the portal center. |
-| `size` | `number` | Particle size. |
-| `speed` | `number` | Individual speed modifier. |

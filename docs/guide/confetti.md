@@ -16,6 +16,10 @@ example=../code/confetti/preview.vue
 example=../code/confetti/directional.vue
 :::
 
+::: example Particle state || Use the `hasParticles` getter to track whether a burst is still animating.
+example=../code/confetti/state.vue
+:::
+
 ## Color Palettes
 
 Try different color palettes by clicking the buttons below, then click anywhere to fire.

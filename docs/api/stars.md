@@ -57,39 +57,3 @@ type StarMode = 'sky' | 'shooting' | 'both';
 | `sky`      | Only twinkling background stars.         |
 | `shooting` | Only shooting stars with trails.         |
 | `both`     | Both twinkling stars and shooting stars. |
-
----
-
-## `Star`
-
-Internal representation of a background star.
-
-```typescript
-type Star = {
-    x: number;           // Normalized X position (0-1)
-    y: number;           // Normalized Y position (0-1)
-    size: number;        // Radius in pixels
-    twinklePhase: number; // Phase offset for twinkle
-    twinkleSpeed: number; // Individual twinkle speed
-    brightness: number;   // Base brightness (0-1)
-};
-```
-
----
-
-## `ShootingStar`
-
-Internal representation of a shooting star.
-
-```typescript
-type ShootingStar = {
-    x: number;    // X position in pixels
-    y: number;    // Y position in pixels
-    vx: number;   // Horizontal velocity
-    vy: number;   // Vertical velocity
-    alpha: number; // Current opacity
-    size: number;  // Head radius
-    decay: number; // Alpha decay per frame
-    trail: { x: number; y: number }[]; // Trail positions
-};
-```

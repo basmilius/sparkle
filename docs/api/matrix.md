@@ -37,20 +37,3 @@ interface MatrixConfig {
 | `fontSize`   | `number` | `14`        | Character size in pixels. Also determines column spacing. Scaled by `scale`.      |
 | `trailLength`| `number` | `20`        | Base number of characters per column trail. Actual length varies randomly.        |
 | `scale`      | `number` | `1`         | Scales font size proportionally.                                                  |
-
----
-
-## `MatrixColumn`
-
-Internal representation of a falling column.
-
-```typescript
-type MatrixColumn = {
-    x: number;              // X position in pixels (center of column)
-    y: number;              // Y position of the head character in pixels
-    speed: number;          // Fall speed of this column
-    chars: string[];        // Array of characters in the trail
-    length: number;         // Number of characters in the trail
-    headBrightness: number; // Brightness of the head character (0.8-1.0)
-};
-```

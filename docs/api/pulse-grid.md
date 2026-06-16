@@ -39,23 +39,3 @@ interface PulseGridConfig {
 | `waveCount` | `number` | `3` | Number of simultaneous ripple waves. |
 | `waveSpeed` | `number` | `100` | Expansion speed of waves in pixels per second. |
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
-
----
-
-## `PulseWave`
-
-```typescript
-interface PulseWave {
-    readonly x: number;
-    readonly y: number;
-    readonly radius: number;
-    readonly maxRadius: number;
-}
-```
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `x` | `number` | X coordinate of the wave origin. |
-| `y` | `number` | Y coordinate of the wave origin. |
-| `radius` | `number` | Current radius of the expanding wave. |
-| `maxRadius` | `number` | Maximum radius before the wave resets. |

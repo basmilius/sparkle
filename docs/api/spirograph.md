@@ -39,25 +39,3 @@ interface SpirographConfig {
 | `fadeSpeed` | `number`   | `0.003`                                                          | Rate at which a curve ages — higher values replace patterns faster.|
 | `complexity`| `number`   | `5`                                                              | Controls the range of gear ratio denominators used.                |
 | `scale`     | `number`   | `1`                                                              | Global scale factor.                                               |
-
----
-
-## `SpirographCurve`
-
-Internal representation of a single spirograph curve.
-
-```typescript
-type SpirographCurve = {
-    outerRadius: number;
-    innerRadius: number;
-    penOffset: number;
-    phase: number;
-    color: string;
-    colorRGB: [number, number, number];
-    points: Point[];
-    pointHead: number;
-    maxPoints: number;
-    age: number;
-    maxAge: number;
-};
-```

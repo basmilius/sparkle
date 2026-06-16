@@ -1,6 +1,6 @@
 # Sparkle (@basmilius/sparkle)
 
-Canvas-based visual effects library for the web. Includes 54 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, kaleidoscope) and playful animations (popcorn, balloons, confetti).
+Canvas-based visual effects library for the web. Includes 60 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, kaleidoscope) and playful animations (popcorn, balloons, confetti).
 
 - **Docs:** https://sparkle.graphics
 - **Repo:** https://github.com/basmilius/sparkle

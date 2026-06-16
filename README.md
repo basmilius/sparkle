@@ -6,7 +6,7 @@
 
 # Sparkle
 
-Canvas-based visual effects library for the web. Includes 61 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, spirograph) and playful animations (popcorn, balloons, confetti).
+Canvas-based visual effects library for the web. Includes 60 visual effects ranging from nature simulations (rain, snow, leaves) to abstract visuals (plasma, voronoi, spirograph) and playful animations (popcorn, balloons, confetti).
 
 ### Install
 

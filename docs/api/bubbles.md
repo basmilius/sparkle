@@ -41,23 +41,3 @@ interface BubblesConfig {
 | `colors`      | `string[]`         | `['#88ccff', '#aaddff', '#ccbbff']` | Base colors for bubble hue.                               |
 | `wobbleAmount`| `number`           | `1`                                 | Horizontal wobble intensity multiplier.                   |
 | `scale`       | `number`           | `1`                                 | Scales all bubble sizes proportionally.                   |
-
----
-
-## `Bubble`
-
-Internal representation of a bubble.
-
-```typescript
-type Bubble = {
-    x: number;          // Normalized X position (0-1)
-    y: number;          // Normalized Y position (0-1)
-    radius: number;     // Bubble radius in pixels
-    speed: number;      // Rise speed
-    hue: number;        // HSL hue value
-    wobblePhase: number; // Wobble oscillation phase
-    wobbleFreq: number;  // Wobble frequency
-    wobbleAmp: number;   // Wobble amplitude
-    opacity: number;     // Base opacity
-};
-```

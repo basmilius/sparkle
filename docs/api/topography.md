@@ -33,7 +33,7 @@ interface TopographyConfig {
 |----------|------|---------|-------------|
 | `speed` | `number` | `0.5` | Speed of height field evolution. |
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
-| `resolution` | `number` | `4` | Pixel step size for the height field grid. |
+| `resolution` | `number` | `2` | Pixel step size for the height field grid. |
 | `contourSpacing` | `number` | `0.1` | Spacing between contour levels (0–1). |
 | `lineWidth` | `number` | `1.5` | Width of contour lines in pixels. |
 | `color` | `string` | `'#2d5016'` | Color of the contour lines. |

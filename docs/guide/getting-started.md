@@ -94,3 +94,20 @@ sim.destroy();
 ```
 
 Simulations automatically pause when the browser tab is hidden and resume when it becomes visible again.
+
+## Runtime Control
+
+Effects can be updated while they are running. Use `configure()` to change any config option on the fly — only the keys you pass are updated — and `pause()` / `resume()` to halt and continue the render loop without losing state.
+
+::: example Runtime control || Pause and resume the snowfall, and adjust its speed live with configure().
+example=../code/snow/lifecycle.vue
+:::
+
+```typescript
+// Change options on the fly — only the passed keys are updated.
+snow.configure({ speed: 2.5 });
+
+// Pause and resume the render loop.
+snow.pause();
+snow.resume();
+```

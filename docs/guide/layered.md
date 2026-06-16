@@ -62,6 +62,25 @@ createLightning({
 })
 ```
 
+## Edge Fading
+
+Any effect can be masked with a soft edge fade using `withFade()`. Pass an `EdgeFade` object with `top`, `right`, `bottom`, and `left` values between `0` and `1` — each value is the fraction of that side that fades to transparent. This works both standalone and as a layer, and is ideal for blending a layer into the one beneath it or into the page background.
+
+::: example Edge fade || Plasma masked on all four edges for a soft vignette.
+example=../code/layered/vignette.vue
+:::
+
+```typescript
+// Fade all four edges for a vignette.
+createPlasma()
+    .withFade({ top: 0.25, right: 0.25, bottom: 0.25, left: 0.25 })
+    .mount(canvas)
+    .start();
+
+// Fade only the bottom of a layer so it dissolves into the layer below.
+createStars({ mode: 'both' }).withFade({ bottom: 0.4 });
+```
+
 ## Example Combinations
 
 ### Aurora Night Sky

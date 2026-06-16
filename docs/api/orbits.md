@@ -39,36 +39,3 @@ interface OrbitsConfig {
 | `trailLength`       | `number`   | `15`           | Number of trail segments behind each orbiter.                          |
 | `showCenters`       | `boolean`  | `true`         | Whether to draw a subtle glow at each center point.                    |
 | `scale`             | `number`   | `1`            | Scales orbit radii and particle sizes proportionally.                  |
-
----
-
-## `OrbitalCenter`
-
-Represents a center point for orbiting particles.
-
-```typescript
-type OrbitalCenter = {
-    x: number;  // Normalized X position (0-1)
-    y: number;  // Normalized Y position (0-1)
-};
-```
-
----
-
-## `Orbiter`
-
-Represents a single orbiting particle.
-
-```typescript
-type Orbiter = {
-    centerIndex: number;   // Index of the center this orbiter belongs to
-    angle: number;         // Current angle in radians
-    angularSpeed: number;  // Rotation speed in radians per frame
-    radiusX: number;       // Horizontal orbit radius in pixels
-    radiusY: number;       // Vertical orbit radius in pixels
-    tilt: number;          // Orbit plane tilt for 3D perspective
-    size: number;          // Particle radius in pixels
-    color: string;         // Hex color string
-    trail: { x: number; y: number }[];  // Trail positions
-};
-```

@@ -31,40 +31,9 @@ interface TornadoConfig {
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `color` | `string` | `'#8B7355'` | Base color of the funnel and debris particles. |
-| `debris` | `number` | `150` | Number of debris particles spiraling around the vortex. |
+| `color` | `string` | `'#8b7355'` | Base color of the funnel and debris particles. |
+| `debris` | `number` | `40` | Number of debris particles spiraling around the vortex. Halved on small screens. |
 | `intensity` | `number` | `1` | Vortex strength multiplier. |
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `speed` | `number` | `1` | Animation speed multiplier. |
 | `width` | `number` | `0.3` | Relative width of the funnel base (0–1). |
-
----
-
-## `TornadoParticle`
-
-```typescript
-interface TornadoParticle {
-    angle: number;
-    distance: number;
-    height: number;
-    opacity: number;
-    size: number;
-    speed: number;
-}
-```
-
----
-
-## `TornadoDebris`
-
-```typescript
-interface TornadoDebris {
-    angle: number;
-    distance: number;
-    height: number;
-    rotation: number;
-    size: number;
-    speed: number;
-    type: number;
-}
-```

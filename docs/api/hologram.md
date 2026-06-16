@@ -37,25 +37,3 @@ interface HologramConfig {
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `scanlineSpacing` | `number` | `3` | Pixel spacing between horizontal scanlines. |
 | `speed` | `number` | `1` | Animation speed multiplier. |
-
----
-
-## `HologramFragment`
-
-```typescript
-interface HologramFragment {
-    opacity: number;
-    size: number;
-    speed: number;
-    x: number;
-    y: number;
-}
-```
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `opacity` | `number` | Current opacity of the fragment. |
-| `size` | `number` | Size of the data fragment. |
-| `speed` | `number` | Vertical drift speed. |
-| `x` | `number` | Horizontal position. |
-| `y` | `number` | Vertical position. |

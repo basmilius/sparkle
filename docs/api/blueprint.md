@@ -37,17 +37,3 @@ interface BlueprintConfig {
 | `backgroundColor` | `string` | `'#0d1b2a'`  | Background fill color.                                          |
 | `complexity`      | `number` | `5`          | Number of elements per drawing (higher = more complex shapes).  |
 | `scale`           | `number` | `1`          | Global scale factor.                                            |
-
----
-
-## `BlueprintElement`
-
-Internal representation of a single element within a drawing.
-
-```typescript
-type BlueprintElement = {
-    type: 'line' | 'rect' | 'circle' | 'arc' | 'dashed' | 'polyline' | 'dimension';
-    points: number[];
-    progress: number;
-};
-```

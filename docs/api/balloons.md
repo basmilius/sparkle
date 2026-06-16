@@ -39,26 +39,3 @@ interface BalloonsConfig {
 | `driftAmount`  | `number`           | `1`                                                                  | Horizontal drift intensity multiplier.                     |
 | `stringLength` | `number`           | `1`                                                                  | String length multiplier.                                  |
 | `scale`        | `number`           | `1`                                                                  | Scales all sizes proportionally.                           |
-
----
-
-## `Balloon`
-
-Internal representation of a balloon.
-
-```typescript
-type Balloon = {
-    x: number;           // Normalized X position (0-1)
-    y: number;           // Normalized Y position (0-1)
-    radiusX: number;     // Horizontal radius in pixels
-    radiusY: number;     // Vertical radius in pixels
-    color: [number, number, number]; // RGB color
-    driftPhase: number;  // Drift oscillation phase
-    driftFreq: number;   // Drift frequency
-    driftAmp: number;    // Drift amplitude
-    riseSpeed: number;   // Individual rise speed
-    rotation: number;    // Current rotation angle
-    rotationSpeed: number; // Rotation oscillation speed
-    stringLength: number;  // String length in pixels
-};
-```

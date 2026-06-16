@@ -37,30 +37,3 @@ interface CrystallizationConfig {
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `seeds` | `number` | `5` | Number of seed points. |
 | `speed` | `number` | `1` | Growth speed multiplier. |
-
----
-
-## `CrystalBranch`
-
-```typescript
-interface CrystalBranch {
-    angle: number;
-    depth: number;
-    length: number;
-    progress: number;
-    x: number;
-    y: number;
-}
-```
-
----
-
-## `CrystalSeed`
-
-```typescript
-interface CrystalSeed {
-    branches: CrystalBranch[];
-    x: number;
-    y: number;
-}
-```

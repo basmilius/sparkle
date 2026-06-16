@@ -35,23 +35,3 @@ interface FirepitConfig {
 | `flameHeight`| `number` | `0.35`  | Flame height as fraction of canvas height.                  |
 | `intensity`  | `number` | `1`     | Overall brightness and spawn rate multiplier.               |
 | `scale`      | `number` | `1`     | Scales ember sizes proportionally.                          |
-
----
-
-## `Ember`
-
-Internal representation of a rising ember particle.
-
-```typescript
-type Ember = {
-    x: number;        // Normalized X position (0-1)
-    y: number;        // Normalized Y position (0-1)
-    vx: number;       // Horizontal velocity
-    vy: number;       // Vertical velocity (negative = upward)
-    size: number;     // Ember size in pixels
-    life: number;     // Remaining life in ticks
-    maxLife: number;  // Maximum life for fade calculation
-    brightness: number; // Color variation (0-1)
-    flicker: number;  // Current flicker intensity
-};
-```

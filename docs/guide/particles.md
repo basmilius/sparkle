@@ -20,6 +20,10 @@ example=../code/particles/attract.vue
 example=../code/particles/repel.vue
 :::
 
+::: example No interaction || A calm plexus that ignores the cursor (`mouseMode: 'none'`).
+example=../code/particles/drift.vue
+:::
+
 ## Configuration
 
 All options are passed via a config object:

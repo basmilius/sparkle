@@ -71,21 +71,6 @@ type ParticleMouseMode = 'attract' | 'repel' | 'connect' | 'none';
 
 ---
 
-## `NetworkParticle`
-
-Internal representation of a particle.
-
-```typescript
-type NetworkParticle = {
-    x: number;        // X position in pixels
-    y: number;        // Y position in pixels
-    vx: number;       // Horizontal velocity
-    vy: number;       // Vertical velocity
-    radius: number;   // Particle radius
-    baseSpeed: number; // Base drift speed
-};
-```
-
 ## Performance
 
 The simulation uses spatial grid partitioning to efficiently find nearby particles. Each frame, particles are bucketed into grid cells of size `connectionDistance`. Only neighboring cells are checked for connections, reducing the complexity from O(n^2) to approximately O(n*k), where k is the average number of neighbors per cell.

@@ -41,19 +41,3 @@ interface FluidConfig {
 | `diffusion`  | `number`   | `0.5`                                                      | Dye spreading rate — higher values make colors spread faster.|
 | `mouseForce` | `number`   | `1`                                                        | Strength of the mouse stir force.                            |
 | `scale`      | `number`   | `1`                                                        | Global scale factor.                                         |
-
----
-
-## `FluidCell`
-
-Internal representation of a single grid cell in the simulation.
-
-```typescript
-type FluidCell = {
-    vx: number;
-    vy: number;
-    dyeR: number;
-    dyeG: number;
-    dyeB: number;
-};
-```

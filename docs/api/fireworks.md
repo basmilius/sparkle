@@ -99,30 +99,6 @@ type FireworkVariant =
 
 ---
 
-## `ExplosionType`
-
-A subset of `FireworkVariant` — all variants except composites.
-
-```typescript
-type ExplosionType =
-    | 'peony' | 'chrysanthemum' | 'willow' | 'ring'
-    | 'palm' | 'crackle' | 'crossette' | 'dahlia'
-    | 'brocade' | 'horsetail' | 'strobe' | 'heart'
-    | 'spiral' | 'flower';
-```
-
----
-
-## `ParticleShape`
-
-The visual shape drawn at the head of a particle.
-
-```typescript
-type ParticleShape = 'line' | 'circle' | 'star' | 'diamond';
-```
-
----
-
 ## `FIREWORK_VARIANTS`
 
 ```typescript

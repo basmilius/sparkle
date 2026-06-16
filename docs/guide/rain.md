@@ -8,6 +8,10 @@ render=../code/rain/preview.vue
 
 ## Examples
 
+::: example Drizzle || A gentle, light rain without splashes.
+example=../code/rain/drizzle.vue
+:::
+
 ::: example Downpour || Heavy rain with splash effects on impact.
 example=../code/rain/preview.vue
 :::

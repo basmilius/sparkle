@@ -37,21 +37,3 @@ interface WavesConfig {
 | `foamColor` | `string`   | `'#ffffff'`                                               | CSS color for foam speckles near wave crests.                                      |
 | `foamAmount`| `number`   | `0.4`                                                     | Foam intensity (0-1). Set to 0 to disable foam.                                    |
 | `scale`     | `number`   | `1`                                                       | Global scale factor for wave amplitude and foam size.                              |
-
----
-
-## `Wave`
-
-Internal representation of a single wave layer.
-
-```typescript
-type Wave = {
-    amplitude: number;    // Wave height in pixels
-    frequency: number;    // Horizontal wave frequency
-    speed: number;        // Individual wave speed
-    phase: number;        // Current phase offset
-    baseY: number;        // Normalized vertical position (0-1)
-    color: string;        // Fill color for this wave layer
-    foamThreshold: number; // Threshold for foam spawn near crests
-};
-```

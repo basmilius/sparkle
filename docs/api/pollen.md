@@ -39,19 +39,3 @@ interface PollenConfig {
 | `size` | `number` | `3` | Base radius of each particle in pixels. |
 | `speed` | `number` | `0.5` | Drift speed multiplier. |
 | `wind` | `number` | `0.3` | Horizontal wind strength. |
-
----
-
-## `PollenParticle`
-
-```typescript
-interface PollenParticle {
-    glowPhase: number;
-    opacity: number;
-    size: number;
-    vx: number;
-    vy: number;
-    x: number;
-    y: number;
-}
-```

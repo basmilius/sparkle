@@ -39,9 +39,3 @@ interface PopcornConfig {
 | `popRate` | `number` | `2` | Number of new kernels popping per second. |
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `speed` | `number` | `1` | Overall speed multiplier. |
-
----
-
-## `PopcornKernel`
-
-Represents a single popcorn kernel. Used internally by the effect.

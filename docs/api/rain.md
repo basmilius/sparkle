@@ -55,22 +55,3 @@ type RainVariant = 'drizzle' | 'downpour' | 'thunderstorm';
 | `drizzle`      | 70    | 0.55  | 0.1  | No       |
 | `downpour`     | 200   | 0.85  | 0.25 | Yes      |
 | `thunderstorm` | 300   | 1.0   | 0.4  | Yes      |
-
----
-
-## `Raindrop`
-
-Internal representation of a raindrop.
-
-```typescript
-type Raindrop = {
-    x: number;       // Normalized X position (0-1)
-    y: number;       // Normalized Y position (0-1)
-    vx: number;      // Horizontal velocity (pixels/tick)
-    vy: number;      // Vertical velocity (pixels/tick)
-    length: number;  // Visual length in pixels
-    speed: number;   // Fall speed
-    depth: number;   // Parallax depth (0.3-1)
-    opacity: number; // Base opacity
-};
-```

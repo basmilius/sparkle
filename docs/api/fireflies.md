@@ -37,19 +37,3 @@ interface FirefliesConfig {
 | `speed`   | `number` | `1`         | Movement speed multiplier.                                  |
 | `glowSpeed`| `number`| `1`         | Glow pulsing speed multiplier.                              |
 | `scale`   | `number` | `1`         | Scales all firefly sizes proportionally.                    |
-
----
-
-## `Firefly`
-
-Internal representation of a firefly particle.
-
-```typescript
-type Firefly = {
-    x: number;       // Normalized X position (0-1)
-    y: number;       // Normalized Y position (0-1)
-    size: number;    // Glow radius in pixels
-    phase: number;   // Glow phase offset
-    glowSpeed: number; // Individual glow speed
-};
-```

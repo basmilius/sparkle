@@ -20,6 +20,14 @@ Fires a burst of confetti particles. All config properties are optional and merg
 sim.burst(config: Partial<Config>): void
 ```
 
+#### `hasParticles`
+
+Read-only getter that returns `true` while any burst is still animating, and `false` once all particles have faded out.
+
+```typescript
+sim.hasParticles: boolean
+```
+
 See [`Effect`](./layered#effect-tconfig) for the full method reference: `mount()`, `start()`, `pause()`, `resume()`, `configure()`, `withFade()`, and `destroy()`.
 
 ---

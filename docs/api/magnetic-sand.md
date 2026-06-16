@@ -34,6 +34,6 @@ interface MagneticSandConfig {
 |------------------|----------|--------------|----------------------------------------------------------------------|
 | `speed`          | `number` | `1`          | Animation speed multiplier.                                          |
 | `count`          | `number` | `600`        | Number of sand grains. Halved on small screens.                      |
-| `color`          | `string` | `'#1a1a1a'`  | Color of all sand grains.                                            |
-| `magnetStrength` | `number` | `1`          | Strength of the magnetic attraction and spike formation.             |
+| `color`          | `string` | `'#888888'`  | Color of all sand grains.                                            |
+| `magnetStrength` | `number` | `0.5`        | Strength of the magnetic attraction and spike formation.             |
 | `scale`          | `number` | `1`          | Global scale factor for grain sizes and interaction radius.          |

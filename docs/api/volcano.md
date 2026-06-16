@@ -39,20 +39,3 @@ interface VolcanoConfig {
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `smokeColor` | `string` | `'#444444'` | Color of the rising smoke plume. |
 | `speed` | `number` | `1` | Animation speed multiplier. |
-
----
-
-## `VolcanoProjectile`
-
-```typescript
-interface VolcanoProjectile {
-    angle: number;
-    glow: number;
-    size: number;
-    speed: number;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-}
-```

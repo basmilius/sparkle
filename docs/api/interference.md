@@ -34,4 +34,4 @@ interface InterferenceConfig {
 | `scale` | `number` | `1` | Scales all sizes proportionally. |
 | `resolution` | `number` | `3` | Pixel step size for rendering. |
 | `layers` | `number` | `3` | Number of concentric wave sources. |
-| `colors` | `string[]` | — | Colors for each wave source layer. |
+| `colors` | `string[]` | `['#ff0066', '#0066ff', '#00ff66']` | Colors for each wave source layer. |

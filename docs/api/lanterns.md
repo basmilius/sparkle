@@ -35,26 +35,3 @@ interface LanternsConfig {
 | `size`   | `number`   | `20`             | Base lantern size in pixels (before scale).                |
 | `speed`  | `number`   | `0.5`            | Rise speed multiplier.                                     |
 | `scale`  | `number`   | `1`              | Scales all lantern sizes proportionally.                   |
-
----
-
-## `Lantern`
-
-Internal representation of a lantern particle.
-
-```typescript
-type Lantern = {
-    x: number;            // Normalized X position (0-1)
-    y: number;            // Normalized Y position (0-1)
-    vx: number;           // Horizontal velocity (unused, reserved)
-    vy: number;           // Rise speed factor
-    size: number;         // Lantern size in pixels
-    glowPhase: number;    // Glow pulse phase offset
-    glowSpeed: number;    // Individual glow pulse speed
-    swayPhase: number;    // Sway oscillation phase offset
-    swaySpeed: number;    // Sway oscillation speed
-    swayAmplitude: number; // Sway oscillation amplitude
-    colorIndex: number;   // Index into the colors array
-    opacity: number;      // Base opacity (0-1)
-};
-```

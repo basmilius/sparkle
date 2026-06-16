@@ -53,23 +53,3 @@ type DigitalRainMode = 'binary' | 'hex' | 'mixed';
 | `'binary'` | Only 0 and 1 characters. |
 | `'hex'` | Hexadecimal characters (0–9, A–F). |
 | `'mixed'` | Combination of binary and hexadecimal characters. |
-
----
-
-## `DigitalRainColumn`
-
-```typescript
-interface DigitalRainColumn {
-    chars: string[];
-    speed: number;
-    x: number;
-    y: number;
-}
-```
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `chars` | `string[]` | Current characters in the column. |
-| `speed` | `number` | Individual fall speed modifier. |
-| `x` | `number` | Horizontal position of the column. |
-| `y` | `number` | Current vertical head position. |

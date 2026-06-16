@@ -24,6 +24,7 @@ interface DonutsConfig {
     collisionPadding?: number;
     colors?: string[];
     count?: number;
+    gradient?: boolean;
     mouseAvoidance?: boolean;
     mouseAvoidanceRadius?: number;
     mouseAvoidanceStrength?: number;
@@ -42,6 +43,7 @@ interface DonutsConfig {
 | `collisionPadding`       | `number`           | `20`                     | Minimum spacing between donut edges in pixels.                                      |
 | `colors`                 | `string[]`         | `['#bd1961', '#da287c']` | Fill colors for the donuts. Each donut picks a random color.                        |
 | `count`                  | `number`           | `12`                     | Number of donuts on screen.                                                         |
+| `gradient`               | `boolean`          | `false`                  | When enabled, donuts are filled with a radial gradient.                            |
 | `mouseAvoidance`         | `boolean`          | `false`                  | When enabled, donuts move away from the mouse cursor.                               |
 | `mouseAvoidanceRadius`   | `number`           | `150`                    | Distance in pixels within which donuts are repelled from the cursor (before scale). |
 | `mouseAvoidanceStrength` | `number`           | `0.03`                   | How strongly donuts are repelled from the cursor. Higher = stronger avoidance.      |
@@ -51,24 +53,3 @@ interface DonutsConfig {
 | `scale`                  | `number`           | `1`                      | Scales donut radius, speed, and collision padding proportionally.                   |
 | `speedRange`             | `[number, number]` | `[0.15, 0.6]`            | Movement speed range `[min, max]` in pixels per frame (before scale).               |
 | `thickness`              | `number`           | `0.39`                   | Ring thickness as a fraction of the outer radius (0–1).                             |
-
----
-
-## `Donut`
-
-Internal representation of a donut particle.
-
-```typescript
-type Donut = {
-    outerRadius: number;  // Outer circle radius in pixels
-    innerRadius: number;  // Inner circle radius in pixels
-    x: number;            // X position in pixels
-    y: number;            // Y position in pixels
-    angle: number;        // Current rotation angle in radians
-    speed: number;        // Base movement speed
-    rotationSpeed: number; // Rotation speed in radians per frame
-    color: string;        // Fill color
-    vx: number;           // X velocity
-    vy: number;           // Y velocity
-};
-```

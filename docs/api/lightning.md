@@ -35,32 +35,3 @@ interface LightningConfig {
 | `branches`  | `boolean` | `true`       | Enable smaller branch bolts forking off the main bolt.                  |
 | `flash`     | `boolean` | `true`       | Enable a brief white screen flash when a bolt strikes.                  |
 | `scale`     | `number`  | `1`          | Global scale factor for line widths.                                    |
-
----
-
-## `LightningBolt`
-
-Internal representation of a lightning bolt.
-
-```typescript
-type LightningBolt = {
-    segments: { x: number; y: number }[];  // Normalized positions (0-1)
-    branches: LightningBranch[];         // Forked sub-bolts
-    alpha: number;                       // Current opacity (1 to 0)
-    lifetime: number;                    // Total lifetime in ticks
-    ticksAlive: number;                  // Ticks since spawn
-};
-```
-
----
-
-## `LightningBranch`
-
-Internal representation of a branch forking off a main bolt.
-
-```typescript
-type LightningBranch = {
-    segments: { x: number; y: number }[];  // Normalized positions (0-1)
-    alpha: number;                       // Branch opacity relative to parent
-};
-```
